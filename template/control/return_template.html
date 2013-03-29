@@ -1,0 +1,12 @@
+<%
+for(user in list){
+	if(user.age<=18){
+	   return;
+    }else{
+%>
+${user.name}
+<%
+	}
+}
+%>
+end

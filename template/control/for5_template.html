@@ -1,0 +1,13 @@
+<%
+for(user in list){
+	if(user.age<=18){
+%>
+${user_index}:${user.name}
+<%
+	}else{
+%>
+${user.name}
+<%
+	}
+}
+%>

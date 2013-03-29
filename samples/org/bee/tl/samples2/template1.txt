@@ -1,0 +1,14 @@
+<%
+//var b = 4--@org.bee.tl.samples.User.getMax();
+//var c = user;
+var c = b--5;
+var d = -b--(+5-1--2);
+
+var e = -b%@org.bee.tl.samples.User.max ;
+
+%>
+//\${b}
+${c}
+${d}
+${e}
+${user.age}

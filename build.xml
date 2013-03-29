@@ -1,0 +1,80 @@
+<project name="client" default="jarClass" basedir=".">
+    <property name="product" value="beetl"/>
+    <property name="version" value="1.21"/>
+    <property name="classes.dir" value="${basedir}/bin"/>
+    <property name="build.dir" value="${basedir}/build"/>
+    <!--property name="lib.dir" value="${basedir}/lib"/-->
+    <!--property name="lib.dir" value="E:\lijz\javamonkey\bee\trunk\workspace\tl_sample_web\WebContent\WEB-INF\lib"/-->
+	<property name="lib.dir" value="E:\lijz\javamonkey\bee\trunk\workspace\beetlonline\WebContent\WEB-INF\lib"/>
+		
+
+    <property name="jar.file" value="${product}.${version}.jar"/>
+
+    
+
+    <target name="clean">
+        <echo>clean build dir</echo>
+        <delete dir="${build.dir}" quiet="true"/>       
+    </target>
+
+    <target name="init" depends="clean">
+        <mkdir dir="${build.dir}"/>
+    </target>
+    
+    <target name="jarClass" depends="init">
+        <jar destfile="${lib.dir}/${jar.file}">
+            <fileset dir="${classes.dir}">
+                <exclude name="org/bee/testcase/**" />
+                <exclude name="org/antlr/runtime/debug/**" />
+                <exclude name="**/*.g" />
+                <exclude name="**/*.tokens" />   
+            	<exclude name="org/bee/tl/performance/**" />  
+                <exclude name="org/bee/tl/samples/**" />
+                <include name="org/bee/tl/core/**"/>    
+            	<include name="org/bee/tl/extend/**"/>              	                
+                <include name="org/antlr/runtime/**"/>
+            	<include name="org/bee/tl/ext/**"/>                  
+            </fileset>
+        	<zipfileset  src="lib/antlr-runtime-3.4-nodebug.jar"/>
+        </jar>
+    </target>
+	
+	 <target name="jarSrc" depends="init">
+	        <jar destfile="${basedir}/beetl_src_${version}.jar">
+	            <fileset dir="${basedir}/src">
+	                <exclude name="**/.svn/**" />
+	            	<exclude name="**/samples/**" />
+	            </fileset>     
+	        	<fileset dir="${basedir}/ext">
+	        		<exclude name="**/.svn/**" />
+	        	</fileset> 
+	        	<fileset dir="${basedir}/samples">
+	        	     <exclude name="**/.svn/**" />
+	        	 </fileset> 
+	        </jar>
+	    </target>
+	
+	 <target name="javadoc" description="Generate the Javadoc HTML pages.">  
+	        <delete dir="../javadoc" />  
+	        <mkdir dir="../javadoc" />  
+	        <javadoc destdir="../javadoc"   
+	                 windowtitle="Beetl API"  
+	                 use="yes"  
+	                 linksource="no"  
+	                 splitindex="yes"  
+	                 encoding="UTF-8" docencoding="UTF-8">  
+	            <classpath>  
+	                <fileset dir="${basedir}/lib">  
+	                    <include name="*.jar"/>  
+	                 </fileset>  
+	               
+	            </classpath>  
+	            <!-- 需要修改 Begin -->  
+	            <packageset dir="src" defaultexcludes="yes">  
+	                <include name="org/bee/**"/>  
+	            </packageset>  
+	            <!-- 需要修改 End -->  
+	        </javadoc>  
+	    </target>  
+    
+</project>

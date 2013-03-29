@@ -1,0 +1,1 @@
+${NativeStaticCall4FTL.getText("hello",7)}

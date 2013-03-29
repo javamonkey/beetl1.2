@@ -1,0 +1,1 @@
+${@org.bee.tl.performance.nat.NativeStaticCall4Beetl.getText("hello",7)}

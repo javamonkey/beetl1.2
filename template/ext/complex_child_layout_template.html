@@ -1,0 +1,19 @@
+<%
+var jsPart = {
+%>
+<script>
+//这是js部分，将放在布局页面的头部
+</script>
+<%};%>
+
+<%var htmlPart={%>
+<div>
+这是html部分，将放在布局页面的底部
+</div>
+<%};%>
+
+<%
+var layoutParas = {"jsPart":jsPart,"htmlPart":htmlPart};
+includeFileTemplate('/ext/complex_layout_template.html',layoutParas){}
+
+%>
