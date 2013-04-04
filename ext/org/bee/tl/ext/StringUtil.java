@@ -40,7 +40,7 @@ import org.bee.tl.core.BeeNumber;
 public class StringUtil
 {
 	public String trim(String str){
-		return str.trim();
+		return str.trim();1212
 	}
 	public boolean startWith(String str, String key)
 	{
