@@ -37,6 +37,7 @@ import java.util.Set;
 
 import org.antlr.runtime.Token;
 import org.bee.tl.core.exception.BeeRuntimeException;
+import org.bee.tl.core.number.NumberFactory;
 
 /**
  * 解释执行保存模板运行的变量，同时，也保存了模板的常量
@@ -53,6 +54,7 @@ public class Context
 	// boolean orginalContextChanged = false;
 	Set<String> rawList = null;
 	Context parent = null;
+	NumberFactory nf = null;
 
 	public Context()
 	{
@@ -80,6 +82,7 @@ public class Context
 	{
 		this();
 		this.parent = parent;
+		this.nf = parent.getNumberFactory();
 
 	}
 
@@ -99,11 +102,12 @@ public class Context
 		{
 			if (value instanceof BigDecimal)
 			{
-				value = new BeeNumber((BigDecimal) value);
+				value = nf.y((BigDecimal) value) ;
 			}
 			else
 			{
-				value = new BeeNumber(value.toString(), (Number) value);
+				value = nf.y((Number) value);
+				
 			}
 
 		}
@@ -468,6 +472,10 @@ public class Context
 		{
 			return this.vars;
 		}
+	}
+	
+	protected NumberFactory getNumberFactory(){
+		return parent.getNumberFactory();
 	}
 
 	public void setVars(Map<String, Object> vars)

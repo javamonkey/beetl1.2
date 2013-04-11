@@ -1,5 +1,7 @@
 package org.bee.tl.core;
 
+import org.bee.tl.core.number.NumberFactory;
+
 public class RuntimeControl
 {
 	// 0 reset 1 continue 2 break;
@@ -9,4 +11,5 @@ public class RuntimeControl
 	static final int FOR_BREAK = 2;
 	static final int RETURN = 4;
 	Derective derective = new Derective();
+	NumberFactory nf = null;
 }

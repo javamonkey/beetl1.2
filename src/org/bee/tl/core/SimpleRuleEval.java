@@ -157,7 +157,7 @@ public class SimpleRuleEval
 
 	public BigDecimal calcBigDecimal() throws SimpleEvalException
 	{
-		return ((BeeNumber) calc()).thisNumber;
+		return ((BeeNumber) calc()).getBigDecimal();
 	}
 
 	protected void handleRecognitionException(RecognitionException ex)

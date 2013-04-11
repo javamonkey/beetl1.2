@@ -48,6 +48,7 @@ import org.bee.tl.core.exception.MVCStrictException;
 import org.bee.tl.core.exception.WrapperAntlrLexerException;
 import org.bee.tl.core.io.ByteWriter;
 import org.bee.tl.core.io.ByteWriter_Char;
+import org.bee.tl.core.number.NumberFactory;
 import org.bee.tl.ext.Println;
 
 /**
@@ -76,6 +77,7 @@ public class CoreScriptRunner
 	boolean isStrict = false;
 	boolean nativeCall = false;
 	boolean directByteOutput = false;
+	boolean isBigNumberSupport = true ;
 
 	//解析结果
 	BeeCommonNodeTree tree = null;
@@ -177,7 +179,14 @@ public class CoreScriptRunner
 				//设置内置变量
 				context.replace("__pw", pw);
 				context.replace("__core", this);
-
+				
+				RuntimeControl control = new RuntimeControl();
+				if(this.isBigNumberSupport){
+					control.nf = new NumberFactory(true);
+				}else{
+					control.nf = new NumberFactory(false);
+				}
+				context.nf = control.nf;
 				//设置全局变量
 				if (global != null)
 				{
@@ -187,7 +196,7 @@ public class CoreScriptRunner
 						context.set(entry.getKey(), entry.getValue());
 					}
 
-					this.print(tree, context, pw, new RuntimeControl());
+					this.print(tree, context, pw, control);
 				}
 
 			}
@@ -1214,6 +1223,14 @@ public class CoreScriptRunner
 	public boolean isDirectByteOutput()
 	{
 		return directByteOutput;
+	}
+	
+	public void setBigNumberSupport(boolean support){
+		this.isBigNumberSupport = support;
+	}
+	
+	public boolean isBigNumberSupport(){
+		return this.isBigNumberSupport;
 	}
 
 	public static void main(String[] args) throws Exception

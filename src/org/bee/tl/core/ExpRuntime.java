@@ -229,14 +229,13 @@ public class ExpRuntime
 					Object o = evalVarRef(exp.getChildren(), ctx, exp, control);
 					if (o instanceof Number)
 					{
-						if (!(o instanceof BeeNumber))
-						{
-							return new BeeNumber(o.toString());
-						}
+						return control.nf.y((Number)o);
 
+					}else{
+						return o;
 					}
 
-					return o;
+					
 
 				}
 
@@ -313,34 +312,15 @@ public class ExpRuntime
 				}
 				case BeeParser.INT:
 				{
-					//					return new BeeNumber(Integer.parseInt(exp.getToken().getText()));
-					if (exp.getCached() != null)
-					{
-						return ((BeeNumber) exp.getCached()).clone();
-					}
-					else
-					{
-						Object o = new BeeNumber(exp.getToken().getText(), int.class);
-						exp.setCached(o);
-						return o;
-					}
+					Object o = control.nf.y(Integer.parseInt(exp.getToken().getText()));
+					return o;
 
 				}
 				case BeeParser.DOUBLE:
 				{
-					//					
-
-					if (exp.getCached() != null)
-					{
-						return ((BeeNumber) exp.getCached()).clone();
-					}
-					else
-					{
-						Object o = new BeeNumber(exp.getToken().getText(), double.class);
-						;
-						exp.setCached(o);
-						return o;
-					}
+						
+					Object o = control.nf.y(new BigDecimal(exp.getToken().getText()));
+					return o;
 
 				}
 				case BeeParser.BOOLEAN:
@@ -361,14 +341,9 @@ public class ExpRuntime
 					Object o = classNativeCall(exp, ctx, control);
 					if (o instanceof Number)
 					{
-						if (o instanceof BigDecimal)
-						{
-							return new BeeNumber((BigDecimal) o);
-						}
-						else
-						{
-							return new BeeNumber(o.toString(), (Number) o);
-						}
+						control.nf.y((Number)o);
+						
+					
 					}
 					else
 					{
@@ -716,15 +691,9 @@ public class ExpRuntime
 			Object o = fn.call(paras, ctx);
 			if (o instanceof Number)
 			{
-				if (o instanceof BigDecimal)
-				{
-					return new BeeNumber((BigDecimal) o);
-				}
-				else
-				{
-					return new BeeNumber(o.toString(), (Number) o);
-				}
-
+				return control.nf.y((Number)o);
+				
+			
 			}
 			else
 			{
@@ -972,7 +941,7 @@ public class ExpRuntime
 			BeeNumber bValue = (BeeNumber) eval(b, ctx, control);
 			Long aLong = aValue.longValue();
 			Long bLong = bValue.longValue();
-			return new BeeNumber(aLong % bLong);
+			return  control.nf.y(aLong % bLong);
 
 		}
 		catch (ClassCastException cc)
@@ -1003,11 +972,6 @@ public class ExpRuntime
 		}
 	}
 
-	public static Object div(Object aValue, Object bValue)
-	{
-		BeeNumber number = new BeeNumber(aValue.toString()).divide(bValue.toString());
-		return number;
-	}
 
 	public static Object nodeMutiple(BeeCommonNodeTree a, BeeCommonNodeTree b, Context ctx, RuntimeControl control)
 	{
