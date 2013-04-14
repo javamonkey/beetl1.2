@@ -284,7 +284,15 @@ public class BeetlCodeGenerator
 
 		if (scriptRunner.isStrict())
 		{
-			println("this.scriptRunner.isStrict();");
+			println("this.scriptRunner.enableStrict();");
+		}
+		
+		if(scriptRunner.isBigNumberSupport()){
+			println("this.scriptRunner.setBigNumberSupport(true);");
+			println("this.nf = NumberFactory.big;");
+		}else{
+			println("this.scriptRunner.setBigNumberSupport(false);");			
+			println("this.nf = NumberFactory.general;");
 		}
 
 		String temproot = this.templateRootPath.replace("\\", "\\\\");
@@ -853,7 +861,7 @@ public class BeetlCodeGenerator
 							}
 							if (left.getTypeClass().isPrimitive())
 							{
-								print("new BeeNumber(");
+								print("nf.y(");
 								writeTree(left);
 								print(")");
 							}
@@ -866,7 +874,7 @@ public class BeetlCodeGenerator
 
 							if (right.getTypeClass().isPrimitive())
 							{
-								print("new BeeNumber(");
+								print("nf.y(");
 								writeTree(right);
 								print(")");
 							}
@@ -911,7 +919,7 @@ public class BeetlCodeGenerator
 								}
 								else
 								{
-									print("new BeeNumber(");
+									print("nf.y(");
 									writeTree(left);
 									print(")");
 								}
@@ -922,7 +930,7 @@ public class BeetlCodeGenerator
 								}
 								else
 								{
-									print("new BeeNumber(");
+									print("nf.y(");
 									writeTree(right);
 									print(")");
 								}
@@ -1137,7 +1145,7 @@ public class BeetlCodeGenerator
 						}
 						if (exp.getExpType().equals(BeeNumber.class))
 						{
-							print("new BeeNumber(");
+							print("nf.y(");
 						}
 						StringBuilder sb = new StringBuilder();
 
@@ -1201,7 +1209,7 @@ public class BeetlCodeGenerator
 						}
 						if (exp.getExpType().equals(BeeNumber.class))
 						{
-							print("new BeeNumber(");
+							print("nf.y(");
 						}
 						Object o;
 						for (int i = 0; i < exp.getChildCount() - 1; i++)
@@ -1387,7 +1395,7 @@ public class BeetlCodeGenerator
 						}
 						else if (right.getTypeClass().getRawType().equals(BeeNumber.class))
 						{
-							print("new BeeNumber(");
+							print("nf.y(");
 							writeTree(left);
 							print(").");
 							print(operatorBigDecimalMap.get(tokeType));
@@ -1397,7 +1405,7 @@ public class BeetlCodeGenerator
 						}
 						else
 						{
-							print("new BeeNumber(");
+							print("nf.y(");
 							writeTree(left);
 							print(").");
 							print(operatorBigDecimalMap.get(tokeType));
@@ -1428,7 +1436,7 @@ public class BeetlCodeGenerator
 					}
 					else
 					{
-						print("new BeeNumber(");
+						print("nf.y(");
 						if (left.getTypeClass().getRawType().equals(Integer.class)
 								|| left.getTypeClass().getRawType().equals(Long.class))
 						{
@@ -1472,13 +1480,13 @@ public class BeetlCodeGenerator
 				case BeeParser.INT:
 				{
 					String text = t.getToken().getText();
-					print("new BeeNumber(" + text + ")");
+					print("nf.y(" + text + ")");
 					break;
 				}
 				case BeeParser.DOUBLE:
 				{
 					String text = t.getToken().getText();
-					print("new BeeNumber(\"" + text + "\")");
+					print("nf.y(\"" + text + "\")");
 					break;
 				}
 				case BeeParser.BOOLEAN:
@@ -2060,7 +2068,7 @@ public class BeetlCodeGenerator
 		// 转成BeeNumber类型
 		if (t.getChildCount() > 1 && type.getRawType().equals(BeeNumber.class))
 		{
-			finalExp = "new BeeNumber(" + this.fw.toString() + ")";
+			finalExp = "nf.y(" + this.fw.toString() + ")";
 		}
 
 		this.fw = orginalWriter;
@@ -2219,6 +2227,8 @@ public class BeetlCodeGenerator
 		println("import org.bee.tl.core.io.*;");
 		println("import org.bee.tl.core.compile.*;");
 		println("import org.bee.tl.core.exception.*;");
+		println("import org.bee.tl.core.number.*;");
+		
 
 	}
 

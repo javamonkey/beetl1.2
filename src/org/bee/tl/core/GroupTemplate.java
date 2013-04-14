@@ -31,8 +31,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.lang.reflect.Method;
@@ -185,6 +183,7 @@ public class GroupTemplate
 	boolean checkTemplateUpdate = true;
 	boolean directByteOutput = false;
 	boolean isStrict = false;
+	boolean isBigNumberSupport = true ;
 	// 每隔5秒检测一次
 	int checkTemplatePeriod = 5;
 	//检测线程
@@ -308,6 +307,8 @@ public class GroupTemplate
 		{
 			template.scriptRunner.enableNativeCall();
 		}
+		template.scriptRunner.setBigNumberSupport(this.isBigNumberSupport);
+		
 		template.config(this.statementStart, this.statementEnd, this.placeholderStart, this.placeholderEnd);
 
 	}
@@ -476,6 +477,7 @@ public class GroupTemplate
 				{
 					scriptRunner.enableNativeCall();
 				}
+				scriptRunner.setBigNumberSupport(this.isBigNumberSupport);				
 				scriptRunner.setGlobal(this.scriptGlobal);
 				scriptRunner.parse();
 				tf.clear();
@@ -1001,6 +1003,14 @@ public class GroupTemplate
 	public boolean isDirectByteOutput()
 	{
 		return directByteOutput;
+	}
+	
+	public void setBigNumberSupport(boolean support){
+		this.isBigNumberSupport = support;
+	}
+	
+	public boolean isBigNumberSupport(){
+		return this.isBigNumberSupport;
 	}
 
 	public List<String> getNativeCallFilter()

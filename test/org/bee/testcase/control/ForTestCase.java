@@ -40,20 +40,20 @@ public class ForTestCase extends BasicTestCase
 
 	}
 
-	public void testSimple() throws IOException, BeeException
-	{
-
-		Template t = this.gt.getFileTemplate("/control/for_template.html");
-		t.set("list", list);
-		String str = t.getTextAsString();
-
-		// 第二次预编译
-		t = this.gt.getFileTemplate("/control/for_template.html");
-		t.set("list", list);
-		str = t.getTextAsString();
-		Assert.assertEquals(this.getFileContent("/control/for_expected.html"), str);
-
-	}
+//	public void testSimple() throws IOException, BeeException
+//	{
+//
+//		Template t = this.gt.getFileTemplate("/control/for_template.html");
+//		t.set("list", list);
+//		String str = t.getTextAsString();
+//
+//		// 第二次预编译
+//		t = this.gt.getFileTemplate("/control/for_template.html");
+//		t.set("list", list);
+//		str = t.getTextAsString();
+//		Assert.assertEquals(this.getFileContent("/control/for_expected.html"), str);
+//
+//	}
 
 	public void testSimple1() throws IOException, BeeException
 	{

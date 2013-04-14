@@ -18,13 +18,13 @@ public class BasicExpTestCase extends BasicTestCase
 	
 	
 
-	public void testMod() throws IOException, BeeException
-	{
-
-		Template t = this.gt.getFileTemplate("/exp/mod_template.html");
-		String str = t.getTextAsString();
-		this.assertEquals(this.getFileContent("/exp/mod_expected.html"), str);
-	}
+//	public void testMod() throws IOException, BeeException
+//	{
+//
+//		Template t = this.gt.getFileTemplate("/exp/mod_template.html");
+//		String str = t.getTextAsString();
+//		this.assertEquals(this.getFileContent("/exp/mod_expected.html"), str);
+//	}
 //
 	public void testDoubleAdd() throws IOException, BeeException
 	{
@@ -36,7 +36,7 @@ public class BasicExpTestCase extends BasicTestCase
 		String str = t.getTextAsString();
 		this.assertEquals(this.getFileContent("/exp/double_add_expected.html"), str);
 	}
-//
+
 	public void testDoubleMinus() throws IOException, BeeException
 	{
 		Template t = this.gt.getFileTemplate("/exp/double_minus_template.html");

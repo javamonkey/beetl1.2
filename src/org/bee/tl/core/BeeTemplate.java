@@ -36,6 +36,7 @@ import java.util.Map;
 
 import org.bee.tl.core.io.ByteWriter;
 import org.bee.tl.core.io.ByteWriter_Char;
+import org.bee.tl.core.number.NumberFactory;
 
 public class BeeTemplate extends AbstractTemplate
 {
@@ -167,10 +168,14 @@ public class BeeTemplate extends AbstractTemplate
 		}
 		try
 		{
-			this.context.text = this.scriptRunner.textVar;
-			this.context.set("__core", this.scriptRunner);
+			this.context.text = this.scriptRunner.textVar;			
 			this.context.set("__group", this.group);
-			//只读变量
+			if(this.scriptRunner.isBigNumberSupport()){
+				this.context.nf =  NumberFactory.big;
+			}else{
+				this.context.nf =  NumberFactory.general;
+			}
+			
 			this.scriptRunner.runScript(pw, new Context(context));
 			pw.flush();
 

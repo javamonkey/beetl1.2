@@ -28,7 +28,6 @@
 package org.bee.tl.core;
 
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -98,20 +97,7 @@ public class Context
 			throw new RuntimeException("不能设置或者改变全局变量");
 		}
 
-		if (value instanceof Number)
-		{
-			if (value instanceof BigDecimal)
-			{
-				value = nf.y((BigDecimal) value) ;
-			}
-			else
-			{
-				value = nf.y((Number) value);
-				
-			}
-
-		}
-
+	
 		this.vars.put(name, value);
 
 	}
@@ -475,7 +461,7 @@ public class Context
 	}
 	
 	protected NumberFactory getNumberFactory(){
-		return parent.getNumberFactory();
+		return nf;
 	}
 
 	public void setVars(Map<String, Object> vars)

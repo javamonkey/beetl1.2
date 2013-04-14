@@ -8,9 +8,9 @@ import java.io.InputStreamReader;
 import junit.framework.TestCase;
 
 import org.bee.testcase.error.TestErrorHandler;
-import org.bee.tl.core.BeeNumber;
 import org.bee.tl.core.Config;
 import org.bee.tl.core.GroupTemplate;
+import org.bee.tl.core.number.NumberFactory;
 
 public class BasicTestCase extends TestCase
 {
@@ -34,7 +34,7 @@ public class BasicTestCase extends TestCase
 		}
 
 		// for simple test ,not not changed it
-		BeeNumber.scale = 2;
+		NumberFactory.scale = 4;
 	}
 
 	protected GroupTemplate gt = BasicTestCase.base;

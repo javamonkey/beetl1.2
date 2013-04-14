@@ -28,7 +28,6 @@
 package org.bee.tl.core;
 
 import java.lang.reflect.Method;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -319,7 +318,7 @@ public class ExpRuntime
 				case BeeParser.DOUBLE:
 				{
 						
-					Object o = control.nf.y(new BigDecimal(exp.getToken().getText()));
+					Object o = control.nf.y(exp.getToken().getText());
 					return o;
 
 				}
@@ -341,7 +340,7 @@ public class ExpRuntime
 					Object o = classNativeCall(exp, ctx, control);
 					if (o instanceof Number)
 					{
-						control.nf.y((Number)o);
+						return control.nf.y((Number)o);
 						
 					
 					}

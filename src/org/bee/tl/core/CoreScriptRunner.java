@@ -182,11 +182,11 @@ public class CoreScriptRunner
 				
 				RuntimeControl control = new RuntimeControl();
 				if(this.isBigNumberSupport){
-					control.nf = new NumberFactory(true);
+					control.nf = NumberFactory.big;
 				}else{
-					control.nf = new NumberFactory(false);
+					control.nf = NumberFactory.general;
 				}
-				context.nf = control.nf;
+				
 				//设置全局变量
 				if (global != null)
 				{
@@ -1232,7 +1232,8 @@ public class CoreScriptRunner
 	public boolean isBigNumberSupport(){
 		return this.isBigNumberSupport;
 	}
-
+	
+	
 	public static void main(String[] args) throws Exception
 	{
 		CoreScriptRunner scriptRunner = new CoreScriptRunner();

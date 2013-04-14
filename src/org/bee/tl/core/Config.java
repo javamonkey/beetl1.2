@@ -64,6 +64,8 @@ public class Config
 	public static String MVC_STRICT = "MVC_STRICT";
 	public static String DEBUG = "DEBUG";
 	public static String COMPILE_CLASS_KEEP_SOURCE = "COMPILE_CLASS_KEEP_SOURCE";
+	public static String BIG_NUMBER_SUPPORT = "BIG_NUMBER_SUPPORT";
+	
 
 	public Config() throws IOException
 	{
@@ -169,6 +171,12 @@ public class Config
 		if (isBoolean(MVC_STRICT, false))
 		{
 			gt.enableStrict();
+		}
+		
+		if(isBoolean(BIG_NUMBER_SUPPORT,true)){
+			gt.setBigNumberSupport(true);
+		}else{
+			gt.setBigNumberSupport(false);
 		}
 
 		String hanlderClass = ps.getProperty(ERROR_HANDLER);

@@ -38,7 +38,6 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import org.bee.tl.core.BeeException;
-import org.bee.tl.core.BeeNumber;
 import org.bee.tl.core.Context;
 import org.bee.tl.core.CoreScriptRunner;
 import org.bee.tl.core.Format;
@@ -50,6 +49,7 @@ import org.bee.tl.core.VirtualAttributeEval;
 import org.bee.tl.core.exception.BeeRuntimeException;
 import org.bee.tl.core.exception.PreCompileException;
 import org.bee.tl.core.io.ByteWriter;
+import org.bee.tl.core.number.NumberFactory;
 
 public class CompiledClass
 {
@@ -60,6 +60,7 @@ public class CompiledClass
 	protected CoreScriptRunner scriptRunner;
 	protected boolean compileError = false;
 	public static int version = 127;
+	protected NumberFactory nf = null;
 
 	public Resource getResource()
 	{
@@ -151,11 +152,11 @@ public class CompiledClass
 		{
 			if (result instanceof BigDecimal)
 			{
-				return new BeeNumber((BigDecimal) result);
+				return nf.y((BigDecimal) result);
 			}
 			else
 			{
-				return new BeeNumber(result.toString(), (Number) result);
+				return nf.y((Number)result);
 			}
 		}
 		else
@@ -191,22 +192,9 @@ public class CompiledClass
 		}
 		else if (a instanceof Number && b instanceof Number)
 		{
-			if (a instanceof BeeNumber && b instanceof BeeNumber)
-			{
-				return ((BeeNumber) a).add((BeeNumber) b);
-			}
-			else if (a instanceof BeeNumber)
-			{
-				return ((BeeNumber) a).add(new BeeNumber(b.toString()));
-			}
-			else if (b instanceof BeeNumber)
-			{
-				return ((BeeNumber) b).add((new BeeNumber(a.toString())));
-			}
-			else
-			{
-				return (new BeeNumber(a.toString())).add(new BeeNumber(b.toString()));
-			}
+			
+			return nf.y((Number)a).add((Number)b);
+			
 		}
 		else
 		{
@@ -218,22 +206,7 @@ public class CompiledClass
 	{
 		if (a instanceof Number && b instanceof Number)
 		{
-			if (a instanceof BeeNumber && b instanceof BeeNumber)
-			{
-				return ((BeeNumber) a).min((BeeNumber) b);
-			}
-			else if (a instanceof BeeNumber)
-			{
-				return ((BeeNumber) a).min(new BeeNumber(b.toString()));
-			}
-			else if (b instanceof BeeNumber)
-			{
-				return ((BeeNumber) b).min((new BeeNumber(a.toString())));
-			}
-			else
-			{
-				return (new BeeNumber(a.toString())).min(new BeeNumber(b.toString()));
-			}
+			return nf.y((Number)a).min((Number)b);
 		}
 		else
 		{
@@ -245,22 +218,7 @@ public class CompiledClass
 	{
 		if (a instanceof Number && b instanceof Number)
 		{
-			if (a instanceof BeeNumber && b instanceof BeeNumber)
-			{
-				return ((BeeNumber) a).multiply((BeeNumber) b);
-			}
-			else if (a instanceof BeeNumber)
-			{
-				return ((BeeNumber) a).multiply(new BeeNumber(b.toString()));
-			}
-			else if (b instanceof BeeNumber)
-			{
-				return ((BeeNumber) b).multiply((new BeeNumber(a.toString())));
-			}
-			else
-			{
-				return (new BeeNumber(a.toString())).multiply(new BeeNumber(b.toString()));
-			}
+			return nf.y((Number)a).multiply((Number)b);
 		}
 		else
 		{
@@ -272,22 +230,7 @@ public class CompiledClass
 	{
 		if (a instanceof Number && b instanceof Number)
 		{
-			if (a instanceof BeeNumber && b instanceof BeeNumber)
-			{
-				return ((BeeNumber) a).divide((BeeNumber) b);
-			}
-			else if (a instanceof BeeNumber)
-			{
-				return ((BeeNumber) a).divide(new BeeNumber(b.toString()));
-			}
-			else if (b instanceof BeeNumber)
-			{
-				return ((BeeNumber) b).divide((new BeeNumber(a.toString())));
-			}
-			else
-			{
-				return (new BeeNumber(a.toString())).divide(new BeeNumber(b.toString()));
-			}
+			return nf.y((Number)a).divide((Number)b);
 		}
 		else
 		{
@@ -303,22 +246,7 @@ public class CompiledClass
 
 		if (a instanceof Number && b instanceof Number)
 		{
-			if (a instanceof BeeNumber && b instanceof BeeNumber)
-			{
-				return ((BeeNumber) a).compareTo((BeeNumber) b);
-			}
-			else if (a instanceof BeeNumber)
-			{
-				return ((BeeNumber) a).compareTo(new BeeNumber(b.toString()));
-			}
-			else if (b instanceof BeeNumber)
-			{
-				return -((BeeNumber) b).compareTo(new BeeNumber(a.toString()));
-			}
-			else
-			{
-				return (new BeeNumber(a.toString())).compareTo(new BeeNumber(b.toString()));
-			}
+			return nf.y((Number)a).compareTo((Number)b);
 		}
 		else
 		{

@@ -15,7 +15,7 @@ public class ExpComplexTestCase extends BasicTestCase {
 		Template t = this.gt.getFileTemplate("/exp/var_add_template.html");
 		t.set("j", 3);
 		String str = t.getTextAsString();
-		//for infer
+//		//for infer
 		t = this.gt.getFileTemplate("/exp/var_add_template.html");
 		t.set("j", 3);
 		str = t.getTextAsString();

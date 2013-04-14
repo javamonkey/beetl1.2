@@ -29,7 +29,6 @@ package org.bee.tl.ext;
 
 import java.text.DecimalFormat;
 
-import org.bee.tl.core.BeeNumber;
 import org.bee.tl.core.Format;
 
 /*格式化Number类型，pattern参考DecimalFormat,如
@@ -60,10 +59,10 @@ public class NumberFormat implements Format
 
 	public static void main(String[] args)
 	{
-		BeeNumber n = new BeeNumber("0.915456");
-		NumberFormat nf = new NumberFormat();
-		String str = nf.format(n, "#.##%");
-		System.out.println(str);
+//		BeeNumber n = new BeeNumber("0.915456");
+//		NumberFormat nf = new NumberFormat();
+//		String str = nf.format(n, "#.##%");
+//		System.out.println(str);
 	}
 
 }

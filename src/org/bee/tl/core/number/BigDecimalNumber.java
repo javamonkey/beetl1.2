@@ -57,7 +57,7 @@ public class BigDecimalNumber  extends GeneralNumber{
 		make();
 		if(n instanceof BigDecimalNumber){
 			BigDecimalNumber a1 = (BigDecimalNumber)n;
-			return new BigDecimalNumber(this.bigNum.add(a1.bigNum));
+			return new BigDecimalNumber(this.bigNum.add(a1.get()));
 		}else {
 			BigDecimal a1 = make(n);
 			return new BigDecimalNumber(this.bigNum.add(a1)) ;
@@ -65,57 +65,66 @@ public class BigDecimalNumber  extends GeneralNumber{
 		
 	}
 	public String toString() {
+		
 		if(this.bigNum==null){
-			return num.toString();
+			return this.num.toString();
 		}else{
-			//也许用format更好
-			String str = bigNum.toString();
-			int index = -1;
-			if ((index = str.indexOf('.')) != -1)
+			return trim(this.bigNum.toString());
+		}
+//		String s = this.bigNum==null?this.num.toString():this.bigNum.toString();	
+////		if(s.indexOf(".") > 0){
+////			s = s.replaceAll("0+?$", "");//去掉多余的0
+////			s = s.replaceAll("[.]$", "");//如最后一位是.则去掉
+////		}
+//		return s;
+	}
+	
+	
+	public static String trim(String str){
+		
+		int index = -1;
+		if ((index = str.indexOf('.')) != -1)
+		{
+			char[] array = str.toCharArray();
+			int i = str.length() - 1;
+			for (; i > index; i--)
 			{
-				char[] array = str.toCharArray();
-				int i = str.length() - 1;
-				for (; i > index; i--)
+				if (array[i] != '0')
 				{
-					if (array[i] != '0')
-					{
-						break;
-					}
+					break;
 				}
-				if (i == index)
-				{
-					return new String(array, 0, i);
-				}
-				else
-				{
-					return new String(array, 0, i + 1);
-				}
-
+			}
+			if (i == index)
+			{
+				return new String(array, 0, i);
 			}
 			else
 			{
-				return str;
+				return new String(array, 0, i + 1);
 			}
 
 		}
-		
+		else
+		{
+			return str;
+		}
 	}
 	
-	private BigDecimal get(){
+	public BigDecimal get(){
 		make();
 		return this.bigNum;
 	}
 
-	public boolean equal(Object o) {
+	public boolean equals(Object o) {
 		make();
 		if(o instanceof BigDecimalNumber){
 			BigDecimalNumber otherBigNumber = (BigDecimalNumber)o;
 			BigDecimal n1 = otherBigNumber.get();
-			return this.bigNum.equals(n1);
+			return this.bigNum.compareTo(n1)==0;
 			
 		}else if(o instanceof Number){
 			BigDecimal n1 = make((Number)o);
-			return this.bigNum.equals(n1);
+			return this.bigNum.compareTo(n1)==0;
 			
 		}else{
 			throw new RuntimeException("不是数字类型，不能比较");
@@ -156,10 +165,10 @@ public class BigDecimalNumber  extends GeneralNumber{
 		make();
 		if(n instanceof BigDecimalNumber){
 			BigDecimalNumber a1 = (BigDecimalNumber)n;
-			return new BigDecimalNumber(this.bigNum.min(a1.bigNum));
+			return new BigDecimalNumber(this.bigNum.subtract(a1.get()));
 		}else {
 			BigDecimal a1 = make(n);
-			return new BigDecimalNumber(this.bigNum.min(a1)) ;
+			return new BigDecimalNumber(this.bigNum.subtract(a1)) ;
 		}
 		
 	}
@@ -169,7 +178,7 @@ public class BigDecimalNumber  extends GeneralNumber{
 		make();
 		if(n instanceof BigDecimalNumber){
 			BigDecimalNumber a1 = (BigDecimalNumber)n;
-			return new BigDecimalNumber(this.bigNum.multiply(a1.bigNum));
+			return new BigDecimalNumber(this.bigNum.multiply(a1.get()));
 		}else {
 			BigDecimal a1 = make(n);
 			return new BigDecimalNumber(this.bigNum.multiply(a1)) ;
@@ -182,7 +191,7 @@ public class BigDecimalNumber  extends GeneralNumber{
 		make();
 		if(n instanceof BigDecimalNumber){
 			BigDecimalNumber a1 = (BigDecimalNumber)n;
-			return new BigDecimalNumber(this.bigNum.divide(a1.bigNum,scale, roundingMode));
+			return new BigDecimalNumber(this.bigNum.divide(a1.get(),scale, roundingMode));
 		}else {
 			BigDecimal a1 = make(n);
 			return new BigDecimalNumber(this.bigNum.divide(a1,scale, roundingMode)) ;

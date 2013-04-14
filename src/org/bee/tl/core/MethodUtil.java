@@ -141,7 +141,7 @@ public class MethodUtil
 						if (paras[j] == Object.class)
 						{
 
-							if (parameterType[j].equals(BeeNumber.class))
+							if (BeeNumber.class.isAssignableFrom(parameterType[j]))
 							{
 								convert[j] = 11;
 							}
@@ -158,7 +158,7 @@ public class MethodUtil
 							continue;
 						}
 
-						else if (paras[j].isPrimitive() && parameterType[j] == BeeNumber.class)
+						else if (paras[j].isPrimitive() &&  BeeNumber.class.isAssignableFrom(parameterType[j]))
 						{
 
 							if (paras[j] == int.class)
@@ -182,7 +182,7 @@ public class MethodUtil
 								convert[j] = 5;
 							}
 						}
-						else if (Number.class.isAssignableFrom(paras[j]) && parameterType[j] == BeeNumber.class)
+						else if (Number.class.isAssignableFrom(paras[j]) && BeeNumber.class.isAssignableFrom(parameterType[j]))
 						{
 							if (paras[j] == Integer.class)
 							{

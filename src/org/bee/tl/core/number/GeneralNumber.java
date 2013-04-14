@@ -1,6 +1,7 @@
 package org.bee.tl.core.number;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 import org.bee.tl.core.BeeNumber;
 
@@ -20,28 +21,60 @@ public class GeneralNumber extends BeeNumber {
 	}
 	
 	
-	private Number trim(double d,Number n1,Number n2){
-		if(n1 instanceof Double || n2 instanceof Double){
+
+	private Number trim(double d,Number a1,Number a2){
+		
+		Number n1 = null;
+		Number n2 = null;
+		if(a1 instanceof BeeNumber){
+			n1 = ((BeeNumber)a1).get();
+		}else{
+			n1 = a1;
+		}
+		if(a2 instanceof BeeNumber ){
+			n2 = ((BeeNumber)a2).get();
+		}else{
+			n2 = a2;
+		}
+		
+		
+		if(a1 instanceof BigDecimal|| a2 instanceof BigDecimal){
+			return  d;
+		} else 	if(n1 instanceof Double || n2 instanceof Double){
 			return d ;
 		}else if(n1 instanceof Float || n2 instanceof Float){
 			return (float) d;
 		}
 		else if(n1 instanceof Long || n2 instanceof Long){
-			return (long)d;
+			if(d!=(long)d){
+				return d;
+			}else{
+				return (long)d;
+			}
+			
 		}else if(n1 instanceof Integer || n2 instanceof Integer){
-			return (int)d;
+			if(d!=(int)d){
+				return d;
+			}else{
+				return (int)d;
+			}
 		}else{
-			return (short)d;
+			if(d!=(short)d){
+				return d;
+			}else{
+				return (short)d;
+			}
 		}
 	}
 	
 
 
 	public String toString() {
-		return num.toString();
+		return this.num.toString();
+//		return this.numToString(this.num);
 	}
 
-	public boolean equal(Object o) {
+	public boolean equals(Object o) {
 		double d = 0;
 		if (o instanceof Number) {
 			d = ((Number) o).doubleValue();
@@ -53,10 +86,16 @@ public class GeneralNumber extends BeeNumber {
 		
 	}
 	
+	
+	
 	public static void main(String[] args){
-		BeeNumber gn = new GeneralNumber(12);
-		BeeNumber  result = gn.add(35.0);
-		System.out.println(result);
+		DecimalFormat df = new DecimalFormat("#0.0000");
+		String s = df.format(0.509001);
+		if(s.indexOf(".") > 0){
+			s = s.replaceAll("0+?$", "");//去掉多余的0
+			s = s.replaceAll("[.]$", "");//如最后一位是.则去掉
+		}
+		System.out.println(s);
 		
 		
 	}
@@ -66,7 +105,7 @@ public class GeneralNumber extends BeeNumber {
 		if( o instanceof Number){
 			Number n = (Number)o;
 			double d1 = this.doubleValue();
-			double d2 = this.doubleValue();
+			double d2 = n.doubleValue();
 			if(d1>d2) return 1 ;
 			else if(d1==d2) return 0;
 			return -1;
@@ -138,4 +177,10 @@ public class GeneralNumber extends BeeNumber {
 	public double doubleValue() {
 		return num.doubleValue();
 	}
+	@Override
+	public Number get() {
+		return this.num;
+	}
+	
+	
 }

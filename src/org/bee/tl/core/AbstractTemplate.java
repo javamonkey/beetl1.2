@@ -37,6 +37,7 @@ import java.io.Writer;
 import org.bee.tl.core.io.ByteWriter;
 import org.bee.tl.core.io.ByteWriter_Byte;
 import org.bee.tl.core.io.ByteWriter_Char;
+import org.bee.tl.core.number.NumberFactory;
 
 public abstract class AbstractTemplate implements Template
 {
@@ -102,13 +103,24 @@ public abstract class AbstractTemplate implements Template
 
 	public void set(String name, Object o)
 	{
-
-		context.set(name, o);
+		
+	
+		if(o instanceof Number){
+			if(this.scriptRunner.isBigNumberSupport()){
+				context.set(name, NumberFactory.big.y((Number)o));
+			}else{
+				context.set(name,  NumberFactory.general.y((Number)o));
+			}
+		}else{
+			context.set(name, o);
+		}
+		
 
 	}
 
 	public void setRawValue(String name, Object o)
 	{
+		//o should be list
 		context.setRawValue(name, o);
 
 	}

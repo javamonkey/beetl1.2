@@ -47,25 +47,11 @@ public class WhileTestCase extends BasicTestCase
 		Assert.assertEquals(this.getFileContent("/control/while_expected.html"), str);
 
 		//第二次预编译
-		//		t = this.gt.getFileTemplate("/control/wile_template.html");
-		//		str = t.getTextAsString();
-		//		Assert.assertEquals(this.getFileContent("/control/while_expected.html"), str);
+				t = this.gt.getFileTemplate("/control/while_template.html");
+				str = t.getTextAsString();
+				Assert.assertEquals(this.getFileContent("/control/while_expected.html"), str);
 
 	}
 
-	public void testSimple1() throws IOException, BeeException
-	{
-
-		Template t = this.gt.getFileTemplate("/control/while_break_template.html");
-		t.set("list", list);
-		String str = t.getTextAsString();
-
-		//第二次预编译
-		t = this.gt.getFileTemplate("/control/while_break_template.html");
-		t.set("list", list);
-		str = t.getTextAsString();
-
-		Assert.assertEquals(this.getFileContent("/control/while_break_expected.html"), str);
-	}
-
+	
 }
