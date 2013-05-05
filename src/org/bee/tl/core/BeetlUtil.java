@@ -10,6 +10,32 @@ import java.util.List;
 
 public class BeetlUtil
 {
+	public static  boolean isObjectSame(Object v1,Object v2){
+		if(v1==null&&v2==null){
+			return true ;
+		}
+		if (v1 != null || v2 != null)
+		{
+			if (v1 != null)
+			{
+				return v1.equals(v2);
+			}
+			else
+			{
+				return v2.equals(v1);
+			}
+
+		}
+		else if (v1 == null)
+		{
+			return v2 == null;
+		}
+		else
+		{
+			return v1 == null;
+		}
+	}
+
 	/**
 	 * 获得模板文件编译成class的包名和类名。如果文件名存在".",则用"_"代替
 	 * 如果存在空格，-号，则用"__"代替。

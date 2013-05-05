@@ -38,6 +38,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import org.bee.tl.core.BeeException;
+import org.bee.tl.core.BeetlUtil;
 import org.bee.tl.core.Context;
 import org.bee.tl.core.CoreScriptRunner;
 import org.bee.tl.core.Format;
@@ -59,7 +60,7 @@ public class CompiledClass
 	protected String CR = "\n";
 	protected CoreScriptRunner scriptRunner;
 	protected boolean compileError = false;
-	public static int version = 128;
+	public static int version = 129;
 	protected NumberFactory nf = null;
 
 	public Resource getResource()
@@ -291,29 +292,7 @@ public class CompiledClass
 	}
 	
 	public boolean isObjectSame(Object v1,Object v2){
-		if(v1==null&&v2==null){
-			return true ;
-		}
-		if (v1 != null || v2 != null)
-		{
-			if (v1 != null)
-			{
-				return v1.equals(v2);
-			}
-			else
-			{
-				return v2.equals(v1);
-			}
-
-		}
-		else if (v1 == null)
-		{
-			return v2 == null;
-		}
-		else
-		{
-			return v1 == null;
-		}
+		return BeetlUtil.isObjectSame(v1, v2);
 	}
 
 	// public void checkFunction(Map<String,Class> map){

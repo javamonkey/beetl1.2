@@ -1,5 +1,5 @@
 /*
- [The "BSD license"]
+bee [The "BSD license"]
  Copyright (c) 2011-2013 Joel Li (李家智)
  All rights reserved.
 
@@ -46,7 +46,7 @@ public class AntlrCodeGen
 	public static void main(String[] args) throws Exception
 	{
 
-		String root = "E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\";
+		String root = "E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\";
 		//		{
 		//			// String tree = root+"CMinusWalker.g";
 		//			// String parser = root+"CMinus.g";

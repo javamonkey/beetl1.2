@@ -38,6 +38,7 @@ tokens {
   G_SWITCH;
   G_CASE;
   G_DEFAULT;
+  G_CASE_EXPLIST;
   JSON;
   JSONARRAY;
   JSONMAP;
@@ -149,6 +150,7 @@ statement
 	|	breakStatment	';'!
 	|	returnStatment	';'!
 	|	switchStatment
+	|	g_switchStatment
 	|	nativeMethod[true] ';'!	
 	|	directive
 	;
@@ -159,7 +161,8 @@ g_switchStatment
 	 ->^(G_SWITCH[$a] $base? g_caseStatment* g_defaultStatment? ) ;
 
 g_caseStatment 
-	:	a='case' exp (',' exp)* ':' statmentBlock ->^(G_CASE[$a] exp+ statmentBlock);
+	:	a='case' exp (',' exp)* ':' statmentBlock ->^(G_CASE[$a] ^(G_CASE_EXPLIST exp+) statmentBlock);
+
 g_defaultStatment
 	:	a='default' ':' statmentBlock -> ^(G_DEFAULT[$a] statmentBlock);	
 
