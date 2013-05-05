@@ -59,7 +59,7 @@ public class CompiledClass
 	protected String CR = "\n";
 	protected CoreScriptRunner scriptRunner;
 	protected boolean compileError = false;
-	public static int version = 127;
+	public static int version = 128;
 	protected NumberFactory nf = null;
 
 	public Resource getResource()
@@ -134,6 +134,17 @@ public class CompiledClass
 		return Arrays.asList(paras);
 	}
 
+	public Object defaultFormat(Object input,String pattern){
+		if(input==null){
+			return "";
+		}
+		Format format = scriptRunner.getDefaultFormat(input.getClass());
+		if (format == null)
+		{
+			throw new PreCompileException("can not find default format for class " + input.getClass());
+		}
+		return format.format(input, pattern);
+	}
 	public Object format(String funName, Object input, String pattern)
 	{
 		Format format = scriptRunner.getFormat(funName);
@@ -273,6 +284,36 @@ public class CompiledClass
 			return c1.compareTo(c2);
 		}
 
+	}
+	
+	public boolean isObjectNotSame(Object v1,Object v2){
+		return !this.isObjectSame(v1, v2);
+	}
+	
+	public boolean isObjectSame(Object v1,Object v2){
+		if(v1==null&&v2==null){
+			return true ;
+		}
+		if (v1 != null || v2 != null)
+		{
+			if (v1 != null)
+			{
+				return v1.equals(v2);
+			}
+			else
+			{
+				return v2.equals(v1);
+			}
+
+		}
+		else if (v1 == null)
+		{
+			return v2 == null;
+		}
+		else
+		{
+			return v1 == null;
+		}
 	}
 
 	// public void checkFunction(Map<String,Class> map){

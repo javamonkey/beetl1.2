@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:50:56 e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g 2013-03-16 10:30:23
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g 2013-04-17 10:24:17
 
 package org.bee.tl.core;
 import org.bee.tl.core.exception.*;
@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.HashMap;
 public class BeeLexer extends Lexer {
     public static final int EOF=-1;
-    public static final int T__94=94;
     public static final int T__95=95;
     public static final int T__96=96;
     public static final int T__97=97;
@@ -39,6 +38,7 @@ public class BeeLexer extends Lexer {
     public static final int T__117=117;
     public static final int T__118=118;
     public static final int T__119=119;
+    public static final int T__120=120;
     public static final int VAR_DEFINE=4;
     public static final int VAR_REFER=5;
     public static final int ASSIGNMENT=6;
@@ -47,88 +47,89 @@ public class BeeLexer extends Lexer {
     public static final int FOR=9;
     public static final int VAR_TEXT=10;
     public static final int FM=11;
-    public static final int SLIST=12;
-    public static final int IF=13;
-    public static final int EXP=14;
-    public static final int COND_EXP=15;
-    public static final int FUNCTION=16;
-    public static final int TEXT_PROCESS=17;
-    public static final int ATTR_NAME=18;
-    public static final int VIRTUAL_ATTR_NAME=19;
-    public static final int MAP_LIST_INDEX=20;
-    public static final int BREAK=21;
-    public static final int CONTINUE=22;
-    public static final int RETURN=23;
-    public static final int NOT=24;
-    public static final int SWITCH=25;
-    public static final int CASE=26;
-    public static final int DEFAULT=27;
-    public static final int JSON=28;
-    public static final int JSONARRAY=29;
-    public static final int JSONMAP=30;
-    public static final int JSONKEYVALUE=31;
-    public static final int CLASS_STATIC_FUNCTION=32;
-    public static final int CLASS_FUNCTION=33;
-    public static final int CLASS_METHOD=34;
-    public static final int VARIABLE_VAR_REFER=35;
-    public static final int TEXT_VAR_REFER=36;
-    public static final int MISSING_VARIABLE_VAR_REFER=37;
-    public static final int FUNCTION_FULL_NAME=38;
-    public static final int SAFE_OUTPUT=39;
-    public static final int DIRECT_CALL=40;
-    public static final int NEGATOM=41;
-    public static final int WHILE=42;
-    public static final int DIRECTIVE=43;
-    public static final int Identifier=44;
-    public static final int StringLiteral=45;
-    public static final int LEFT_BRACE=46;
-    public static final int RIGHT_BRACE=47;
-    public static final int LEFT_TEXT_TOKEN=48;
-    public static final int RIGHT_TOKEN=49;
-    public static final int LEFT_TOKEN=50;
-    public static final int VAR=51;
-    public static final int OR=52;
-    public static final int AND=53;
-    public static final int EQUAL=54;
-    public static final int NOT_EQUAL=55;
-    public static final int LARGE=56;
-    public static final int LARGE_EQUAL=57;
-    public static final int LESS=58;
-    public static final int LESS_EQUAL=59;
-    public static final int ADD=60;
-    public static final int MINUS=61;
-    public static final int MULTIP=62;
-    public static final int DIV=63;
-    public static final int MOD=64;
-    public static final int BOOLEAN=65;
-    public static final int INT=66;
-    public static final int NULL=67;
-    public static final int DOUBLE=68;
-    public static final int ID_START=69;
-    public static final int Comment=70;
-    public static final int LineComment=71;
-    public static final int DoubleStringCharacter=72;
-    public static final int SingleStringCharacter=73;
-    public static final int EscapeSequence=74;
-    public static final int CharacterEscapeSequence=75;
-    public static final int HexEscapeSequence=76;
-    public static final int UnicodeEscapeSequence=77;
-    public static final int SingleEscapeCharacter=78;
-    public static final int NonEscapeCharacter=79;
-    public static final int EscapeCharacter=80;
-    public static final int DecimalDigit=81;
-    public static final int HexDigit=82;
-    public static final int DecimalLiteral=83;
-    public static final int HexIntegerLiteral=84;
-    public static final int NumericLiteral=85;
-    public static final int ExponentPart=86;
-    public static final int IdentifierStart=87;
-    public static final int IdentifierPart=88;
-    public static final int UnicodeLetter=89;
-    public static final int UnicodeDigit=90;
-    public static final int UnicodeConnectorPunctuation=91;
-    public static final int UnicodeCombiningMark=92;
-    public static final int WhiteSpace=93;
+    public static final int DEFAULT_FM=12;
+    public static final int SLIST=13;
+    public static final int IF=14;
+    public static final int EXP=15;
+    public static final int COND_EXP=16;
+    public static final int FUNCTION=17;
+    public static final int TEXT_PROCESS=18;
+    public static final int ATTR_NAME=19;
+    public static final int VIRTUAL_ATTR_NAME=20;
+    public static final int MAP_LIST_INDEX=21;
+    public static final int BREAK=22;
+    public static final int CONTINUE=23;
+    public static final int RETURN=24;
+    public static final int NOT=25;
+    public static final int SWITCH=26;
+    public static final int CASE=27;
+    public static final int DEFAULT=28;
+    public static final int JSON=29;
+    public static final int JSONARRAY=30;
+    public static final int JSONMAP=31;
+    public static final int JSONKEYVALUE=32;
+    public static final int CLASS_STATIC_FUNCTION=33;
+    public static final int CLASS_FUNCTION=34;
+    public static final int CLASS_METHOD=35;
+    public static final int VARIABLE_VAR_REFER=36;
+    public static final int TEXT_VAR_REFER=37;
+    public static final int MISSING_VARIABLE_VAR_REFER=38;
+    public static final int FUNCTION_FULL_NAME=39;
+    public static final int SAFE_OUTPUT=40;
+    public static final int DIRECT_CALL=41;
+    public static final int NEGATOM=42;
+    public static final int WHILE=43;
+    public static final int DIRECTIVE=44;
+    public static final int Identifier=45;
+    public static final int StringLiteral=46;
+    public static final int LEFT_BRACE=47;
+    public static final int RIGHT_BRACE=48;
+    public static final int LEFT_TEXT_TOKEN=49;
+    public static final int RIGHT_TOKEN=50;
+    public static final int LEFT_TOKEN=51;
+    public static final int VAR=52;
+    public static final int OR=53;
+    public static final int AND=54;
+    public static final int EQUAL=55;
+    public static final int NOT_EQUAL=56;
+    public static final int LARGE=57;
+    public static final int LARGE_EQUAL=58;
+    public static final int LESS=59;
+    public static final int LESS_EQUAL=60;
+    public static final int ADD=61;
+    public static final int MINUS=62;
+    public static final int MULTIP=63;
+    public static final int DIV=64;
+    public static final int MOD=65;
+    public static final int BOOLEAN=66;
+    public static final int INT=67;
+    public static final int NULL=68;
+    public static final int DOUBLE=69;
+    public static final int ID_START=70;
+    public static final int Comment=71;
+    public static final int LineComment=72;
+    public static final int DoubleStringCharacter=73;
+    public static final int SingleStringCharacter=74;
+    public static final int EscapeSequence=75;
+    public static final int CharacterEscapeSequence=76;
+    public static final int HexEscapeSequence=77;
+    public static final int UnicodeEscapeSequence=78;
+    public static final int SingleEscapeCharacter=79;
+    public static final int NonEscapeCharacter=80;
+    public static final int EscapeCharacter=81;
+    public static final int DecimalDigit=82;
+    public static final int HexDigit=83;
+    public static final int DecimalLiteral=84;
+    public static final int HexIntegerLiteral=85;
+    public static final int NumericLiteral=86;
+    public static final int ExponentPart=87;
+    public static final int IdentifierStart=88;
+    public static final int IdentifierPart=89;
+    public static final int UnicodeLetter=90;
+    public static final int UnicodeDigit=91;
+    public static final int UnicodeConnectorPunctuation=92;
+    public static final int UnicodeCombiningMark=93;
+    public static final int WhiteSpace=94;
 
     public void reportError(RecognitionException e){
         throw new WrapperAntlrLexerException(e);
@@ -147,38 +148,17 @@ public class BeeLexer extends Lexer {
         super(input,state);
 
     }
-    public String getGrammarFileName() { return "e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g"; }
-
-    // $ANTLR start "T__94"
-    public final void mT__94() throws RecognitionException {
-        try {
-            int _type = T__94;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:15:7: ( ';' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:15:9: ';'
-            {
-            match(';'); if (state.failed) return ;
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "T__94"
+    public String getGrammarFileName() { return "E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g"; }
 
     // $ANTLR start "T__95"
     public final void mT__95() throws RecognitionException {
         try {
             int _type = T__95;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:16:7: ( 'DIRECTIVE' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:16:9: 'DIRECTIVE'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:15:7: ( ';' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:15:9: ';'
             {
-            match("DIRECTIVE"); if (state.failed) return ;
-
+            match(';'); if (state.failed) return ;
 
             }
 
@@ -195,10 +175,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__96;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:17:7: ( 'return' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:17:9: 'return'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:16:7: ( 'DIRECTIVE' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:16:9: 'DIRECTIVE'
             {
-            match("return"); if (state.failed) return ;
+            match("DIRECTIVE"); if (state.failed) return ;
 
 
             }
@@ -216,10 +196,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__97;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:18:7: ( 'continue' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:18:9: 'continue'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:17:7: ( 'return' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:17:9: 'return'
             {
-            match("continue"); if (state.failed) return ;
+            match("return"); if (state.failed) return ;
 
 
             }
@@ -237,10 +217,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__98;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:19:7: ( 'break' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:19:9: 'break'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:18:7: ( 'continue' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:18:9: 'continue'
             {
-            match("break"); if (state.failed) return ;
+            match("continue"); if (state.failed) return ;
 
 
             }
@@ -258,10 +238,11 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__99;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:20:7: ( '(' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:20:9: '('
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:19:7: ( 'break' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:19:9: 'break'
             {
-            match('('); if (state.failed) return ;
+            match("break"); if (state.failed) return ;
+
 
             }
 
@@ -278,10 +259,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__100;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:21:8: ( ',' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:21:10: ','
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:20:8: ( '(' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:20:10: '('
             {
-            match(','); if (state.failed) return ;
+            match('('); if (state.failed) return ;
 
             }
 
@@ -298,10 +279,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__101;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:22:8: ( ')' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:22:10: ')'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:21:8: ( ',' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:21:10: ','
             {
-            match(')'); if (state.failed) return ;
+            match(','); if (state.failed) return ;
 
             }
 
@@ -318,11 +299,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__102;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:23:8: ( 'for' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:23:10: 'for'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:22:8: ( ')' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:22:10: ')'
             {
-            match("for"); if (state.failed) return ;
-
+            match(')'); if (state.failed) return ;
 
             }
 
@@ -339,10 +319,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__103;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:24:8: ( 'in ' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:24:10: 'in '
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:23:8: ( 'for' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:23:10: 'for'
             {
-            match("in "); if (state.failed) return ;
+            match("for"); if (state.failed) return ;
 
 
             }
@@ -360,10 +340,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__104;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:25:8: ( 'elsefor' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:25:10: 'elsefor'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:24:8: ( 'in ' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:24:10: 'in '
             {
-            match("elsefor"); if (state.failed) return ;
+            match("in "); if (state.failed) return ;
 
 
             }
@@ -381,10 +361,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__105;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:26:8: ( 'while' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:26:10: 'while'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:25:8: ( 'elsefor' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:25:10: 'elsefor'
             {
-            match("while"); if (state.failed) return ;
+            match("elsefor"); if (state.failed) return ;
 
 
             }
@@ -402,10 +382,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__106;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:27:8: ( 'if' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:27:10: 'if'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:26:8: ( 'while' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:26:10: 'while'
             {
-            match("if"); if (state.failed) return ;
+            match("while"); if (state.failed) return ;
 
 
             }
@@ -423,10 +403,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__107;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:28:8: ( 'else' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:28:10: 'else'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:27:8: ( 'if' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:27:10: 'if'
             {
-            match("else"); if (state.failed) return ;
+            match("if"); if (state.failed) return ;
 
 
             }
@@ -444,10 +424,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__108;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:29:8: ( '!(' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:29:10: '!('
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:28:8: ( 'else' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:28:10: 'else'
             {
-            match("!("); if (state.failed) return ;
+            match("else"); if (state.failed) return ;
 
 
             }
@@ -465,10 +445,11 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__109;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:30:8: ( '=' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:30:10: '='
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:29:8: ( '!(' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:29:10: '!('
             {
-            match('='); if (state.failed) return ;
+            match("!("); if (state.failed) return ;
+
 
             }
 
@@ -485,10 +466,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__110;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:31:8: ( '!' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:31:10: '!'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:30:8: ( '=' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:30:10: '='
             {
-            match('!'); if (state.failed) return ;
+            match('='); if (state.failed) return ;
 
             }
 
@@ -505,10 +486,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__111;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:32:8: ( '.' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:32:10: '.'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:31:8: ( '!' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:31:10: '!'
             {
-            match('.'); if (state.failed) return ;
+            match('!'); if (state.failed) return ;
 
             }
 
@@ -525,11 +506,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__112;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:33:8: ( '.~' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:33:10: '.~'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:32:8: ( '.' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:32:10: '.'
             {
-            match(".~"); if (state.failed) return ;
-
+            match('.'); if (state.failed) return ;
 
             }
 
@@ -546,10 +526,11 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__113;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:34:8: ( '[' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:34:10: '['
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:33:8: ( '.~' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:33:10: '.~'
             {
-            match('['); if (state.failed) return ;
+            match(".~"); if (state.failed) return ;
+
 
             }
 
@@ -566,10 +547,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__114;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:35:8: ( ']' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:35:10: ']'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:34:8: ( '[' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:34:10: '['
             {
-            match(']'); if (state.failed) return ;
+            match('['); if (state.failed) return ;
 
             }
 
@@ -586,10 +567,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__115;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:36:8: ( '@' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:36:10: '@'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:35:8: ( ']' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:35:10: ']'
             {
-            match('@'); if (state.failed) return ;
+            match(']'); if (state.failed) return ;
 
             }
 
@@ -606,11 +587,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__116;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:37:8: ( 'switch' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:37:10: 'switch'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:36:8: ( '@' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:36:10: '@'
             {
-            match("switch"); if (state.failed) return ;
-
+            match('@'); if (state.failed) return ;
 
             }
 
@@ -627,10 +607,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__117;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:38:8: ( 'case' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:38:10: 'case'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:37:8: ( 'switch' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:37:10: 'switch'
             {
-            match("case"); if (state.failed) return ;
+            match("switch"); if (state.failed) return ;
 
 
             }
@@ -648,10 +628,11 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__118;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:39:8: ( ':' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:39:10: ':'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:38:8: ( 'case' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:38:10: 'case'
             {
-            match(':'); if (state.failed) return ;
+            match("case"); if (state.failed) return ;
+
 
             }
 
@@ -668,8 +649,28 @@ public class BeeLexer extends Lexer {
         try {
             int _type = T__119;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:40:8: ( 'default' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:40:10: 'default'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:39:8: ( ':' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:39:10: ':'
+            {
+            match(':'); if (state.failed) return ;
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__119"
+
+    // $ANTLR start "T__120"
+    public final void mT__120() throws RecognitionException {
+        try {
+            int _type = T__120;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:40:8: ( 'default' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:40:10: 'default'
             {
             match("default"); if (state.failed) return ;
 
@@ -682,14 +683,14 @@ public class BeeLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "T__119"
+    // $ANTLR end "T__120"
 
     // $ANTLR start "BOOLEAN"
     public final void mBOOLEAN() throws RecognitionException {
         try {
             int _type = BOOLEAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:299:9: ( 'true' | 'false' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:306:9: ( 'true' | 'false' )
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -708,7 +709,7 @@ public class BeeLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:299:11: 'true'
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:306:11: 'true'
                     {
                     match("true"); if (state.failed) return ;
 
@@ -716,7 +717,7 @@ public class BeeLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:299:18: 'false'
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:306:18: 'false'
                     {
                     match("false"); if (state.failed) return ;
 
@@ -738,8 +739,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = VAR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:300:5: ( 'var' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:300:7: 'var'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:307:5: ( 'var' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:307:7: 'var'
             {
             match("var"); if (state.failed) return ;
 
@@ -759,10 +760,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:301:5: ( ( '0' .. '9' )+ )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:301:8: ( '0' .. '9' )+
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:308:5: ( ( '0' .. '9' )+ )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:308:8: ( '0' .. '9' )+
             {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:301:8: ( '0' .. '9' )+
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:308:8: ( '0' .. '9' )+
             int cnt2=0;
             loop2:
             do {
@@ -776,7 +777,7 @@ public class BeeLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:301:8: '0' .. '9'
+            	    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:308:8: '0' .. '9'
             	    {
             	    matchRange('0','9'); if (state.failed) return ;
 
@@ -809,10 +810,10 @@ public class BeeLexer extends Lexer {
         try {
             int _type = DOUBLE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:302:8: ( ( '0' .. '9' )+ '.' ( '0' .. '9' )+ )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:302:10: ( '0' .. '9' )+ '.' ( '0' .. '9' )+
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:309:8: ( ( '0' .. '9' )+ '.' ( '0' .. '9' )+ )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:309:10: ( '0' .. '9' )+ '.' ( '0' .. '9' )+
             {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:302:10: ( '0' .. '9' )+
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:309:10: ( '0' .. '9' )+
             int cnt3=0;
             loop3:
             do {
@@ -826,7 +827,7 @@ public class BeeLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:302:10: '0' .. '9'
+            	    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:309:10: '0' .. '9'
             	    {
             	    matchRange('0','9'); if (state.failed) return ;
 
@@ -844,7 +845,7 @@ public class BeeLexer extends Lexer {
             } while (true);
 
             match('.'); if (state.failed) return ;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:302:24: ( '0' .. '9' )+
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:309:24: ( '0' .. '9' )+
             int cnt4=0;
             loop4:
             do {
@@ -858,7 +859,7 @@ public class BeeLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:302:24: '0' .. '9'
+            	    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:309:24: '0' .. '9'
             	    {
             	    matchRange('0','9'); if (state.failed) return ;
 
@@ -891,8 +892,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = NULL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:303:5: ( 'null' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:303:7: 'null'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:310:5: ( 'null' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:310:7: 'null'
             {
             match("null"); if (state.failed) return ;
 
@@ -910,10 +911,10 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "ID_START"
     public final void mID_START() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:306:18: ( ( 'a' .. 'z' | 'A' .. 'Z' )+ )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:306:20: ( 'a' .. 'z' | 'A' .. 'Z' )+
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:313:18: ( ( 'a' .. 'z' | 'A' .. 'Z' )+ )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:313:20: ( 'a' .. 'z' | 'A' .. 'Z' )+
             {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:306:20: ( 'a' .. 'z' | 'A' .. 'Z' )+
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:313:20: ( 'a' .. 'z' | 'A' .. 'Z' )+
             int cnt5=0;
             loop5:
             do {
@@ -927,7 +928,7 @@ public class BeeLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:
+            	    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:
             	    {
             	    if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
@@ -967,8 +968,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = ADD;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:307:5: ( '+' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:307:7: '+'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:314:5: ( '+' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:314:7: '+'
             {
             match('+'); if (state.failed) return ;
 
@@ -987,8 +988,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = MINUS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:308:7: ( '-' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:308:9: '-'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:315:7: ( '-' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:315:9: '-'
             {
             match('-'); if (state.failed) return ;
 
@@ -1007,8 +1008,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = MULTIP;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:309:8: ( '*' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:309:10: '*'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:316:8: ( '*' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:316:10: '*'
             {
             match('*'); if (state.failed) return ;
 
@@ -1027,8 +1028,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = DIV;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:310:5: ( '/' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:310:7: '/'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:317:5: ( '/' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:317:7: '/'
             {
             match('/'); if (state.failed) return ;
 
@@ -1047,8 +1048,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = MOD;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:311:5: ( '%' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:311:7: '%'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:318:5: ( '%' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:318:7: '%'
             {
             match('%'); if (state.failed) return ;
 
@@ -1067,8 +1068,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = EQUAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:312:7: ( '==' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:312:9: '=='
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:319:7: ( '==' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:319:9: '=='
             {
             match("=="); if (state.failed) return ;
 
@@ -1088,8 +1089,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = NOT_EQUAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:314:2: ( '!=' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:314:4: '!='
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:321:2: ( '!=' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:321:4: '!='
             {
             match("!="); if (state.failed) return ;
 
@@ -1109,8 +1110,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = LARGE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:315:7: ( '>' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:315:9: '>'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:322:7: ( '>' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:322:9: '>'
             {
             match('>'); if (state.failed) return ;
 
@@ -1129,8 +1130,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = LARGE_EQUAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:316:13: ( '>=' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:316:14: '>='
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:323:13: ( '>=' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:323:14: '>='
             {
             match(">="); if (state.failed) return ;
 
@@ -1150,8 +1151,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = LESS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:317:6: ( '<' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:317:8: '<'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:324:6: ( '<' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:324:8: '<'
             {
             match('<'); if (state.failed) return ;
 
@@ -1170,8 +1171,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = LESS_EQUAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:318:12: ( '<=' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:318:13: '<='
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:325:12: ( '<=' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:325:13: '<='
             {
             match("<="); if (state.failed) return ;
 
@@ -1191,8 +1192,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = OR;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:319:4: ( '||' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:319:6: '||'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:326:4: ( '||' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:326:6: '||'
             {
             match("||"); if (state.failed) return ;
 
@@ -1212,8 +1213,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = AND;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:320:5: ( '&&' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:320:7: '&&'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:327:5: ( '&&' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:327:7: '&&'
             {
             match("&&"); if (state.failed) return ;
 
@@ -1233,8 +1234,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = LEFT_TOKEN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:323:2: ( '<<' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:323:4: '<<'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:330:2: ( '<<' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:330:4: '<<'
             {
             match("<<"); if (state.failed) return ;
 
@@ -1254,8 +1255,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = RIGHT_TOKEN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:325:2: ( '>>' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:325:4: '>>'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:332:2: ( '>>' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:332:4: '>>'
             {
             match(">>"); if (state.failed) return ;
 
@@ -1275,8 +1276,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = LEFT_TEXT_TOKEN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:327:2: ( '<$' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:327:4: '<$'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:334:2: ( '<$' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:334:4: '<$'
             {
             match("<$"); if (state.failed) return ;
 
@@ -1296,8 +1297,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = LEFT_BRACE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:329:2: ( '{' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:329:4: '{'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:336:2: ( '{' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:336:4: '{'
             {
             match('{'); if (state.failed) return ;
 
@@ -1316,8 +1317,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = RIGHT_BRACE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:331:2: ( '}' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:331:4: '}'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:338:2: ( '}' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:338:4: '}'
             {
             match('}'); if (state.failed) return ;
 
@@ -1336,12 +1337,12 @@ public class BeeLexer extends Lexer {
         try {
             int _type = Comment;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:334:2: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:334:4: '/*' ( options {greedy=false; } : . )* '*/'
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:341:2: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:341:4: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); if (state.failed) return ;
 
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:334:9: ( options {greedy=false; } : . )*
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:341:9: ( options {greedy=false; } : . )*
             loop6:
             do {
                 int alt6=2;
@@ -1366,7 +1367,7 @@ public class BeeLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:334:36: .
+            	    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:341:36: .
             	    {
             	    matchAny(); if (state.failed) return ;
 
@@ -1399,12 +1400,12 @@ public class BeeLexer extends Lexer {
         try {
             int _type = LineComment;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:338:2: ( '//' (~ ( '\\n' | '\\r' | '\\u2028' | '\\u2029' ) )* )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:338:4: '//' (~ ( '\\n' | '\\r' | '\\u2028' | '\\u2029' ) )*
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:345:2: ( '//' (~ ( '\\n' | '\\r' | '\\u2028' | '\\u2029' ) )* )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:345:4: '//' (~ ( '\\n' | '\\r' | '\\u2028' | '\\u2029' ) )*
             {
             match("//"); if (state.failed) return ;
 
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:338:9: (~ ( '\\n' | '\\r' | '\\u2028' | '\\u2029' ) )*
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:345:9: (~ ( '\\n' | '\\r' | '\\u2028' | '\\u2029' ) )*
             loop7:
             do {
                 int alt7=2;
@@ -1417,7 +1418,7 @@ public class BeeLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:338:9: ~ ( '\\n' | '\\r' | '\\u2028' | '\\u2029' )
+            	    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:345:9: ~ ( '\\n' | '\\r' | '\\u2028' | '\\u2029' )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\u2027')||(input.LA(1)>='\u202A' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1457,7 +1458,7 @@ public class BeeLexer extends Lexer {
         try {
             int _type = StringLiteral;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:342:2: ( '\"' ( DoubleStringCharacter )* '\"' | '\\'' ( SingleStringCharacter )* '\\'' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:349:2: ( '\"' ( DoubleStringCharacter )* '\"' | '\\'' ( SingleStringCharacter )* '\\'' )
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -1476,10 +1477,10 @@ public class BeeLexer extends Lexer {
             }
             switch (alt10) {
                 case 1 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:342:4: '\"' ( DoubleStringCharacter )* '\"'
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:349:4: '\"' ( DoubleStringCharacter )* '\"'
                     {
                     match('\"'); if (state.failed) return ;
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:342:8: ( DoubleStringCharacter )*
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:349:8: ( DoubleStringCharacter )*
                     loop8:
                     do {
                         int alt8=2;
@@ -1492,7 +1493,7 @@ public class BeeLexer extends Lexer {
 
                         switch (alt8) {
                     	case 1 :
-                    	    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:342:8: DoubleStringCharacter
+                    	    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:349:8: DoubleStringCharacter
                     	    {
                     	    mDoubleStringCharacter(); if (state.failed) return ;
 
@@ -1509,10 +1510,10 @@ public class BeeLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:343:4: '\\'' ( SingleStringCharacter )* '\\''
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:350:4: '\\'' ( SingleStringCharacter )* '\\''
                     {
                     match('\''); if (state.failed) return ;
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:343:9: ( SingleStringCharacter )*
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:350:9: ( SingleStringCharacter )*
                     loop9:
                     do {
                         int alt9=2;
@@ -1525,7 +1526,7 @@ public class BeeLexer extends Lexer {
 
                         switch (alt9) {
                     	case 1 :
-                    	    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:343:9: SingleStringCharacter
+                    	    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:350:9: SingleStringCharacter
                     	    {
                     	    mSingleStringCharacter(); if (state.failed) return ;
 
@@ -1554,7 +1555,7 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "DoubleStringCharacter"
     public final void mDoubleStringCharacter() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:347:2: (~ ( '\"' | '\\\\' | '\\n' ) | '\\\\' EscapeSequence )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:354:2: (~ ( '\"' | '\\\\' | '\\n' ) | '\\\\' EscapeSequence )
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -1573,7 +1574,7 @@ public class BeeLexer extends Lexer {
             }
             switch (alt11) {
                 case 1 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:347:4: ~ ( '\"' | '\\\\' | '\\n' )
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:354:4: ~ ( '\"' | '\\\\' | '\\n' )
                     {
                     if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                         input.consume();
@@ -1589,7 +1590,7 @@ public class BeeLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:348:4: '\\\\' EscapeSequence
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:355:4: '\\\\' EscapeSequence
                     {
                     match('\\'); if (state.failed) return ;
                     mEscapeSequence(); if (state.failed) return ;
@@ -1607,7 +1608,7 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "SingleStringCharacter"
     public final void mSingleStringCharacter() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:352:2: (~ ( '\\'' | '\\\\' | '\\n' ) | '\\\\' EscapeSequence )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:359:2: (~ ( '\\'' | '\\\\' | '\\n' ) | '\\\\' EscapeSequence )
             int alt12=2;
             int LA12_0 = input.LA(1);
 
@@ -1626,7 +1627,7 @@ public class BeeLexer extends Lexer {
             }
             switch (alt12) {
                 case 1 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:352:4: ~ ( '\\'' | '\\\\' | '\\n' )
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:359:4: ~ ( '\\'' | '\\\\' | '\\n' )
                     {
                     if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                         input.consume();
@@ -1642,7 +1643,7 @@ public class BeeLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:353:4: '\\\\' EscapeSequence
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:360:4: '\\\\' EscapeSequence
                     {
                     match('\\'); if (state.failed) return ;
                     mEscapeSequence(); if (state.failed) return ;
@@ -1660,7 +1661,7 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "EscapeSequence"
     public final void mEscapeSequence() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:357:2: ( CharacterEscapeSequence | '0' | HexEscapeSequence | UnicodeEscapeSequence )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:364:2: ( CharacterEscapeSequence | '0' | HexEscapeSequence | UnicodeEscapeSequence )
             int alt13=4;
             int LA13_0 = input.LA(1);
 
@@ -1685,28 +1686,28 @@ public class BeeLexer extends Lexer {
             }
             switch (alt13) {
                 case 1 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:357:4: CharacterEscapeSequence
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:364:4: CharacterEscapeSequence
                     {
                     mCharacterEscapeSequence(); if (state.failed) return ;
 
                     }
                     break;
                 case 2 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:358:4: '0'
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:365:4: '0'
                     {
                     match('0'); if (state.failed) return ;
 
                     }
                     break;
                 case 3 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:359:4: HexEscapeSequence
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:366:4: HexEscapeSequence
                     {
                     mHexEscapeSequence(); if (state.failed) return ;
 
                     }
                     break;
                 case 4 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:360:4: UnicodeEscapeSequence
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:367:4: UnicodeEscapeSequence
                     {
                     mUnicodeEscapeSequence(); if (state.failed) return ;
 
@@ -1723,7 +1724,7 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "CharacterEscapeSequence"
     public final void mCharacterEscapeSequence() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:364:2: ( SingleEscapeCharacter | NonEscapeCharacter )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:371:2: ( SingleEscapeCharacter | NonEscapeCharacter )
             int alt14=2;
             int LA14_0 = input.LA(1);
 
@@ -1742,14 +1743,14 @@ public class BeeLexer extends Lexer {
             }
             switch (alt14) {
                 case 1 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:364:4: SingleEscapeCharacter
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:371:4: SingleEscapeCharacter
                     {
                     mSingleEscapeCharacter(); if (state.failed) return ;
 
                     }
                     break;
                 case 2 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:365:4: NonEscapeCharacter
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:372:4: NonEscapeCharacter
                     {
                     mNonEscapeCharacter(); if (state.failed) return ;
 
@@ -1766,8 +1767,8 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "NonEscapeCharacter"
     public final void mNonEscapeCharacter() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:369:2: (~ ( EscapeCharacter ) )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:369:4: ~ ( EscapeCharacter )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:376:2: (~ ( EscapeCharacter ) )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:376:4: ~ ( EscapeCharacter )
             {
             if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='/')||(input.LA(1)>=':' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='a')||(input.LA(1)>='c' && input.LA(1)<='e')||(input.LA(1)>='g' && input.LA(1)<='m')||(input.LA(1)>='o' && input.LA(1)<='q')||input.LA(1)=='s'||input.LA(1)=='w'||(input.LA(1)>='y' && input.LA(1)<='\uFFFF') ) {
                 input.consume();
@@ -1791,8 +1792,8 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "SingleEscapeCharacter"
     public final void mSingleEscapeCharacter() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:373:2: ( '\\'' | '\"' | '\\\\' | 'b' | 'f' | 'n' | 'r' | 't' | 'v' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:380:2: ( '\\'' | '\"' | '\\\\' | 'b' | 'f' | 'n' | 'r' | 't' | 'v' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:
             {
             if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t'||input.LA(1)=='v' ) {
                 input.consume();
@@ -1816,7 +1817,7 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "EscapeCharacter"
     public final void mEscapeCharacter() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:377:2: ( SingleEscapeCharacter | DecimalDigit | 'x' | 'u' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:384:2: ( SingleEscapeCharacter | DecimalDigit | 'x' | 'u' )
             int alt15=4;
             switch ( input.LA(1) ) {
             case '\"':
@@ -1866,28 +1867,28 @@ public class BeeLexer extends Lexer {
 
             switch (alt15) {
                 case 1 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:377:4: SingleEscapeCharacter
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:384:4: SingleEscapeCharacter
                     {
                     mSingleEscapeCharacter(); if (state.failed) return ;
 
                     }
                     break;
                 case 2 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:378:4: DecimalDigit
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:385:4: DecimalDigit
                     {
                     mDecimalDigit(); if (state.failed) return ;
 
                     }
                     break;
                 case 3 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:379:4: 'x'
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:386:4: 'x'
                     {
                     match('x'); if (state.failed) return ;
 
                     }
                     break;
                 case 4 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:380:4: 'u'
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:387:4: 'u'
                     {
                     match('u'); if (state.failed) return ;
 
@@ -1904,8 +1905,8 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "HexEscapeSequence"
     public final void mHexEscapeSequence() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:384:2: ( 'x' HexDigit HexDigit )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:384:4: 'x' HexDigit HexDigit
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:391:2: ( 'x' HexDigit HexDigit )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:391:4: 'x' HexDigit HexDigit
             {
             match('x'); if (state.failed) return ;
             mHexDigit(); if (state.failed) return ;
@@ -1922,8 +1923,8 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "UnicodeEscapeSequence"
     public final void mUnicodeEscapeSequence() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:388:2: ( 'u' HexDigit HexDigit HexDigit HexDigit )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:388:4: 'u' HexDigit HexDigit HexDigit HexDigit
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:395:2: ( 'u' HexDigit HexDigit HexDigit HexDigit )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:395:4: 'u' HexDigit HexDigit HexDigit HexDigit
             {
             match('u'); if (state.failed) return ;
             mHexDigit(); if (state.failed) return ;
@@ -1944,7 +1945,7 @@ public class BeeLexer extends Lexer {
         try {
             int _type = NumericLiteral;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:392:2: ( DecimalLiteral | HexIntegerLiteral )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:399:2: ( DecimalLiteral | HexIntegerLiteral )
             int alt16=2;
             int LA16_0 = input.LA(1);
 
@@ -1969,14 +1970,14 @@ public class BeeLexer extends Lexer {
             }
             switch (alt16) {
                 case 1 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:392:4: DecimalLiteral
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:399:4: DecimalLiteral
                     {
                     mDecimalLiteral(); if (state.failed) return ;
 
                     }
                     break;
                 case 2 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:393:4: HexIntegerLiteral
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:400:4: HexIntegerLiteral
                     {
                     mHexIntegerLiteral(); if (state.failed) return ;
 
@@ -1995,8 +1996,8 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "HexIntegerLiteral"
     public final void mHexIntegerLiteral() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:397:2: ( '0' ( 'x' | 'X' ) ( HexDigit )+ )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:397:4: '0' ( 'x' | 'X' ) ( HexDigit )+
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:404:2: ( '0' ( 'x' | 'X' ) ( HexDigit )+ )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:404:4: '0' ( 'x' | 'X' ) ( HexDigit )+
             {
             match('0'); if (state.failed) return ;
             if ( input.LA(1)=='X'||input.LA(1)=='x' ) {
@@ -2009,7 +2010,7 @@ public class BeeLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:397:20: ( HexDigit )+
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:404:20: ( HexDigit )+
             int cnt17=0;
             loop17:
             do {
@@ -2023,7 +2024,7 @@ public class BeeLexer extends Lexer {
 
                 switch (alt17) {
             	case 1 :
-            	    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:397:20: HexDigit
+            	    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:404:20: HexDigit
             	    {
             	    mHexDigit(); if (state.failed) return ;
 
@@ -2052,7 +2053,7 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "HexDigit"
     public final void mHexDigit() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:401:2: ( DecimalDigit | ( 'a' .. 'f' ) | ( 'A' .. 'F' ) )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:408:2: ( DecimalDigit | ( 'a' .. 'f' ) | ( 'A' .. 'F' ) )
             int alt18=3;
             switch ( input.LA(1) ) {
             case '0':
@@ -2099,17 +2100,17 @@ public class BeeLexer extends Lexer {
 
             switch (alt18) {
                 case 1 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:401:4: DecimalDigit
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:408:4: DecimalDigit
                     {
                     mDecimalDigit(); if (state.failed) return ;
 
                     }
                     break;
                 case 2 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:401:19: ( 'a' .. 'f' )
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:408:19: ( 'a' .. 'f' )
                     {
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:401:19: ( 'a' .. 'f' )
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:401:20: 'a' .. 'f'
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:408:19: ( 'a' .. 'f' )
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:408:20: 'a' .. 'f'
                     {
                     matchRange('a','f'); if (state.failed) return ;
 
@@ -2119,10 +2120,10 @@ public class BeeLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:401:32: ( 'A' .. 'F' )
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:408:32: ( 'A' .. 'F' )
                     {
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:401:32: ( 'A' .. 'F' )
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:401:33: 'A' .. 'F'
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:408:32: ( 'A' .. 'F' )
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:408:33: 'A' .. 'F'
                     {
                     matchRange('A','F'); if (state.failed) return ;
 
@@ -2142,14 +2143,14 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "DecimalLiteral"
     public final void mDecimalLiteral() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:405:2: ( ( DecimalDigit )+ '.' ( DecimalDigit )* ( ExponentPart )? | ( '.' )? ( DecimalDigit )+ ( ExponentPart )? )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:412:2: ( ( DecimalDigit )+ '.' ( DecimalDigit )* ( ExponentPart )? | ( '.' )? ( DecimalDigit )+ ( ExponentPart )? )
             int alt25=2;
             alt25 = dfa25.predict(input);
             switch (alt25) {
                 case 1 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:405:4: ( DecimalDigit )+ '.' ( DecimalDigit )* ( ExponentPart )?
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:412:4: ( DecimalDigit )+ '.' ( DecimalDigit )* ( ExponentPart )?
                     {
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:405:4: ( DecimalDigit )+
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:412:4: ( DecimalDigit )+
                     int cnt19=0;
                     loop19:
                     do {
@@ -2163,7 +2164,7 @@ public class BeeLexer extends Lexer {
 
                         switch (alt19) {
                     	case 1 :
-                    	    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:405:4: DecimalDigit
+                    	    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:412:4: DecimalDigit
                     	    {
                     	    mDecimalDigit(); if (state.failed) return ;
 
@@ -2181,7 +2182,7 @@ public class BeeLexer extends Lexer {
                     } while (true);
 
                     match('.'); if (state.failed) return ;
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:405:22: ( DecimalDigit )*
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:412:22: ( DecimalDigit )*
                     loop20:
                     do {
                         int alt20=2;
@@ -2194,7 +2195,7 @@ public class BeeLexer extends Lexer {
 
                         switch (alt20) {
                     	case 1 :
-                    	    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:405:22: DecimalDigit
+                    	    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:412:22: DecimalDigit
                     	    {
                     	    mDecimalDigit(); if (state.failed) return ;
 
@@ -2206,7 +2207,7 @@ public class BeeLexer extends Lexer {
                         }
                     } while (true);
 
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:405:36: ( ExponentPart )?
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:412:36: ( ExponentPart )?
                     int alt21=2;
                     int LA21_0 = input.LA(1);
 
@@ -2215,7 +2216,7 @@ public class BeeLexer extends Lexer {
                     }
                     switch (alt21) {
                         case 1 :
-                            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:405:36: ExponentPart
+                            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:412:36: ExponentPart
                             {
                             mExponentPart(); if (state.failed) return ;
 
@@ -2228,9 +2229,9 @@ public class BeeLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:406:4: ( '.' )? ( DecimalDigit )+ ( ExponentPart )?
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:413:4: ( '.' )? ( DecimalDigit )+ ( ExponentPart )?
                     {
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:406:4: ( '.' )?
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:413:4: ( '.' )?
                     int alt22=2;
                     int LA22_0 = input.LA(1);
 
@@ -2239,7 +2240,7 @@ public class BeeLexer extends Lexer {
                     }
                     switch (alt22) {
                         case 1 :
-                            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:406:4: '.'
+                            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:413:4: '.'
                             {
                             match('.'); if (state.failed) return ;
 
@@ -2248,7 +2249,7 @@ public class BeeLexer extends Lexer {
 
                     }
 
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:406:9: ( DecimalDigit )+
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:413:9: ( DecimalDigit )+
                     int cnt23=0;
                     loop23:
                     do {
@@ -2262,7 +2263,7 @@ public class BeeLexer extends Lexer {
 
                         switch (alt23) {
                     	case 1 :
-                    	    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:406:9: DecimalDigit
+                    	    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:413:9: DecimalDigit
                     	    {
                     	    mDecimalDigit(); if (state.failed) return ;
 
@@ -2279,7 +2280,7 @@ public class BeeLexer extends Lexer {
                         cnt23++;
                     } while (true);
 
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:406:23: ( ExponentPart )?
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:413:23: ( ExponentPart )?
                     int alt24=2;
                     int LA24_0 = input.LA(1);
 
@@ -2288,7 +2289,7 @@ public class BeeLexer extends Lexer {
                     }
                     switch (alt24) {
                         case 1 :
-                            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:406:23: ExponentPart
+                            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:413:23: ExponentPart
                             {
                             mExponentPart(); if (state.failed) return ;
 
@@ -2311,8 +2312,8 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "DecimalDigit"
     public final void mDecimalDigit() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:410:2: ( ( '0' .. '9' ) )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:410:4: ( '0' .. '9' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:417:2: ( ( '0' .. '9' ) )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:417:4: ( '0' .. '9' )
             {
             if ( (input.LA(1)>='0' && input.LA(1)<='9') ) {
                 input.consume();
@@ -2336,8 +2337,8 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "ExponentPart"
     public final void mExponentPart() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:414:2: ( ( 'e' | 'E' ) ( '+' | '-' )? ( DecimalDigit )+ )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:414:4: ( 'e' | 'E' ) ( '+' | '-' )? ( DecimalDigit )+
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:421:2: ( ( 'e' | 'E' ) ( '+' | '-' )? ( DecimalDigit )+ )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:421:4: ( 'e' | 'E' ) ( '+' | '-' )? ( DecimalDigit )+
             {
             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                 input.consume();
@@ -2349,7 +2350,7 @@ public class BeeLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:414:16: ( '+' | '-' )?
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:421:16: ( '+' | '-' )?
             int alt26=2;
             int LA26_0 = input.LA(1);
 
@@ -2358,7 +2359,7 @@ public class BeeLexer extends Lexer {
             }
             switch (alt26) {
                 case 1 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:
                     {
                     if ( input.LA(1)=='+'||input.LA(1)=='-' ) {
                         input.consume();
@@ -2376,7 +2377,7 @@ public class BeeLexer extends Lexer {
 
             }
 
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:414:30: ( DecimalDigit )+
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:421:30: ( DecimalDigit )+
             int cnt27=0;
             loop27:
             do {
@@ -2390,7 +2391,7 @@ public class BeeLexer extends Lexer {
 
                 switch (alt27) {
             	case 1 :
-            	    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:414:30: DecimalDigit
+            	    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:421:30: DecimalDigit
             	    {
             	    mDecimalDigit(); if (state.failed) return ;
 
@@ -2421,11 +2422,11 @@ public class BeeLexer extends Lexer {
         try {
             int _type = Identifier;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:420:2: ( IdentifierStart ( IdentifierPart )* )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:420:4: IdentifierStart ( IdentifierPart )*
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:427:2: ( IdentifierStart ( IdentifierPart )* )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:427:4: IdentifierStart ( IdentifierPart )*
             {
             mIdentifierStart(); if (state.failed) return ;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:420:20: ( IdentifierPart )*
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:427:20: ( IdentifierPart )*
             loop28:
             do {
                 int alt28=2;
@@ -2438,7 +2439,7 @@ public class BeeLexer extends Lexer {
 
                 switch (alt28) {
             	case 1 :
-            	    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:420:20: IdentifierPart
+            	    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:427:20: IdentifierPart
             	    {
             	    mIdentifierPart(); if (state.failed) return ;
 
@@ -2464,7 +2465,7 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "IdentifierStart"
     public final void mIdentifierStart() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:424:2: ( UnicodeLetter | '$' | '_' | '\\\\' UnicodeEscapeSequence )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:431:2: ( UnicodeLetter | '$' | '_' | '\\\\' UnicodeEscapeSequence )
             int alt29=4;
             int LA29_0 = input.LA(1);
 
@@ -2489,28 +2490,28 @@ public class BeeLexer extends Lexer {
             }
             switch (alt29) {
                 case 1 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:424:4: UnicodeLetter
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:431:4: UnicodeLetter
                     {
                     mUnicodeLetter(); if (state.failed) return ;
 
                     }
                     break;
                 case 2 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:425:4: '$'
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:432:4: '$'
                     {
                     match('$'); if (state.failed) return ;
 
                     }
                     break;
                 case 3 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:426:4: '_'
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:433:4: '_'
                     {
                     match('_'); if (state.failed) return ;
 
                     }
                     break;
                 case 4 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:427:11: '\\\\' UnicodeEscapeSequence
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:434:11: '\\\\' UnicodeEscapeSequence
                     {
                     match('\\'); if (state.failed) return ;
                     mUnicodeEscapeSequence(); if (state.failed) return ;
@@ -2528,7 +2529,7 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "IdentifierPart"
     public final void mIdentifierPart() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:431:2: ( ( IdentifierStart )=> IdentifierStart | UnicodeDigit | UnicodeConnectorPunctuation )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:438:2: ( ( IdentifierStart )=> IdentifierStart | UnicodeDigit | UnicodeConnectorPunctuation )
             int alt30=3;
             int LA30_0 = input.LA(1);
 
@@ -2573,21 +2574,21 @@ public class BeeLexer extends Lexer {
             }
             switch (alt30) {
                 case 1 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:431:4: ( IdentifierStart )=> IdentifierStart
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:438:4: ( IdentifierStart )=> IdentifierStart
                     {
                     mIdentifierStart(); if (state.failed) return ;
 
                     }
                     break;
                 case 2 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:432:4: UnicodeDigit
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:439:4: UnicodeDigit
                     {
                     mUnicodeDigit(); if (state.failed) return ;
 
                     }
                     break;
                 case 3 :
-                    // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:433:4: UnicodeConnectorPunctuation
+                    // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:440:4: UnicodeConnectorPunctuation
                     {
                     mUnicodeConnectorPunctuation(); if (state.failed) return ;
 
@@ -2604,8 +2605,8 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "UnicodeLetter"
     public final void mUnicodeLetter() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:437:2: ( '\\u0041' .. '\\u005A' | '\\u0061' .. '\\u007A' | '\\u00AA' | '\\u00B5' | '\\u00BA' | '\\u00C0' .. '\\u00D6' | '\\u00D8' .. '\\u00F6' | '\\u00F8' .. '\\u021F' | '\\u0222' .. '\\u0233' | '\\u0250' .. '\\u02AD' | '\\u02B0' .. '\\u02B8' | '\\u02BB' .. '\\u02C1' | '\\u02D0' .. '\\u02D1' | '\\u02E0' .. '\\u02E4' | '\\u02EE' | '\\u037A' | '\\u0386' | '\\u0388' .. '\\u038A' | '\\u038C' | '\\u038E' .. '\\u03A1' | '\\u03A3' .. '\\u03CE' | '\\u03D0' .. '\\u03D7' | '\\u03DA' .. '\\u03F3' | '\\u0400' .. '\\u0481' | '\\u048C' .. '\\u04C4' | '\\u04C7' .. '\\u04C8' | '\\u04CB' .. '\\u04CC' | '\\u04D0' .. '\\u04F5' | '\\u04F8' .. '\\u04F9' | '\\u0531' .. '\\u0556' | '\\u0559' | '\\u0561' .. '\\u0587' | '\\u05D0' .. '\\u05EA' | '\\u05F0' .. '\\u05F2' | '\\u0621' .. '\\u063A' | '\\u0640' .. '\\u064A' | '\\u0671' .. '\\u06D3' | '\\u06D5' | '\\u06E5' .. '\\u06E6' | '\\u06FA' .. '\\u06FC' | '\\u0710' | '\\u0712' .. '\\u072C' | '\\u0780' .. '\\u07A5' | '\\u0905' .. '\\u0939' | '\\u093D' | '\\u0950' | '\\u0958' .. '\\u0961' | '\\u0985' .. '\\u098C' | '\\u098F' .. '\\u0990' | '\\u0993' .. '\\u09A8' | '\\u09AA' .. '\\u09B0' | '\\u09B2' | '\\u09B6' .. '\\u09B9' | '\\u09DC' .. '\\u09DD' | '\\u09DF' .. '\\u09E1' | '\\u09F0' .. '\\u09F1' | '\\u0A05' .. '\\u0A0A' | '\\u0A0F' .. '\\u0A10' | '\\u0A13' .. '\\u0A28' | '\\u0A2A' .. '\\u0A30' | '\\u0A32' .. '\\u0A33' | '\\u0A35' .. '\\u0A36' | '\\u0A38' .. '\\u0A39' | '\\u0A59' .. '\\u0A5C' | '\\u0A5E' | '\\u0A72' .. '\\u0A74' | '\\u0A85' .. '\\u0A8B' | '\\u0A8D' | '\\u0A8F' .. '\\u0A91' | '\\u0A93' .. '\\u0AA8' | '\\u0AAA' .. '\\u0AB0' | '\\u0AB2' .. '\\u0AB3' | '\\u0AB5' .. '\\u0AB9' | '\\u0ABD' | '\\u0AD0' | '\\u0AE0' | '\\u0B05' .. '\\u0B0C' | '\\u0B0F' .. '\\u0B10' | '\\u0B13' .. '\\u0B28' | '\\u0B2A' .. '\\u0B30' | '\\u0B32' .. '\\u0B33' | '\\u0B36' .. '\\u0B39' | '\\u0B3D' | '\\u0B5C' .. '\\u0B5D' | '\\u0B5F' .. '\\u0B61' | '\\u0B85' .. '\\u0B8A' | '\\u0B8E' .. '\\u0B90' | '\\u0B92' .. '\\u0B95' | '\\u0B99' .. '\\u0B9A' | '\\u0B9C' | '\\u0B9E' .. '\\u0B9F' | '\\u0BA3' .. '\\u0BA4' | '\\u0BA8' .. '\\u0BAA' | '\\u0BAE' .. '\\u0BB5' | '\\u0BB7' .. '\\u0BB9' | '\\u0C05' .. '\\u0C0C' | '\\u0C0E' .. '\\u0C10' | '\\u0C12' .. '\\u0C28' | '\\u0C2A' .. '\\u0C33' | '\\u0C35' .. '\\u0C39' | '\\u0C60' .. '\\u0C61' | '\\u0C85' .. '\\u0C8C' | '\\u0C8E' .. '\\u0C90' | '\\u0C92' .. '\\u0CA8' | '\\u0CAA' .. '\\u0CB3' | '\\u0CB5' .. '\\u0CB9' | '\\u0CDE' | '\\u0CE0' .. '\\u0CE1' | '\\u0D05' .. '\\u0D0C' | '\\u0D0E' .. '\\u0D10' | '\\u0D12' .. '\\u0D28' | '\\u0D2A' .. '\\u0D39' | '\\u0D60' .. '\\u0D61' | '\\u0D85' .. '\\u0D96' | '\\u0D9A' .. '\\u0DB1' | '\\u0DB3' .. '\\u0DBB' | '\\u0DBD' | '\\u0DC0' .. '\\u0DC6' | '\\u0E01' .. '\\u0E30' | '\\u0E32' .. '\\u0E33' | '\\u0E40' .. '\\u0E46' | '\\u0E81' .. '\\u0E82' | '\\u0E84' | '\\u0E87' .. '\\u0E88' | '\\u0E8A' | '\\u0E8D' | '\\u0E94' .. '\\u0E97' | '\\u0E99' .. '\\u0E9F' | '\\u0EA1' .. '\\u0EA3' | '\\u0EA5' | '\\u0EA7' | '\\u0EAA' .. '\\u0EAB' | '\\u0EAD' .. '\\u0EB0' | '\\u0EB2' .. '\\u0EB3' | '\\u0EBD' .. '\\u0EC4' | '\\u0EC6' | '\\u0EDC' .. '\\u0EDD' | '\\u0F00' | '\\u0F40' .. '\\u0F6A' | '\\u0F88' .. '\\u0F8B' | '\\u1000' .. '\\u1021' | '\\u1023' .. '\\u1027' | '\\u1029' .. '\\u102A' | '\\u1050' .. '\\u1055' | '\\u10A0' .. '\\u10C5' | '\\u10D0' .. '\\u10F6' | '\\u1100' .. '\\u1159' | '\\u115F' .. '\\u11A2' | '\\u11A8' .. '\\u11F9' | '\\u1200' .. '\\u1206' | '\\u1208' .. '\\u1246' | '\\u1248' | '\\u124A' .. '\\u124D' | '\\u1250' .. '\\u1256' | '\\u1258' | '\\u125A' .. '\\u125D' | '\\u1260' .. '\\u1286' | '\\u1288' | '\\u128A' .. '\\u128D' | '\\u1290' .. '\\u12AE' | '\\u12B0' | '\\u12B2' .. '\\u12B5' | '\\u12B8' .. '\\u12BE' | '\\u12C0' | '\\u12C2' .. '\\u12C5' | '\\u12C8' .. '\\u12CE' | '\\u12D0' .. '\\u12D6' | '\\u12D8' .. '\\u12EE' | '\\u12F0' .. '\\u130E' | '\\u1310' | '\\u1312' .. '\\u1315' | '\\u1318' .. '\\u131E' | '\\u1320' .. '\\u1346' | '\\u1348' .. '\\u135A' | '\\u13A0' .. '\\u13B0' | '\\u13B1' .. '\\u13F4' | '\\u1401' .. '\\u1676' | '\\u1681' .. '\\u169A' | '\\u16A0' .. '\\u16EA' | '\\u1780' .. '\\u17B3' | '\\u1820' .. '\\u1877' | '\\u1880' .. '\\u18A8' | '\\u1E00' .. '\\u1E9B' | '\\u1EA0' .. '\\u1EE0' | '\\u1EE1' .. '\\u1EF9' | '\\u1F00' .. '\\u1F15' | '\\u1F18' .. '\\u1F1D' | '\\u1F20' .. '\\u1F39' | '\\u1F3A' .. '\\u1F45' | '\\u1F48' .. '\\u1F4D' | '\\u1F50' .. '\\u1F57' | '\\u1F59' | '\\u1F5B' | '\\u1F5D' | '\\u1F5F' .. '\\u1F7D' | '\\u1F80' .. '\\u1FB4' | '\\u1FB6' .. '\\u1FBC' | '\\u1FBE' | '\\u1FC2' .. '\\u1FC4' | '\\u1FC6' .. '\\u1FCC' | '\\u1FD0' .. '\\u1FD3' | '\\u1FD6' .. '\\u1FDB' | '\\u1FE0' .. '\\u1FEC' | '\\u1FF2' .. '\\u1FF4' | '\\u1FF6' .. '\\u1FFC' | '\\u207F' | '\\u2102' | '\\u2107' | '\\u210A' .. '\\u2113' | '\\u2115' | '\\u2119' .. '\\u211D' | '\\u2124' | '\\u2126' | '\\u2128' | '\\u212A' .. '\\u212D' | '\\u212F' .. '\\u2131' | '\\u2133' .. '\\u2139' | '\\u2160' .. '\\u2183' | '\\u3005' .. '\\u3007' | '\\u3021' .. '\\u3029' | '\\u3031' .. '\\u3035' | '\\u3038' .. '\\u303A' | '\\u3041' .. '\\u3094' | '\\u309D' .. '\\u309E' | '\\u30A1' .. '\\u30FA' | '\\u30FC' .. '\\u30FE' | '\\u3105' .. '\\u312C' | '\\u3131' .. '\\u318E' | '\\u31A0' .. '\\u31B7' | '\\u3400' | '\\u4DB5' | '\\u4E00' | '\\u9FA5' | '\\uA000' .. '\\uA48C' | '\\uAC00' | '\\uD7A3' | '\\uF900' .. '\\uFA2D' | '\\uFB00' .. '\\uFB06' | '\\uFB13' .. '\\uFB17' | '\\uFB1D' | '\\uFB1F' .. '\\uFB28' | '\\uFB2A' .. '\\uFB36' | '\\uFB38' .. '\\uFB3C' | '\\uFB3E' | '\\uFB40' .. '\\uFB41' | '\\uFB43' .. '\\uFB44' | '\\uFB46' .. '\\uFBB1' | '\\uFBD3' .. '\\uFD3D' | '\\uFD50' .. '\\uFD8F' | '\\uFD92' .. '\\uFDC7' | '\\uFDF0' .. '\\uFDFB' | '\\uFE70' .. '\\uFE72' | '\\uFE74' | '\\uFE76' .. '\\uFEFC' | '\\uFF21' .. '\\uFF3A' | '\\uFF41' .. '\\uFF5A' | '\\uFF66' .. '\\uFFBE' | '\\uFFC2' .. '\\uFFC7' | '\\uFFCA' .. '\\uFFCF' | '\\uFFD2' .. '\\uFFD7' | '\\uFFDA' .. '\\uFFDC' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:444:2: ( '\\u0041' .. '\\u005A' | '\\u0061' .. '\\u007A' | '\\u00AA' | '\\u00B5' | '\\u00BA' | '\\u00C0' .. '\\u00D6' | '\\u00D8' .. '\\u00F6' | '\\u00F8' .. '\\u021F' | '\\u0222' .. '\\u0233' | '\\u0250' .. '\\u02AD' | '\\u02B0' .. '\\u02B8' | '\\u02BB' .. '\\u02C1' | '\\u02D0' .. '\\u02D1' | '\\u02E0' .. '\\u02E4' | '\\u02EE' | '\\u037A' | '\\u0386' | '\\u0388' .. '\\u038A' | '\\u038C' | '\\u038E' .. '\\u03A1' | '\\u03A3' .. '\\u03CE' | '\\u03D0' .. '\\u03D7' | '\\u03DA' .. '\\u03F3' | '\\u0400' .. '\\u0481' | '\\u048C' .. '\\u04C4' | '\\u04C7' .. '\\u04C8' | '\\u04CB' .. '\\u04CC' | '\\u04D0' .. '\\u04F5' | '\\u04F8' .. '\\u04F9' | '\\u0531' .. '\\u0556' | '\\u0559' | '\\u0561' .. '\\u0587' | '\\u05D0' .. '\\u05EA' | '\\u05F0' .. '\\u05F2' | '\\u0621' .. '\\u063A' | '\\u0640' .. '\\u064A' | '\\u0671' .. '\\u06D3' | '\\u06D5' | '\\u06E5' .. '\\u06E6' | '\\u06FA' .. '\\u06FC' | '\\u0710' | '\\u0712' .. '\\u072C' | '\\u0780' .. '\\u07A5' | '\\u0905' .. '\\u0939' | '\\u093D' | '\\u0950' | '\\u0958' .. '\\u0961' | '\\u0985' .. '\\u098C' | '\\u098F' .. '\\u0990' | '\\u0993' .. '\\u09A8' | '\\u09AA' .. '\\u09B0' | '\\u09B2' | '\\u09B6' .. '\\u09B9' | '\\u09DC' .. '\\u09DD' | '\\u09DF' .. '\\u09E1' | '\\u09F0' .. '\\u09F1' | '\\u0A05' .. '\\u0A0A' | '\\u0A0F' .. '\\u0A10' | '\\u0A13' .. '\\u0A28' | '\\u0A2A' .. '\\u0A30' | '\\u0A32' .. '\\u0A33' | '\\u0A35' .. '\\u0A36' | '\\u0A38' .. '\\u0A39' | '\\u0A59' .. '\\u0A5C' | '\\u0A5E' | '\\u0A72' .. '\\u0A74' | '\\u0A85' .. '\\u0A8B' | '\\u0A8D' | '\\u0A8F' .. '\\u0A91' | '\\u0A93' .. '\\u0AA8' | '\\u0AAA' .. '\\u0AB0' | '\\u0AB2' .. '\\u0AB3' | '\\u0AB5' .. '\\u0AB9' | '\\u0ABD' | '\\u0AD0' | '\\u0AE0' | '\\u0B05' .. '\\u0B0C' | '\\u0B0F' .. '\\u0B10' | '\\u0B13' .. '\\u0B28' | '\\u0B2A' .. '\\u0B30' | '\\u0B32' .. '\\u0B33' | '\\u0B36' .. '\\u0B39' | '\\u0B3D' | '\\u0B5C' .. '\\u0B5D' | '\\u0B5F' .. '\\u0B61' | '\\u0B85' .. '\\u0B8A' | '\\u0B8E' .. '\\u0B90' | '\\u0B92' .. '\\u0B95' | '\\u0B99' .. '\\u0B9A' | '\\u0B9C' | '\\u0B9E' .. '\\u0B9F' | '\\u0BA3' .. '\\u0BA4' | '\\u0BA8' .. '\\u0BAA' | '\\u0BAE' .. '\\u0BB5' | '\\u0BB7' .. '\\u0BB9' | '\\u0C05' .. '\\u0C0C' | '\\u0C0E' .. '\\u0C10' | '\\u0C12' .. '\\u0C28' | '\\u0C2A' .. '\\u0C33' | '\\u0C35' .. '\\u0C39' | '\\u0C60' .. '\\u0C61' | '\\u0C85' .. '\\u0C8C' | '\\u0C8E' .. '\\u0C90' | '\\u0C92' .. '\\u0CA8' | '\\u0CAA' .. '\\u0CB3' | '\\u0CB5' .. '\\u0CB9' | '\\u0CDE' | '\\u0CE0' .. '\\u0CE1' | '\\u0D05' .. '\\u0D0C' | '\\u0D0E' .. '\\u0D10' | '\\u0D12' .. '\\u0D28' | '\\u0D2A' .. '\\u0D39' | '\\u0D60' .. '\\u0D61' | '\\u0D85' .. '\\u0D96' | '\\u0D9A' .. '\\u0DB1' | '\\u0DB3' .. '\\u0DBB' | '\\u0DBD' | '\\u0DC0' .. '\\u0DC6' | '\\u0E01' .. '\\u0E30' | '\\u0E32' .. '\\u0E33' | '\\u0E40' .. '\\u0E46' | '\\u0E81' .. '\\u0E82' | '\\u0E84' | '\\u0E87' .. '\\u0E88' | '\\u0E8A' | '\\u0E8D' | '\\u0E94' .. '\\u0E97' | '\\u0E99' .. '\\u0E9F' | '\\u0EA1' .. '\\u0EA3' | '\\u0EA5' | '\\u0EA7' | '\\u0EAA' .. '\\u0EAB' | '\\u0EAD' .. '\\u0EB0' | '\\u0EB2' .. '\\u0EB3' | '\\u0EBD' .. '\\u0EC4' | '\\u0EC6' | '\\u0EDC' .. '\\u0EDD' | '\\u0F00' | '\\u0F40' .. '\\u0F6A' | '\\u0F88' .. '\\u0F8B' | '\\u1000' .. '\\u1021' | '\\u1023' .. '\\u1027' | '\\u1029' .. '\\u102A' | '\\u1050' .. '\\u1055' | '\\u10A0' .. '\\u10C5' | '\\u10D0' .. '\\u10F6' | '\\u1100' .. '\\u1159' | '\\u115F' .. '\\u11A2' | '\\u11A8' .. '\\u11F9' | '\\u1200' .. '\\u1206' | '\\u1208' .. '\\u1246' | '\\u1248' | '\\u124A' .. '\\u124D' | '\\u1250' .. '\\u1256' | '\\u1258' | '\\u125A' .. '\\u125D' | '\\u1260' .. '\\u1286' | '\\u1288' | '\\u128A' .. '\\u128D' | '\\u1290' .. '\\u12AE' | '\\u12B0' | '\\u12B2' .. '\\u12B5' | '\\u12B8' .. '\\u12BE' | '\\u12C0' | '\\u12C2' .. '\\u12C5' | '\\u12C8' .. '\\u12CE' | '\\u12D0' .. '\\u12D6' | '\\u12D8' .. '\\u12EE' | '\\u12F0' .. '\\u130E' | '\\u1310' | '\\u1312' .. '\\u1315' | '\\u1318' .. '\\u131E' | '\\u1320' .. '\\u1346' | '\\u1348' .. '\\u135A' | '\\u13A0' .. '\\u13B0' | '\\u13B1' .. '\\u13F4' | '\\u1401' .. '\\u1676' | '\\u1681' .. '\\u169A' | '\\u16A0' .. '\\u16EA' | '\\u1780' .. '\\u17B3' | '\\u1820' .. '\\u1877' | '\\u1880' .. '\\u18A8' | '\\u1E00' .. '\\u1E9B' | '\\u1EA0' .. '\\u1EE0' | '\\u1EE1' .. '\\u1EF9' | '\\u1F00' .. '\\u1F15' | '\\u1F18' .. '\\u1F1D' | '\\u1F20' .. '\\u1F39' | '\\u1F3A' .. '\\u1F45' | '\\u1F48' .. '\\u1F4D' | '\\u1F50' .. '\\u1F57' | '\\u1F59' | '\\u1F5B' | '\\u1F5D' | '\\u1F5F' .. '\\u1F7D' | '\\u1F80' .. '\\u1FB4' | '\\u1FB6' .. '\\u1FBC' | '\\u1FBE' | '\\u1FC2' .. '\\u1FC4' | '\\u1FC6' .. '\\u1FCC' | '\\u1FD0' .. '\\u1FD3' | '\\u1FD6' .. '\\u1FDB' | '\\u1FE0' .. '\\u1FEC' | '\\u1FF2' .. '\\u1FF4' | '\\u1FF6' .. '\\u1FFC' | '\\u207F' | '\\u2102' | '\\u2107' | '\\u210A' .. '\\u2113' | '\\u2115' | '\\u2119' .. '\\u211D' | '\\u2124' | '\\u2126' | '\\u2128' | '\\u212A' .. '\\u212D' | '\\u212F' .. '\\u2131' | '\\u2133' .. '\\u2139' | '\\u2160' .. '\\u2183' | '\\u3005' .. '\\u3007' | '\\u3021' .. '\\u3029' | '\\u3031' .. '\\u3035' | '\\u3038' .. '\\u303A' | '\\u3041' .. '\\u3094' | '\\u309D' .. '\\u309E' | '\\u30A1' .. '\\u30FA' | '\\u30FC' .. '\\u30FE' | '\\u3105' .. '\\u312C' | '\\u3131' .. '\\u318E' | '\\u31A0' .. '\\u31B7' | '\\u3400' | '\\u4DB5' | '\\u4E00' | '\\u9FA5' | '\\uA000' .. '\\uA48C' | '\\uAC00' | '\\uD7A3' | '\\uF900' .. '\\uFA2D' | '\\uFB00' .. '\\uFB06' | '\\uFB13' .. '\\uFB17' | '\\uFB1D' | '\\uFB1F' .. '\\uFB28' | '\\uFB2A' .. '\\uFB36' | '\\uFB38' .. '\\uFB3C' | '\\uFB3E' | '\\uFB40' .. '\\uFB41' | '\\uFB43' .. '\\uFB44' | '\\uFB46' .. '\\uFBB1' | '\\uFBD3' .. '\\uFD3D' | '\\uFD50' .. '\\uFD8F' | '\\uFD92' .. '\\uFDC7' | '\\uFDF0' .. '\\uFDFB' | '\\uFE70' .. '\\uFE72' | '\\uFE74' | '\\uFE76' .. '\\uFEFC' | '\\uFF21' .. '\\uFF3A' | '\\uFF41' .. '\\uFF5A' | '\\uFF66' .. '\\uFFBE' | '\\uFFC2' .. '\\uFFC7' | '\\uFFCA' .. '\\uFFCF' | '\\uFFD2' .. '\\uFFD7' | '\\uFFDA' .. '\\uFFDC' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z')||input.LA(1)=='\u00AA'||input.LA(1)=='\u00B5'||input.LA(1)=='\u00BA'||(input.LA(1)>='\u00C0' && input.LA(1)<='\u00D6')||(input.LA(1)>='\u00D8' && input.LA(1)<='\u00F6')||(input.LA(1)>='\u00F8' && input.LA(1)<='\u021F')||(input.LA(1)>='\u0222' && input.LA(1)<='\u0233')||(input.LA(1)>='\u0250' && input.LA(1)<='\u02AD')||(input.LA(1)>='\u02B0' && input.LA(1)<='\u02B8')||(input.LA(1)>='\u02BB' && input.LA(1)<='\u02C1')||(input.LA(1)>='\u02D0' && input.LA(1)<='\u02D1')||(input.LA(1)>='\u02E0' && input.LA(1)<='\u02E4')||input.LA(1)=='\u02EE'||input.LA(1)=='\u037A'||input.LA(1)=='\u0386'||(input.LA(1)>='\u0388' && input.LA(1)<='\u038A')||input.LA(1)=='\u038C'||(input.LA(1)>='\u038E' && input.LA(1)<='\u03A1')||(input.LA(1)>='\u03A3' && input.LA(1)<='\u03CE')||(input.LA(1)>='\u03D0' && input.LA(1)<='\u03D7')||(input.LA(1)>='\u03DA' && input.LA(1)<='\u03F3')||(input.LA(1)>='\u0400' && input.LA(1)<='\u0481')||(input.LA(1)>='\u048C' && input.LA(1)<='\u04C4')||(input.LA(1)>='\u04C7' && input.LA(1)<='\u04C8')||(input.LA(1)>='\u04CB' && input.LA(1)<='\u04CC')||(input.LA(1)>='\u04D0' && input.LA(1)<='\u04F5')||(input.LA(1)>='\u04F8' && input.LA(1)<='\u04F9')||(input.LA(1)>='\u0531' && input.LA(1)<='\u0556')||input.LA(1)=='\u0559'||(input.LA(1)>='\u0561' && input.LA(1)<='\u0587')||(input.LA(1)>='\u05D0' && input.LA(1)<='\u05EA')||(input.LA(1)>='\u05F0' && input.LA(1)<='\u05F2')||(input.LA(1)>='\u0621' && input.LA(1)<='\u063A')||(input.LA(1)>='\u0640' && input.LA(1)<='\u064A')||(input.LA(1)>='\u0671' && input.LA(1)<='\u06D3')||input.LA(1)=='\u06D5'||(input.LA(1)>='\u06E5' && input.LA(1)<='\u06E6')||(input.LA(1)>='\u06FA' && input.LA(1)<='\u06FC')||input.LA(1)=='\u0710'||(input.LA(1)>='\u0712' && input.LA(1)<='\u072C')||(input.LA(1)>='\u0780' && input.LA(1)<='\u07A5')||(input.LA(1)>='\u0905' && input.LA(1)<='\u0939')||input.LA(1)=='\u093D'||input.LA(1)=='\u0950'||(input.LA(1)>='\u0958' && input.LA(1)<='\u0961')||(input.LA(1)>='\u0985' && input.LA(1)<='\u098C')||(input.LA(1)>='\u098F' && input.LA(1)<='\u0990')||(input.LA(1)>='\u0993' && input.LA(1)<='\u09A8')||(input.LA(1)>='\u09AA' && input.LA(1)<='\u09B0')||input.LA(1)=='\u09B2'||(input.LA(1)>='\u09B6' && input.LA(1)<='\u09B9')||(input.LA(1)>='\u09DC' && input.LA(1)<='\u09DD')||(input.LA(1)>='\u09DF' && input.LA(1)<='\u09E1')||(input.LA(1)>='\u09F0' && input.LA(1)<='\u09F1')||(input.LA(1)>='\u0A05' && input.LA(1)<='\u0A0A')||(input.LA(1)>='\u0A0F' && input.LA(1)<='\u0A10')||(input.LA(1)>='\u0A13' && input.LA(1)<='\u0A28')||(input.LA(1)>='\u0A2A' && input.LA(1)<='\u0A30')||(input.LA(1)>='\u0A32' && input.LA(1)<='\u0A33')||(input.LA(1)>='\u0A35' && input.LA(1)<='\u0A36')||(input.LA(1)>='\u0A38' && input.LA(1)<='\u0A39')||(input.LA(1)>='\u0A59' && input.LA(1)<='\u0A5C')||input.LA(1)=='\u0A5E'||(input.LA(1)>='\u0A72' && input.LA(1)<='\u0A74')||(input.LA(1)>='\u0A85' && input.LA(1)<='\u0A8B')||input.LA(1)=='\u0A8D'||(input.LA(1)>='\u0A8F' && input.LA(1)<='\u0A91')||(input.LA(1)>='\u0A93' && input.LA(1)<='\u0AA8')||(input.LA(1)>='\u0AAA' && input.LA(1)<='\u0AB0')||(input.LA(1)>='\u0AB2' && input.LA(1)<='\u0AB3')||(input.LA(1)>='\u0AB5' && input.LA(1)<='\u0AB9')||input.LA(1)=='\u0ABD'||input.LA(1)=='\u0AD0'||input.LA(1)=='\u0AE0'||(input.LA(1)>='\u0B05' && input.LA(1)<='\u0B0C')||(input.LA(1)>='\u0B0F' && input.LA(1)<='\u0B10')||(input.LA(1)>='\u0B13' && input.LA(1)<='\u0B28')||(input.LA(1)>='\u0B2A' && input.LA(1)<='\u0B30')||(input.LA(1)>='\u0B32' && input.LA(1)<='\u0B33')||(input.LA(1)>='\u0B36' && input.LA(1)<='\u0B39')||input.LA(1)=='\u0B3D'||(input.LA(1)>='\u0B5C' && input.LA(1)<='\u0B5D')||(input.LA(1)>='\u0B5F' && input.LA(1)<='\u0B61')||(input.LA(1)>='\u0B85' && input.LA(1)<='\u0B8A')||(input.LA(1)>='\u0B8E' && input.LA(1)<='\u0B90')||(input.LA(1)>='\u0B92' && input.LA(1)<='\u0B95')||(input.LA(1)>='\u0B99' && input.LA(1)<='\u0B9A')||input.LA(1)=='\u0B9C'||(input.LA(1)>='\u0B9E' && input.LA(1)<='\u0B9F')||(input.LA(1)>='\u0BA3' && input.LA(1)<='\u0BA4')||(input.LA(1)>='\u0BA8' && input.LA(1)<='\u0BAA')||(input.LA(1)>='\u0BAE' && input.LA(1)<='\u0BB5')||(input.LA(1)>='\u0BB7' && input.LA(1)<='\u0BB9')||(input.LA(1)>='\u0C05' && input.LA(1)<='\u0C0C')||(input.LA(1)>='\u0C0E' && input.LA(1)<='\u0C10')||(input.LA(1)>='\u0C12' && input.LA(1)<='\u0C28')||(input.LA(1)>='\u0C2A' && input.LA(1)<='\u0C33')||(input.LA(1)>='\u0C35' && input.LA(1)<='\u0C39')||(input.LA(1)>='\u0C60' && input.LA(1)<='\u0C61')||(input.LA(1)>='\u0C85' && input.LA(1)<='\u0C8C')||(input.LA(1)>='\u0C8E' && input.LA(1)<='\u0C90')||(input.LA(1)>='\u0C92' && input.LA(1)<='\u0CA8')||(input.LA(1)>='\u0CAA' && input.LA(1)<='\u0CB3')||(input.LA(1)>='\u0CB5' && input.LA(1)<='\u0CB9')||input.LA(1)=='\u0CDE'||(input.LA(1)>='\u0CE0' && input.LA(1)<='\u0CE1')||(input.LA(1)>='\u0D05' && input.LA(1)<='\u0D0C')||(input.LA(1)>='\u0D0E' && input.LA(1)<='\u0D10')||(input.LA(1)>='\u0D12' && input.LA(1)<='\u0D28')||(input.LA(1)>='\u0D2A' && input.LA(1)<='\u0D39')||(input.LA(1)>='\u0D60' && input.LA(1)<='\u0D61')||(input.LA(1)>='\u0D85' && input.LA(1)<='\u0D96')||(input.LA(1)>='\u0D9A' && input.LA(1)<='\u0DB1')||(input.LA(1)>='\u0DB3' && input.LA(1)<='\u0DBB')||input.LA(1)=='\u0DBD'||(input.LA(1)>='\u0DC0' && input.LA(1)<='\u0DC6')||(input.LA(1)>='\u0E01' && input.LA(1)<='\u0E30')||(input.LA(1)>='\u0E32' && input.LA(1)<='\u0E33')||(input.LA(1)>='\u0E40' && input.LA(1)<='\u0E46')||(input.LA(1)>='\u0E81' && input.LA(1)<='\u0E82')||input.LA(1)=='\u0E84'||(input.LA(1)>='\u0E87' && input.LA(1)<='\u0E88')||input.LA(1)=='\u0E8A'||input.LA(1)=='\u0E8D'||(input.LA(1)>='\u0E94' && input.LA(1)<='\u0E97')||(input.LA(1)>='\u0E99' && input.LA(1)<='\u0E9F')||(input.LA(1)>='\u0EA1' && input.LA(1)<='\u0EA3')||input.LA(1)=='\u0EA5'||input.LA(1)=='\u0EA7'||(input.LA(1)>='\u0EAA' && input.LA(1)<='\u0EAB')||(input.LA(1)>='\u0EAD' && input.LA(1)<='\u0EB0')||(input.LA(1)>='\u0EB2' && input.LA(1)<='\u0EB3')||(input.LA(1)>='\u0EBD' && input.LA(1)<='\u0EC4')||input.LA(1)=='\u0EC6'||(input.LA(1)>='\u0EDC' && input.LA(1)<='\u0EDD')||input.LA(1)=='\u0F00'||(input.LA(1)>='\u0F40' && input.LA(1)<='\u0F6A')||(input.LA(1)>='\u0F88' && input.LA(1)<='\u0F8B')||(input.LA(1)>='\u1000' && input.LA(1)<='\u1021')||(input.LA(1)>='\u1023' && input.LA(1)<='\u1027')||(input.LA(1)>='\u1029' && input.LA(1)<='\u102A')||(input.LA(1)>='\u1050' && input.LA(1)<='\u1055')||(input.LA(1)>='\u10A0' && input.LA(1)<='\u10C5')||(input.LA(1)>='\u10D0' && input.LA(1)<='\u10F6')||(input.LA(1)>='\u1100' && input.LA(1)<='\u1159')||(input.LA(1)>='\u115F' && input.LA(1)<='\u11A2')||(input.LA(1)>='\u11A8' && input.LA(1)<='\u11F9')||(input.LA(1)>='\u1200' && input.LA(1)<='\u1206')||(input.LA(1)>='\u1208' && input.LA(1)<='\u1246')||input.LA(1)=='\u1248'||(input.LA(1)>='\u124A' && input.LA(1)<='\u124D')||(input.LA(1)>='\u1250' && input.LA(1)<='\u1256')||input.LA(1)=='\u1258'||(input.LA(1)>='\u125A' && input.LA(1)<='\u125D')||(input.LA(1)>='\u1260' && input.LA(1)<='\u1286')||input.LA(1)=='\u1288'||(input.LA(1)>='\u128A' && input.LA(1)<='\u128D')||(input.LA(1)>='\u1290' && input.LA(1)<='\u12AE')||input.LA(1)=='\u12B0'||(input.LA(1)>='\u12B2' && input.LA(1)<='\u12B5')||(input.LA(1)>='\u12B8' && input.LA(1)<='\u12BE')||input.LA(1)=='\u12C0'||(input.LA(1)>='\u12C2' && input.LA(1)<='\u12C5')||(input.LA(1)>='\u12C8' && input.LA(1)<='\u12CE')||(input.LA(1)>='\u12D0' && input.LA(1)<='\u12D6')||(input.LA(1)>='\u12D8' && input.LA(1)<='\u12EE')||(input.LA(1)>='\u12F0' && input.LA(1)<='\u130E')||input.LA(1)=='\u1310'||(input.LA(1)>='\u1312' && input.LA(1)<='\u1315')||(input.LA(1)>='\u1318' && input.LA(1)<='\u131E')||(input.LA(1)>='\u1320' && input.LA(1)<='\u1346')||(input.LA(1)>='\u1348' && input.LA(1)<='\u135A')||(input.LA(1)>='\u13A0' && input.LA(1)<='\u13F4')||(input.LA(1)>='\u1401' && input.LA(1)<='\u1676')||(input.LA(1)>='\u1681' && input.LA(1)<='\u169A')||(input.LA(1)>='\u16A0' && input.LA(1)<='\u16EA')||(input.LA(1)>='\u1780' && input.LA(1)<='\u17B3')||(input.LA(1)>='\u1820' && input.LA(1)<='\u1877')||(input.LA(1)>='\u1880' && input.LA(1)<='\u18A8')||(input.LA(1)>='\u1E00' && input.LA(1)<='\u1E9B')||(input.LA(1)>='\u1EA0' && input.LA(1)<='\u1EF9')||(input.LA(1)>='\u1F00' && input.LA(1)<='\u1F15')||(input.LA(1)>='\u1F18' && input.LA(1)<='\u1F1D')||(input.LA(1)>='\u1F20' && input.LA(1)<='\u1F45')||(input.LA(1)>='\u1F48' && input.LA(1)<='\u1F4D')||(input.LA(1)>='\u1F50' && input.LA(1)<='\u1F57')||input.LA(1)=='\u1F59'||input.LA(1)=='\u1F5B'||input.LA(1)=='\u1F5D'||(input.LA(1)>='\u1F5F' && input.LA(1)<='\u1F7D')||(input.LA(1)>='\u1F80' && input.LA(1)<='\u1FB4')||(input.LA(1)>='\u1FB6' && input.LA(1)<='\u1FBC')||input.LA(1)=='\u1FBE'||(input.LA(1)>='\u1FC2' && input.LA(1)<='\u1FC4')||(input.LA(1)>='\u1FC6' && input.LA(1)<='\u1FCC')||(input.LA(1)>='\u1FD0' && input.LA(1)<='\u1FD3')||(input.LA(1)>='\u1FD6' && input.LA(1)<='\u1FDB')||(input.LA(1)>='\u1FE0' && input.LA(1)<='\u1FEC')||(input.LA(1)>='\u1FF2' && input.LA(1)<='\u1FF4')||(input.LA(1)>='\u1FF6' && input.LA(1)<='\u1FFC')||input.LA(1)=='\u207F'||input.LA(1)=='\u2102'||input.LA(1)=='\u2107'||(input.LA(1)>='\u210A' && input.LA(1)<='\u2113')||input.LA(1)=='\u2115'||(input.LA(1)>='\u2119' && input.LA(1)<='\u211D')||input.LA(1)=='\u2124'||input.LA(1)=='\u2126'||input.LA(1)=='\u2128'||(input.LA(1)>='\u212A' && input.LA(1)<='\u212D')||(input.LA(1)>='\u212F' && input.LA(1)<='\u2131')||(input.LA(1)>='\u2133' && input.LA(1)<='\u2139')||(input.LA(1)>='\u2160' && input.LA(1)<='\u2183')||(input.LA(1)>='\u3005' && input.LA(1)<='\u3007')||(input.LA(1)>='\u3021' && input.LA(1)<='\u3029')||(input.LA(1)>='\u3031' && input.LA(1)<='\u3035')||(input.LA(1)>='\u3038' && input.LA(1)<='\u303A')||(input.LA(1)>='\u3041' && input.LA(1)<='\u3094')||(input.LA(1)>='\u309D' && input.LA(1)<='\u309E')||(input.LA(1)>='\u30A1' && input.LA(1)<='\u30FA')||(input.LA(1)>='\u30FC' && input.LA(1)<='\u30FE')||(input.LA(1)>='\u3105' && input.LA(1)<='\u312C')||(input.LA(1)>='\u3131' && input.LA(1)<='\u318E')||(input.LA(1)>='\u31A0' && input.LA(1)<='\u31B7')||input.LA(1)=='\u3400'||input.LA(1)=='\u4DB5'||input.LA(1)=='\u4E00'||input.LA(1)=='\u9FA5'||(input.LA(1)>='\uA000' && input.LA(1)<='\uA48C')||input.LA(1)=='\uAC00'||input.LA(1)=='\uD7A3'||(input.LA(1)>='\uF900' && input.LA(1)<='\uFA2D')||(input.LA(1)>='\uFB00' && input.LA(1)<='\uFB06')||(input.LA(1)>='\uFB13' && input.LA(1)<='\uFB17')||input.LA(1)=='\uFB1D'||(input.LA(1)>='\uFB1F' && input.LA(1)<='\uFB28')||(input.LA(1)>='\uFB2A' && input.LA(1)<='\uFB36')||(input.LA(1)>='\uFB38' && input.LA(1)<='\uFB3C')||input.LA(1)=='\uFB3E'||(input.LA(1)>='\uFB40' && input.LA(1)<='\uFB41')||(input.LA(1)>='\uFB43' && input.LA(1)<='\uFB44')||(input.LA(1)>='\uFB46' && input.LA(1)<='\uFBB1')||(input.LA(1)>='\uFBD3' && input.LA(1)<='\uFD3D')||(input.LA(1)>='\uFD50' && input.LA(1)<='\uFD8F')||(input.LA(1)>='\uFD92' && input.LA(1)<='\uFDC7')||(input.LA(1)>='\uFDF0' && input.LA(1)<='\uFDFB')||(input.LA(1)>='\uFE70' && input.LA(1)<='\uFE72')||input.LA(1)=='\uFE74'||(input.LA(1)>='\uFE76' && input.LA(1)<='\uFEFC')||(input.LA(1)>='\uFF21' && input.LA(1)<='\uFF3A')||(input.LA(1)>='\uFF41' && input.LA(1)<='\uFF5A')||(input.LA(1)>='\uFF66' && input.LA(1)<='\uFFBE')||(input.LA(1)>='\uFFC2' && input.LA(1)<='\uFFC7')||(input.LA(1)>='\uFFCA' && input.LA(1)<='\uFFCF')||(input.LA(1)>='\uFFD2' && input.LA(1)<='\uFFD7')||(input.LA(1)>='\uFFDA' && input.LA(1)<='\uFFDC') ) {
                 input.consume();
@@ -2629,8 +2630,8 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "UnicodeCombiningMark"
     public final void mUnicodeCombiningMark() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:701:2: ( '\\u0300' .. '\\u034E' | '\\u0360' .. '\\u0362' | '\\u0483' .. '\\u0486' | '\\u0591' .. '\\u05A1' | '\\u05A3' .. '\\u05B9' | '\\u05BB' .. '\\u05BD' | '\\u05BF' | '\\u05C1' .. '\\u05C2' | '\\u05C4' | '\\u064B' .. '\\u0655' | '\\u0670' | '\\u06D6' .. '\\u06DC' | '\\u06DF' .. '\\u06E4' | '\\u06E7' .. '\\u06E8' | '\\u06EA' .. '\\u06ED' | '\\u0711' | '\\u0730' .. '\\u074A' | '\\u07A6' .. '\\u07B0' | '\\u0901' .. '\\u0903' | '\\u093C' | '\\u093E' .. '\\u094D' | '\\u0951' .. '\\u0954' | '\\u0962' .. '\\u0963' | '\\u0981' .. '\\u0983' | '\\u09BC' .. '\\u09C4' | '\\u09C7' .. '\\u09C8' | '\\u09CB' .. '\\u09CD' | '\\u09D7' | '\\u09E2' .. '\\u09E3' | '\\u0A02' | '\\u0A3C' | '\\u0A3E' .. '\\u0A42' | '\\u0A47' .. '\\u0A48' | '\\u0A4B' .. '\\u0A4D' | '\\u0A70' .. '\\u0A71' | '\\u0A81' .. '\\u0A83' | '\\u0ABC' | '\\u0ABE' .. '\\u0AC5' | '\\u0AC7' .. '\\u0AC9' | '\\u0ACB' .. '\\u0ACD' | '\\u0B01' .. '\\u0B03' | '\\u0B3C' | '\\u0B3E' .. '\\u0B43' | '\\u0B47' .. '\\u0B48' | '\\u0B4B' .. '\\u0B4D' | '\\u0B56' .. '\\u0B57' | '\\u0B82' .. '\\u0B83' | '\\u0BBE' .. '\\u0BC2' | '\\u0BC6' .. '\\u0BC8' | '\\u0BCA' .. '\\u0BCD' | '\\u0BD7' | '\\u0C01' .. '\\u0C03' | '\\u0C3E' .. '\\u0C44' | '\\u0C46' .. '\\u0C48' | '\\u0C4A' .. '\\u0C4D' | '\\u0C55' .. '\\u0C56' | '\\u0C82' .. '\\u0C83' | '\\u0CBE' .. '\\u0CC4' | '\\u0CC6' .. '\\u0CC8' | '\\u0CCA' .. '\\u0CCD' | '\\u0CD5' .. '\\u0CD6' | '\\u0D02' .. '\\u0D03' | '\\u0D3E' .. '\\u0D43' | '\\u0D46' .. '\\u0D48' | '\\u0D4A' .. '\\u0D4D' | '\\u0D57' | '\\u0D82' .. '\\u0D83' | '\\u0DCA' | '\\u0DCF' .. '\\u0DD4' | '\\u0DD6' | '\\u0DD8' .. '\\u0DDF' | '\\u0DF2' .. '\\u0DF3' | '\\u0E31' | '\\u0E34' .. '\\u0E3A' | '\\u0E47' .. '\\u0E4E' | '\\u0EB1' | '\\u0EB4' .. '\\u0EB9' | '\\u0EBB' .. '\\u0EBC' | '\\u0EC8' .. '\\u0ECD' | '\\u0F18' .. '\\u0F19' | '\\u0F35' | '\\u0F37' | '\\u0F39' | '\\u0F3E' .. '\\u0F3F' | '\\u0F71' .. '\\u0F84' | '\\u0F86' .. '\\u0F87' | '\\u0F90' .. '\\u0F97' | '\\u0F99' .. '\\u0FBC' | '\\u0FC6' | '\\u102C' .. '\\u1032' | '\\u1036' .. '\\u1039' | '\\u1056' .. '\\u1059' | '\\u17B4' .. '\\u17D3' | '\\u18A9' | '\\u20D0' .. '\\u20DC' | '\\u20E1' | '\\u302A' .. '\\u302F' | '\\u3099' .. '\\u309A' | '\\uFB1E' | '\\uFE20' .. '\\uFE23' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:708:2: ( '\\u0300' .. '\\u034E' | '\\u0360' .. '\\u0362' | '\\u0483' .. '\\u0486' | '\\u0591' .. '\\u05A1' | '\\u05A3' .. '\\u05B9' | '\\u05BB' .. '\\u05BD' | '\\u05BF' | '\\u05C1' .. '\\u05C2' | '\\u05C4' | '\\u064B' .. '\\u0655' | '\\u0670' | '\\u06D6' .. '\\u06DC' | '\\u06DF' .. '\\u06E4' | '\\u06E7' .. '\\u06E8' | '\\u06EA' .. '\\u06ED' | '\\u0711' | '\\u0730' .. '\\u074A' | '\\u07A6' .. '\\u07B0' | '\\u0901' .. '\\u0903' | '\\u093C' | '\\u093E' .. '\\u094D' | '\\u0951' .. '\\u0954' | '\\u0962' .. '\\u0963' | '\\u0981' .. '\\u0983' | '\\u09BC' .. '\\u09C4' | '\\u09C7' .. '\\u09C8' | '\\u09CB' .. '\\u09CD' | '\\u09D7' | '\\u09E2' .. '\\u09E3' | '\\u0A02' | '\\u0A3C' | '\\u0A3E' .. '\\u0A42' | '\\u0A47' .. '\\u0A48' | '\\u0A4B' .. '\\u0A4D' | '\\u0A70' .. '\\u0A71' | '\\u0A81' .. '\\u0A83' | '\\u0ABC' | '\\u0ABE' .. '\\u0AC5' | '\\u0AC7' .. '\\u0AC9' | '\\u0ACB' .. '\\u0ACD' | '\\u0B01' .. '\\u0B03' | '\\u0B3C' | '\\u0B3E' .. '\\u0B43' | '\\u0B47' .. '\\u0B48' | '\\u0B4B' .. '\\u0B4D' | '\\u0B56' .. '\\u0B57' | '\\u0B82' .. '\\u0B83' | '\\u0BBE' .. '\\u0BC2' | '\\u0BC6' .. '\\u0BC8' | '\\u0BCA' .. '\\u0BCD' | '\\u0BD7' | '\\u0C01' .. '\\u0C03' | '\\u0C3E' .. '\\u0C44' | '\\u0C46' .. '\\u0C48' | '\\u0C4A' .. '\\u0C4D' | '\\u0C55' .. '\\u0C56' | '\\u0C82' .. '\\u0C83' | '\\u0CBE' .. '\\u0CC4' | '\\u0CC6' .. '\\u0CC8' | '\\u0CCA' .. '\\u0CCD' | '\\u0CD5' .. '\\u0CD6' | '\\u0D02' .. '\\u0D03' | '\\u0D3E' .. '\\u0D43' | '\\u0D46' .. '\\u0D48' | '\\u0D4A' .. '\\u0D4D' | '\\u0D57' | '\\u0D82' .. '\\u0D83' | '\\u0DCA' | '\\u0DCF' .. '\\u0DD4' | '\\u0DD6' | '\\u0DD8' .. '\\u0DDF' | '\\u0DF2' .. '\\u0DF3' | '\\u0E31' | '\\u0E34' .. '\\u0E3A' | '\\u0E47' .. '\\u0E4E' | '\\u0EB1' | '\\u0EB4' .. '\\u0EB9' | '\\u0EBB' .. '\\u0EBC' | '\\u0EC8' .. '\\u0ECD' | '\\u0F18' .. '\\u0F19' | '\\u0F35' | '\\u0F37' | '\\u0F39' | '\\u0F3E' .. '\\u0F3F' | '\\u0F71' .. '\\u0F84' | '\\u0F86' .. '\\u0F87' | '\\u0F90' .. '\\u0F97' | '\\u0F99' .. '\\u0FBC' | '\\u0FC6' | '\\u102C' .. '\\u1032' | '\\u1036' .. '\\u1039' | '\\u1056' .. '\\u1059' | '\\u17B4' .. '\\u17D3' | '\\u18A9' | '\\u20D0' .. '\\u20DC' | '\\u20E1' | '\\u302A' .. '\\u302F' | '\\u3099' .. '\\u309A' | '\\uFB1E' | '\\uFE20' .. '\\uFE23' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:
             {
             if ( (input.LA(1)>='\u0300' && input.LA(1)<='\u034E')||(input.LA(1)>='\u0360' && input.LA(1)<='\u0362')||(input.LA(1)>='\u0483' && input.LA(1)<='\u0486')||(input.LA(1)>='\u0591' && input.LA(1)<='\u05A1')||(input.LA(1)>='\u05A3' && input.LA(1)<='\u05B9')||(input.LA(1)>='\u05BB' && input.LA(1)<='\u05BD')||input.LA(1)=='\u05BF'||(input.LA(1)>='\u05C1' && input.LA(1)<='\u05C2')||input.LA(1)=='\u05C4'||(input.LA(1)>='\u064B' && input.LA(1)<='\u0655')||input.LA(1)=='\u0670'||(input.LA(1)>='\u06D6' && input.LA(1)<='\u06DC')||(input.LA(1)>='\u06DF' && input.LA(1)<='\u06E4')||(input.LA(1)>='\u06E7' && input.LA(1)<='\u06E8')||(input.LA(1)>='\u06EA' && input.LA(1)<='\u06ED')||input.LA(1)=='\u0711'||(input.LA(1)>='\u0730' && input.LA(1)<='\u074A')||(input.LA(1)>='\u07A6' && input.LA(1)<='\u07B0')||(input.LA(1)>='\u0901' && input.LA(1)<='\u0903')||input.LA(1)=='\u093C'||(input.LA(1)>='\u093E' && input.LA(1)<='\u094D')||(input.LA(1)>='\u0951' && input.LA(1)<='\u0954')||(input.LA(1)>='\u0962' && input.LA(1)<='\u0963')||(input.LA(1)>='\u0981' && input.LA(1)<='\u0983')||(input.LA(1)>='\u09BC' && input.LA(1)<='\u09C4')||(input.LA(1)>='\u09C7' && input.LA(1)<='\u09C8')||(input.LA(1)>='\u09CB' && input.LA(1)<='\u09CD')||input.LA(1)=='\u09D7'||(input.LA(1)>='\u09E2' && input.LA(1)<='\u09E3')||input.LA(1)=='\u0A02'||input.LA(1)=='\u0A3C'||(input.LA(1)>='\u0A3E' && input.LA(1)<='\u0A42')||(input.LA(1)>='\u0A47' && input.LA(1)<='\u0A48')||(input.LA(1)>='\u0A4B' && input.LA(1)<='\u0A4D')||(input.LA(1)>='\u0A70' && input.LA(1)<='\u0A71')||(input.LA(1)>='\u0A81' && input.LA(1)<='\u0A83')||input.LA(1)=='\u0ABC'||(input.LA(1)>='\u0ABE' && input.LA(1)<='\u0AC5')||(input.LA(1)>='\u0AC7' && input.LA(1)<='\u0AC9')||(input.LA(1)>='\u0ACB' && input.LA(1)<='\u0ACD')||(input.LA(1)>='\u0B01' && input.LA(1)<='\u0B03')||input.LA(1)=='\u0B3C'||(input.LA(1)>='\u0B3E' && input.LA(1)<='\u0B43')||(input.LA(1)>='\u0B47' && input.LA(1)<='\u0B48')||(input.LA(1)>='\u0B4B' && input.LA(1)<='\u0B4D')||(input.LA(1)>='\u0B56' && input.LA(1)<='\u0B57')||(input.LA(1)>='\u0B82' && input.LA(1)<='\u0B83')||(input.LA(1)>='\u0BBE' && input.LA(1)<='\u0BC2')||(input.LA(1)>='\u0BC6' && input.LA(1)<='\u0BC8')||(input.LA(1)>='\u0BCA' && input.LA(1)<='\u0BCD')||input.LA(1)=='\u0BD7'||(input.LA(1)>='\u0C01' && input.LA(1)<='\u0C03')||(input.LA(1)>='\u0C3E' && input.LA(1)<='\u0C44')||(input.LA(1)>='\u0C46' && input.LA(1)<='\u0C48')||(input.LA(1)>='\u0C4A' && input.LA(1)<='\u0C4D')||(input.LA(1)>='\u0C55' && input.LA(1)<='\u0C56')||(input.LA(1)>='\u0C82' && input.LA(1)<='\u0C83')||(input.LA(1)>='\u0CBE' && input.LA(1)<='\u0CC4')||(input.LA(1)>='\u0CC6' && input.LA(1)<='\u0CC8')||(input.LA(1)>='\u0CCA' && input.LA(1)<='\u0CCD')||(input.LA(1)>='\u0CD5' && input.LA(1)<='\u0CD6')||(input.LA(1)>='\u0D02' && input.LA(1)<='\u0D03')||(input.LA(1)>='\u0D3E' && input.LA(1)<='\u0D43')||(input.LA(1)>='\u0D46' && input.LA(1)<='\u0D48')||(input.LA(1)>='\u0D4A' && input.LA(1)<='\u0D4D')||input.LA(1)=='\u0D57'||(input.LA(1)>='\u0D82' && input.LA(1)<='\u0D83')||input.LA(1)=='\u0DCA'||(input.LA(1)>='\u0DCF' && input.LA(1)<='\u0DD4')||input.LA(1)=='\u0DD6'||(input.LA(1)>='\u0DD8' && input.LA(1)<='\u0DDF')||(input.LA(1)>='\u0DF2' && input.LA(1)<='\u0DF3')||input.LA(1)=='\u0E31'||(input.LA(1)>='\u0E34' && input.LA(1)<='\u0E3A')||(input.LA(1)>='\u0E47' && input.LA(1)<='\u0E4E')||input.LA(1)=='\u0EB1'||(input.LA(1)>='\u0EB4' && input.LA(1)<='\u0EB9')||(input.LA(1)>='\u0EBB' && input.LA(1)<='\u0EBC')||(input.LA(1)>='\u0EC8' && input.LA(1)<='\u0ECD')||(input.LA(1)>='\u0F18' && input.LA(1)<='\u0F19')||input.LA(1)=='\u0F35'||input.LA(1)=='\u0F37'||input.LA(1)=='\u0F39'||(input.LA(1)>='\u0F3E' && input.LA(1)<='\u0F3F')||(input.LA(1)>='\u0F71' && input.LA(1)<='\u0F84')||(input.LA(1)>='\u0F86' && input.LA(1)<='\u0F87')||(input.LA(1)>='\u0F90' && input.LA(1)<='\u0F97')||(input.LA(1)>='\u0F99' && input.LA(1)<='\u0FBC')||input.LA(1)=='\u0FC6'||(input.LA(1)>='\u102C' && input.LA(1)<='\u1032')||(input.LA(1)>='\u1036' && input.LA(1)<='\u1039')||(input.LA(1)>='\u1056' && input.LA(1)<='\u1059')||(input.LA(1)>='\u17B4' && input.LA(1)<='\u17D3')||input.LA(1)=='\u18A9'||(input.LA(1)>='\u20D0' && input.LA(1)<='\u20DC')||input.LA(1)=='\u20E1'||(input.LA(1)>='\u302A' && input.LA(1)<='\u302F')||(input.LA(1)>='\u3099' && input.LA(1)<='\u309A')||input.LA(1)=='\uFB1E'||(input.LA(1)>='\uFE20' && input.LA(1)<='\uFE23') ) {
                 input.consume();
@@ -2654,8 +2655,8 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "UnicodeDigit"
     public final void mUnicodeDigit() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:804:2: ( '\\u0030' .. '\\u0039' | '\\u0660' .. '\\u0669' | '\\u06F0' .. '\\u06F9' | '\\u0966' .. '\\u096F' | '\\u09E6' .. '\\u09EF' | '\\u0A66' .. '\\u0A6F' | '\\u0AE6' .. '\\u0AEF' | '\\u0B66' .. '\\u0B6F' | '\\u0BE7' .. '\\u0BEF' | '\\u0C66' .. '\\u0C6F' | '\\u0CE6' .. '\\u0CEF' | '\\u0D66' .. '\\u0D6F' | '\\u0E50' .. '\\u0E59' | '\\u0ED0' .. '\\u0ED9' | '\\u0F20' .. '\\u0F29' | '\\u1040' .. '\\u1049' | '\\u1369' .. '\\u1371' | '\\u17E0' .. '\\u17E9' | '\\u1810' .. '\\u1819' | '\\uFF10' .. '\\uFF19' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:811:2: ( '\\u0030' .. '\\u0039' | '\\u0660' .. '\\u0669' | '\\u06F0' .. '\\u06F9' | '\\u0966' .. '\\u096F' | '\\u09E6' .. '\\u09EF' | '\\u0A66' .. '\\u0A6F' | '\\u0AE6' .. '\\u0AEF' | '\\u0B66' .. '\\u0B6F' | '\\u0BE7' .. '\\u0BEF' | '\\u0C66' .. '\\u0C6F' | '\\u0CE6' .. '\\u0CEF' | '\\u0D66' .. '\\u0D6F' | '\\u0E50' .. '\\u0E59' | '\\u0ED0' .. '\\u0ED9' | '\\u0F20' .. '\\u0F29' | '\\u1040' .. '\\u1049' | '\\u1369' .. '\\u1371' | '\\u17E0' .. '\\u17E9' | '\\u1810' .. '\\u1819' | '\\uFF10' .. '\\uFF19' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:
             {
             if ( (input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='\u0660' && input.LA(1)<='\u0669')||(input.LA(1)>='\u06F0' && input.LA(1)<='\u06F9')||(input.LA(1)>='\u0966' && input.LA(1)<='\u096F')||(input.LA(1)>='\u09E6' && input.LA(1)<='\u09EF')||(input.LA(1)>='\u0A66' && input.LA(1)<='\u0A6F')||(input.LA(1)>='\u0AE6' && input.LA(1)<='\u0AEF')||(input.LA(1)>='\u0B66' && input.LA(1)<='\u0B6F')||(input.LA(1)>='\u0BE7' && input.LA(1)<='\u0BEF')||(input.LA(1)>='\u0C66' && input.LA(1)<='\u0C6F')||(input.LA(1)>='\u0CE6' && input.LA(1)<='\u0CEF')||(input.LA(1)>='\u0D66' && input.LA(1)<='\u0D6F')||(input.LA(1)>='\u0E50' && input.LA(1)<='\u0E59')||(input.LA(1)>='\u0ED0' && input.LA(1)<='\u0ED9')||(input.LA(1)>='\u0F20' && input.LA(1)<='\u0F29')||(input.LA(1)>='\u1040' && input.LA(1)<='\u1049')||(input.LA(1)>='\u1369' && input.LA(1)<='\u1371')||(input.LA(1)>='\u17E0' && input.LA(1)<='\u17E9')||(input.LA(1)>='\u1810' && input.LA(1)<='\u1819')||(input.LA(1)>='\uFF10' && input.LA(1)<='\uFF19') ) {
                 input.consume();
@@ -2679,8 +2680,8 @@ public class BeeLexer extends Lexer {
     // $ANTLR start "UnicodeConnectorPunctuation"
     public final void mUnicodeConnectorPunctuation() throws RecognitionException {
         try {
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:827:2: ( '\\u005F' | '\\u203F' .. '\\u2040' | '\\u30FB' | '\\uFE33' .. '\\uFE34' | '\\uFE4D' .. '\\uFE4F' | '\\uFF3F' | '\\uFF65' )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:834:2: ( '\\u005F' | '\\u203F' .. '\\u2040' | '\\u30FB' | '\\uFE33' .. '\\uFE34' | '\\uFE4D' .. '\\uFE4F' | '\\uFF3F' | '\\uFF65' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:
             {
             if ( input.LA(1)=='_'||(input.LA(1)>='\u203F' && input.LA(1)<='\u2040')||input.LA(1)=='\u30FB'||(input.LA(1)>='\uFE33' && input.LA(1)<='\uFE34')||(input.LA(1)>='\uFE4D' && input.LA(1)<='\uFE4F')||input.LA(1)=='\uFF3F'||input.LA(1)=='\uFF65' ) {
                 input.consume();
@@ -2706,8 +2707,8 @@ public class BeeLexer extends Lexer {
         try {
             int _type = WhiteSpace;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:838:2: ( ( '\\t' | '\\v' | '\\f' | ' ' | '\\r' | '\\n' | '\\u00A0' ) )
-            // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:838:4: ( '\\t' | '\\v' | '\\f' | ' ' | '\\r' | '\\n' | '\\u00A0' )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:845:2: ( ( '\\t' | '\\v' | '\\f' | ' ' | '\\r' | '\\n' | '\\u00A0' ) )
+            // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:845:4: ( '\\t' | '\\v' | '\\f' | ' ' | '\\r' | '\\n' | '\\u00A0' )
             {
             if ( (input.LA(1)>='\t' && input.LA(1)<='\n')||(input.LA(1)>='\f' && input.LA(1)<='\r')||input.LA(1)==' '||input.LA(1)=='v'||input.LA(1)=='\u00A0' ) {
                 input.consume();
@@ -2734,390 +2735,390 @@ public class BeeLexer extends Lexer {
     // $ANTLR end "WhiteSpace"
 
     public void mTokens() throws RecognitionException {
-        // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:8: ( T__94 | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | T__107 | T__108 | T__109 | T__110 | T__111 | T__112 | T__113 | T__114 | T__115 | T__116 | T__117 | T__118 | T__119 | BOOLEAN | VAR | INT | DOUBLE | NULL | ADD | MINUS | MULTIP | DIV | MOD | EQUAL | NOT_EQUAL | LARGE | LARGE_EQUAL | LESS | LESS_EQUAL | OR | AND | LEFT_TOKEN | RIGHT_TOKEN | LEFT_TEXT_TOKEN | LEFT_BRACE | RIGHT_BRACE | Comment | LineComment | StringLiteral | NumericLiteral | Identifier | WhiteSpace )
+        // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:8: ( T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | T__107 | T__108 | T__109 | T__110 | T__111 | T__112 | T__113 | T__114 | T__115 | T__116 | T__117 | T__118 | T__119 | T__120 | BOOLEAN | VAR | INT | DOUBLE | NULL | ADD | MINUS | MULTIP | DIV | MOD | EQUAL | NOT_EQUAL | LARGE | LARGE_EQUAL | LESS | LESS_EQUAL | OR | AND | LEFT_TOKEN | RIGHT_TOKEN | LEFT_TEXT_TOKEN | LEFT_BRACE | RIGHT_BRACE | Comment | LineComment | StringLiteral | NumericLiteral | Identifier | WhiteSpace )
         int alt31=55;
         alt31 = dfa31.predict(input);
         switch (alt31) {
             case 1 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:10: T__94
-                {
-                mT__94(); if (state.failed) return ;
-
-                }
-                break;
-            case 2 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:16: T__95
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:10: T__95
                 {
                 mT__95(); if (state.failed) return ;
 
                 }
                 break;
-            case 3 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:22: T__96
+            case 2 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:16: T__96
                 {
                 mT__96(); if (state.failed) return ;
 
                 }
                 break;
-            case 4 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:28: T__97
+            case 3 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:22: T__97
                 {
                 mT__97(); if (state.failed) return ;
 
                 }
                 break;
-            case 5 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:34: T__98
+            case 4 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:28: T__98
                 {
                 mT__98(); if (state.failed) return ;
 
                 }
                 break;
-            case 6 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:40: T__99
+            case 5 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:34: T__99
                 {
                 mT__99(); if (state.failed) return ;
 
                 }
                 break;
-            case 7 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:46: T__100
+            case 6 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:40: T__100
                 {
                 mT__100(); if (state.failed) return ;
 
                 }
                 break;
-            case 8 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:53: T__101
+            case 7 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:47: T__101
                 {
                 mT__101(); if (state.failed) return ;
 
                 }
                 break;
-            case 9 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:60: T__102
+            case 8 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:54: T__102
                 {
                 mT__102(); if (state.failed) return ;
 
                 }
                 break;
-            case 10 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:67: T__103
+            case 9 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:61: T__103
                 {
                 mT__103(); if (state.failed) return ;
 
                 }
                 break;
-            case 11 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:74: T__104
+            case 10 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:68: T__104
                 {
                 mT__104(); if (state.failed) return ;
 
                 }
                 break;
-            case 12 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:81: T__105
+            case 11 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:75: T__105
                 {
                 mT__105(); if (state.failed) return ;
 
                 }
                 break;
-            case 13 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:88: T__106
+            case 12 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:82: T__106
                 {
                 mT__106(); if (state.failed) return ;
 
                 }
                 break;
-            case 14 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:95: T__107
+            case 13 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:89: T__107
                 {
                 mT__107(); if (state.failed) return ;
 
                 }
                 break;
-            case 15 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:102: T__108
+            case 14 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:96: T__108
                 {
                 mT__108(); if (state.failed) return ;
 
                 }
                 break;
-            case 16 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:109: T__109
+            case 15 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:103: T__109
                 {
                 mT__109(); if (state.failed) return ;
 
                 }
                 break;
-            case 17 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:116: T__110
+            case 16 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:110: T__110
                 {
                 mT__110(); if (state.failed) return ;
 
                 }
                 break;
-            case 18 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:123: T__111
+            case 17 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:117: T__111
                 {
                 mT__111(); if (state.failed) return ;
 
                 }
                 break;
-            case 19 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:130: T__112
+            case 18 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:124: T__112
                 {
                 mT__112(); if (state.failed) return ;
 
                 }
                 break;
-            case 20 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:137: T__113
+            case 19 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:131: T__113
                 {
                 mT__113(); if (state.failed) return ;
 
                 }
                 break;
-            case 21 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:144: T__114
+            case 20 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:138: T__114
                 {
                 mT__114(); if (state.failed) return ;
 
                 }
                 break;
-            case 22 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:151: T__115
+            case 21 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:145: T__115
                 {
                 mT__115(); if (state.failed) return ;
 
                 }
                 break;
-            case 23 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:158: T__116
+            case 22 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:152: T__116
                 {
                 mT__116(); if (state.failed) return ;
 
                 }
                 break;
-            case 24 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:165: T__117
+            case 23 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:159: T__117
                 {
                 mT__117(); if (state.failed) return ;
 
                 }
                 break;
-            case 25 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:172: T__118
+            case 24 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:166: T__118
                 {
                 mT__118(); if (state.failed) return ;
 
                 }
                 break;
-            case 26 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:179: T__119
+            case 25 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:173: T__119
                 {
                 mT__119(); if (state.failed) return ;
 
                 }
                 break;
+            case 26 :
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:180: T__120
+                {
+                mT__120(); if (state.failed) return ;
+
+                }
+                break;
             case 27 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:186: BOOLEAN
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:187: BOOLEAN
                 {
                 mBOOLEAN(); if (state.failed) return ;
 
                 }
                 break;
             case 28 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:194: VAR
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:195: VAR
                 {
                 mVAR(); if (state.failed) return ;
 
                 }
                 break;
             case 29 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:198: INT
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:199: INT
                 {
                 mINT(); if (state.failed) return ;
 
                 }
                 break;
             case 30 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:202: DOUBLE
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:203: DOUBLE
                 {
                 mDOUBLE(); if (state.failed) return ;
 
                 }
                 break;
             case 31 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:209: NULL
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:210: NULL
                 {
                 mNULL(); if (state.failed) return ;
 
                 }
                 break;
             case 32 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:214: ADD
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:215: ADD
                 {
                 mADD(); if (state.failed) return ;
 
                 }
                 break;
             case 33 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:218: MINUS
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:219: MINUS
                 {
                 mMINUS(); if (state.failed) return ;
 
                 }
                 break;
             case 34 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:224: MULTIP
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:225: MULTIP
                 {
                 mMULTIP(); if (state.failed) return ;
 
                 }
                 break;
             case 35 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:231: DIV
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:232: DIV
                 {
                 mDIV(); if (state.failed) return ;
 
                 }
                 break;
             case 36 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:235: MOD
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:236: MOD
                 {
                 mMOD(); if (state.failed) return ;
 
                 }
                 break;
             case 37 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:239: EQUAL
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:240: EQUAL
                 {
                 mEQUAL(); if (state.failed) return ;
 
                 }
                 break;
             case 38 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:245: NOT_EQUAL
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:246: NOT_EQUAL
                 {
                 mNOT_EQUAL(); if (state.failed) return ;
 
                 }
                 break;
             case 39 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:255: LARGE
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:256: LARGE
                 {
                 mLARGE(); if (state.failed) return ;
 
                 }
                 break;
             case 40 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:261: LARGE_EQUAL
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:262: LARGE_EQUAL
                 {
                 mLARGE_EQUAL(); if (state.failed) return ;
 
                 }
                 break;
             case 41 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:273: LESS
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:274: LESS
                 {
                 mLESS(); if (state.failed) return ;
 
                 }
                 break;
             case 42 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:278: LESS_EQUAL
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:279: LESS_EQUAL
                 {
                 mLESS_EQUAL(); if (state.failed) return ;
 
                 }
                 break;
             case 43 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:289: OR
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:290: OR
                 {
                 mOR(); if (state.failed) return ;
 
                 }
                 break;
             case 44 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:292: AND
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:293: AND
                 {
                 mAND(); if (state.failed) return ;
 
                 }
                 break;
             case 45 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:296: LEFT_TOKEN
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:297: LEFT_TOKEN
                 {
                 mLEFT_TOKEN(); if (state.failed) return ;
 
                 }
                 break;
             case 46 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:307: RIGHT_TOKEN
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:308: RIGHT_TOKEN
                 {
                 mRIGHT_TOKEN(); if (state.failed) return ;
 
                 }
                 break;
             case 47 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:319: LEFT_TEXT_TOKEN
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:320: LEFT_TEXT_TOKEN
                 {
                 mLEFT_TEXT_TOKEN(); if (state.failed) return ;
 
                 }
                 break;
             case 48 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:335: LEFT_BRACE
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:336: LEFT_BRACE
                 {
                 mLEFT_BRACE(); if (state.failed) return ;
 
                 }
                 break;
             case 49 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:346: RIGHT_BRACE
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:347: RIGHT_BRACE
                 {
                 mRIGHT_BRACE(); if (state.failed) return ;
 
                 }
                 break;
             case 50 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:358: Comment
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:359: Comment
                 {
                 mComment(); if (state.failed) return ;
 
                 }
                 break;
             case 51 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:366: LineComment
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:367: LineComment
                 {
                 mLineComment(); if (state.failed) return ;
 
                 }
                 break;
             case 52 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:378: StringLiteral
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:379: StringLiteral
                 {
                 mStringLiteral(); if (state.failed) return ;
 
                 }
                 break;
             case 53 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:392: NumericLiteral
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:393: NumericLiteral
                 {
                 mNumericLiteral(); if (state.failed) return ;
 
                 }
                 break;
             case 54 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:407: Identifier
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:408: Identifier
                 {
                 mIdentifier(); if (state.failed) return ;
 
                 }
                 break;
             case 55 :
-                // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:1:418: WhiteSpace
+                // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:1:419: WhiteSpace
                 {
                 mWhiteSpace(); if (state.failed) return ;
 
@@ -3130,8 +3131,8 @@ public class BeeLexer extends Lexer {
 
     // $ANTLR start synpred1_Bee
     public final void synpred1_Bee_fragment() throws RecognitionException {   
-        // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:431:4: ( IdentifierStart )
-        // e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\beetl1.2.beta\\src\\org\\bee\\tl\\core\\Bee.g:431:5: IdentifierStart
+        // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:438:4: ( IdentifierStart )
+        // E:\\lijz\\javamonkey\\git\\oschina_beetl\\src\\org\\bee\\tl\\core\\Bee.g:438:5: IdentifierStart
         {
         mIdentifierStart(); if (state.failed) return ;
 
@@ -3206,7 +3207,7 @@ public class BeeLexer extends Lexer {
             this.transition = DFA25_transition;
         }
         public String getDescription() {
-            return "404:10: fragment DecimalLiteral : ( ( DecimalDigit )+ '.' ( DecimalDigit )* ( ExponentPart )? | ( '.' )? ( DecimalDigit )+ ( ExponentPart )? );";
+            return "411:10: fragment DecimalLiteral : ( ( DecimalDigit )+ '.' ( DecimalDigit )* ( ExponentPart )? | ( '.' )? ( DecimalDigit )+ ( ExponentPart )? );";
         }
     }
     static final String DFA31_eotS =
@@ -4537,7 +4538,7 @@ public class BeeLexer extends Lexer {
             this.transition = DFA31_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__94 | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | T__107 | T__108 | T__109 | T__110 | T__111 | T__112 | T__113 | T__114 | T__115 | T__116 | T__117 | T__118 | T__119 | BOOLEAN | VAR | INT | DOUBLE | NULL | ADD | MINUS | MULTIP | DIV | MOD | EQUAL | NOT_EQUAL | LARGE | LARGE_EQUAL | LESS | LESS_EQUAL | OR | AND | LEFT_TOKEN | RIGHT_TOKEN | LEFT_TEXT_TOKEN | LEFT_BRACE | RIGHT_BRACE | Comment | LineComment | StringLiteral | NumericLiteral | Identifier | WhiteSpace );";
+            return "1:1: Tokens : ( T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | T__107 | T__108 | T__109 | T__110 | T__111 | T__112 | T__113 | T__114 | T__115 | T__116 | T__117 | T__118 | T__119 | T__120 | BOOLEAN | VAR | INT | DOUBLE | NULL | ADD | MINUS | MULTIP | DIV | MOD | EQUAL | NOT_EQUAL | LARGE | LARGE_EQUAL | LESS | LESS_EQUAL | OR | AND | LEFT_TOKEN | RIGHT_TOKEN | LEFT_TEXT_TOKEN | LEFT_BRACE | RIGHT_BRACE | Comment | LineComment | StringLiteral | NumericLiteral | Identifier | WhiteSpace );";
         }
     }
  

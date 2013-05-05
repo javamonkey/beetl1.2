@@ -94,6 +94,8 @@ public class EmptyFunction implements Function
 						{
 							return false;
 						}
+					}else{
+						return false;
 					}
 
 				}

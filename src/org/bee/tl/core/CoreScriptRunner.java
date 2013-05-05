@@ -71,6 +71,8 @@ public class CoreScriptRunner
 	Map<String, Function> fnMap = new HashMap<String, Function>(0);
 	Map<String, Class<Tag>> textProcessMap = new HashMap<String, Class<Tag>>(0);
 	Map<String, Format> formatMap = new HashMap<String, Format>(0);
+	Map<Class, Format> defaultFormatMap = new HashMap<Class, Format>(0);
+	
 	List<VirtualAttributeEval> virtualAttributeList = new ArrayList<VirtualAttributeEval>(0);
 	List<String> illegalNativeCallFilter = new ArrayList<String>(Arrays.asList("java.lang"));
 
@@ -104,6 +106,19 @@ public class CoreScriptRunner
 	public void setScriptInputReader(Reader reader)
 	{
 		this.reader = reader;
+	}
+	
+
+	/**
+	 * 如果模板已经转化成类，清除此模板，
+	 */
+	protected void clearAST(){
+		antlrReader = null;
+		lexer = null;
+		tokens = null;
+		parser = null;
+		tree = null;
+		
 	}
 
 	public void parse() throws IOException
@@ -918,14 +933,13 @@ public class CoreScriptRunner
 		BeeCommonNodeTree vartextNode = (BeeCommonNodeTree) list.get(0);
 
 		Object value = ExpRuntime.eval((BeeCommonNodeTree) vartextNode.getChild(0), localCtx, control);
-
+		String pattern = null;
+		Format format  = null;
 		if (vartextNode.getChildren().size() > 1)
 		{
 
-			List fmList = vartextNode.getChildren().subList(1, vartextNode.getChildCount());
-			for (int i = 0; i < fmList.size(); i++)
-			{
-				BeeCommonNodeTree fmNode = (BeeCommonNodeTree) fmList.get(i);
+			BeeCommonNodeTree fmNode = (BeeCommonNodeTree) vartextNode.getChildren().get(1);
+			if(fmNode.getType()==BeeParser.FM){
 				BeeCommonNodeTree fmNameNode = (BeeCommonNodeTree) fmNode.getChild(0);
 				String fmFunction = (String) fmNameNode.getCached();
 				if (fmFunction == null)
@@ -933,18 +947,19 @@ public class CoreScriptRunner
 					fmFunction = BeetlUtil.getFunctionFullName(fmNameNode);
 					fmNameNode.setCached(fmFunction);
 				}
-				String pattern = null;
+			
 				if (fmNode.getChildCount() == 2)
 				{
 					pattern = ((BeeCommonNodeTree) fmNode.getChild(1)).getToken().getText();
 					pattern = pattern.substring(1, pattern.length() - 1);
 				}
-				Format format = getFormat(fmFunction);
+				 format = getFormat(fmFunction);
 				if (format == null)
 				{
 					throw new BeeRuntimeException(BeeRuntimeException.FORMAT_NOT_FOUND,
 							((BeeCommonNodeTree) fmNode.getChild(0)).getToken());
 				}
+				
 				try
 				{
 					value = format.format(value, pattern);
@@ -954,10 +969,36 @@ public class CoreScriptRunner
 					throw new BeeRuntimeException(BeeRuntimeException.NATIVE_CALL_EXCEPTION,
 							((BeeCommonNodeTree) fmNode.getChild(0)).getToken(), ex);
 				}
-
+			
+			}else{
+					//BeeParser.DEFAULT_FM
+					BeeCommonNodeTree pattenNode = (BeeCommonNodeTree) fmNode.getChild(0);
+					pattern = pattenNode.getText();
+					pattern = pattern.substring(1, pattern.length() - 1);
+					Class type = value.getClass();
+					
+					 format = this.getDefaultFormat(type);
+					if (format == null)
+					{
+						throw new BeeRuntimeException(BeeRuntimeException.DEFAULT_FORMAT_NOT_FOUND,
+								((BeeCommonNodeTree)vartextNode.getChild(0)).getToken() , type.toString());
+					}
+					
+					try
+					{
+						value = format.format(value, pattern);
+					}
+					catch (Exception ex)
+					{
+						throw new BeeRuntimeException(BeeRuntimeException.NATIVE_CALL_EXCEPTION,
+								((BeeCommonNodeTree) fmNode.getChild(0)).getToken(), ex);
+					}
+					
+				
+				}
 			}
-
-		}
+		
+		
 		if (value != null)
 		{
 			if (directByteOutput)
@@ -1025,6 +1066,22 @@ public class CoreScriptRunner
 	public void registerFormat(String name, Format format)
 	{
 		this.formatMap.put(name, format);
+	}
+	
+	public void registerDefaultFormat(Class type,Format format){
+		this.defaultFormatMap.put(type,format);
+	}
+	
+	public Format getDefaultFormat(Class type){
+		
+		Format f = this.global.getDefaultFormat(type);
+		if(f==null){
+			return this.defaultFormatMap.get(type);
+		}else{
+			return f;
+		}
+		//或者便利defaultFormatMap，看key是否是type的超类或者接口,看哪个性能好了
+	
 	}
 
 	public void registerVirtualAttributeEval(VirtualAttributeEval e)

@@ -650,16 +650,23 @@ public class BeetlCodeGenerator
 					else
 					{
 						String[] formatsArg = getFormat(textVarNode);
-						printStart("out.write(format(\"" + formatsArg[0] + "\",");
-						this.writeTree(expNode);
-						if (formatsArg[1] == null)
-						{
-							print(",null ));");
+						if(formatsArg[0]==null){
+							printStart("out.write(defaultFormat(");
+							this.writeTree(expNode);							
+								print(",\"" + formatsArg[1] + "\"));");							
+						}else{
+							printStart("out.write(format(\"" + formatsArg[0] + "\",");
+							this.writeTree(expNode);
+							if (formatsArg[1] == null)
+							{
+								print(",null ));");
+							}
+							else
+							{
+								print(",\"" + formatsArg[1] + "\"));");
+							}
 						}
-						else
-						{
-							print(",\"" + formatsArg[1] + "\"));");
-						}
+						
 
 					}
 
@@ -847,7 +854,39 @@ public class BeetlCodeGenerator
 
 						if (tokeType == BeeParser.EQUAL || tokeType == BeeParser.NOT_EQUAL)
 						{
-
+							//为了保证 null==null 这种情况仍然可以比较
+							String fun = null ;
+							if(tokeType == BeeParser.EQUAL){
+								fun = "isObjectSame";
+							}else{
+								fun = "isObjectNotSame";
+							}
+							
+							print(fun+"(");
+							if (left.getTypeClass().isPrimitive())
+							{
+								print("nf.y(");
+								writeTree(left);
+								print(")");
+							}else{
+								writeTree(left);
+							}
+							
+							print(",");
+							
+							if (right.getTypeClass().isPrimitive())
+							{
+								print("nf.y(");
+								writeTree(right);
+								print(")");
+							}else{
+								writeTree(right);
+							}
+							
+							print(")");
+							
+							
+							/*
 							String equal = ".equals(";
 							if (left.getTypeClass().getRawType().equals(NullClass.class)
 									|| right.getTypeClass().getRawType().equals(NullClass.class))
@@ -887,6 +926,8 @@ public class BeetlCodeGenerator
 								print(")");
 							}
 							print(")");
+							
+							*/
 
 						}
 
@@ -1896,13 +1937,11 @@ public class BeetlCodeGenerator
 
 	private String[] getFormat(BeeCommonNodeTree textVarNode) throws IOException
 	{
-		List fmList = textVarNode.getChildren().subList(1, textVarNode.getChildCount());
+		
+		BeeCommonNodeTree fmNode = (BeeCommonNodeTree) textVarNode.getChildren().get(1);
 		String fmFunction = null;
 		String pattern = null;
-		for (int i = 0; i < fmList.size(); i++)
-		{
-			BeeCommonNodeTree fmNode = (BeeCommonNodeTree) fmList.get(i);
-
+		if(fmNode.getType()==BeeParser.FM){
 			BeeCommonNodeTree fmNameNode = (BeeCommonNodeTree) fmNode.getChild(0);
 			fmFunction = (String) fmNameNode.getCached();
 			if (fmFunction == null)
@@ -1910,19 +1949,22 @@ public class BeetlCodeGenerator
 				fmFunction = BeetlUtil.getFunctionFullName(fmNameNode);
 				fmNameNode.setCached(fmFunction);
 			}
-
+		
 			if (fmNode.getChildCount() == 2)
 			{
-				pattern = ((CommonTree) fmNode.getChild(1)).getToken().getText();
+				pattern = ((BeeCommonNodeTree) fmNode.getChild(1)).getToken().getText();
 				pattern = pattern.substring(1, pattern.length() - 1);
-
 			}
-			//目前支持一个
-			break;
-
+		}else{
+			BeeCommonNodeTree pattenNode = (BeeCommonNodeTree) fmNode.getChild(0);
+			pattern = pattenNode.getText();
+			pattern = pattern.substring(1, pattern.length() - 1);
 		}
-		return new String[]
-		{ fmFunction, pattern };
+		
+		return new String[]{ fmFunction, pattern };
+		
+		
+	
 	}
 
 	private void writeObjectRef(BeeCommonNodeTree t, int to) throws IOException

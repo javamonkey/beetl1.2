@@ -107,6 +107,7 @@ public class BeeTemplate extends AbstractTemplate
 	{
 		return resource.getLines(start, end);
 	}
+	
 
 	protected void initScriptRunner() throws IOException
 	{

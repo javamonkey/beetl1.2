@@ -6,4 +6,9 @@ public class ActivityRecord2
 	{
 		return key + "_123";
 	}
+	
+	public Object get(String key,Object o)
+	{
+		return key;
+	}
 }

@@ -6,4 +6,6 @@ public class ActivityRecord
 	{
 		return new ActivityRecord2();
 	}
+	
+	
 }

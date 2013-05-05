@@ -261,7 +261,7 @@ public class PreCompiledClass extends CompiledClass
 		CompiledClass real = null;
 		try
 		{
-			// 需要优化，并不总需要重新生成一个Classloader
+		
 			if (newLoaderRequired)
 			{
 				// class已经存在，需要重新加载，所以新生成一个classloader
@@ -278,6 +278,7 @@ public class PreCompiledClass extends CompiledClass
 			group.classMap.cacheCompiledClass(child, real);
 			// System.out.println("version:" + real.getVersion());
 			// 编译，运行成功
+			this.scriptRunner.clearAST();
 			typeTable = null;
 		}
 		catch (InstantiationException e)

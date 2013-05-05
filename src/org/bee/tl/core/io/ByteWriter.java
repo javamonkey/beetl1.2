@@ -22,6 +22,7 @@ public abstract class ByteWriter
 
 	public abstract ByteWriter getTempWriter();
 
+	/*将来也许能优化，避免数组的copy*/
 	public abstract Object getTempContent();
 
 	public abstract void flush() throws IOException;

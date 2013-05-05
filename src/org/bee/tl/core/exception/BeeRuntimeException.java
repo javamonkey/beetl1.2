@@ -86,6 +86,9 @@ public class BeeRuntimeException extends RuntimeException
 	 * 格式化函数不存在错误
 	 */
 	public static final String FORMAT_NOT_FOUND = "FORMAT_NOT_FOUND";
+	public static final String DEFAULT_FORMAT_NOT_FOUND = "DEFAULT_FORMAT_NOT_FOUND";
+	
+	
 	/**
 	 * 表达式运行错误
 	 */

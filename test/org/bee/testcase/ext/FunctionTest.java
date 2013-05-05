@@ -9,7 +9,6 @@ import org.bee.tl.core.BeeException;
 import org.bee.tl.core.Context;
 import org.bee.tl.core.Function;
 import org.bee.tl.core.Template;
-import org.bee.tl.samples.User;
 
 public class FunctionTest extends BasicTestCase
 {
@@ -28,64 +27,72 @@ public class FunctionTest extends BasicTestCase
 
 	}
 
-	public void testFunction1() throws IOException, BeeException
-	{
+//	public void testFunction1() throws IOException, BeeException
+//	{
+//
+//		Template t = this.gt.getFileTemplate("/ext/fun_template.html");
+//		User user = new User();
+//		user.setAge(19);
+//		user.setName("joel");
+//		t.set("user", user);
+//		String str = t.getTextAsString();
+//
+//		//第二次预编译
+//		t = this.gt.getFileTemplate("/ext/fun_template.html");
+//		user = new User();
+//		user.setAge(19);
+//		user.setName("joel");
+//		t.set("user", user);
+//		str = t.getTextAsString();
+//
+//		Assert.assertEquals(this.getFileContent("/ext/fun_expected.html"), str);
+//	}
+//
+//	public void testNVL() throws IOException, BeeException
+//	{
+//
+//		Template t = this.gt.getFileTemplate("/ext/nvl_template.html");
+//		User user = new User();
+//
+//		t.set("user", user);
+//		t.set("b", "好");
+//		String str = t.getTextAsString();
+//
+//		//第二次预编译
+//		t = this.gt.getFileTemplate("/ext/nvl_template.html");
+//		t.set("user", user);
+//		t.set("b", "好");
+//		str = t.getTextAsString();
+//		System.out.println(this.getFileContent("/ext/nvl_expected.html"));
+//		Assert.assertEquals(this.getFileContent("/ext/nvl_expected.html"), str);
+//	}
+//
+//	public void testSplit() throws IOException, BeeException
+//	{
+//
+//		this.gt.registerFunction("split", new SplitFunction());
+//		Template t = this.gt.getFileTemplate("/ext/split_template.html");
+//
+//		t.set("b", "hello,this is joel,nice to see you");
+//		String str = t.getTextAsString();
+//
+//		//第二次预编译
+//		t = this.gt.getFileTemplate("/ext/split_template.html");
+//		t.set("b", "hello,this is joel,nice to see you");
+//		str = t.getTextAsString();
+//
+//		Assert.assertEquals(this.getFileContent("/ext/split_expected.html"), str);
+//
+//	}
 
-		Template t = this.gt.getFileTemplate("/ext/fun_template.html");
-		User user = new User();
-		user.setAge(19);
-		user.setName("joel");
-		t.set("user", user);
+	public void testWrapper() throws IOException, BeeException{
+		FunctionWrapperSample fw = new FunctionWrapperSample();
+		this.gt.registerFunctionPackage("love", fw);
+		Template t = this.gt.getFileTemplate("/ext/wrapper_template.html");		
 		String str = t.getTextAsString();
-
-		//第二次预编译
-		t = this.gt.getFileTemplate("/ext/fun_template.html");
-		user = new User();
-		user.setAge(19);
-		user.setName("joel");
-		t.set("user", user);
-		str = t.getTextAsString();
-
-		Assert.assertEquals(this.getFileContent("/ext/fun_expected.html"), str);
+		Assert.assertEquals(this.getFileContent("/ext/wrapper_expected.html"), str);
 	}
-
-	public void testNVL() throws IOException, BeeException
-	{
-
-		Template t = this.gt.getFileTemplate("/ext/nvl_template.html");
-		User user = new User();
-
-		t.set("user", user);
-		t.set("b", "好");
-		String str = t.getTextAsString();
-
-		//第二次预编译
-		t = this.gt.getFileTemplate("/ext/nvl_template.html");
-		t.set("user", user);
-		t.set("b", "好");
-		str = t.getTextAsString();
-		System.out.println(this.getFileContent("/ext/nvl_expected.html"));
-		Assert.assertEquals(this.getFileContent("/ext/nvl_expected.html"), str);
-	}
-
-	public void testSplit() throws IOException, BeeException
-	{
-
-		this.gt.registerFunction("split", new SplitFunction());
-		Template t = this.gt.getFileTemplate("/ext/split_template.html");
-
-		t.set("b", "hello,this is joel,nice to see you");
-		String str = t.getTextAsString();
-
-		//第二次预编译
-		t = this.gt.getFileTemplate("/ext/split_template.html");
-		t.set("b", "hello,this is joel,nice to see you");
-		str = t.getTextAsString();
-
-		Assert.assertEquals(this.getFileContent("/ext/split_expected.html"), str);
-
-	}
-
+	
 	class SplitFunction implements Function
 	{
 

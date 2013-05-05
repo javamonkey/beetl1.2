@@ -7,6 +7,17 @@ public class MethodConf
 	public Method method;
 	public int[] convert;
 	public boolean isNeedConvert;
+	public boolean isExactMatch = true ;
+	public final static int  INT_CONVERT =1 ;
+	public final static int  LONG_CONVERT =2 ;
+	public final static int  DOUBLE_CONVERT =3 ;
+	public final static int  FLOAT_CONVERT =4 ;
+	public final static int  SHORT_CONVERT =5 ;
+	public final static int  ORGINAL_CONVERT =11 ;
+	public final static int  NO_CONVERT =0 ;
+	
+	
+	
 
 	public String toString()
 	{
@@ -28,27 +39,27 @@ public class MethodConf
 		switch (convert[i])
 		{
 
-			case 1:
+			case INT_CONVERT:
 			{
 				return ".intValue()";
 			}
-			case 2:
+			case LONG_CONVERT:
 			{
 				return ".longValue()";
 			}
-			case 3:
+			case DOUBLE_CONVERT:
 			{
 				return ".doubleValue()";
 			}
-			case 4:
+			case FLOAT_CONVERT:
 			{
 				return ".floatValue()";
 			}
-			case 5:
+			case SHORT_CONVERT:
 			{
 				return ".shortValue()";
 			}
-			case 11:
+			case ORGINAL_CONVERT:
 			{
 				return ".orginalObject()";
 			}
@@ -64,31 +75,31 @@ public class MethodConf
 	{
 		switch (convert[i])
 		{
-			case 0:
+			case NO_CONVERT:
 			{
 				return o;
 			}
-			case 1:
+			case INT_CONVERT:
 			{
 				return ((Number) o).intValue();
 			}
-			case 2:
+			case LONG_CONVERT:
 			{
 				return ((Number) o).longValue();
 			}
-			case 3:
+			case DOUBLE_CONVERT:
 			{
 				return ((Number) o).doubleValue();
 			}
-			case 4:
+			case FLOAT_CONVERT:
 			{
 				return ((Number) o).floatValue();
 			}
-			case 5:
+			case SHORT_CONVERT:
 			{
 				return ((Number) o).shortValue();
 			}
-			case 11:
+			case ORGINAL_CONVERT:
 			{
 				return ((BeeNumber) o).orginalObject();
 			}

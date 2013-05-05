@@ -1,12 +1,11 @@
 <project name="client" default="jarClass" basedir=".">
     <property name="product" value="beetl"/>
-    <property name="version" value="1.21"/>
+    <property name="version" value="1.22"/>
     <property name="classes.dir" value="${basedir}/bin"/>
     <property name="build.dir" value="${basedir}/build"/>
-    <!--property name="lib.dir" value="${basedir}/lib"/-->
+    <property name="lib.dir" value="${basedir}"/>
     <!--property name="lib.dir" value="E:\lijz\javamonkey\bee\trunk\workspace\tl_sample_web\WebContent\WEB-INF\lib"/-->
-	<property name="lib.dir" value="E:\lijz\javamonkey\bee\trunk\workspace\beetlonline\WebContent\WEB-INF\lib"/>
-		
+	
 
     <property name="jar.file" value="${product}.${version}.jar"/>
 

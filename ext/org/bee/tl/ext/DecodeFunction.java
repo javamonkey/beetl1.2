@@ -49,7 +49,7 @@ public class DecodeFunction implements Function
 			int i = 1;
 			while (true)
 			{
-				if (o.equals(paras[i]))
+				if (same(o,paras[i]))
 				{
 					return paras[i + 1];
 				}
@@ -74,6 +74,15 @@ public class DecodeFunction implements Function
 			throw new RuntimeException("decode函数使用错误:DECODE(value, if1, then1, if2,then2, if3,then3, . . . else )");
 		}
 
+	}
+	
+	private boolean same(Object a,Object b){
+		if(a==null&&b==null) return true;
+		else if(a!=null&&b!=null){
+			return a.equals(b);
+		}else{
+			return false;
+		}
 	}
 
 	public static void main(String args[])

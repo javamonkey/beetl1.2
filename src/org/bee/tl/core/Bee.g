@@ -18,6 +18,7 @@ tokens {
   FOR; 
   VAR_TEXT;
   FM;
+  DEFAULT_FM;
   SLIST;
   IF;
   EXP;
@@ -199,8 +200,14 @@ textStatment
 	:   
 	    LEFT_TOKEN textVar RIGHT_TOKEN -> ^(HOLDER textVar)
 	|	LEFT_TOKEN '!(' textVar ')'RIGHT_TOKEN -> ^(HOLDER textVar SAFE_OUTPUT);
-textVar	:	b=exp (',' fm=functionFullName ('=' StringLiteral)?)* -> ^(VAR_TEXT $b (^(FM $fm StringLiteral?))*) ;
-		
+
+textVar	
+:	b=exp  (',' textformat)?   -> ^(VAR_TEXT $b textformat? ) ;
+
+textformat:
+fm=functionFullName ('=' StringLiteral)? -> ^(FM $fm StringLiteral? )
+| StringLiteral -> ^(DEFAULT_FM StringLiteral) ;
+	
 varDefine
 	
 	:	a=VAR{if(isStrictMVC)	throw new MVCStrictException($a);} varAssignMent (',' varAssignMent)* ->^(VAR_DEFINE[$a] varAssignMent )+;	

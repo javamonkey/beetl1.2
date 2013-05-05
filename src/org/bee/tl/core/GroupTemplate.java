@@ -33,7 +33,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
-import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -644,12 +643,8 @@ public class GroupTemplate
 	 */
 	public void registerFunctionPackage(String packageName, Object o)
 	{
-		Method[] ms = BeetlUtil.getSelfMethod(o);
-		for (Method m : ms)
-		{
-			FunctionWrapper fw = new FunctionWrapper(o, m);
-			this.registerFunction(packageName + "." + fw.getFunctionName(), fw);
-		}
+		
+		this.scriptGlobal.registerFunctionPackage(packageName, o);
 
 	}
 
@@ -675,6 +670,28 @@ public class GroupTemplate
 
 		scriptGlobal.registerFormat(name, format);
 	}
+	
+	
+	public void registerDefaultFormat(Class type,Format format){
+			this.scriptGlobal.registerDefaultFormat(type, format);
+	}
+	
+	
+	
+	/**
+	 * 添加一个共享变量，这样，所有模板都能读取到共享变量
+	 * 
+	 * @param name
+	 * @param value
+	 */
+	public void addSharedVarible(String name, Object value){
+		this.scriptGlobal.addSharedVarible(name, value);
+	}
+	
+	public Object getSharedVarible(String name){
+		return this.scriptGlobal.getSharedVarible(name);
+	}
+	
 
 	protected VirtualAttributeEval getVirtualAttributeEval(Class c, String attributeName)
 	{
@@ -851,7 +868,7 @@ public class GroupTemplate
 		}
 		catch (MalformedURLException e)
 		{
-			// TODO Auto-generated catch block
+			//不可能发生
 			e.printStackTrace();
 		}
 	}

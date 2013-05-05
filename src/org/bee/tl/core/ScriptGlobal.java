@@ -54,12 +54,10 @@ import org.bee.tl.ext.StringUtil;
 import org.bee.tl.ext.TruncFunction;
 import org.bee.tl.ext.cache.CacheTag;
 
-public class ScriptGlobal
-{
+public class ScriptGlobal {
 	public static ScriptGlobal defaultScriptGlobal = new ScriptGlobal();
 
-	static
-	{
+	static {
 		initEmbed(defaultScriptGlobal);
 	}
 
@@ -68,23 +66,22 @@ public class ScriptGlobal
 	Map<String, Format> formatMap = new HashMap<String, Format>();
 	List<VirtualAttributeEval> virtualAttributeList = new ArrayList<VirtualAttributeEval>();
 	Map<String, Object> sharedVarible = new HashMap<String, Object>();
-	List<String> illegaleNativeCall = new ArrayList<String>(Arrays.asList("java.lang"));
+	Map<Class, Format> defaultFormatMap = new HashMap<Class, Format>(0);
+	List<String> illegaleNativeCall = new ArrayList<String>(
+			Arrays.asList("java.lang"));
 
-	public static ScriptGlobal createScriptGlobal()
-	{
+	public static ScriptGlobal createScriptGlobal() {
 		ScriptGlobal sg = new ScriptGlobal();
 		initEmbed(sg);
 		return sg;
 
 	}
 
-	public void addSharedVarible(String name, Object value)
-	{
+	public void addSharedVarible(String name, Object value) {
 		this.sharedVarible.put(name, value);
 	}
 
-	public void registerVirtualAttributeEval(VirtualAttributeEval e)
-	{
+	public void registerVirtualAttributeEval(VirtualAttributeEval e) {
 		virtualAttributeList.add(e);
 
 	}
@@ -95,10 +92,8 @@ public class ScriptGlobal
 	 * @param name
 	 * @param fn
 	 */
-	public void registerFunction(String name, Function fn)
-	{
-		if (this.containTag(name))
-		{
+	public void registerFunction(String name, Function fn) {
+		if (this.containTag(name)) {
 			throw new RuntimeException("Function和Tag方法名不能重复:" + name);
 		}
 		this.fnMap.put(name, fn);
@@ -111,12 +106,11 @@ public class ScriptGlobal
 	 * @param packageName
 	 * @param o
 	 */
-	public void registerFunctionPackage(String packageName, Object o)
-	{
+	public void registerFunctionPackage(String packageName, Object o) {
+		
+		List<FunctionWrapper>  list = FunctionWrapper.getFunctionWrapper(o);
 		Method[] ms = BeetlUtil.getSelfMethod(o);
-		for (Method m : ms)
-		{
-			FunctionWrapper fw = new FunctionWrapper(o, m);
+		for (FunctionWrapper fw : list) {			
 			this.registerFunction(packageName + "." + fw.getFunctionName(), fw);
 		}
 
@@ -128,19 +122,15 @@ public class ScriptGlobal
 	 * @param name
 	 * @param tag
 	 */
-	public void registerTag(String name, Class tag)
-	{
-		if (this.containFunction(name))
-		{
+	public void registerTag(String name, Class tag) {
+		if (this.containFunction(name)) {
 			throw new RuntimeException("Tag和Function方法名不能重复:" + name);
 		}
-		if (BeetlUtil.checkTag(tag))
-		{
+		if (BeetlUtil.checkTag(tag)) {
 			this.textProcessMap.put(name, tag);
-		}
-		else
-		{
-			throw new RuntimeException("Class " + tag + " is not a Tag or can not create instance");
+		} else {
+			throw new RuntimeException("Class " + tag
+					+ " is not a Tag or can not create instance");
 		}
 	}
 
@@ -150,107 +140,96 @@ public class ScriptGlobal
 	 * @param name
 	 * @param format
 	 */
-	public void registerFormat(String name, Format format)
-	{
+	public void registerFormat(String name, Format format) {
 
 		this.formatMap.put(name, format);
 	}
 
-	protected VirtualAttributeEval getVirtualAttributeEval(Class c, String attributeName)
-	{
-		for (VirtualAttributeEval eval : virtualAttributeList)
-		{
-			if (eval.isSuppoert(c, attributeName))
-			{
+	public void registerDefaultFormat(Class type, Format format) {
+		this.defaultFormatMap.put(type, format);
+	}
+
+	public Format getDefaultFormat(Class type) {
+
+		// 或者便利defaultFormatMap，看key是否是type的超类或者接口,看哪个性能好了
+	
+		return this.defaultFormatMap.get(type);
+	
+	}
+
+	protected VirtualAttributeEval getVirtualAttributeEval(Class c,
+			String attributeName) {
+		for (VirtualAttributeEval eval : virtualAttributeList) {
+			if (eval.isSuppoert(c, attributeName)) {
 				return eval;
 			}
 		}
 		return null;
 	}
 
-	protected Tag getTag(String name)
-	{
+	protected Tag getTag(String name) {
 		Class process = this.textProcessMap.get(name);
-		if (process == null)
-		{
+		if (process == null) {
 			return null;
-		}
-		else
-		{
-			try
-			{
+		} else {
+			try {
 
 				Tag tag = (Tag) process.newInstance();
 
 				return tag;
-			}
-			catch (InstantiationException e)
-			{
+			} catch (InstantiationException e) {
 				return null;
-			}
-			catch (IllegalAccessException e)
-			{
+			} catch (IllegalAccessException e) {
 				return null;
 			}
 		}
 
 	}
 
-	public Function getFunction(String name)
-	{
+	public Function getFunction(String name) {
 		Function fn = fnMap.get(name);
 		return fn;
 	}
 
-	public Format getFormat(String name)
-	{
+	public Format getFormat(String name) {
 		Format fn = formatMap.get(name);
 		return fn;
 	}
 
-	public boolean containFunction(String name)
-	{
+	public boolean containFunction(String name) {
 		return fnMap.containsKey(name);
 	}
 
-	public boolean containTag(String name)
-	{
+	public boolean containTag(String name) {
 		return textProcessMap.containsKey(name);
 	}
 
-	public boolean containFormat(String name)
-	{
+	public boolean containFormat(String name) {
 		return formatMap.containsKey(name);
 	}
 
-	public boolean containIllegalNativeCall(String name)
-	{
+	public boolean containIllegalNativeCall(String name) {
 		return BeetlUtil.contain(illegaleNativeCall, name);
 
 	}
 
-	public Map<String, Object> getSharedVaribles()
-	{
+	public Map<String, Object> getSharedVaribles() {
 		return this.sharedVarible;
 	}
 
-	public Object getSharedVarible(String name)
-	{
+	public Object getSharedVarible(String name) {
 		return this.sharedVarible.get(name);
 	}
 
-	public void addNativeCall(String packageName)
-	{
+	public void addNativeCall(String packageName) {
 		this.illegaleNativeCall.add(packageName);
 	}
 
-	public List<String> getIllegaleNativeCall()
-	{
+	public List<String> getIllegaleNativeCall() {
 		return illegaleNativeCall;
 	}
 
-	public static void initEmbed(ScriptGlobal sg)
-	{
+	public static void initEmbed(ScriptGlobal sg) {
 		sg.registerFunction("date", new DateFunction());
 		sg.registerFunction("nvl", new NVLFunction());
 		sg.registerFunction("debug", new DebugFunction());
@@ -267,58 +246,64 @@ public class ScriptGlobal
 		sg.registerFunctionPackage("strutil", new StringUtil());
 
 		// format
-		sg.registerFormat("dateFormat", new DateFormat());
-		sg.registerFormat("numberFormat", new NumberFormat());
+		Format dateForamt = new DateFormat();
+		Format numberFormat = new NumberFormat();
+		
+		sg.registerFormat("dateFormat",dateForamt);
+		sg.registerFormat("numberFormat",numberFormat);
+		
+		sg.registerDefaultFormat(java.util.Date.class, dateForamt);
+		sg.registerDefaultFormat(java.sql.Date.class, dateForamt);
+		sg.registerDefaultFormat(java.sql.Time.class, dateForamt);
+		sg.registerDefaultFormat(java.sql.Timestamp.class, dateForamt);
+		
+		sg.registerDefaultFormat(java.lang.Short.class, numberFormat);
+		sg.registerDefaultFormat(java.lang.Long.class, numberFormat);
+		sg.registerDefaultFormat(java.lang.Integer.class, numberFormat);
+		sg.registerDefaultFormat(java.lang.Float.class, numberFormat);
+		sg.registerDefaultFormat(java.lang.Double.class, numberFormat);
+		sg.registerDefaultFormat(java.math.BigInteger.class, numberFormat);
+		sg.registerDefaultFormat(java.math.BigDecimal.class, numberFormat);
+		sg.registerDefaultFormat(java.util.concurrent.atomic.AtomicLong.class, numberFormat);
+		sg.registerDefaultFormat(java.util.concurrent.atomic.AtomicInteger.class, numberFormat);
+		sg.registerDefaultFormat(org.bee.tl.core.number.BigDecimalNumber.class, numberFormat);
+		sg.registerDefaultFormat(org.bee.tl.core.number.GeneralNumber.class, numberFormat);
 
 		// tag
 		sg.registerTag("deleteTag", DeleteTag.class);
 		sg.registerTag("includeFileTemplate", IncludeFileTemplateTag.class);
 		sg.registerTag("include", IncludeFileTemplateTag.class);
-		//		sg.registerTag("includeJsp", IncludeJSPTag.class);
+		// sg.registerTag("includeJsp", IncludeJSPTag.class);
 		sg.registerTag("layout", LayoutTag.class);
 		sg.registerTag("cache", CacheTag.class);
 
 		// virtual attribute
 		sg.registerVirtualAttributeEval(new VirtualAttributeEval() {
-			public Integer eval(Object o, String attributeName, Context ctx)
-			{
-				if (attributeName.equals("size"))
-				{
-					if (o instanceof Collection)
-					{
+			public Integer eval(Object o, String attributeName, Context ctx) {
+				if (attributeName.equals("size")) {
+					if (o instanceof Collection) {
 						return ((Collection) o).size();
-					}
-					else if (o instanceof Map)
-					{
+					} else if (o instanceof Map) {
 						return ((Map) o).size();
-					}
-					else if (o.getClass().isArray())
-					{
+					} else if (o.getClass().isArray()) {
 						return ((Object[]) o).length;
 
-					}
-					else
-					{
+					} else {
 						throw new IllegalArgumentException();
 					}
 
-				}
-				else
-				{
+				} else {
 					throw new IllegalArgumentException();
 				}
 
 			}
 
-			public boolean isSuppoert(Class c, String attributeName)
-			{
-				if ((Map.class.isAssignableFrom(c) || Collection.class.isAssignableFrom(c) || c.isArray())
-						&& attributeName.equals("size"))
-				{
+			public boolean isSuppoert(Class c, String attributeName) {
+				if ((Map.class.isAssignableFrom(c)
+						|| Collection.class.isAssignableFrom(c) || c.isArray())
+						&& attributeName.equals("size")) {
 					return true;
-				}
-				else
-				{
+				} else {
 					return false;
 				}
 			}

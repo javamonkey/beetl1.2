@@ -32,7 +32,7 @@ import java.math.BigDecimal;
 
 
 /**
- * beetl里的数字，保证精度和大数的计算
+ * beetl里的数值，支持大精度模式和普通模式
  * <p>
  * 如999999999999999999999999/23232323
  * 
@@ -57,62 +57,7 @@ public  abstract class BeeNumber extends Number implements Comparable
 	public abstract BeeNumber negate();
 	public abstract Number get();
 	public abstract BigDecimal getBigDecimal();
-////	public String numToString(Number num){
-////		return num.toString();
-//////		try{
-//////			Log.key1Start();
-//////			if(num instanceof Integer|| num instanceof Long || num instanceof Short ||num instanceof BigInteger){
-//////				return num.toString();
-//////			}else if(num instanceof BigDecimal){
-//////				String str = num.toString();
-//////				int index = -1;
-//////				//5.120000
-//////				if ((index = str.indexOf('.')) != -1)
-//////				{
-//////					char[] array = str.toCharArray();
-//////					int i = str.length() - 1;
-//////					for (; i > index; i--)
-//////					{
-//////						if (array[i] != '0')
-//////						{
-//////							break;
-//////						}
-//////					}
-//////					if (i == index)
-//////					{
-//////						return new String(array, 0, i);
-//////					}
-//////					else
-//////					{
-//////						return new String(array, 0, i + 1);
-//////					}
-//////
-//////				}
-//////				else
-//////				{
-//////					String  st = num.toString();
-//////					return str;
-//////					
-//////					
-//////				}
-//////
-//////			}
-//////			//double float
-//////			else{
-//////				
-////////				
-////////				
-//////				
-//////				return s;			
-//////				
-//////			}
-//////		}finally{
-//////			Log.key1End();
-//////		}
-////		
-//		
-//	}
-	
+
 	
 		
 

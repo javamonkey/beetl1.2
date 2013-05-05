@@ -127,7 +127,7 @@ public class BigDecimalNumber  extends GeneralNumber{
 			return this.bigNum.compareTo(n1)==0;
 			
 		}else{
-			throw new RuntimeException("不是数字类型，不能比较");
+			return false ;
 		}
 		
 		

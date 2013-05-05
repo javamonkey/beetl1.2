@@ -24,8 +24,13 @@ public class FormatTest extends BasicTestCase
 		
 
 		});
+		
+		
+		
+		
 
 	}
+
 
 	public void testFormat() throws IOException, BeeException
 	{
@@ -38,6 +43,20 @@ public class FormatTest extends BasicTestCase
 		str = t.getTextAsString();
 		Assert.assertEquals(this.getFileContent("/ext/format_expected.html"), str);
 	}
+	
+	
+	public void testDefaultFormat() throws IOException, BeeException
+	{
+
+		Template t = this.gt.getFileTemplate("/ext/defaultformat_template.html");		
+		String str = t.getTextAsString();
+		Assert.assertEquals(this.getFileContent("/ext/defaultformat_expected.html"), str);
+		//第二次预编译
+		t = this.gt.getFileTemplate("/ext/defaultformat_template.html");		
+		str = t.getTextAsString();
+		Assert.assertEquals(this.getFileContent("/ext/defaultformat_expected.html"), str);
+	}
+
 
 	
 }

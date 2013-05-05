@@ -49,7 +49,7 @@ public class ByteWriter_Byte extends ByteWriter
 	public Object getTempContent()
 	{
 		NoLockByteArrayOutputStream bos = (NoLockByteArrayOutputStream) os;
-		return bos.buf;
+		return bos.toByteArray();
 	}
 
 	@Override

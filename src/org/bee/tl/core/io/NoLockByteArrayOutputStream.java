@@ -51,7 +51,7 @@ public class NoLockByteArrayOutputStream extends OutputStream
 
 	public byte toByteArray()[]
 	{
-		return this.buf;
+		return Arrays.copyOf(this.buf,count);
 	}
 
 	public int size()

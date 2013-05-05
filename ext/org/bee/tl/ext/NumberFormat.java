@@ -29,7 +29,9 @@ package org.bee.tl.ext;
 
 import java.text.DecimalFormat;
 
+import org.bee.tl.core.BeeNumber;
 import org.bee.tl.core.Format;
+import org.bee.tl.core.number.NumberFactory;
 
 /*格式化Number类型，pattern参考DecimalFormat,如
  * ${0.345,numberFormat="##.#%"}
@@ -52,17 +54,25 @@ public class NumberFormat implements Format
 		{
 			df = new DecimalFormat(pattern);
 		}
+		
+		
+		if(data instanceof BeeNumber){
+			return df.format(((BeeNumber)data).orginalObject());
+		}else{
 
-		return df.format(data);
+			return df.format(data);
+		}
+
 
 	}
 
 	public static void main(String[] args)
 	{
-//		BeeNumber n = new BeeNumber("0.915456");
-//		NumberFormat nf = new NumberFormat();
-//		String str = nf.format(n, "#.##%");
-//		System.out.println(str);
+		NumberFactory f = new NumberFactory(false);
+		BeeNumber n = f.y(12.4464);
+		NumberFormat nf = new NumberFormat();
+		String str = nf.format(n, "#.##");
+		System.out.println(str);
 	}
 
 }

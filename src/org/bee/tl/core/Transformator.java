@@ -155,7 +155,7 @@ public class Transformator
 		}
 		checkAppendCR();
 		parser();
-
+		orginal.close();
 		return new StringReader(sb.toString());
 	}
 
@@ -174,13 +174,7 @@ public class Transformator
 		return new StringReader(sb.toString());
 	}
 
-	private char[] addCapcacity(char[] array, int newLength)
-	{
-		char[] newArray = new char[newLength];
-		System.arraycopy(array, 0, newArray, 0, Math.min(array.length, newLength));
-		return newArray;
 
-	}
 
 	private void findCR()
 	{
@@ -398,6 +392,7 @@ public class Transformator
 						// 需要更改输出
 						reforamtStatmentLine();
 						lineStatus.reset();
+						sb.append(lineSeparator);
 					}
 					else
 					{

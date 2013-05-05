@@ -170,6 +170,7 @@ public class ExpRuntime
 	{
 		Object v1 = eval(a, ctx, control);
 		Object v2 = eval(b, ctx, control);
+		/*
 		if(b.getType()==BeeParser.NULL){
 			if(v1==null) return true;
 			else return false ;
@@ -177,30 +178,31 @@ public class ExpRuntime
 			//big change,与编译引擎保持一致 20130328
 			return v1.equals(v2);
 		}
+		*/
 		
-//		if(v1==null&&v2==null){
-//			return true ;
-//		}
-//		if (v1 != null || v2 != null)
-//		{
-//			if (v1 != null)
-//			{
-//				return v1.equals(v2);
-//			}
-//			else
-//			{
-//				return v2.equals(v1);
-//			}
-//
-//		}
-//		else if (v1 == null)
-//		{
-//			return v2 == null;
-//		}
-//		else
-//		{
-//			return v1 == null;
-//		}
+		if(v1==null&&v2==null){
+			return true ;
+		}
+		if (v1 != null || v2 != null)
+		{
+			if (v1 != null)
+			{
+				return v1.equals(v2);
+			}
+			else
+			{
+				return v2.equals(v1);
+			}
+
+		}
+		else if (v1 == null)
+		{
+			return v2 == null;
+		}
+		else
+		{
+			return v1 == null;
+		}
 	}
 
 	public static Object eval(BeeCommonNodeTree exp, Context ctx, RuntimeControl control)
