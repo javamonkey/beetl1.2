@@ -35,6 +35,9 @@ tokens {
   SWITCH;
   CASE;
   DEFAULT;
+  G_SWITCH;
+  G_CASE;
+  G_DEFAULT;
   JSON;
   JSONARRAY;
   JSONMAP;
@@ -151,7 +154,14 @@ statement
 	;
 	
 
-	
+g_switchStatment
+	:	a='go-switch' ('(' base=exp ')')? '{' g_caseStatment* g_defaultStatment? '}'
+	 ->^(G_SWITCH[$a] $base? g_caseStatment* g_defaultStatment? ) ;
+
+g_caseStatment 
+	:	a='case' exp (',' exp)* ':' statmentBlock ->^(G_CASE[$a] exp+ statmentBlock);
+g_defaultStatment
+	:	a='default' ':' statmentBlock -> ^(G_DEFAULT[$a] statmentBlock);	
 
 directive: 'DIRECTIVE'  Identifier (StringLiteral)? ';' -> ^(DIRECTIVE Identifier (StringLiteral)?);
 returnStatment
