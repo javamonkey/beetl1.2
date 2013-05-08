@@ -578,6 +578,56 @@ public class TypeTable
 				break;
 
 			}
+			
+			case BeeParser.G_SWITCH:
+			{
+				BeeCommonNodeTree firstNode = (BeeCommonNodeTree) tree.getChild(0);
+			
+				int caseCount = 0;
+				int startCase = 0;
+				if(firstNode.getType()==BeeParser.G_CASE||firstNode.getType()==BeeParser.G_DEFAULT){				
+					startCase = 0;;
+					caseCount = tree.getChildCount();
+					
+				}else{
+					caseCount = tree.getChildCount()-1;				
+					startCase = 1;
+					this.infer(firstNode, ctx);
+					
+				}
+				
+				
+				BeeCommonNodeTree caseTree = null;
+				BeeCommonNodeTree caseBlockTree = null;
+				BeeCommonNodeTree expListTree = null;
+				for (int i = startCase; i < caseCount; i++)
+				{
+					caseTree = (BeeCommonNodeTree) tree.getChild(i);
+
+					if (caseTree.getToken().getType() != BeeParser.DEFAULT)
+					{
+						expListTree = (BeeCommonNodeTree) caseTree.getChild(0);
+						for(int j=0;j<expListTree.getChildCount();j++){
+							this.infer((BeeCommonNodeTree)expListTree.getChild(j), ctx);
+						}
+						caseBlockTree = (BeeCommonNodeTree)caseTree.getChild(1);
+						this.infer(caseBlockTree, ctx);
+					
+					}
+					else
+					{
+						caseBlockTree = (BeeCommonNodeTree) caseTree.getChild(0);
+						this.infer(caseBlockTree, ctx);
+
+					}
+
+				}
+				
+				 break;
+				
+		
+			}
+			
 			case BeeParser.WHILE:
 			{
 				BeeCommonNodeTree condNode = (BeeCommonNodeTree) tree.getChild(0);
