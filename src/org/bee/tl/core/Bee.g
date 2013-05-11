@@ -161,10 +161,10 @@ g_switchStatment
 	 ->^(G_SWITCH[$a] $base? g_caseStatment* g_defaultStatment? ) ;
 
 g_caseStatment 
-	:	a='case' exp (',' exp)* ':' statmentBlock ->^(G_CASE[$a] ^(G_CASE_EXPLIST exp+) statmentBlock);
+	:	a='case' exp (',' exp)* ':' statements ->^(G_CASE[$a] ^(G_CASE_EXPLIST exp+) statements);
 
 g_defaultStatment
-	:	a='default' ':' statmentBlock -> ^(G_DEFAULT[$a] statmentBlock);	
+	:	a='default' ':' statements -> ^(G_DEFAULT[$a] statements);	
 
 directive: 'DIRECTIVE'  Identifier (StringLiteral)? ';' -> ^(DIRECTIVE Identifier (StringLiteral)?);
 returnStatment

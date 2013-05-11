@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:50:56 E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g 2013-05-05 21:31:41
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g 2013-05-12 00:12:49
 
 package org.bee.tl.core;
 import org.bee.tl.core.exception.*;
@@ -896,7 +896,7 @@ public class BeeParser extends Parser {
     };
 
     // $ANTLR start "g_caseStatment"
-    // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:163:1: g_caseStatment : a= 'case' exp ( ',' exp )* ':' statmentBlock -> ^( G_CASE[$a] ^( G_CASE_EXPLIST ( exp )+ ) statmentBlock ) ;
+    // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:163:1: g_caseStatment : a= 'case' exp ( ',' exp )* ':' statements -> ^( G_CASE[$a] ^( G_CASE_EXPLIST ( exp )+ ) statements ) ;
     public final BeeParser.g_caseStatment_return g_caseStatment() throws RecognitionException {
         BeeParser.g_caseStatment_return retval = new BeeParser.g_caseStatment_return();
         retval.start = input.LT(1);
@@ -910,7 +910,7 @@ public class BeeParser extends Parser {
 
         BeeParser.exp_return exp34 = null;
 
-        BeeParser.statmentBlock_return statmentBlock36 = null;
+        BeeParser.statements_return statements36 = null;
 
 
         BeeCommonNodeTree a_tree=null;
@@ -920,11 +920,11 @@ public class BeeParser extends Parser {
         RewriteRuleTokenStream stream_104=new RewriteRuleTokenStream(adaptor,"token 104");
         RewriteRuleTokenStream stream_103=new RewriteRuleTokenStream(adaptor,"token 103");
         RewriteRuleSubtreeStream stream_exp=new RewriteRuleSubtreeStream(adaptor,"rule exp");
-        RewriteRuleSubtreeStream stream_statmentBlock=new RewriteRuleSubtreeStream(adaptor,"rule statmentBlock");
+        RewriteRuleSubtreeStream stream_statements=new RewriteRuleSubtreeStream(adaptor,"rule statements");
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 5) ) { return retval; }
-            // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:164:2: (a= 'case' exp ( ',' exp )* ':' statmentBlock -> ^( G_CASE[$a] ^( G_CASE_EXPLIST ( exp )+ ) statmentBlock ) )
-            // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:164:4: a= 'case' exp ( ',' exp )* ':' statmentBlock
+            // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:164:2: (a= 'case' exp ( ',' exp )* ':' statements -> ^( G_CASE[$a] ^( G_CASE_EXPLIST ( exp )+ ) statements ) )
+            // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:164:4: a= 'case' exp ( ',' exp )* ':' statements
             {
             a=(Token)match(input,103,FOLLOW_103_in_g_caseStatment509); if (state.failed) return retval; 
             if ( state.backtracking==0 ) stream_103.add(a);
@@ -971,16 +971,16 @@ public class BeeParser extends Parser {
             char_literal35=(Token)match(input,105,FOLLOW_105_in_g_caseStatment520); if (state.failed) return retval; 
             if ( state.backtracking==0 ) stream_105.add(char_literal35);
 
-            pushFollow(FOLLOW_statmentBlock_in_g_caseStatment522);
-            statmentBlock36=statmentBlock();
+            pushFollow(FOLLOW_statements_in_g_caseStatment522);
+            statements36=statements();
 
             state._fsp--;
             if (state.failed) return retval;
-            if ( state.backtracking==0 ) stream_statmentBlock.add(statmentBlock36.getTree());
+            if ( state.backtracking==0 ) stream_statements.add(statements36.getTree());
 
 
             // AST REWRITE
-            // elements: statmentBlock, exp
+            // elements: statements, exp
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -991,14 +991,14 @@ public class BeeParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (BeeCommonNodeTree)adaptor.nil();
-            // 164:46: -> ^( G_CASE[$a] ^( G_CASE_EXPLIST ( exp )+ ) statmentBlock )
+            // 164:43: -> ^( G_CASE[$a] ^( G_CASE_EXPLIST ( exp )+ ) statements )
             {
-                // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:164:48: ^( G_CASE[$a] ^( G_CASE_EXPLIST ( exp )+ ) statmentBlock )
+                // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:164:45: ^( G_CASE[$a] ^( G_CASE_EXPLIST ( exp )+ ) statements )
                 {
                 BeeCommonNodeTree root_1 = (BeeCommonNodeTree)adaptor.nil();
                 root_1 = (BeeCommonNodeTree)adaptor.becomeRoot((BeeCommonNodeTree)adaptor.create(G_CASE, a), root_1);
 
-                // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:164:61: ^( G_CASE_EXPLIST ( exp )+ )
+                // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:164:58: ^( G_CASE_EXPLIST ( exp )+ )
                 {
                 BeeCommonNodeTree root_2 = (BeeCommonNodeTree)adaptor.nil();
                 root_2 = (BeeCommonNodeTree)adaptor.becomeRoot((BeeCommonNodeTree)adaptor.create(G_CASE_EXPLIST, "G_CASE_EXPLIST"), root_2);
@@ -1014,7 +1014,7 @@ public class BeeParser extends Parser {
 
                 adaptor.addChild(root_1, root_2);
                 }
-                adaptor.addChild(root_1, stream_statmentBlock.nextTree());
+                adaptor.addChild(root_1, stream_statements.nextTree());
 
                 adaptor.addChild(root_0, root_1);
                 }
@@ -1050,7 +1050,7 @@ public class BeeParser extends Parser {
     };
 
     // $ANTLR start "g_defaultStatment"
-    // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:166:1: g_defaultStatment : a= 'default' ':' statmentBlock -> ^( G_DEFAULT[$a] statmentBlock ) ;
+    // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:166:1: g_defaultStatment : a= 'default' ':' statements -> ^( G_DEFAULT[$a] statements ) ;
     public final BeeParser.g_defaultStatment_return g_defaultStatment() throws RecognitionException {
         BeeParser.g_defaultStatment_return retval = new BeeParser.g_defaultStatment_return();
         retval.start = input.LT(1);
@@ -1059,18 +1059,18 @@ public class BeeParser extends Parser {
 
         Token a=null;
         Token char_literal37=null;
-        BeeParser.statmentBlock_return statmentBlock38 = null;
+        BeeParser.statements_return statements38 = null;
 
 
         BeeCommonNodeTree a_tree=null;
         BeeCommonNodeTree char_literal37_tree=null;
         RewriteRuleTokenStream stream_106=new RewriteRuleTokenStream(adaptor,"token 106");
         RewriteRuleTokenStream stream_105=new RewriteRuleTokenStream(adaptor,"token 105");
-        RewriteRuleSubtreeStream stream_statmentBlock=new RewriteRuleSubtreeStream(adaptor,"rule statmentBlock");
+        RewriteRuleSubtreeStream stream_statements=new RewriteRuleSubtreeStream(adaptor,"rule statements");
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 6) ) { return retval; }
-            // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:167:2: (a= 'default' ':' statmentBlock -> ^( G_DEFAULT[$a] statmentBlock ) )
-            // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:167:4: a= 'default' ':' statmentBlock
+            // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:167:2: (a= 'default' ':' statements -> ^( G_DEFAULT[$a] statements ) )
+            // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:167:4: a= 'default' ':' statements
             {
             a=(Token)match(input,106,FOLLOW_106_in_g_defaultStatment548); if (state.failed) return retval; 
             if ( state.backtracking==0 ) stream_106.add(a);
@@ -1078,16 +1078,16 @@ public class BeeParser extends Parser {
             char_literal37=(Token)match(input,105,FOLLOW_105_in_g_defaultStatment550); if (state.failed) return retval; 
             if ( state.backtracking==0 ) stream_105.add(char_literal37);
 
-            pushFollow(FOLLOW_statmentBlock_in_g_defaultStatment552);
-            statmentBlock38=statmentBlock();
+            pushFollow(FOLLOW_statements_in_g_defaultStatment552);
+            statements38=statements();
 
             state._fsp--;
             if (state.failed) return retval;
-            if ( state.backtracking==0 ) stream_statmentBlock.add(statmentBlock38.getTree());
+            if ( state.backtracking==0 ) stream_statements.add(statements38.getTree());
 
 
             // AST REWRITE
-            // elements: statmentBlock
+            // elements: statements
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1098,14 +1098,14 @@ public class BeeParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (BeeCommonNodeTree)adaptor.nil();
-            // 167:34: -> ^( G_DEFAULT[$a] statmentBlock )
+            // 167:31: -> ^( G_DEFAULT[$a] statements )
             {
-                // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:167:37: ^( G_DEFAULT[$a] statmentBlock )
+                // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:167:34: ^( G_DEFAULT[$a] statements )
                 {
                 BeeCommonNodeTree root_1 = (BeeCommonNodeTree)adaptor.nil();
                 root_1 = (BeeCommonNodeTree)adaptor.becomeRoot((BeeCommonNodeTree)adaptor.create(G_DEFAULT, a), root_1);
 
-                adaptor.addChild(root_1, stream_statmentBlock.nextTree());
+                adaptor.addChild(root_1, stream_statements.nextTree());
 
                 adaptor.addChild(root_0, root_1);
                 }
@@ -7009,11 +7009,11 @@ public class BeeParser extends Parser {
     public static final BitSet FOLLOW_exp_in_g_caseStatment511 = new BitSet(new long[]{0x0000000000000000L,0x0000030000000000L});
     public static final BitSet FOLLOW_104_in_g_caseStatment514 = new BitSet(new long[]{0x000E000000000000L,0x14800020000003C6L});
     public static final BitSet FOLLOW_exp_in_g_caseStatment516 = new BitSet(new long[]{0x0000000000000000L,0x0000030000000000L});
-    public static final BitSet FOLLOW_105_in_g_caseStatment520 = new BitSet(new long[]{0x0008000000000000L});
-    public static final BitSet FOLLOW_statmentBlock_in_g_caseStatment522 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_105_in_g_caseStatment520 = new BitSet(new long[]{0x01AA000000000000L,0x300CF81000000000L});
+    public static final BitSet FOLLOW_statements_in_g_caseStatment522 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_106_in_g_defaultStatment548 = new BitSet(new long[]{0x0000000000000000L,0x0000020000000000L});
-    public static final BitSet FOLLOW_105_in_g_defaultStatment550 = new BitSet(new long[]{0x0008000000000000L});
-    public static final BitSet FOLLOW_statmentBlock_in_g_defaultStatment552 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_105_in_g_defaultStatment550 = new BitSet(new long[]{0x01AA000000000000L,0x300CF81000000000L});
+    public static final BitSet FOLLOW_statements_in_g_defaultStatment552 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_107_in_directive569 = new BitSet(new long[]{0x0002000000000000L});
     public static final BitSet FOLLOW_Identifier_in_directive572 = new BitSet(new long[]{0x0004000000000000L,0x0000000800000000L});
     public static final BitSet FOLLOW_StringLiteral_in_directive575 = new BitSet(new long[]{0x0000000000000000L,0x0000000800000000L});

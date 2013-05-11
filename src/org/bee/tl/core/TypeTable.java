@@ -583,14 +583,14 @@ public class TypeTable
 			{
 				BeeCommonNodeTree firstNode = (BeeCommonNodeTree) tree.getChild(0);
 			
-				int caseCount = 0;
+				
 				int startCase = 0;
 				if(firstNode.getType()==BeeParser.G_CASE||firstNode.getType()==BeeParser.G_DEFAULT){				
 					startCase = 0;;
-					caseCount = tree.getChildCount();
+				
 					
 				}else{
-					caseCount = tree.getChildCount()-1;				
+						
 					startCase = 1;
 					this.infer(firstNode, ctx);
 					
@@ -600,11 +600,11 @@ public class TypeTable
 				BeeCommonNodeTree caseTree = null;
 				BeeCommonNodeTree caseBlockTree = null;
 				BeeCommonNodeTree expListTree = null;
-				for (int i = startCase; i < caseCount; i++)
+				for (int i = startCase; i < tree.getChildCount(); i++)
 				{
 					caseTree = (BeeCommonNodeTree) tree.getChild(i);
 
-					if (caseTree.getToken().getType() != BeeParser.DEFAULT)
+					if (caseTree.getToken().getType() != BeeParser.G_DEFAULT)
 					{
 						expListTree = (BeeCommonNodeTree) caseTree.getChild(0);
 						for(int j=0;j<expListTree.getChildCount();j++){

@@ -1,9 +1,10 @@
 <%
 var c = 'b';
-go-switch (c){
-case 'a','b' :{println('good');}
-case 'c','d':{println('just so so');}
-default:{println("wrong");}
+var a =1;
+go-switch {
+case c=='a',a>=1 :println('good');
+case c=='b':println('just so so');
+default:println("wrong");
 
 }
 %>

@@ -1625,24 +1625,24 @@ public class BeetlCodeGenerator
 				}
 				case BeeParser.G_SWITCH:{
 					BeeCommonNodeTree firstNode = (BeeCommonNodeTree) t.getChild(0);					
-					int caseCount = 0;
+					
 					int startCase = 0;
 					boolean hasExp = false ;
 					String expName = "";
 					if(firstNode.getType()==BeeParser.G_CASE||firstNode.getType()==BeeParser.G_DEFAULT){				
 						startCase = 0;;
-						caseCount = t.getChildCount();
+						
 						
 					}else{
-						caseCount = t.getChildCount()-1;				
+								
 						startCase = 1;
 						hasExp = true ;
 						Class type = firstNode.getTypeClass().getRawType(); 
-						print(this.getShowType(type));
+						printStart(this.getShowType(type));
 						expName = "obj_"+firstNode.getLine()+firstNode.getToken().getCharPositionInLine();
 						print(" "+expName+" = ");
 						this.writeTree(firstNode);
-						println(";");
+						print(";");
 						printCR();
 						
 					}
@@ -1652,19 +1652,19 @@ public class BeetlCodeGenerator
 					BeeCommonNodeTree caseBlockTree = null;
 					BeeCommonNodeTree expListTree = null;
 					boolean hasWriteIf = false;
-					for (int i = startCase; i < caseCount; i++)
+					for (int i = startCase; i < t.getChildCount(); i++)
 					{
 						caseTree = (BeeCommonNodeTree) t.getChild(i);
 
-						if (caseTree.getToken().getType() != BeeParser.DEFAULT)
+						if (caseTree.getToken().getType() != BeeParser.G_DEFAULT)
 						{
 							expListTree = (BeeCommonNodeTree) caseTree.getChild(0);
 							caseBlockTree = (BeeCommonNodeTree) caseTree.getChild(1);
 							String concat = "||";
 							if(hasWriteIf){
-								print("else if(");
+								printStart("else if(");
 							}else{
-								print("if(");
+								printStart("if(");
 								hasWriteIf = true;
 							}
 							
@@ -1691,13 +1691,13 @@ public class BeetlCodeGenerator
 							this.writeTree(caseBlockTree);
 							this.decIndent();
 							println("}");
-							this.decIndent();
+							
 						
 						}
 						else
 						{
 							caseBlockTree = (BeeCommonNodeTree) caseTree.getChild(0);
-							println(" else {");
+							printStart("else {");
 							this.addIndent();
 							writeTree(caseBlockTree);
 							this.decIndent();							
