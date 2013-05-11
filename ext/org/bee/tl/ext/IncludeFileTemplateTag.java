@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bee.tl.core.BeeException;
+import org.bee.tl.core.BeetlUtil;
 import org.bee.tl.core.ByteSupportTag;
 import org.bee.tl.core.Template;
 
@@ -70,8 +71,13 @@ public class IncludeFileTemplateTag extends ByteSupportTag
 			throw new RuntimeException("参数错误，期望child,Map .....");
 		}
 		String child = (String) args[0];
-
+		
+		if(BeetlUtil.isOutsideOfRoot(child)){
+			throw new RuntimeException("include 文件非法，不在根目录里:"+child);
+		}
+		
 		Template t = null;
+		
 		try
 		{
 			t = group.getFileTemplate(child);
