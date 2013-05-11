@@ -646,8 +646,8 @@ public class CoreScriptRunner
 			}
 			Iterator it = c.iterator();
 			//@todo:如果未用此变量，这不需要设置，可性能优化，下同
-			localCtx.defineVar(name + "_size", c.size());
-			localCtx.defineVar(name, null);
+			localCtx.defineVar(name + "_size", c.size(),idNode.getToken());
+			localCtx.defineVar(name, null,idNode.getToken());
 			while (it.hasNext())
 			{
 				Object temp = it.next();
@@ -694,8 +694,8 @@ public class CoreScriptRunner
 			Object key = null;
 			Object value = null;
 			MapEntry entry = null;
-			localCtx.defineVar(name + "_size", map.size());
-			localCtx.defineVar(name, null);
+			localCtx.defineVar(name + "_size", map.size(),idNode.getToken());
+			localCtx.defineVar(name, null,idNode.getToken());
 			while (it.hasNext())
 			{
 				entry0 = it.next();
@@ -734,7 +734,7 @@ public class CoreScriptRunner
 
 				return;
 			}
-			localCtx.defineVar(name + "_size", array.length);
+			localCtx.defineVar(name + "_size", array.length,idNode.getToken());
 			localCtx.defineVar(name, null, idNode.getToken());
 			for (Object temp : array)
 			{
@@ -767,7 +767,7 @@ public class CoreScriptRunner
 		{
 
 			Iterable iterable = (Iterable) o;
-			localCtx.defineVar(name, null);
+			localCtx.defineVar(name, null,idNode.getToken());
 			Iterator it = iterable.iterator();
 			boolean inLoop = false;
 			while (it.hasNext())
