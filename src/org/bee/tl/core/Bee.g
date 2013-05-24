@@ -35,6 +35,10 @@ tokens {
   SWITCH;
   CASE;
   DEFAULT;
+  G_SWITCH;
+  G_CASE;
+  G_DEFAULT;
+  G_CASE_EXPLIST;
   JSON;
   JSONARRAY;
   JSONMAP;
@@ -146,12 +150,21 @@ statement
 	|	breakStatment	';'!
 	|	returnStatment	';'!
 	|	switchStatment
+	|	g_switchStatment
 	|	nativeMethod[true] ';'!	
 	|	directive
 	;
 	
 
-	
+g_switchStatment
+	:	a='select' ('(' base=exp ')')? '{' g_caseStatment* g_defaultStatment? '}'
+	 ->^(G_SWITCH[$a] $base? g_caseStatment* g_defaultStatment? ) ;
+
+g_caseStatment 
+	:	a='case' exp (',' exp)* ':' statements ->^(G_CASE[$a] ^(G_CASE_EXPLIST exp+) statements);
+
+g_defaultStatment
+	:	a='default' ':' statements -> ^(G_DEFAULT[$a] statements);	
 
 directive: 'DIRECTIVE'  Identifier (StringLiteral)? ';' -> ^(DIRECTIVE Identifier (StringLiteral)?);
 returnStatment

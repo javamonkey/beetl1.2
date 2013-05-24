@@ -1623,6 +1623,92 @@ public class BeetlCodeGenerator
 					break;
 
 				}
+				case BeeParser.G_SWITCH:{
+					BeeCommonNodeTree firstNode = (BeeCommonNodeTree) t.getChild(0);					
+					
+					int startCase = 0;
+					boolean hasExp = false ;
+					String expName = "";
+					if(firstNode.getType()==BeeParser.G_CASE||firstNode.getType()==BeeParser.G_DEFAULT){				
+						startCase = 0;;
+						
+						
+					}else{
+								
+						startCase = 1;
+						hasExp = true ;
+						Class type = firstNode.getTypeClass().getRawType(); 
+						printStart(this.getShowType(type));
+						expName = "obj_"+firstNode.getLine()+firstNode.getToken().getCharPositionInLine();
+						print(" "+expName+" = ");
+						this.writeTree(firstNode);
+						print(";");
+						printCR();
+						
+					}
+					
+					
+					BeeCommonNodeTree caseTree = null;
+					BeeCommonNodeTree caseBlockTree = null;
+					BeeCommonNodeTree expListTree = null;
+					boolean hasWriteIf = false;
+					for (int i = startCase; i < t.getChildCount(); i++)
+					{
+						caseTree = (BeeCommonNodeTree) t.getChild(i);
+
+						if (caseTree.getToken().getType() != BeeParser.G_DEFAULT)
+						{
+							expListTree = (BeeCommonNodeTree) caseTree.getChild(0);
+							caseBlockTree = (BeeCommonNodeTree) caseTree.getChild(1);
+							String concat = "||";
+							if(hasWriteIf){
+								printStart("else if(");
+							}else{
+								printStart("if(");
+								hasWriteIf = true;
+							}
+							
+							for(int j=0;j<expListTree.getChildCount();j++){
+								if(j==expListTree.getChildCount()-1){
+									concat = "";
+								}
+								BeeCommonNodeTree caseExp = (BeeCommonNodeTree)expListTree.getChild(j);
+								if(hasExp){
+									print("isObjectSame("+expName+",");
+									writeTree(caseExp);
+									print(")");
+									print(concat);
+									
+								}else{
+									writeTree(caseExp);
+									print(concat);
+								}
+							
+							}
+							print("){");
+							printCR();
+							this.addIndent();
+							this.writeTree(caseBlockTree);
+							this.decIndent();
+							println("}");
+							
+						
+						}
+						else
+						{
+							caseBlockTree = (BeeCommonNodeTree) caseTree.getChild(0);
+							printStart("else {");
+							this.addIndent();
+							writeTree(caseBlockTree);
+							this.decIndent();							
+							println("}");
+							
+
+						}
+
+					}
+					break;
+				}
 				case BeeParser.WHILE:
 				{
 					BeeCommonNodeTree condNode = (BeeCommonNodeTree) t.getChild(0);

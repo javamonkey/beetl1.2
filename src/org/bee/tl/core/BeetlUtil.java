@@ -5,10 +5,37 @@ import java.io.Reader;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class BeetlUtil
 {
+	public static  boolean isObjectSame(Object v1,Object v2){
+		if(v1==null&&v2==null){
+			return true ;
+		}
+		if (v1 != null || v2 != null)
+		{
+			if (v1 != null)
+			{
+				return v1.equals(v2);
+			}
+			else
+			{
+				return v2.equals(v1);
+			}
+
+		}
+		else if (v1 == null)
+		{
+			return v2 == null;
+		}
+		else
+		{
+			return v1 == null;
+		}
+	}
+
 	/**
 	 * 获得模板文件编译成class的包名和类名。如果文件名存在".",则用"_"代替
 	 * 如果存在空格，-号，则用"__"代替。
@@ -163,8 +190,9 @@ public class BeetlUtil
 
 	public static void main(String[] args)
 	{
-		String child = "/xxx/cc.html";
-		System.out.println(isOutsideOfRoot(child));
+		String[] str = BeetlUtil.getPackage2Class("/WEB-INF/ccc");
+		System.out.println(Arrays.asList(str));
+
 	}
 
 	/**得到对象自己的所有public方法
@@ -230,48 +258,5 @@ public class BeetlUtil
 		}
 		return false;
 	}
-	
-	
-	
-	public static boolean isOutsideOfRoot(String child){
-		if(child==null) return true;
-		char[] array = child.toCharArray();
-		int root = 0;
-		if(array.length==0) return true ;
-		int start = 0;
-		if(array[0]=='/'||array[0]=='\\'){
-			start = 1;
-		}
-		StringBuilder dir = new StringBuilder();
-		for(int i=start;i<array.length;i++){
-			char c = array[i];		
-	
-			if(c=='/'||c=='\\'){
-				if(dir.toString().equals("..")){
-					root++;
-					if(root==1){
-						return true;
-					}
-				}else if(dir.length()==0){
-					//非法的格式
-					return true ;
-				}else{
-					root--;
-				}
-				dir.setLength(0);
-			}else{
-				dir.append(c);
-			}
-			
-		}
-		if(root<=0){
-			return false;
-		}else{
-			return true;
-		}
-		
-	}
-	
-
 
 }

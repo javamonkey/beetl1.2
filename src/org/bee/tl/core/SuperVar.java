@@ -46,6 +46,8 @@ public class SuperVar
 	{
 		this.writer = writer;
 	}
+	
+	
 
 	public byte[] toByte()
 	{
@@ -84,4 +86,6 @@ public class SuperVar
 		}
 		return str;
 	}
+	
+	
 }
