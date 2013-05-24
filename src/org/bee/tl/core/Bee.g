@@ -157,7 +157,7 @@ statement
 	
 
 g_switchStatment
-	:	a='go-switch' ('(' base=exp ')')? '{' g_caseStatment* g_defaultStatment? '}'
+	:	a='select' ('(' base=exp ')')? '{' g_caseStatment* g_defaultStatment? '}'
 	 ->^(G_SWITCH[$a] $base? g_caseStatment* g_defaultStatment? ) ;
 
 g_caseStatment 

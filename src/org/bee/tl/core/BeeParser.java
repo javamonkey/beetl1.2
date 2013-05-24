@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:50:56 E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g 2013-05-12 00:12:49
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g 2013-05-24 21:30:28
 
 package org.bee.tl.core;
 import org.bee.tl.core.exception.*;
@@ -18,7 +18,7 @@ import org.antlr.runtime.tree.*;
 
 public class BeeParser extends Parser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "VAR_DEFINE", "VAR_REFER", "ASSIGNMENT", "HOLDER", "TEXT_HOLDER", "FOR", "VAR_TEXT", "FM", "DEFAULT_FM", "SLIST", "IF", "EXP", "COND_EXP", "FUNCTION", "TEXT_PROCESS", "ATTR_NAME", "VIRTUAL_ATTR_NAME", "MAP_LIST_INDEX", "BREAK", "CONTINUE", "RETURN", "NOT", "SWITCH", "CASE", "DEFAULT", "G_SWITCH", "G_CASE", "G_DEFAULT", "G_CASE_EXPLIST", "JSON", "JSONARRAY", "JSONMAP", "JSONKEYVALUE", "CLASS_STATIC_FUNCTION", "CLASS_FUNCTION", "CLASS_METHOD", "VARIABLE_VAR_REFER", "TEXT_VAR_REFER", "MISSING_VARIABLE_VAR_REFER", "FUNCTION_FULL_NAME", "SAFE_OUTPUT", "DIRECT_CALL", "NEGATOM", "WHILE", "DIRECTIVE", "Identifier", "StringLiteral", "LEFT_BRACE", "RIGHT_BRACE", "LEFT_TEXT_TOKEN", "RIGHT_TOKEN", "LEFT_TOKEN", "VAR", "OR", "AND", "EQUAL", "NOT_EQUAL", "LARGE", "LARGE_EQUAL", "LESS", "LESS_EQUAL", "ADD", "MINUS", "MULTIP", "DIV", "MOD", "BOOLEAN", "INT", "NULL", "DOUBLE", "ID_START", "Comment", "LineComment", "DoubleStringCharacter", "SingleStringCharacter", "EscapeSequence", "CharacterEscapeSequence", "HexEscapeSequence", "UnicodeEscapeSequence", "SingleEscapeCharacter", "NonEscapeCharacter", "EscapeCharacter", "DecimalDigit", "HexDigit", "DecimalLiteral", "HexIntegerLiteral", "NumericLiteral", "ExponentPart", "IdentifierStart", "IdentifierPart", "UnicodeLetter", "UnicodeDigit", "UnicodeConnectorPunctuation", "UnicodeCombiningMark", "WhiteSpace", "';'", "'go-switch'", "'('", "')'", "'case'", "','", "':'", "'default'", "'DIRECTIVE'", "'return'", "'continue'", "'break'", "'for'", "'in '", "'elsefor'", "'while'", "'if'", "'else'", "'!('", "'='", "'!'", "'.'", "'.~'", "'['", "']'", "'@'", "'switch'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "VAR_DEFINE", "VAR_REFER", "ASSIGNMENT", "HOLDER", "TEXT_HOLDER", "FOR", "VAR_TEXT", "FM", "DEFAULT_FM", "SLIST", "IF", "EXP", "COND_EXP", "FUNCTION", "TEXT_PROCESS", "ATTR_NAME", "VIRTUAL_ATTR_NAME", "MAP_LIST_INDEX", "BREAK", "CONTINUE", "RETURN", "NOT", "SWITCH", "CASE", "DEFAULT", "G_SWITCH", "G_CASE", "G_DEFAULT", "G_CASE_EXPLIST", "JSON", "JSONARRAY", "JSONMAP", "JSONKEYVALUE", "CLASS_STATIC_FUNCTION", "CLASS_FUNCTION", "CLASS_METHOD", "VARIABLE_VAR_REFER", "TEXT_VAR_REFER", "MISSING_VARIABLE_VAR_REFER", "FUNCTION_FULL_NAME", "SAFE_OUTPUT", "DIRECT_CALL", "NEGATOM", "WHILE", "DIRECTIVE", "Identifier", "StringLiteral", "LEFT_BRACE", "RIGHT_BRACE", "LEFT_TEXT_TOKEN", "RIGHT_TOKEN", "LEFT_TOKEN", "VAR", "OR", "AND", "EQUAL", "NOT_EQUAL", "LARGE", "LARGE_EQUAL", "LESS", "LESS_EQUAL", "ADD", "MINUS", "MULTIP", "DIV", "MOD", "BOOLEAN", "INT", "NULL", "DOUBLE", "ID_START", "Comment", "LineComment", "DoubleStringCharacter", "SingleStringCharacter", "EscapeSequence", "CharacterEscapeSequence", "HexEscapeSequence", "UnicodeEscapeSequence", "SingleEscapeCharacter", "NonEscapeCharacter", "EscapeCharacter", "DecimalDigit", "HexDigit", "DecimalLiteral", "HexIntegerLiteral", "NumericLiteral", "ExponentPart", "IdentifierStart", "IdentifierPart", "UnicodeLetter", "UnicodeDigit", "UnicodeConnectorPunctuation", "UnicodeCombiningMark", "WhiteSpace", "';'", "'select'", "'('", "')'", "'case'", "','", "':'", "'default'", "'DIRECTIVE'", "'return'", "'continue'", "'break'", "'for'", "'in '", "'elsefor'", "'while'", "'if'", "'else'", "'!('", "'='", "'!'", "'.'", "'.~'", "'['", "']'", "'@'", "'switch'"
     };
     public static final int EOF=-1;
     public static final int T__99=99;
@@ -693,7 +693,7 @@ public class BeeParser extends Parser {
     };
 
     // $ANTLR start "g_switchStatment"
-    // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:159:1: g_switchStatment : a= 'go-switch' ( '(' base= exp ')' )? '{' ( g_caseStatment )* ( g_defaultStatment )? '}' -> ^( G_SWITCH[$a] ( $base)? ( g_caseStatment )* ( g_defaultStatment )? ) ;
+    // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:159:1: g_switchStatment : a= 'select' ( '(' base= exp ')' )? '{' ( g_caseStatment )* ( g_defaultStatment )? '}' -> ^( G_SWITCH[$a] ( $base)? ( g_caseStatment )* ( g_defaultStatment )? ) ;
     public final BeeParser.g_switchStatment_return g_switchStatment() throws RecognitionException {
         BeeParser.g_switchStatment_return retval = new BeeParser.g_switchStatment_return();
         retval.start = input.LT(1);
@@ -727,13 +727,13 @@ public class BeeParser extends Parser {
         RewriteRuleSubtreeStream stream_g_defaultStatment=new RewriteRuleSubtreeStream(adaptor,"rule g_defaultStatment");
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 4) ) { return retval; }
-            // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:160:2: (a= 'go-switch' ( '(' base= exp ')' )? '{' ( g_caseStatment )* ( g_defaultStatment )? '}' -> ^( G_SWITCH[$a] ( $base)? ( g_caseStatment )* ( g_defaultStatment )? ) )
-            // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:160:4: a= 'go-switch' ( '(' base= exp ')' )? '{' ( g_caseStatment )* ( g_defaultStatment )? '}'
+            // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:160:2: (a= 'select' ( '(' base= exp ')' )? '{' ( g_caseStatment )* ( g_defaultStatment )? '}' -> ^( G_SWITCH[$a] ( $base)? ( g_caseStatment )* ( g_defaultStatment )? ) )
+            // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:160:4: a= 'select' ( '(' base= exp ')' )? '{' ( g_caseStatment )* ( g_defaultStatment )? '}'
             {
             a=(Token)match(input,100,FOLLOW_100_in_g_switchStatment456); if (state.failed) return retval; 
             if ( state.backtracking==0 ) stream_100.add(a);
 
-            // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:160:18: ( '(' base= exp ')' )?
+            // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:160:15: ( '(' base= exp ')' )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -742,7 +742,7 @@ public class BeeParser extends Parser {
             }
             switch (alt4) {
                 case 1 :
-                    // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:160:19: '(' base= exp ')'
+                    // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:160:16: '(' base= exp ')'
                     {
                     char_literal26=(Token)match(input,101,FOLLOW_101_in_g_switchStatment459); if (state.failed) return retval; 
                     if ( state.backtracking==0 ) stream_101.add(char_literal26);
@@ -765,7 +765,7 @@ public class BeeParser extends Parser {
             char_literal28=(Token)match(input,LEFT_BRACE,FOLLOW_LEFT_BRACE_in_g_switchStatment469); if (state.failed) return retval; 
             if ( state.backtracking==0 ) stream_LEFT_BRACE.add(char_literal28);
 
-            // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:160:42: ( g_caseStatment )*
+            // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:160:39: ( g_caseStatment )*
             loop5:
             do {
                 int alt5=2;
@@ -795,7 +795,7 @@ public class BeeParser extends Parser {
                 }
             } while (true);
 
-            // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:160:58: ( g_defaultStatment )?
+            // E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\Bee.g:160:55: ( g_defaultStatment )?
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -824,7 +824,7 @@ public class BeeParser extends Parser {
 
 
             // AST REWRITE
-            // elements: g_defaultStatment, base, g_caseStatment
+            // elements: g_caseStatment, base, g_defaultStatment
             // token labels: 
             // rule labels: retval, base
             // token list labels: 
@@ -1705,7 +1705,7 @@ public class BeeParser extends Parser {
 
 
             // AST REWRITE
-            // elements: statmentBlock, exp, functionFullName
+            // elements: functionFullName, exp, statmentBlock
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1867,7 +1867,7 @@ public class BeeParser extends Parser {
 
 
             // AST REWRITE
-            // elements: exp, functionFullName, functionFullName, exp
+            // elements: functionFullName, exp, exp, functionFullName
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -2169,7 +2169,7 @@ public class BeeParser extends Parser {
 
 
             // AST REWRITE
-            // elements: c, aaa, a, d
+            // elements: a, d, c, aaa
             // token labels: a
             // rule labels: retval, d, aaa, c
             // token list labels: 
@@ -2287,7 +2287,7 @@ public class BeeParser extends Parser {
 
 
             // AST REWRITE
-            // elements: a, statmentBlock
+            // elements: statmentBlock, a
             // token labels: 
             // rule labels: retval, a
             // token list labels: 
@@ -2430,7 +2430,7 @@ public class BeeParser extends Parser {
 
 
             // AST REWRITE
-            // elements: condExp, n, l
+            // elements: l, n, condExp
             // token labels: 
             // rule labels: retval, n, l
             // token list labels: 
@@ -2826,7 +2826,7 @@ public class BeeParser extends Parser {
 
 
             // AST REWRITE
-            // elements: b, textformat
+            // elements: textformat, b
             // token labels: 
             // rule labels: retval, b
             // token list labels: 
@@ -3437,7 +3437,7 @@ public class BeeParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: statmentBlock, Identifier
+                    // elements: Identifier, statmentBlock
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -3531,7 +3531,7 @@ public class BeeParser extends Parser {
 
 
             // AST REWRITE
-            // elements: Identifier, exp
+            // elements: exp, Identifier
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -3742,7 +3742,7 @@ public class BeeParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: safeOutput, varAttribute, Identifier
+                    // elements: safeOutput, Identifier, varAttribute
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -5553,7 +5553,7 @@ public class BeeParser extends Parser {
 
 
             // AST REWRITE
-            // elements: Identifier, Identifier, classMethod, classMethod
+            // elements: Identifier, classMethod, classMethod, Identifier
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -5748,7 +5748,7 @@ public class BeeParser extends Parser {
 
 
             // AST REWRITE
-            // elements: exp, Identifier
+            // elements: Identifier, exp
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -6032,7 +6032,7 @@ public class BeeParser extends Parser {
 
 
             // AST REWRITE
-            // elements: caseStatment, base, defaultStatment
+            // elements: defaultStatment, caseStatment, base
             // token labels: 
             // rule labels: retval, base
             // token list labels: 
@@ -6145,7 +6145,7 @@ public class BeeParser extends Parser {
 
 
             // AST REWRITE
-            // elements: statements, exp
+            // elements: exp, statements
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -6638,7 +6638,7 @@ public class BeeParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: exp, StringLiteral
+                    // elements: StringLiteral, exp
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -6685,7 +6685,7 @@ public class BeeParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: Identifier, exp
+                    // elements: exp, Identifier
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 

@@ -70,6 +70,8 @@ import org.bee.tl.core.io.ByteWriter;
  * <p/>
  * layout(path,{'paraName1':value1,'paraName2',value2})
  * 
+ * 如果变量layoutContent与模板有冲突，可以作为第三个参数传入到layout变量里，如：
+ * layout(path,{},"xxxLayoutContent");
  * @author joelli
  * @since 1.1
  * 
@@ -117,14 +119,18 @@ public class LayoutTag extends ByteSupportTag
 			}
 
 		}
+		String varName = "layoutContent" ;
+		if(args.length==3){
+			varName = (String)args[2];
+		}
 
 		if (this.byteContent)
 		{
-			t.set("layoutContent", this.inputBytes);
+			t.set(varName, this.inputBytes);
 		}
 		else
 		{
-			t.set("layoutContent", this.input);
+			t.set(varName, this.input);
 		}
 
 		if (args.length == 2)

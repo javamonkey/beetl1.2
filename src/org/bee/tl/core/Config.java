@@ -208,8 +208,13 @@ public class Config
 		{
 			gt.setCharset(charset);
 		}
+		
+		String sd = getString(DELIMITER_STATEMENT_END);
+		if(sd==null||sd.length()==0||sd.equals("null")){
+			sd = null;
+		}
 
-		gt.config(getString(DELIMITER_STATEMENT_START, "<%"), getString(DELIMITER_STATEMENT_END, "%>"),
+		gt.config(getString(DELIMITER_STATEMENT_START, "<%"), sd,
 				getString(DELIMITER_PLACEHOLDER_START, "${"), getString(DELIMITER_PLACEHOLDER_END, "}"));
 
 		return gt;
@@ -232,6 +237,11 @@ public class Config
 	public String getString(String key, String defaultValue)
 	{
 		return ps.getProperty(key, defaultValue);
+	}
+
+	public String getString(String key)
+	{
+		return ps.getProperty(key);
 	}
 
 	public boolean isNotEmpty(String str)
