@@ -7,6 +7,7 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="lib" path="lib/antlr-3.3-complete.jar"/>
 	<classpathentry kind="lib" path="lib/httl-1.0.7.jar"/>
+	<classpathentry kind="lib" path="lib/nutz-1.b.48.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.6.0_25"/>
 	<classpathentry kind="lib" path="E:/lijz/apache-tomcat-6.0.35/lib/servlet-api.jar"/>
