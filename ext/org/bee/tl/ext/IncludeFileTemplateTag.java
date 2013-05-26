@@ -73,7 +73,7 @@ public class IncludeFileTemplateTag extends ByteSupportTag
 		String child = (String) args[0];
 
 		if(BeetlUtil.isOutsideOfRoot(child)){
-			throw new RuntimeException("layout 文件非法，不在根目录里:"+child);
+			throw new RuntimeException("include 文件非法，不在根目录里:"+child);
 		}
 		
 		Template t = null;

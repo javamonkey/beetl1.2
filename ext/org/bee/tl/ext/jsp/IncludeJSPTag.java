@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bee.tl.core.BeetlUtil;
 import org.bee.tl.core.Tag;
 import org.bee.tl.ext.spring.WebVariable;
 
@@ -27,7 +28,9 @@ public class IncludeJSPTag extends Tag
 		//			throw new RuntimeException("参数错误，期望child,Map .....");
 		//		}
 		String child = (String) args[0];
-
+		if(BeetlUtil.isOutsideOfRoot(child)){
+			throw new RuntimeException("includeJSP 文件非法，不在根目录里:"+child);
+		}
 		try
 		{
 			Map map = ctx.getRootVars();
