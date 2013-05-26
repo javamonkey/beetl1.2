@@ -533,82 +533,79 @@ public class CoreScriptRunner {
 			ByteWriter pw, RuntimeControl control) throws IOException {
 		BeeCommonNodeTree firstNode = (BeeCommonNodeTree) t.getChild(0);
 		Object o = null;
-		boolean hasExp = true;
-		int caseCount = 0;
+		boolean hasExp = true;		
 		int startCase = 0;
 		if(firstNode.getType()==BeeParser.G_CASE||firstNode.getType()==BeeParser.G_DEFAULT){
 			hasExp = false;
 			startCase = 0;;
-			caseCount = t.getChildCount();
-		}else{
-		
-			o = ExpRuntime.eval(firstNode, localCtx, control);
-			caseCount = t.getChildCount()-1;
+			
+		}else{		
+			o = ExpRuntime.eval(firstNode, localCtx, control);		
 			hasExp = true;
 			startCase = 1;
 			
 		}
-		boolean hasDefault = false;
-		boolean isMatch = false;
-		
-		if (t.getChild(t.getChildCount() - 1).getType() == BeeParser.G_DEFAULT) {
-			caseCount = caseCount - 1;
-			hasDefault = true;
-		}
+	
 		
 		BeeCommonNodeTree caseTree = null;
 		BeeCommonNodeTree expTreeList = null;
-		Object comparedObject = null;
-		BeeCommonNodeTree caseExpTree = null;
+	
 		BeeCommonNodeTree blockTree = null;
 		
-		for (int i = startCase; i < caseCount; i++) {
+		for (int i = startCase; i < t.getChildCount(); i++) {
 			caseTree = (BeeCommonNodeTree) t.getChild(i);
-			expTreeList = (BeeCommonNodeTree) caseTree.getChild(0);
-			boolean expListHasTrue = false;
-			for(int j=0;j<expTreeList.getChildCount();j++){
-				BeeCommonNodeTree exp = (BeeCommonNodeTree) expTreeList.getChild(j);
-				Object expValue = ExpRuntime.eval(exp, localCtx, control);
-				if(hasExp){
-					if(BeetlUtil.isObjectSame(o,expValue)){
-						expListHasTrue = true;
-						break;
-					}
-				}else{
-					if(expValue instanceof Boolean){
-						if(((Boolean)expValue).booleanValue()){
+			
+			if (caseTree.getToken().getType() != BeeParser.G_DEFAULT)
+			{
+				expTreeList = (BeeCommonNodeTree) caseTree.getChild(0);
+				boolean expListHasTrue = false;
+				for(int j=0;j<expTreeList.getChildCount();j++){
+					
+					
+					BeeCommonNodeTree exp = (BeeCommonNodeTree) expTreeList.getChild(j);
+					Object expValue = ExpRuntime.eval(exp, localCtx, control);
+					if(hasExp){
+						if(BeetlUtil.isObjectSame(o,expValue)){
 							expListHasTrue = true;
 							break;
-						}else{
-							continue;
 						}
 					}else{
-						throw new BeeRuntimeException(BeeRuntimeException.BOOLEAN_EXPECTED_ERROR, exp.getToken());
+						if(expValue instanceof Boolean){
+							if(((Boolean)expValue).booleanValue()){
+								expListHasTrue = true;
+								break;
+							}else{
+								continue;
+							}
+						}else{
+							throw new BeeRuntimeException(BeeRuntimeException.BOOLEAN_EXPECTED_ERROR, exp.getToken());
 
+						}
 					}
+					
 				}
+				if(expListHasTrue){
+					//执行
+					blockTree = (BeeCommonNodeTree)caseTree.getChild(1);
+					this.print(blockTree, localCtx, pw, control);
 				
+					break;
+				}
+			}else{
+				//default
+				BeeCommonNodeTree defaultTree = caseTree ;
+				BeeCommonNodeTree expTree = null;
+				for (int j = 0; j < defaultTree.getChildCount(); j++) {
+					expTree = (BeeCommonNodeTree) defaultTree.getChild(j);
+					this.print(expTree, localCtx, pw, control);
+				}
 			}
-			if(expListHasTrue){
-				//执行
-				blockTree = (BeeCommonNodeTree)caseTree.getChild(1);
-				this.print(blockTree, localCtx, pw, control);
-				isMatch = true;
-				break;
-			}
+			
+			
 			
 		}
 
-		if (!isMatch && hasDefault) {
-			BeeCommonNodeTree defaultTree = (BeeCommonNodeTree) t.getChild(t
-					.getChildCount() - 1);
-			BeeCommonNodeTree expTree = null;
-			for (int i = 0; i < defaultTree.getChildCount(); i++) {
-				expTree = (BeeCommonNodeTree) defaultTree.getChild(i);
-				this.print(expTree, localCtx, pw, control);
-			}
-
-		}
+		
 	}
 
 	private void parseFor(BeeCommonNodeTree t, Context localCtx, ByteWriter pw,
@@ -649,9 +646,9 @@ public class CoreScriptRunner {
 				return;
 			}
 			Iterator it = c.iterator();
-			// @todo:如果未用此变量，这不需要设置，可性能优化，下同
-			localCtx.defineVar(name + "_size", c.size());
-			localCtx.defineVar(name, null);
+			// @todo:如果未用此变量，这不需要设置，可性能优化，下同		
+			localCtx.defineVar(name + "_size", c.size(),idNode.getToken());
+			localCtx.defineVar(name, null,idNode.getToken());
 			while (it.hasNext()) {
 				Object temp = it.next();
 				localCtx.fastSetVar(name, temp);

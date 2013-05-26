@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bee.tl.core.BeeException;
+import org.bee.tl.core.BeetlUtil;
 import org.bee.tl.core.ByteSupportTag;
 import org.bee.tl.core.Template;
 
@@ -71,6 +72,10 @@ public class IncludeFileTemplateTag extends ByteSupportTag
 		}
 		String child = (String) args[0];
 
+		if(BeetlUtil.isOutsideOfRoot(child)){
+			throw new RuntimeException("layout 文件非法，不在根目录里:"+child);
+		}
+		
 		Template t = null;
 		try
 		{

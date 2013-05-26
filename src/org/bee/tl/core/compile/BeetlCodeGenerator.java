@@ -1698,6 +1698,7 @@ public class BeetlCodeGenerator
 						{
 							caseBlockTree = (BeeCommonNodeTree) caseTree.getChild(0);
 							printStart("else {");
+							printCR();
 							this.addIndent();
 							writeTree(caseBlockTree);
 							this.decIndent();							

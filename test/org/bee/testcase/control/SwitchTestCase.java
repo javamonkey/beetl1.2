@@ -82,6 +82,7 @@ public class SwitchTestCase extends BasicTestCase
 
 		Assert.assertEquals(this.getFileContent("/control/switch_default_expected.html"), str);
 	}
+	
 
 
 }

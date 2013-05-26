@@ -7,6 +7,7 @@ import org.bee.testcase.comment.CommentTestCase;
 import org.bee.testcase.control.ElseForTestCase;
 import org.bee.testcase.control.ForTestCase;
 import org.bee.testcase.control.IfTestCase;
+import org.bee.testcase.control.SelectTestCase;
 import org.bee.testcase.control.SwitchTestCase;
 import org.bee.testcase.control.WhileTestCase;
 import org.bee.testcase.directive.DirectiveSafeOutputTestCase;
@@ -45,6 +46,7 @@ public class AllTests
 
 		suite.addTestSuite(IfTestCase.class);
 		suite.addTestSuite(SwitchTestCase.class);
+		suite.addTestSuite(SelectTestCase.class);
 		suite.addTestSuite(WhileTestCase.class);
 
 		suite.addTestSuite(InvalidTestCase.class);

@@ -28,6 +28,8 @@
 package org.bee.tl.ext;
 
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.bee.tl.core.BeeNumber;
 
@@ -96,6 +98,11 @@ public class StringUtil
 	{
 		String result = MessageFormat.format(str, args);
 		return result;
+	}
+	
+	public String formatDate(Date o,String args){
+		SimpleDateFormat sd = new  SimpleDateFormat(args);
+		return sd.format(o);
 	}
 
 }
