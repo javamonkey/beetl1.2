@@ -246,6 +246,13 @@ public class Transformator
 		{
 			if (match(this.placeholderEnd))
 			{
+				//如果前面一个是转义符
+				if (this.isEscape(sb, index))
+				{
+					sb.append(cs[index++]);
+					continue;
+				}
+				
 				index = index + this.placeholderEnd.length();
 				sb.append(">>");
 				status = 1;
@@ -273,6 +280,13 @@ public class Transformator
 		{
 			if (match(this.endStatement))
 			{
+				
+				//如果前面一个是转义符
+				if (this.isEscape(sb, index))
+				{
+					sb.append(cs[index++]);
+					continue;
+				}
 				index = index + this.endStatement.length();
 				status = 1;
 				//如果是以回车符作为控制语句结束符号
@@ -317,6 +331,8 @@ public class Transformator
 	public void readCommonString()
 	{
 		StringBuilder temp = new StringBuilder();
+		boolean hasLetter = false ;
+		boolean hasCheck = false ;
 		while (index <= cs.length)
 		{
 			if (match(this.placeholderStart))
@@ -377,7 +393,7 @@ public class Transformator
 						index++;
 					}
 
-					if (this.lineStatus.onlyText())
+					if (!hasLetter&&this.lineStatus.onlyText())
 					{
 						//多行，直到碰到占位符号才停止
 						temp.append(this.lineSeparator);
@@ -411,6 +427,11 @@ public class Transformator
 				}
 				else
 				{
+					
+					if(!hasCheck&&ch!=' '&&ch!='\t'){
+						hasLetter = true ;
+						hasCheck = true;
+					}
 					//正常调用路径
 					temp.append(ch);
 				}
@@ -530,13 +551,15 @@ public class Transformator
 			}
 			i++;
 		}
+		return true;
 
 		//如果匹配，但往前看有转义符，则还是算不匹配
+		/*
 		if (isEscape(sb, index) && (this.status == 2 || this.status == 3))
 			return false;
 		else
 			return true;
-
+	*/
 	}
 
 	/**
@@ -598,13 +621,16 @@ public class Transformator
 	public static void main(String[] args)
 	{
 		char c = '\\';
-		Transformator p = new Transformator("${", "}", "@", null);
+		Transformator p = new Transformator("${", "}", "<%","%>");
 		try
 		{
 
 			// String str = "   #:var u='hello';:#  \n  $u$";
-			String str = "@var number = 1 ,str='hello',now = date();\n"
-					+ "number is ${number},str is ${str},time is ${now}";
+			String str = "<%p%> b\n"
+					//+"\n"
+					+ "c <%p();%> d\n"
+					;
+			
 			BufferedReader reader = new BufferedReader(p.transform(str));
 			String line = null;
 			System.out.println(p.getTextMap());
