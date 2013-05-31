@@ -14,7 +14,6 @@ public class TagTest extends BasicTestCase
 	public TagTest()
 	{
 		super();
-	
 
 	}
 
