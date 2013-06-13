@@ -10,7 +10,6 @@
 	<classpathentry kind="lib" path="lib/antlr-3.3-complete.jar"/>
 	<classpathentry kind="lib" path="lib/antlr-runtime-3.4-nodebug.jar"/>
 	<classpathentry kind="lib" path="lib/antlr-runtime.jar"/>
-	<classpathentry kind="lib" path="lib/freemarker.jar"/>
 	<classpathentry kind="lib" path="lib/httl-1.0.7.jar"/>
 	<classpathentry kind="lib" path="lib/JFinal-1.1.6-bin.jar"/>
 	<classpathentry kind="lib" path="lib/nutz-1.b.48.jar"/>
@@ -23,6 +22,6 @@
 	<classpathentry kind="lib" path="lib/spring-webmvc-3.2.2.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/struts2-core-2.3.12.jar"/>
 	<classpathentry kind="lib" path="lib/xwork-core-2.3.12.jar"/>
-	<classpathentry kind="lib" path="D:/apache-tomcat-6.0.30/apache-tomcat-6.0.30/apache-tomcat-6.0.30/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="lib/freemarker.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
