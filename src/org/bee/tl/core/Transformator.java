@@ -35,6 +35,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Stack;
 
 /**
  * 将模版转化为beetl script的代码，此为核心代码之一
@@ -44,6 +46,11 @@ import java.util.Map;
  */
 public class Transformator
 {
+
+	static String HTML_TAG_START = "<@";
+	static String HTML_TAG_END = "</@";
+	static String HTML_EMPTY_TAG_END = ">";
+	Stack htmlTagStack = new Stack();
 
 	String placeholderStart = "$";
 	String placeholderEnd = "$";
@@ -381,6 +388,60 @@ public class Transformator
 
 				status = 2;
 				return;
+			}else if(match(HTML_TAG_START)){
+				StringBuilder script = new StringBuilder();
+				script.append("html");
+				HTMLTagParser html = new HTMLTagParser(cs,index+2,true);
+				html.parser();
+				String tagName = html.getTagName();
+				script.append("('").append(tagName).append("',");
+				
+				Map<String,String> map = html.getExpMap();
+				if(map.size()!=0){
+					script.append("{");
+				}
+				for(Entry<String,String> entry : map.entrySet()){
+					
+					String key = entry.getKey();
+					String value = entry.getValue();
+					script.append(key).append(":");
+					if(!value.startsWith(this.placeholderStart)){
+						script.append("'").append(value).append("'");
+					}else{
+						value = new String(value.toCharArray(),this.placeholderStart.length(),value.length()-this.placeholderStart.length()-this.placeholderEnd.length());
+						script.append(value);
+					}
+					script.append(",");
+				}
+				
+				script.setLength(script.length()-1);				
+				if(map.size()!=0){
+					script.append("}");
+				}
+				
+				script.append("){");
+				if(html.isEmptyTag()){
+					script.append("}");
+				}else{
+					htmlTagStack.push(tagName);
+				}
+				this.sb.append(script);
+				this.index = html.getIndex();
+				continue;
+				
+			}else if(match(this.HTML_TAG_END)){
+				HTMLTagParser html = new HTMLTagParser(cs,index+3,false);
+				String tagName = html.getTagName();
+				String lastTag = (String)this.htmlTagStack.peek();
+				if(tagName.equals(lastTag)){
+					this.htmlTagStack.pop();
+					sb.append("}");
+				}else{
+					throw new RuntimeException("解析出错");
+				}
+				this.index = html.getIndex();
+				continue;
+				
 			}
 			else if (status != 4)
 			{
@@ -626,10 +687,7 @@ public class Transformator
 		{
 
 			// String str = "   #:var u='hello';:#  \n  $u$";
-			String str = "<%p%> b\n"
-					//+"\n"
-					+ "c <%p();%> d\n"
-					;
+			String str = "<@input > ${hello} <@/input> " ;					
 			
 			BufferedReader reader = new BufferedReader(p.transform(str));
 			String line = null;

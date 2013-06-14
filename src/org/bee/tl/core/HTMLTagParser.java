@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 
+ * 用于解析htmltag，转化成宏调用
  * @author joelli
  * @create 2013-6-12
  */
@@ -25,7 +25,7 @@ public class HTMLTagParser {
 
 	public void parser() {
 		findTagName();
-		while (!isStart && next())
+		while (isStart && next())
 			;
 	}
 
@@ -35,6 +35,7 @@ public class HTMLTagParser {
 		while (start++ < cs.length) {
 			if(isStart){
 				if (hasLetter&&cs[start] == ' ') {
+					
 					this.tagName = new String(cs, index, start - index);
 					index = start;
 					return;
@@ -42,9 +43,10 @@ public class HTMLTagParser {
 					hasLetter = true ;
 				}
 			}else{
-				if (hasLetter&&cs[start] == '/'&&cs[start+1]=='>') {
-					this.tagName = new String(cs, index, start - index);
-					index = start;
+				//</@input>
+				if (hasLetter&&cs[start] == '>') {
+					this.tagName = new String(cs, index, start - index).trim();
+					index = start+1;
 					return;
 				}else if(cs[start]!=' '){
 					hasLetter = true ;
@@ -69,6 +71,7 @@ public class HTMLTagParser {
 		while (index++ < cs.length) {
 			switch (status) {
 			case 0: {
+				
 				if (cs[index] != '=') {
 					keySb.append(cs[index]);
 					continue;
@@ -116,6 +119,7 @@ public class HTMLTagParser {
 					return false;
 				} else if (cs[index] == '/' && cs[index + 1] == '>') {
 					this.isEmptyTag = true;
+					index = index+2;
 					return false;
 
 				} else if (cs[index] != ' ') {
@@ -151,7 +155,13 @@ public class HTMLTagParser {
 	
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		String input = "</@input>";
+		HTMLTagParser htmltag = new HTMLTagParser(input.toCharArray(),3,false);
+		htmltag.parser();
+		System.out.println(htmltag.getTagName());
+		System.out.println(htmltag.getExpMap());
+		System.out.println(htmltag.isEmptyTag());
+		
 
 	}
 
