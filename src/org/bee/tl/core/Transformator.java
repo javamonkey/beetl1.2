@@ -61,7 +61,7 @@ public class Transformator
 	int vnamesuffix = 0;
 	Map<String, String> textMap = new HashMap<String, String>();
 	List<String> lineList = new ArrayList<String>();
-	// 1 解析在文本处，2 解析在控制语句处，3 解析在占位符号里 4文件结束
+	// 1 解析在文本处，2 解析在控制语句处，3 解析在占位符号里 4文件结束 5,html tag begin 6 html tag end
 	int status = 1;
 	//最后转化的结果
 	StringBuilder sb = new StringBuilder();
@@ -232,6 +232,8 @@ public class Transformator
 					readPlaceHolder();
 					break;
 				}
+				case 5:readHTMLTagBegin();break;
+				case 6: readHTMLTagEnd();break;
 				case 4:
 				{
 
@@ -241,6 +243,68 @@ public class Transformator
 			}
 		}
 
+	}
+	
+	public void readHTMLTagBegin(){
+		StringBuilder script = new StringBuilder();
+		script.append("html");
+		HTMLTagParser html = new HTMLTagParser(cs,index,true);
+		html.parser();
+		String tagName = html.getTagName();
+		script.append("('").append(tagName).append("',");
+		
+		Map<String,String> map = html.getExpMap();
+		if(map.size()!=0){
+			script.append("{");
+		}
+		for(Entry<String,String> entry : map.entrySet()){
+			
+			String key = entry.getKey();
+			String value = entry.getValue();
+			script.append(key).append(":");
+			if(!value.startsWith(this.placeholderStart)){
+				script.append("'").append(value).append("'");
+			}else{
+				value = new String(value.toCharArray(),this.placeholderStart.length(),value.length()-this.placeholderStart.length()-this.placeholderEnd.length());
+				script.append(value);
+			}
+			script.append(",");
+		}
+		
+		script.setLength(script.length()-1);				
+		if(map.size()!=0){
+			script.append("}");
+		}
+		
+		script.append("){");
+		if(html.isEmptyTag()){
+			script.append("}");
+		}else{
+			htmlTagStack.push(tagName);
+		}
+				
+		sb.append(script);
+		this.index = html.getIndex();
+		status = 1;
+		
+	}
+	
+	public void readHTMLTagEnd(){
+		
+		HTMLTagParser html = new HTMLTagParser(cs,index,false);
+		html.parser();
+		String tagName = html.getTagName();
+		String lastTag = (String)this.htmlTagStack.peek();
+		if(tagName.equals(lastTag)){
+			this.htmlTagStack.pop();
+			sb.append("}");
+		}else{
+			throw new RuntimeException("解析出错");
+		}
+		this.index = html.getIndex();
+		status = 1;
+	
+		
 	}
 
 	public void readPlaceHolder()
@@ -388,60 +452,46 @@ public class Transformator
 
 				status = 2;
 				return;
-			}else if(match(HTML_TAG_START)){
-				StringBuilder script = new StringBuilder();
-				script.append("html");
-				HTMLTagParser html = new HTMLTagParser(cs,index+2,true);
-				html.parser();
-				String tagName = html.getTagName();
-				script.append("('").append(tagName).append("',");
+			}
+			else if(match(HTML_TAG_END)){
 				
-				Map<String,String> map = html.getExpMap();
-				if(map.size()!=0){
-					script.append("{");
-				}
-				for(Entry<String,String> entry : map.entrySet()){
-					
-					String key = entry.getKey();
-					String value = entry.getValue();
-					script.append(key).append(":");
-					if(!value.startsWith(this.placeholderStart)){
-						script.append("'").append(value).append("'");
-					}else{
-						value = new String(value.toCharArray(),this.placeholderStart.length(),value.length()-this.placeholderStart.length()-this.placeholderEnd.length());
-						script.append(value);
+				if (temp.length() != 0)
+				{
+					if (lineCount >= 1)
+					{
+						createMutipleLineTextNode(temp);
+						lineCount = 0;
 					}
-					script.append(",");
+					else
+					{
+						createTextNode(temp);
+					}
 				}
+				index= index+3;
+				status = 6;
+				return ;
+
+
+			}
+			else if(match(HTML_TAG_START)){
 				
-				script.setLength(script.length()-1);				
-				if(map.size()!=0){
-					script.append("}");
+				if (temp.length() != 0)
+				{
+					if (lineCount >= 1)
+					{
+						createMutipleLineTextNode(temp);
+						lineCount = 0;
+					}
+					else
+					{
+						createTextNode(temp);
+					}
 				}
+				status = 5;
+				index = index+2;
+				return ;
 				
-				script.append("){");
-				if(html.isEmptyTag()){
-					script.append("}");
-				}else{
-					htmlTagStack.push(tagName);
-				}
-				this.sb.append(script);
-				this.index = html.getIndex();
-				continue;
-				
-			}else if(match(this.HTML_TAG_END)){
-				HTMLTagParser html = new HTMLTagParser(cs,index+3,false);
-				String tagName = html.getTagName();
-				String lastTag = (String)this.htmlTagStack.peek();
-				if(tagName.equals(lastTag)){
-					this.htmlTagStack.pop();
-					sb.append("}");
-				}else{
-					throw new RuntimeException("解析出错");
-				}
-				this.index = html.getIndex();
-				continue;
-				
+
 			}
 			else if (status != 4)
 			{
@@ -687,7 +737,7 @@ public class Transformator
 		{
 
 			// String str = "   #:var u='hello';:#  \n  $u$";
-			String str = "<@input > ${hello} <@/input> " ;					
+			String str = "<@input>hello</@input>" ;					
 			
 			BufferedReader reader = new BufferedReader(p.transform(str));
 			String line = null;

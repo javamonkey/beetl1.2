@@ -24,21 +24,27 @@ public class HTMLTagParser {
 	}
 
 	public void parser() {
-		findTagName();
+		if(!findTagName()) return ;
 		while (isStart && next())
 			;
 	}
 
-	private void findTagName() {
+	private boolean findTagName() {
 		int start = index;
 		boolean hasLetter = false ;
 		while (start++ < cs.length) {
 			if(isStart){
-				if (hasLetter&&cs[start] == ' ') {
+				if (hasLetter) {
+					if(cs[start]==' '||cs[start]=='>'){
+						this.tagName = new String(cs, index, start - index);
+						index = start+1;
+						return false ;
+					}else if(cs[start]=='/'&&cs[start+1]=='>'){
+						this.tagName = new String(cs, index, start - index);
+						index = start+2;
+						return false;
+					}
 					
-					this.tagName = new String(cs, index, start - index);
-					index = start;
-					return;
 				}else if(cs[start]!=' '){
 					hasLetter = true ;
 				}
@@ -47,13 +53,14 @@ public class HTMLTagParser {
 				if (hasLetter&&cs[start] == '>') {
 					this.tagName = new String(cs, index, start - index).trim();
 					index = start+1;
-					return;
+					return false;
 				}else if(cs[start]!=' '){
 					hasLetter = true ;
 				}
 			}
 			
 		}
+		throw new RuntimeException("ERROR");
 	}
 
 	public boolean isEmptyTag() {
@@ -68,12 +75,15 @@ public class HTMLTagParser {
 		int status = 0;
 		char quot = '\'';
 
-		while (index++ < cs.length) {
+		while (index < cs.length) {
+			char ch = cs[index];
+			index++;
 			switch (status) {
 			case 0: {
-				
-				if (cs[index] != '=') {
-					keySb.append(cs[index]);
+				if(ch=='>'){					
+					return false;
+				}else if (ch != '=') {
+					keySb.append(ch);
 					continue;
 				} else {
 					key = keySb.toString().trim();
@@ -83,18 +93,18 @@ public class HTMLTagParser {
 
 			}
 			case 1: {
-				if (cs[index] == '\'') {
+				if (ch== '\'') {
 					quot = '\'';
 					status = 2;
 
-				} else if (cs[index] == '\"') {
+				} else if (ch == '\"') {
 					quot = '\"';
 					status = 2;
 				}
 				continue;
 			}
 			case 2: {
-				if (cs[index] == quot) {
+				if (ch == quot) {
 					if (cs[index - 1] != '\\') {
 						// 结束
 						exp = expSb.toString().trim();
@@ -103,11 +113,11 @@ public class HTMLTagParser {
 
 					} else {
 						// escape
-						expSb.append(cs[index]);
+						expSb.append(ch);
 						continue;
 					}
 				} else {
-					expSb.append(cs[index]);
+					expSb.append(ch);
 					continue;
 				}
 			}
@@ -115,14 +125,14 @@ public class HTMLTagParser {
 			case 3: {
 				this.expMap.put(key, exp);
 				// 继续往前，如果碰到了'>'或者'/>'者表示结束，如果碰到其他分空字符，则是下一个属性
-				if (cs[index] == '>') {
+				if (ch == '>') {
 					return false;
-				} else if (cs[index] == '/' && cs[index + 1] == '>') {
+				} else if (ch == '/' && cs[index + 1] == '>') {
 					this.isEmptyTag = true;
 					index = index+2;
 					return false;
 
-				} else if (cs[index] != ' ') {
+				} else if (ch != ' ') {
 					index--;
 					return true;
 				}
