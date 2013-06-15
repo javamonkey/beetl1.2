@@ -1439,7 +1439,10 @@ public class TypeTable
 		if (Map.class.isAssignableFrom(c))
 		{
 			return true;
+		}else if(hasGeneralGetMethod(c)){
+			return true ;
 		}
+		
 		for (String attr : attrs)
 		{
 			if (attr.startsWith("@"))
@@ -1476,6 +1479,18 @@ public class TypeTable
 
 		}
 		return true;
+	}
+	
+	private boolean hasGeneralGetMethod(Class c ){
+		try {
+			Method m = c.getMethod("get", new Class[]{String.class});
+			if(m!=null) return true;
+			else return false ;
+		} catch (SecurityException e) {
+			return false ;
+		} catch (NoSuchMethodException e) {
+			return false;
+		}
 	}
 
 	private void setExpType(BeeCommonNodeTree exp, Class returnClass)
