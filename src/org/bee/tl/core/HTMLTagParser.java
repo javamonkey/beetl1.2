@@ -32,30 +32,47 @@ public class HTMLTagParser {
 	private boolean findTagName() {
 		int start = index;
 		boolean hasLetter = false ;
-		while (start++ < cs.length) {
+		char c = 0;
+		while (start < cs.length) {
+			c = cs[start];
+			start++;
 			if(isStart){
 				if (hasLetter) {
-					if(cs[start]==' '||cs[start]=='>'){
-						this.tagName = new String(cs, index, start - index);
-						index = start+1;
+					if(c==' '){
+						this.tagName = new String(cs, index, start - index-1).trim();
+						index = start ;
+						return true;
+					}else if(c=='>'){
+						this.tagName = new String(cs, index, start - index-1).trim();
+						index = start;
 						return false ;
-					}else if(cs[start]=='/'&&cs[start+1]=='>'){
-						this.tagName = new String(cs, index, start - index);
-						index = start+2;
+					}else if(c=='/'&&cs[start]=='>'){
+						this.tagName = new String(cs, index, start - index-1);
+						index = start+1;
+						isEmptyTag = true;
 						return false;
+					}else if(!isID(c)){
+						throw new RuntimeException("解析出错，html tag不合法："+new String(cs, index, start - index));
 					}
 					
-				}else if(cs[start]!=' '){
+				}else if(c!=' '){
+					if(!isID(c)){
+						throw new RuntimeException("解析出错，html tag不合法："+new String(cs, index, start - index));
+					}
 					hasLetter = true ;
 				}
 			}else{
 				//</@input>
-				if (hasLetter&&cs[start] == '>') {
-					this.tagName = new String(cs, index, start - index).trim();
-					index = start+1;
+				if (hasLetter&&c == '>') {
+					this.tagName = new String(cs, index, start - index-1).trim();
+					index = start;
 					return false;
-				}else if(cs[start]!=' '){
+				}else if(c!=' '){
+					if(!isID(c)){
+						throw new RuntimeException("解析出错，html tag不合法："+new String(cs, index, start - index));
+					}
 					hasLetter = true ;
+					
 				}
 			}
 			
@@ -65,6 +82,17 @@ public class HTMLTagParser {
 
 	public boolean isEmptyTag() {
 		return this.isEmptyTag;
+	}
+	
+	/**判断是否是id
+	 * joelli
+	 */
+	private boolean isID(char c){
+		if((c>='a'&&c<='z')||(c>='A'&&c<='Z')||c=='_' ){
+			return true;
+		}else{
+			return false ;
+		}
 	}
 
 	private boolean next() {
@@ -83,6 +111,11 @@ public class HTMLTagParser {
 				if(ch=='>'){					
 					return false;
 				}else if (ch != '=') {
+					if(ch==' '){
+						continue;
+					}else if(!isID(ch)){
+						throw new RuntimeException("解析出错，html tag '"+this.tagName+"' 属性不合法："+keySb.toString()+ch);
+					}
 					keySb.append(ch);
 					continue;
 				} else {
@@ -100,6 +133,9 @@ public class HTMLTagParser {
 				} else if (ch == '\"') {
 					quot = '\"';
 					status = 2;
+				}else if(ch!=' '){
+					throw new RuntimeException("解析出错，html tag '"+this.tagName+"' 属性不合法："+keySb.toString());
+					
 				}
 				continue;
 			}
@@ -127,9 +163,9 @@ public class HTMLTagParser {
 				// 继续往前，如果碰到了'>'或者'/>'者表示结束，如果碰到其他分空字符，则是下一个属性
 				if (ch == '>') {
 					return false;
-				} else if (ch == '/' && cs[index + 1] == '>') {
+				} else if (ch == '/' && cs[index] == '>') {
 					this.isEmptyTag = true;
-					index = index+2;
+					index = index+1;
 					return false;
 
 				} else if (ch != ' ') {
@@ -141,7 +177,8 @@ public class HTMLTagParser {
 
 			}
 		}
-		return false;
+		throw new RuntimeException("解析出错，html tag '"+this.tagName+"' 属性不合法");
+		
 	}
 
 	public int getIndex() {
@@ -165,8 +202,8 @@ public class HTMLTagParser {
 	
 
 	public static void main(String[] args) {
-		String input = "</@input>";
-		HTMLTagParser htmltag = new HTMLTagParser(input.toCharArray(),3,false);
+		String input = "<@  input  aa='cc>";
+		HTMLTagParser htmltag = new HTMLTagParser(input.toCharArray(),2,true);
 		htmltag.parser();
 		System.out.println(htmltag.getTagName());
 		System.out.println(htmltag.getExpMap());

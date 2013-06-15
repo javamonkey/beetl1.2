@@ -60,7 +60,7 @@ public class Transformator
 	String vname = "__V";
 	int vnamesuffix = 0;
 	Map<String, String> textMap = new HashMap<String, String>();
-	List<String> lineList = new ArrayList<String>();
+	
 	// 1 解析在文本处，2 解析在控制语句处，3 解析在占位符号里 4文件结束 5,html tag begin 6 html tag end
 	int status = 1;
 	//最后转化的结果
@@ -737,7 +737,7 @@ public class Transformator
 		{
 
 			// String str = "   #:var u='hello';:#  \n  $u$";
-			String str = "<@input>hello</@input>" ;					
+			String str = "<@c ab='d'> <@d p=' ${ a } '>  just test </@d>  </@c>" ;					
 			
 			BufferedReader reader = new BufferedReader(p.transform(str));
 			String line = null;
@@ -758,7 +758,7 @@ public class Transformator
 	public void clear()
 	{
 		this.cs = null;
-		this.lineList = null;
+		
 		this.sb = null;
 	}
 
