@@ -1,7 +1,6 @@
 package org.bee.tl.core.io;
 
 import java.io.OutputStream;
-import java.util.Arrays;
 
 public class NoLockByteArrayOutputStream extends OutputStream
 {
@@ -26,7 +25,7 @@ public class NoLockByteArrayOutputStream extends OutputStream
 		int newcount = count + 1;
 		if (newcount > buf.length)
 		{
-			buf = Arrays.copyOf(buf, Math.max(buf.length << 1, newcount));
+			buf = copyOf(buf, Math.max(buf.length << 1, newcount));
 		}
 		buf[count] = (byte) b;
 		count = newcount;
@@ -38,11 +37,18 @@ public class NoLockByteArrayOutputStream extends OutputStream
 		int newcount = count + len;
 		if (newcount > buf.length)
 		{
-			buf = Arrays.copyOf(buf, Math.max(buf.length << 1, newcount));
+			buf = copyOf(buf, Math.max(buf.length << 1, newcount));
 		}
 		System.arraycopy(b, off, buf, count, len);
 		count = newcount;
 	}
+	
+	 public static byte[] copyOf(byte[] original, int newLength) {
+	        byte[] copy = new byte[newLength];
+	        System.arraycopy(original, 0, copy, 0,
+	                         Math.min(original.length, newLength));
+	        return copy;
+	    }
 
 	public void reset()
 	{
@@ -51,7 +57,7 @@ public class NoLockByteArrayOutputStream extends OutputStream
 
 	public byte toByteArray()[]
 	{
-		return Arrays.copyOf(this.buf,count);
+		return copyOf(this.buf,count);
 	}
 
 	public int size()
