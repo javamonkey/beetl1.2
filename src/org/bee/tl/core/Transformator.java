@@ -247,7 +247,7 @@ public class Transformator
 	
 	public void readHTMLTagBegin(){
 		StringBuilder script = new StringBuilder();
-		script.append("html");
+		script.append("htmltag");
 		HTMLTagParser html = new HTMLTagParser(cs,index,true);
 		html.parser();
 		String tagName = html.getTagName();

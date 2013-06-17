@@ -43,6 +43,7 @@ import org.bee.tl.ext.DebugFunction;
 import org.bee.tl.ext.DecodeFunction;
 import org.bee.tl.ext.DeleteTag;
 import org.bee.tl.ext.EmptyFunction;
+import org.bee.tl.ext.HTMLTagSupport;
 import org.bee.tl.ext.IncludeFileTemplateTag;
 import org.bee.tl.ext.LayoutTag;
 import org.bee.tl.ext.NVLFunction;
@@ -276,6 +277,7 @@ public class ScriptGlobal {
 		// sg.registerTag("includeJsp", IncludeJSPTag.class);
 		sg.registerTag("layout", LayoutTag.class);
 		sg.registerTag("cache", CacheTag.class);
+		sg.registerTag("htmltag", HTMLTagSupport.class);
 
 		// virtual attribute
 		sg.registerVirtualAttributeEval(new VirtualAttributeEval() {

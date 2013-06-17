@@ -63,7 +63,7 @@ public class IncludeFileTemplateTag extends ByteSupportTag
 		return false;
 	}
 
-	private void makeOutput()
+	protected void makeOutput()
 	{
 
 		if (args.length == 0 || args.length > 2)
