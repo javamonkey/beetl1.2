@@ -32,8 +32,11 @@ import java.io.OutputStream;
 import java.io.Writer;
 import java.util.Enumeration;
 
+import javax.servlet.http.HttpSession;
+
 import org.bee.tl.core.GroupTemplate;
 import org.bee.tl.core.Template;
+import org.bee.tl.ext.spring.SessionWrapper;
 import org.bee.tl.ext.spring.WebVariable;
 
 import com.jfinal.render.Render;
@@ -65,13 +68,25 @@ public class BeetlRender extends Render
 			while (attrs.hasMoreElements())
 			{
 				String attrName = attrs.nextElement();
-				template.set(attrName, request.getAttribute(attrName));
+				if(attrName.equals("session")){
+					//jfinal session is private,do nothing
+					HttpSession  session = (HttpSession )request.getAttribute("session");
+					template.setRawValue("session", new SessionWrapper(session));
+					
+					
+				}else{
+					template.set(attrName, request.getAttribute(attrName));
+				}
+				
 
 			}
 			WebVariable webVariable = new WebVariable();
 			webVariable.setRequest(request);
 			webVariable.setResponse(response);
 			webVariable.setSession(request.getSession());
+//			System.out.println(request.getSession().getAttributeNames());
+//			
+//			template.setRawValue("session",new SessionWrapper(webVariable.getSession()));
 
 			template.set("servlet", webVariable);
 			template.set("request", request);
