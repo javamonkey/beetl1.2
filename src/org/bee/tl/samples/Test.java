@@ -21,18 +21,19 @@ public class Test
 		 		group.config("<%", "%>", "${", "}");
 		 		group.setDebug(true);
 		 		group.enableNativeCall();
+		 		//group.enableDirectOutputByte();
 		 		Map compileConfig = new HashMap();
-	 		   compileConfig.put(GroupTemplate.OPTIMIZE_KEEP_SOURCE, true);
-	 		   group.enableOptimize(compileConfig);
+	 		    compileConfig.put(GroupTemplate.OPTIMIZE_KEEP_SOURCE, true);
+	 		    group.enableOptimize(compileConfig);
 		 		 //		group.enableOptimize();
 //		 		  group.enableDirectOutputByte();
 		 		 
-		 		Template template = group.getFileTemplate("/helloworld.html");
+		 		 Template template = group.getFileTemplate("/helloworld.html");
 		 		
 		 		System.out.println(template.getTextAsString());
 		 		
 	 		template = group.getFileTemplate("/helloworld.html");
-	 	 		System.out.println(template.getTextAsString());
+	 		System.out.println(template.getTextAsString());
 		 		
 
 		
@@ -43,4 +44,5 @@ public class Test
 	{
 		return true;
 	}
+
 }
