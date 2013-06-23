@@ -175,6 +175,10 @@ public class CompiledBeeTemplate extends AbstractTemplate
 
 		Transformator tf = new Transformator(group.placeholderStart, group.placeholderEnd, group.statementStart,
 				group.statementEnd);
+		if(group.isHtmlTagSupport){
+			tf.enableHtmlTagSupport(group.htmlTagStart, group.htmlTagStart);
+		}
+	
 		Resource resource = new Resource(child, group.root, group.charset);
 		Reader textReader = resource.getReader();
 		Reader scriptReader = tf.transform(textReader);

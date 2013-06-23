@@ -158,6 +158,9 @@ public class GroupTemplate
 	String placeholderEnd = "}";
 	String statementStart = "<%";
 	String statementEnd = "%>";
+	String htmlTagStart = "<#";
+	String htmlTagEnd= "</#";
+	
 	//文件模板根目录
 	File root = null;
 	//根目录别名
@@ -183,6 +186,7 @@ public class GroupTemplate
 	boolean directByteOutput = false;
 	boolean isStrict = false;
 	boolean isBigNumberSupport = true ;
+	boolean isHtmlTagSupport = false;
 	// 每隔5秒检测一次
 	int checkTemplatePeriod = 5;
 	//检测线程
@@ -309,6 +313,9 @@ public class GroupTemplate
 		template.scriptRunner.setBigNumberSupport(this.isBigNumberSupport);
 		
 		template.config(this.statementStart, this.statementEnd, this.placeholderStart, this.placeholderEnd);
+		if(this.isHtmlTagSupport){
+			template.enableHtmlTagSupport (this.htmlTagStart,this.htmlTagEnd);
+		}
 
 	}
 
@@ -439,6 +446,9 @@ public class GroupTemplate
 			{
 				Transformator tf = new Transformator(placeholderStart, placeholderEnd, this.statementStart,
 						this.statementEnd);
+				if(this.isBigNumberSupport){
+					tf.enableHtmlTagSupport(this.htmlTagStart, this.htmlTagStart);
+				}
 				Resource resource = new Resource(child, root, this.charset);
 				Reader textReader = resource.getReader();
 				Reader scriptReader = tf.transform(textReader);
@@ -832,6 +842,12 @@ public class GroupTemplate
 
 		enableOptimize();
 	}
+	
+	public void enableHtmlTagSupport(String tagStart,String tagEnd){
+		this.isHtmlTagSupport = true ;
+		this.htmlTagEnd = tagEnd;
+		this.htmlTagStart = tagStart;
+	}
 
 	protected URLClassLoader getTemplateClassLoader()
 	{
@@ -1092,5 +1108,11 @@ public class GroupTemplate
 	{
 		this.classLoader = classLoader;
 	}
+	
+	public ScriptGlobal getScriptGlobal(){
+		return this.scriptGlobal;
+	}
+	
+
 
 }

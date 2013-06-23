@@ -47,10 +47,11 @@ import java.util.Stack;
 public class Transformator
 {
 
-	static String HTML_TAG_START = "<@";
-	static String HTML_TAG_END = "</@";
-	static String HTML_EMPTY_TAG_END = ">";
+	String htmlTagStart = "<#";
+	String htmlTagEnd = "</#";
+	
 	Stack htmlTagStack = new Stack();
+	boolean isSupportHtmlTag = false ;
 
 	String placeholderStart = "$";
 	String placeholderEnd = "$";
@@ -137,6 +138,12 @@ public class Transformator
 	{
 		this.endStatement = endStatement;
 
+	}
+	
+	public void enableHtmlTagSupport(String tagStart,String tagEnd){
+		this.htmlTagStart = tagStart;
+		this.htmlTagEnd = tagEnd;
+		this.isSupportHtmlTag = true ;
 	}
 
 	public Reader transform(Reader orginal) throws IOException
@@ -453,7 +460,7 @@ public class Transformator
 				status = 2;
 				return;
 			}
-			else if(match(HTML_TAG_END)){
+			else if(isSupportHtmlTag&&match(htmlTagEnd)){
 				
 				if (temp.length() != 0)
 				{
@@ -473,7 +480,7 @@ public class Transformator
 
 
 			}
-			else if(match(HTML_TAG_START)){
+			else if(isSupportHtmlTag&&match(htmlTagStart)){
 				
 				if (temp.length() != 0)
 				{

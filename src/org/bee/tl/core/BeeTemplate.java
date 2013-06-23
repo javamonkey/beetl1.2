@@ -46,6 +46,12 @@ public class BeeTemplate extends AbstractTemplate
 	String statementStart = "<%";
 	String statementEnd = "%>";
 	
+	
+	String htmlTagStart = "<#";
+	String htmlTagEnd= "</#";
+	boolean isHtmlTagSupport = false;
+	
+	
 	public BeeTemplate(String input)
 	{
 
@@ -113,6 +119,9 @@ public class BeeTemplate extends AbstractTemplate
 	{
 
 		Transformator tf = new Transformator(placeholderStart, placeholderEnd, this.statementStart, this.statementEnd);
+		if(this.isHtmlTagSupport){
+			tf.enableHtmlTagSupport(this.htmlTagStart, this.htmlTagEnd);
+		}
 		Reader textReader = this.resource.getReader();
 		Reader scriptReader = tf.transform(textReader);
 		scriptRunner.setScriptInputReader(scriptReader);
@@ -331,6 +340,13 @@ public class BeeTemplate extends AbstractTemplate
 		}
 
 	}
+	
+	public void enableHtmlTagSupport(String tagStart,String tagEnd){
+		this.isHtmlTagSupport = true ;
+		this.htmlTagEnd = tagEnd;
+		this.htmlTagStart = tagStart;
+	}
+
 
 
 }

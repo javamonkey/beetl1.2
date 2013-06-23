@@ -43,7 +43,7 @@ import org.bee.tl.ext.DebugFunction;
 import org.bee.tl.ext.DecodeFunction;
 import org.bee.tl.ext.DeleteTag;
 import org.bee.tl.ext.EmptyFunction;
-import org.bee.tl.ext.HTMLTagSupport;
+import org.bee.tl.ext.HTMLTagSupportWrapper;
 import org.bee.tl.ext.IncludeFileTemplateTag;
 import org.bee.tl.ext.LayoutTag;
 import org.bee.tl.ext.NVLFunction;
@@ -168,7 +168,7 @@ public class ScriptGlobal {
 		return null;
 	}
 
-	protected Tag getTag(String name) {
+	public Tag getTag(String name) {
 		Class process = this.textProcessMap.get(name);
 		if (process == null) {
 			return null;
@@ -277,7 +277,7 @@ public class ScriptGlobal {
 		// sg.registerTag("includeJsp", IncludeJSPTag.class);
 		sg.registerTag("layout", LayoutTag.class);
 		sg.registerTag("cache", CacheTag.class);
-		sg.registerTag("htmltag", HTMLTagSupport.class);
+		sg.registerTag("htmltag", HTMLTagSupportWrapper.class);
 
 		// virtual attribute
 		sg.registerVirtualAttributeEval(new VirtualAttributeEval() {

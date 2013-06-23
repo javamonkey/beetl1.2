@@ -17,10 +17,11 @@ public class Test
 
 		 		String home = System.getProperty("user.dir") + File.separator + "template" + File.separator;
 		 		GroupTemplate group = new GroupTemplate(new File(home));
-		 		group.setCharset("GBK");
+		 		group.setCharset("UTF-8");
 		 		group.config("<%", "%>", "${", "}");
 		 		group.setDebug(true);
 		 		group.enableNativeCall();
+		 		group.registerTag("html.comment", CommentTag.class);
 		 		Map compileConfig = new HashMap();
 	 		   compileConfig.put(GroupTemplate.OPTIMIZE_KEEP_SOURCE, true);
 	 		   group.enableOptimize(compileConfig);
@@ -29,9 +30,8 @@ public class Test
 		 		 
 		 		Template template = group.getFileTemplate("/helloworld.html");
 		 		
-		 		System.out.println(template.getTextAsString());
-		 		
-	 		template = group.getFileTemplate("/helloworld.html");
+		 		System.out.println(template.getTextAsString());		 		
+		 		template = group.getFileTemplate("/helloworld.html");
 	 	 		System.out.println(template.getTextAsString());
 		 		
 

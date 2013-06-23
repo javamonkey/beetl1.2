@@ -88,7 +88,7 @@ public class HTMLTagParser {
 	 * joelli
 	 */
 	private boolean isID(char c){
-		if((c>='a'&&c<='z')||(c>='A'&&c<='Z')||c=='_' ){
+		if((c>='a'&&c<='z')||(c>='A'&&c<='Z')||c=='_' ||c==':'){
 			return true;
 		}else{
 			return false ;
