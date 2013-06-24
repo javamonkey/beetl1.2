@@ -341,10 +341,10 @@ public class BeeTemplate extends AbstractTemplate
 
 	}
 	
-	public void enableHtmlTagSupport(String tagStart,String tagEnd){
+	public void enableHtmlTagSupport(String tagFlag){
 		this.isHtmlTagSupport = true ;
-		this.htmlTagEnd = tagEnd;
-		this.htmlTagStart = tagStart;
+		this.htmlTagEnd = "<"+tagFlag;
+		this.htmlTagStart = "</"+tagFlag;
 	}
 
 

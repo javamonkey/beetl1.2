@@ -158,9 +158,10 @@ public class GroupTemplate
 	String placeholderEnd = "}";
 	String statementStart = "<%";
 	String statementEnd = "%>";
-	String htmlTagStart = "<#";
-	String htmlTagEnd= "</#";
-	
+	String htmlTagFlag = "#";
+	String htmlTagStart = "<"+htmlTagFlag;
+	String htmlTagEnd= "</"+htmlTagFlag;
+
 	//文件模板根目录
 	File root = null;
 	//根目录别名
@@ -314,7 +315,7 @@ public class GroupTemplate
 		
 		template.config(this.statementStart, this.statementEnd, this.placeholderStart, this.placeholderEnd);
 		if(this.isHtmlTagSupport){
-			template.enableHtmlTagSupport (this.htmlTagStart,this.htmlTagEnd);
+			template.enableHtmlTagSupport (htmlTagFlag);
 		}
 
 	}
@@ -843,10 +844,11 @@ public class GroupTemplate
 		enableOptimize();
 	}
 	
-	public void enableHtmlTagSupport(String tagStart,String tagEnd){
+	public void enableHtmlTagSupport(String tagFlag){
 		this.isHtmlTagSupport = true ;
-		this.htmlTagEnd = tagEnd;
-		this.htmlTagStart = tagStart;
+		this.htmlTagFlag = tagFlag;
+		this.htmlTagEnd = "<"+tagFlag;
+		this.htmlTagStart = "</"+tagFlag;
 	}
 
 	protected URLClassLoader getTemplateClassLoader()
