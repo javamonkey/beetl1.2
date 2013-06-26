@@ -76,6 +76,8 @@ public class BeetlCodeGenerator
 	Map<String, Object> textMap = null;
 	CoreScriptRunner scriptRunner = null;
 	public final static int SPACE = 4;
+	public final static int SPLIT_MAX = 512;
+	
 	private long cachedId;
 	protected Map<Integer, Integer> lineMap = new HashMap<Integer, Integer>();
 	private String charset;
@@ -373,6 +375,7 @@ public class BeetlCodeGenerator
 		println("private static char[] __VCR = \"" + crs + "\".toCharArray();");
 		Iterator<String> it = this.textMap.keySet().iterator();
 		String key = null;
+		int max = SPLIT_MAX;
 		while (it.hasNext())
 		{
 			key = it.next();
@@ -381,11 +384,48 @@ public class BeetlCodeGenerator
 				continue;
 			}
 			text = (String) textMap.get(key);
-			println("private static final char[] " + key + " = \"" + addEscape(text) + "\".toCharArray();");
+			
+			if(text.length()>max){
+				int section = text.length()/max+(text.length()%max==0?0:1);
+				
+				for(int i=0;i<section;i++){
+					int start = i*max;
+					int end = 0;
+					if(i==section-1){
+						end = text.length();
+					}else{
+						end = (i+1)*max;
+					}
+					writeLongTextSection(key+i,text.substring(start,end));
+				}
+				printStart("private static final char[] " + key + " = connectString( new String[]{" );
+				for(int i=0;i<section;i++){
+					print("getChar_"+key+i+"()");
+					if(i!=section-1){
+						print(",");
+					}
+				}
+				print("});");
+				printCR();
+			}else{
+				println("private static final char[] " + key + " = \"" + addEscape(text) + "\".toCharArray();");
+				
+			}
 		}
 
 		this.decIndent();
 
+	}
+	
+	private void writeLongTextSection(String method,String text) throws IOException{
+		println("private static String getChar_" + method + "(){");
+		this.addIndent();
+		println("return \"" + addEscape(text) + "\";");
+		this.decIndent();
+		println("}");
+		
+		
+		
 	}
 
 	private void writeConstantByte() throws IOException
@@ -395,22 +435,56 @@ public class BeetlCodeGenerator
 
 		Iterator<String> it = this.textMap.keySet().iterator();
 		String key = null;
+		int max = 2*SPLIT_MAX;
 		while (it.hasNext())
 		{
 			key = it.next();
 			byte[] text = (byte[]) textMap.get(key);
-			println("private static final byte[] " + key + " = new byte[]{" + this.toByteArray(text) + "};");
+			if(text.length>max){
+				int section = text.length/max+(text.length%max==0?0:1);				
+				for(int i=0;i<section;i++){
+					int start = i*max;
+					int end = 0;
+					if(i==section-1){
+						end = text.length;
+					}else{
+						end = (i+1)*max;
+					}
+					writeLongByteSection(key+i,text,start,end);
+				}
+				printStart("private static final byte[] " + key + " = connectByte( new byte[][]{" );
+				for(int i=0;i<section;i++){
+					print("getByte_"+key+i+"()");
+					if(i!=section-1){
+						print(",");
+					}
+				}
+				print("},"+text.length+");");
+				printCR();
+			}else{
+				println("private static final byte[] " + key + " = new byte[]{" + this.toByteArray(text) + "};");
+			}
 		}
 
 		this.decIndent();
 
 	}
-
-	private static String toByteArray(byte[] bs)
-	{
+	
+	private  void writeLongByteSection(String method,byte[] bs ,int start,int end) throws IOException{
+		println("private static byte[] getByte_" + method + "(){");
+		this.addIndent();
+		println("return new byte[]{"+this.toByteArray(bs, start, end)+"};");
+		this.decIndent();
+		println("}");
+		
+	}
+	
+	private static String toByteArray(byte[] bs ,int start,int end){
 		StringBuilder sb = new StringBuilder();
-		for (byte b : bs)
+		
+		for (int i=start;i<end;i++)
 		{
+			byte b= bs[i];
 			sb.append("0x");
 			sb.append(Integer.toHexString(b));
 			sb.append(",");
@@ -418,6 +492,11 @@ public class BeetlCodeGenerator
 		sb.setLength(sb.length() - 1);
 
 		return sb.toString();
+	}
+	
+	private static String toByteArray(byte[] bs)
+	{
+		return toByteArray(bs,0,bs.length);
 	}
 
 	private String addEscape(String text)

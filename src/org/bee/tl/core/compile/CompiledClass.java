@@ -27,6 +27,7 @@
  */
 package org.bee.tl.core.compile;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -459,6 +460,31 @@ public class CompiledClass
 	public String getCR()
 	{
 		return CR;
+	}
+	
+	public static char[] connectString(String[] strs){
+		StringBuilder sb = new StringBuilder();
+		for(String s:strs){
+			sb.append(s);
+		}
+		return sb.toString().toCharArray();
+	}
+	
+	public static byte[] connectByte(byte[][] bs,int length){
+		try{
+			ByteArrayOutputStream bw = new ByteArrayOutputStream(length);
+			for(int i=0;i<bs.length;i++){
+				bw.write(bs[i]);
+			}
+			return bw.toByteArray();
+		}catch(Exception ex){
+			ex.printStackTrace();
+			//不可能发生
+			throw new RuntimeException(ex);
+		}
+		
+		
+		
 	}
 
 }
