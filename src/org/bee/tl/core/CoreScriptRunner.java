@@ -927,24 +927,26 @@ public class CoreScriptRunner {
 						.getChild(0);
 				pattern = pattenNode.getText();
 				pattern = pattern.substring(1, pattern.length() - 1);
-				Class type = value.getClass();
+				if(value!=null){
+					Class type = value.getClass();
+					format = this.getDefaultFormat(type);
+					if (format == null) {
+						throw new BeeRuntimeException(
+								BeeRuntimeException.DEFAULT_FORMAT_NOT_FOUND,
+								((BeeCommonNodeTree) vartextNode.getChild(0))
+										.getToken(), type.toString());
+					}
 
-				format = this.getDefaultFormat(type);
-				if (format == null) {
-					throw new BeeRuntimeException(
-							BeeRuntimeException.DEFAULT_FORMAT_NOT_FOUND,
-							((BeeCommonNodeTree) vartextNode.getChild(0))
-									.getToken(), type.toString());
+					try {
+						value = format.format(value, pattern);
+					} catch (Exception ex) {
+						throw new BeeRuntimeException(
+								BeeRuntimeException.NATIVE_CALL_EXCEPTION,
+								((BeeCommonNodeTree) fmNode.getChild(0)).getToken(),
+								ex);
+					}
 				}
-
-				try {
-					value = format.format(value, pattern);
-				} catch (Exception ex) {
-					throw new BeeRuntimeException(
-							BeeRuntimeException.NATIVE_CALL_EXCEPTION,
-							((BeeCommonNodeTree) fmNode.getChild(0)).getToken(),
-							ex);
-				}
+			
 
 			}
 		}

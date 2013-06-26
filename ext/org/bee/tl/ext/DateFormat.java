@@ -43,7 +43,8 @@ public class DateFormat implements Format
 
 	public Object format(Object data, String pattern)
 	{
-		if (data instanceof Date)
+		if(data==null) return null;
+		if (Date.class.isAssignableFrom(data.getClass()))
 		{
 			SimpleDateFormat sdf = null;
 			if (pattern == null)
@@ -54,13 +55,18 @@ public class DateFormat implements Format
 			{
 				sdf = new SimpleDateFormat(pattern);
 			}
-			return sdf.format(data);
+			return sdf.format((Date)data);
 
 		}
 		else
 		{
 			throw new RuntimeException("Arg Error:Type should be Date");
 		}
+	}
+	
+	public static void main(String[] args){
+		DateFormat d = new DateFormat();
+		System.out.println(d.format(new java.sql.Timestamp(11), "yyyy"));
 	}
 
 }
