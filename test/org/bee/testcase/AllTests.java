@@ -24,6 +24,7 @@ import org.bee.testcase.ext.FunctionTest;
 import org.bee.testcase.ext.IncludeFunctionTest;
 import org.bee.testcase.ext.LayoutFunctionTest;
 import org.bee.testcase.ext.TagTest;
+import org.bee.testcase.html.HtmlTagTestCase;
 import org.bee.testcase.nat.NativeTestCase;
 import org.bee.testcase.nat.NativeTestCase2;
 import org.bee.testcase.objref.ComplicatedModelTestCase;
@@ -80,6 +81,8 @@ public class AllTests
 
 		suite.addTestSuite(StrTemplateTestCase.class);
 		suite.addTestSuite(DirectiveSafeOutputTestCase.class);
+		
+		suite.addTestSuite(HtmlTagTestCase.class);
 
 		//$JUnit-END$
 		return suite;

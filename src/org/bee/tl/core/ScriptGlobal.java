@@ -51,6 +51,7 @@ import org.bee.tl.ext.NumberFormat;
 import org.bee.tl.ext.Print;
 import org.bee.tl.ext.Printf;
 import org.bee.tl.ext.Println;
+import org.bee.tl.ext.QuestionMark;
 import org.bee.tl.ext.StringUtil;
 import org.bee.tl.ext.TruncFunction;
 import org.bee.tl.ext.cache.CacheTag;
@@ -243,6 +244,7 @@ public class ScriptGlobal {
 		sg.registerFunction("prinf", new Printf());
 		sg.registerFunction("trunc", new TruncFunction());
 		sg.registerFunction("empty", new EmptyFunction());
+		sg.registerFunction("qmark", new QuestionMark());
 
 		sg.registerFunctionPackage("strutil", new StringUtil());
 

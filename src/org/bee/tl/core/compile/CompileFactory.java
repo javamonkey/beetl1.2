@@ -96,7 +96,7 @@ public class CompileFactory
 		
 		JavaCompiler jc = getCompiler();
 		StringBuilder sb = new StringBuilder();
-		sb.append("import org.bee.tl.core.compile.ErrorToken;").append("\n");
+		sb.append("import org.bee.tl.core.ErrorToken;").append("\n");
 		sb.append("public class TestBeetlEnv{ ErrorToken e = new ErrorToken();}");
 		String tempFolder = System.getProperty("user.home") + File.separator + ".bee";
 		new File(tempFolder).mkdirs();

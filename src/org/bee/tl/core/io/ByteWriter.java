@@ -28,6 +28,8 @@ public abstract class ByteWriter
 	public abstract void flush() throws IOException;
 
 	public abstract ByteWriter getParent();
+	
+	public abstract void flushToParent() throws IOException;
 
 	public void write(Object o) throws IOException
 	{

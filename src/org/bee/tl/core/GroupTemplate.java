@@ -50,6 +50,7 @@ import org.bee.tl.core.cache.CachedScriptItem;
 import org.bee.tl.core.cache.CachedScriptRunner;
 import org.bee.tl.core.cache.CompiledClassMap;
 import org.bee.tl.core.compile.CompileFactory;
+import org.bee.tl.core.exception.HTMLTagParserException;
 
 /**
  *  系统的主要类，通过此类可以完成所有的模版渲染工作，分别说明说下：
@@ -448,12 +449,26 @@ public class GroupTemplate
 				Transformator tf = new Transformator(placeholderStart, placeholderEnd, this.statementStart,
 						this.statementEnd);
 				if(this.isBigNumberSupport){
-					tf.enableHtmlTagSupport(this.htmlTagStart, this.htmlTagStart);
+					tf.enableHtmlTagSupport(this.htmlTagStart, this.htmlTagEnd);
 				}
 				Resource resource = new Resource(child, root, this.charset);
 				Reader textReader = resource.getReader();
-				Reader scriptReader = tf.transform(textReader);
 				CoreScriptRunner scriptRunner = new CoreScriptRunner();
+				Reader scriptReader = null;
+				try {
+					scriptReader = tf.transform(textReader);
+				} catch (HTMLTagParserException e) {
+					//返回一个错误的模板
+					scriptRunner.lasetRe =e ;
+					scriptRunner.hasParsed = true;
+					scriptRunner.isParseSuccess = false;
+					tf.clear();
+					cachedRuntime.updateCache(scriptRunner, resource);
+					template = new BeeTemplate(resource, scriptRunner);
+					template.setGroupTemplate(this);
+					return template ;
+				}
+				
 				scriptRunner.setScriptInputReader(scriptReader);
 
 				if (this.directByteOutput)
@@ -847,8 +862,8 @@ public class GroupTemplate
 	public void enableHtmlTagSupport(String tagFlag){
 		this.isHtmlTagSupport = true ;
 		this.htmlTagFlag = tagFlag;
-		this.htmlTagEnd = "<"+tagFlag;
-		this.htmlTagStart = "</"+tagFlag;
+		this.htmlTagStart = "<"+tagFlag;
+		this.htmlTagEnd = "</"+tagFlag;
 	}
 
 	protected URLClassLoader getTemplateClassLoader()

@@ -128,6 +128,11 @@ public class BeeRuntimeException extends RuntimeException
 
 	//断言异常，与assert函数一起使用
 	public static final String ASSERT_ERROR = "ASSERT_ERROR";
+	
+	//HTML TAG 解析出错
+	public static final String HTML_TAG_PARSER_ERROR = "HTML_TAG_PARSER_ERROR";
+	
+	
 
 	public static final String ERROR = "ERROR";
 
@@ -136,6 +141,8 @@ public class BeeRuntimeException extends RuntimeException
 		this(detailCode, token, (Exception) null, null);
 
 	}
+	
+	
 
 	public BeeRuntimeException(String detailCode, Token token, String msg)
 	{

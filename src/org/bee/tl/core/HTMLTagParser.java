@@ -88,7 +88,7 @@ public class HTMLTagParser {
 	 * joelli
 	 */
 	private boolean isID(char c){
-		if((c>='a'&&c<='z')||(c>='A'&&c<='Z')||c=='_' ||c==':'){
+		if((c>='a'&&c<='z')||(c>='A'&&c<='Z')||c=='_' ||c==':'||(c>='0'&&c<='9')){
 			return true;
 		}else{
 			return false ;
@@ -202,7 +202,7 @@ public class HTMLTagParser {
 	
 
 	public static void main(String[] args) {
-		String input = "<@  input  aa='cc>";
+		String input = "<@  input aa='cc>' >";
 		HTMLTagParser htmltag = new HTMLTagParser(input.toCharArray(),2,true);
 		htmltag.parser();
 		System.out.println(htmltag.getTagName());

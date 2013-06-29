@@ -38,6 +38,13 @@ public class ByteWriter_Byte extends ByteWriter
 		os.write(bs);
 
 	}
+	
+
+	protected void write(byte[] bs, int count) throws IOException {
+		os.write(bs, 0, count);
+		
+	}
+
 
 	@Override
 	public ByteWriter getTempWriter()
@@ -71,4 +78,17 @@ public class ByteWriter_Byte extends ByteWriter
 		
 	}
 
+	@Override
+	public void flushToParent() throws IOException {
+		if(this.parent==null){
+			throw new NullPointerException("Parent is null");
+		}
+		os.flush();
+		NoLockByteArrayOutputStream bos = (NoLockByteArrayOutputStream) os;
+		((ByteWriter_Byte)this.parent).write(bos.buf,bos.count);
+		
+		
+	}
+
+	
 }

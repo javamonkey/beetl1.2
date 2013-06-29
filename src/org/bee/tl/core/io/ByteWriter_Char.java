@@ -76,4 +76,17 @@ public class ByteWriter_Char extends ByteWriter
 		
 	}
 
+	
+
+	@Override
+	public void flushToParent() throws IOException {
+		// TODO Auto-generated method stub
+		if(this.parent==null){
+			throw new NullPointerException("Parent is null");
+		}
+		w.flush();
+		parent.write(w.toString());
+		
+	}
+
 }

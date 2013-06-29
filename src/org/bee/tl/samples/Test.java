@@ -25,6 +25,7 @@ public class Test
 		 		Map compileConfig = new HashMap();
 	 		   compileConfig.put(GroupTemplate.OPTIMIZE_KEEP_SOURCE, true);
 	 		   group.enableOptimize(compileConfig);
+	 		   group.enableHtmlTagSupport("#");
 		 		 //		group.enableOptimize();
 //		 		  group.enableDirectOutputByte();
 		 		 

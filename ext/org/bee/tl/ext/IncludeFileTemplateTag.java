@@ -33,7 +33,7 @@ import java.util.Map.Entry;
 
 import org.bee.tl.core.BeeException;
 import org.bee.tl.core.BeetlUtil;
-import org.bee.tl.core.ByteSupportTag;
+import org.bee.tl.core.GeneralBeetlTag;
 import org.bee.tl.core.Template;
 
 /**
@@ -54,10 +54,10 @@ import org.bee.tl.core.Template;
  * @since 1.2
  * 
  */
-public class IncludeFileTemplateTag extends ByteSupportTag
+public class IncludeFileTemplateTag extends GeneralBeetlTag
 {
 
-	@Override
+	
 	public boolean requriedInput()
 	{
 		return false;
@@ -128,19 +128,6 @@ public class IncludeFileTemplateTag extends ByteSupportTag
 
 	}
 
-	@Override
-	public String getOutput()
-	{
-		makeOutput();
-		return null;
-	}
-
-	@Override
-	public byte[] getOutputAsByte()
-	{
-		makeOutput();
-
-		return NULL_BYTE;
-	}
+	
 
 }
