@@ -65,6 +65,10 @@ public class Config
 	public static String DEBUG = "DEBUG";
 	public static String COMPILE_CLASS_KEEP_SOURCE = "COMPILE_CLASS_KEEP_SOURCE";
 	public static String BIG_NUMBER_SUPPORT = "BIG_NUMBER_SUPPORT";
+	public static String HTML_TAG_SUPPORT = "HTML_TAG_SUPPORT";
+	public static String HTML_TAG_FLAG = "HTML_TAG_FLAG";
+	
+
 	
 
 	public Config() throws IOException
@@ -178,6 +182,10 @@ public class Config
 		}else{
 			gt.setBigNumberSupport(false);
 		}
+		
+		if(isBoolean(HTML_TAG_SUPPORT,false)){
+			gt.enableHtmlTagSupport(this.getString(HTML_TAG_FLAG,"#"));
+		}
 
 		String hanlderClass = ps.getProperty(ERROR_HANDLER);
 		try
@@ -202,6 +210,8 @@ public class Config
 		{
 			gt.setDebug(true);
 		}
+		
+		
 
 		String charset = ps.getProperty(this.TEMPLATE_CHARSET);
 		if (charset != null)

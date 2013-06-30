@@ -33,7 +33,7 @@ import java.util.Map.Entry;
 
 import org.bee.tl.core.BeeException;
 import org.bee.tl.core.BeetlUtil;
-import org.bee.tl.core.ByteSupportTag;
+import org.bee.tl.core.GeneralBeetlTag;
 import org.bee.tl.core.Template;
 import org.bee.tl.core.io.ByteWriter;
 
@@ -77,7 +77,7 @@ import org.bee.tl.core.io.ByteWriter;
  * @since 1.1
  * 
  */
-public class LayoutTag extends ByteSupportTag
+public class LayoutTag extends GeneralBeetlTag
 {
 
 	ByteWriter tempWriter = null;
@@ -137,6 +137,7 @@ public class LayoutTag extends ByteSupportTag
 			t.set(varName, this.input);
 		}
 
+		
 		if (args.length == 2)
 		{
 			Map<String, Object> map = (Map<String, Object>) args[1];
@@ -152,6 +153,7 @@ public class LayoutTag extends ByteSupportTag
 		{
 
 			t.getTextByByteWriter(tempWriter);
+			tempWriter.flushToParent();
 		}
 		catch (IOException e)
 		{
@@ -161,21 +163,14 @@ public class LayoutTag extends ByteSupportTag
 		{
 			throw new RuntimeException(e);
 		}
+		
+		
+		
+	
+		
 
 	}
 
-	@Override
-	public String getOutput()
-	{
-		makeOutput();
-		return (String) this.tempWriter.getTempContent();
-	}
-
-	@Override
-	public byte[] getOutputAsByte()
-	{
-		makeOutput();
-		return (byte[]) this.tempWriter.getTempContent();
-	}
+	
 
 }

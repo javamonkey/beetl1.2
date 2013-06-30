@@ -43,6 +43,7 @@ import org.bee.tl.ext.DebugFunction;
 import org.bee.tl.ext.DecodeFunction;
 import org.bee.tl.ext.DeleteTag;
 import org.bee.tl.ext.EmptyFunction;
+import org.bee.tl.ext.HTMLTagSupportWrapper;
 import org.bee.tl.ext.IncludeFileTemplateTag;
 import org.bee.tl.ext.LayoutTag;
 import org.bee.tl.ext.NVLFunction;
@@ -50,6 +51,7 @@ import org.bee.tl.ext.NumberFormat;
 import org.bee.tl.ext.Print;
 import org.bee.tl.ext.Printf;
 import org.bee.tl.ext.Println;
+import org.bee.tl.ext.QuestionMark;
 import org.bee.tl.ext.StringUtil;
 import org.bee.tl.ext.TruncFunction;
 import org.bee.tl.ext.cache.CacheTag;
@@ -167,7 +169,7 @@ public class ScriptGlobal {
 		return null;
 	}
 
-	protected Tag getTag(String name) {
+	public Tag getTag(String name) {
 		Class process = this.textProcessMap.get(name);
 		if (process == null) {
 			return null;
@@ -242,6 +244,7 @@ public class ScriptGlobal {
 		sg.registerFunction("prinf", new Printf());
 		sg.registerFunction("trunc", new TruncFunction());
 		sg.registerFunction("empty", new EmptyFunction());
+		sg.registerFunction("qmark", new QuestionMark());
 
 		sg.registerFunctionPackage("strutil", new StringUtil());
 
@@ -276,6 +279,7 @@ public class ScriptGlobal {
 		// sg.registerTag("includeJsp", IncludeJSPTag.class);
 		sg.registerTag("layout", LayoutTag.class);
 		sg.registerTag("cache", CacheTag.class);
+		sg.registerTag("htmltag", HTMLTagSupportWrapper.class);
 
 		// virtual attribute
 		sg.registerVirtualAttributeEval(new VirtualAttributeEval() {

@@ -34,6 +34,7 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bee.tl.core.exception.HTMLTagParserException;
 import org.bee.tl.core.io.ByteWriter;
 import org.bee.tl.core.io.ByteWriter_Char;
 import org.bee.tl.core.number.NumberFactory;
@@ -45,6 +46,12 @@ public class BeeTemplate extends AbstractTemplate
 	String placeholderEnd = "}";
 	String statementStart = "<%";
 	String statementEnd = "%>";
+	
+	
+	String htmlTagStart = "<#";
+	String htmlTagEnd= "</#";
+	boolean isHtmlTagSupport = false;
+	
 	
 	public BeeTemplate(String input)
 	{
@@ -113,8 +120,22 @@ public class BeeTemplate extends AbstractTemplate
 	{
 
 		Transformator tf = new Transformator(placeholderStart, placeholderEnd, this.statementStart, this.statementEnd);
+		if(this.isHtmlTagSupport){
+			tf.enableHtmlTagSupport(this.htmlTagStart, this.htmlTagEnd);
+		}
 		Reader textReader = this.resource.getReader();
-		Reader scriptReader = tf.transform(textReader);
+		Reader scriptReader = null;
+		
+		
+		try {
+			scriptReader = tf.transform(textReader);
+		} catch (HTMLTagParserException e) {
+			//返回一个错误的模板
+			scriptRunner.lasetRe =e ;
+			scriptRunner.isParseSuccess = false;
+			tf.clear();
+			return ;
+		}
 		scriptRunner.setScriptInputReader(scriptReader);
 
 		if (scriptRunner.directByteOutput)
@@ -331,6 +352,13 @@ public class BeeTemplate extends AbstractTemplate
 		}
 
 	}
+	
+	public void enableHtmlTagSupport(String tagFlag){
+		this.isHtmlTagSupport = true ;
+		this.htmlTagEnd = "<"+tagFlag;
+		this.htmlTagStart = "</"+tagFlag;
+	}
+
 
 
 }

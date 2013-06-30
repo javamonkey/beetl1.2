@@ -36,6 +36,7 @@ import java.util.logging.Logger;
 
 import org.bee.tl.core.compile.CompiledClass;
 import org.bee.tl.core.exception.BeeRuntimeException;
+import org.bee.tl.core.exception.HTMLTagParserException;
 import org.bee.tl.core.exception.VaribaleCastException;
 import org.bee.tl.core.io.ByteWriter;
 
@@ -175,47 +176,75 @@ public class CompiledBeeTemplate extends AbstractTemplate
 
 		Transformator tf = new Transformator(group.placeholderStart, group.placeholderEnd, group.statementStart,
 				group.statementEnd);
+		if(group.isHtmlTagSupport){
+			tf.enableHtmlTagSupport(group.htmlTagStart, group.htmlTagEnd);
+		}
+	
 		Resource resource = new Resource(child, group.root, group.charset);
 		Reader textReader = resource.getReader();
-		Reader scriptReader = tf.transform(textReader);
+		Reader scriptReader = null;
 		scriptRunner = new CoreScriptRunner();
-		scriptRunner.setScriptInputReader(scriptReader);
-		if (group.directByteOutput)
-		{
-			scriptRunner.enableDirectOutputByte();
+		try {
+			scriptReader = tf.transform(textReader);
+		} catch (HTMLTagParserException e) {
+			//返回一个错误的模板		
+			tf.clear();
+			cls = new WrongCompiledClass();
+			cls.setScriptRunner(scriptRunner);			
+			scriptRunner.lasetRe =e ;
+			scriptRunner.isParseSuccess = false ;
+			scriptRunner.hasParsed = true;
+			((WrongCompiledClass) cls).init(child, group, scriptRunner, resource);
+			BeeException bee = new BeeException(e);
+			bee.setResource(resource);
+			((WrongCompiledClass)cls).setParseException(bee);
+			group.classMap.cacheCompiledClass(child, cls);
+			return ;
+			
+			
+			
 		}
-		if (group.isStrict)
-		{
-			scriptRunner.enableStrict();
-		}
-		if (group.nativeCall)
-		{
-			scriptRunner.enableNativeCall();
-		}
-		scriptRunner.setGlobal(group.scriptGlobal);
-		if (this.scriptRunner.directByteOutput)
-		{
-			// 直接二进制输出
-			Map<String, String> texts = tf.getTextMap();
-			Map<String, byte[]> byteMap = new HashMap<String, byte[]>(texts.size());
-			for (Map.Entry<String, String> entry : texts.entrySet())
+	
+			
+			scriptRunner.setScriptInputReader(scriptReader);
+			if (group.directByteOutput)
 			{
-				byteMap.put(entry.getKey(), entry.getValue().getBytes(group.charset));
+				scriptRunner.enableDirectOutputByte();
+			}
+			if (group.isStrict)
+			{
+				scriptRunner.enableStrict();
+			}
+			if (group.nativeCall)
+			{
+				scriptRunner.enableNativeCall();
+			}
+			scriptRunner.setGlobal(group.scriptGlobal);
+			if (this.scriptRunner.directByteOutput)
+			{
+				// 直接二进制输出
+				Map<String, String> texts = tf.getTextMap();
+				Map<String, byte[]> byteMap = new HashMap<String, byte[]>(texts.size());
+				for (Map.Entry<String, String> entry : texts.entrySet())
+				{
+					byteMap.put(entry.getKey(), entry.getValue().getBytes(group.charset));
+				}
+
+				scriptRunner.textVar = byteMap;
+
+			}
+			else
+			{
+				scriptRunner.textVar = tf.getTextMap();
 			}
 
-			scriptRunner.textVar = byteMap;
-
-		}
-		else
-		{
-			scriptRunner.textVar = tf.getTextMap();
-		}
-
-		resource.setCR(tf.lineSeparator);
-		scriptRunner.setCharset(group.charset);
-		scriptRunner.setCR(tf.lineSeparator);
-		scriptRunner.parse();
-		tf.clear();
+			resource.setCR(tf.lineSeparator);
+			scriptRunner.setCharset(group.charset);
+			scriptRunner.setCR(tf.lineSeparator);
+			scriptRunner.parse();
+			tf.clear();
+		
+		
 		if (isWrong)
 		{
 			((WrongCompiledClass) cls).init(child, group, scriptRunner, resource);

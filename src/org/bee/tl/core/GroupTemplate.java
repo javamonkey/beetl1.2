@@ -50,6 +50,7 @@ import org.bee.tl.core.cache.CachedScriptItem;
 import org.bee.tl.core.cache.CachedScriptRunner;
 import org.bee.tl.core.cache.CompiledClassMap;
 import org.bee.tl.core.compile.CompileFactory;
+import org.bee.tl.core.exception.HTMLTagParserException;
 
 /**
  *  系统的主要类，通过此类可以完成所有的模版渲染工作，分别说明说下：
@@ -158,6 +159,10 @@ public class GroupTemplate
 	String placeholderEnd = "}";
 	String statementStart = "<%";
 	String statementEnd = "%>";
+	String htmlTagFlag = "#";
+	String htmlTagStart = "<"+htmlTagFlag;
+	String htmlTagEnd= "</"+htmlTagFlag;
+
 	//文件模板根目录
 	File root = null;
 	//根目录别名
@@ -183,6 +188,7 @@ public class GroupTemplate
 	boolean directByteOutput = false;
 	boolean isStrict = false;
 	boolean isBigNumberSupport = true ;
+	boolean isHtmlTagSupport = false;
 	// 每隔5秒检测一次
 	int checkTemplatePeriod = 5;
 	//检测线程
@@ -309,6 +315,9 @@ public class GroupTemplate
 		template.scriptRunner.setBigNumberSupport(this.isBigNumberSupport);
 		
 		template.config(this.statementStart, this.statementEnd, this.placeholderStart, this.placeholderEnd);
+		if(this.isHtmlTagSupport){
+			template.enableHtmlTagSupport (htmlTagFlag);
+		}
 
 	}
 
@@ -405,6 +414,29 @@ public class GroupTemplate
 
 		}
 	}
+	
+	
+	/**
+	 * 
+	 * 判断模板是否存在
+	 *  @param child 模板的key
+	 */
+	public boolean hasTemplate(String key){
+		if (this.optimize)
+		{
+			
+			return this.classMap.hasLoaded(key)||stringTemplateList.contains(key);
+		
+
+		}
+		else
+		{
+
+			
+			return this.cachedRuntime.contain(key);
+
+		}
+	}
 
 	/**
 	 * 得到一个文件模板,调用此方法，必须首先以模版root目录为参数构造GroupTemplate
@@ -439,10 +471,27 @@ public class GroupTemplate
 			{
 				Transformator tf = new Transformator(placeholderStart, placeholderEnd, this.statementStart,
 						this.statementEnd);
+				if(this.isBigNumberSupport){
+					tf.enableHtmlTagSupport(this.htmlTagStart, this.htmlTagEnd);
+				}
 				Resource resource = new Resource(child, root, this.charset);
 				Reader textReader = resource.getReader();
-				Reader scriptReader = tf.transform(textReader);
 				CoreScriptRunner scriptRunner = new CoreScriptRunner();
+				Reader scriptReader = null;
+				try {
+					scriptReader = tf.transform(textReader);
+				} catch (HTMLTagParserException e) {
+					//返回一个错误的模板
+					scriptRunner.lasetRe =e ;
+					scriptRunner.hasParsed = true;
+					scriptRunner.isParseSuccess = false;
+					tf.clear();
+					cachedRuntime.updateCache(scriptRunner, resource);
+					template = new BeeTemplate(resource, scriptRunner);
+					template.setGroupTemplate(this);
+					return template ;
+				}
+				
 				scriptRunner.setScriptInputReader(scriptReader);
 
 				if (this.directByteOutput)
@@ -832,6 +881,13 @@ public class GroupTemplate
 
 		enableOptimize();
 	}
+	
+	public void enableHtmlTagSupport(String tagFlag){
+		this.isHtmlTagSupport = true ;
+		this.htmlTagFlag = tagFlag;
+		this.htmlTagStart = "<"+tagFlag;
+		this.htmlTagEnd = "</"+tagFlag;
+	}
 
 	protected URLClassLoader getTemplateClassLoader()
 	{
@@ -1092,5 +1148,11 @@ public class GroupTemplate
 	{
 		this.classLoader = classLoader;
 	}
+	
+	public ScriptGlobal getScriptGlobal(){
+		return this.scriptGlobal;
+	}
+	
+
 
 }

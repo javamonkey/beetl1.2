@@ -34,6 +34,7 @@ import java.io.PrintWriter;
 import org.antlr.runtime.MismatchedTokenException;
 import org.antlr.runtime.RecognitionException;
 import org.bee.tl.core.exception.BeeRuntimeException;
+import org.bee.tl.core.exception.HTMLTagParserException;
 import org.bee.tl.core.exception.MVCStrictException;
 import org.bee.tl.core.exception.WrapperAntlrLexerException;
 
@@ -157,6 +158,13 @@ public class DefaultErrorHandler extends ErrorHandler
 				}
 
 				os.println((">>语法错：缺少符号" + errorText + "," + errorLine + " 行" + fileTip));
+			}
+			else if(ex instanceof HTMLTagParserException){
+				HTMLTagParserException htmle = (HTMLTagParserException)ex;
+				String errorText = htmle.token.getText();
+				errorLine = htmle.token.getLine();
+				os.println((">>HTML Tag 格式错," + errorLine + " 行" + fileTip+",原因:"+htmle.getHtmlTagErrorMsg()));
+				
 			}
 			else
 			{

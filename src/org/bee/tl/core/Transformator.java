@@ -35,6 +35,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Stack;
+
+import org.bee.tl.core.exception.HTMLTagParserException;
 
 /**
  * 将模版转化为beetl script的代码，此为核心代码之一
@@ -45,6 +49,12 @@ import java.util.Map;
 public class Transformator
 {
 
+	String htmlTagStart = "<#";
+	String htmlTagEnd = "</#";
+	
+	Stack htmlTagStack = new Stack();
+	boolean isSupportHtmlTag = false ;
+
 	String placeholderStart = "$";
 	String placeholderEnd = "$";
 	String startStatement = "#:";
@@ -53,8 +63,8 @@ public class Transformator
 	String vname = "__V";
 	int vnamesuffix = 0;
 	Map<String, String> textMap = new HashMap<String, String>();
-	List<String> lineList = new ArrayList<String>();
-	// 1 解析在文本处，2 解析在控制语句处，3 解析在占位符号里 4文件结束
+	
+	// 1 解析在文本处，2 解析在控制语句处，3 解析在占位符号里 4文件结束 5,html tag begin 6 html tag end
 	int status = 1;
 	//最后转化的结果
 	StringBuilder sb = new StringBuilder();
@@ -63,7 +73,10 @@ public class Transformator
 	int index = 0;
 	// int currentLine = 0;
 	LineStatus lineStatus = new LineStatus();
+	//合并行的行数
 	int lineCount = 0;
+	//总共有多少行
+	int totalLineCount = 0;
 
 	String VCR = "<$__VCR>>";
 	String lineSeparator = System.getProperty("line.separator");
@@ -131,8 +144,14 @@ public class Transformator
 		this.endStatement = endStatement;
 
 	}
+	
+	public void enableHtmlTagSupport(String tagStart,String tagEnd){
+		this.htmlTagStart = tagStart;
+		this.htmlTagEnd = tagEnd;
+		this.isSupportHtmlTag = true ;
+	}
 
-	public Reader transform(Reader orginal) throws IOException
+	public Reader transform(Reader orginal) throws IOException,HTMLTagParserException
 	{
 
 		StringBuilder temp = new StringBuilder();
@@ -155,11 +174,24 @@ public class Transformator
 		}
 		checkAppendCR();
 		parser();
+		if(this.isSupportHtmlTag&&this.htmlTagStack.size()!=0){
+			String tagName = (String)htmlTagStack.peek();
+			ErrorToken token = new ErrorToken();			
+			token.set(tagName,this.totalLineCount+1);
+			HTMLTagParserException ex = new HTMLTagParserException("解析html tag 标签出错,未找到匹配结束标签 "+tagName);
+			ex.token = token;
+			ex.line = totalLineCount+1;
+			this.clear();
+			throw ex;		
+			
+		}
+		
+			
 		orginal.close();
 		return new StringReader(sb.toString());
 	}
 
-	public Reader transform(String str) throws IOException
+	public Reader transform(String str) throws IOException, HTMLTagParserException
 	{
 		cs = str.toCharArray();
 		// 找到回车换行符号
@@ -170,7 +202,16 @@ public class Transformator
 		}
 		checkAppendCR();
 		parser();
-
+		if(this.isSupportHtmlTag&&this.htmlTagStack.size()!=0){
+			String tagName = (String)htmlTagStack.peek();
+			ErrorToken token = new ErrorToken();			
+			token.set(tagName,this.totalLineCount+1);
+			HTMLTagParserException ex = new HTMLTagParserException("解析html tag 标签出错,未找到匹配结束标签 "+tagName);
+			ex.token = token;
+			ex.line = totalLineCount+1;
+			this.clear();
+			throw ex;		
+		}
 		return new StringReader(sb.toString());
 	}
 
@@ -203,7 +244,7 @@ public class Transformator
 
 	}
 
-	public void parser()
+	public void parser()  throws HTMLTagParserException
 	{
 
 		while (true)
@@ -225,6 +266,8 @@ public class Transformator
 					readPlaceHolder();
 					break;
 				}
+				case 5:readHTMLTagBegin();break;
+				case 6: readHTMLTagEnd();break;
 				case 4:
 				{
 
@@ -234,6 +277,98 @@ public class Transformator
 			}
 		}
 
+	}
+	
+	public void readHTMLTagBegin()  throws HTMLTagParserException{
+		String tagName = null;
+		try{
+			StringBuilder script = new StringBuilder();
+			script.append("htmltag");
+			HTMLTagParser html = new HTMLTagParser(cs,index,true);
+			html.parser();
+			tagName = html.getTagName();
+			script.append("('").append(tagName).append("',");
+			
+			Map<String,String> map = html.getExpMap();
+			if(map.size()!=0){
+				script.append("{");
+			}
+			for(Entry<String,String> entry : map.entrySet()){
+				
+				String key = entry.getKey();
+				String value = entry.getValue();
+				script.append(key).append(":");
+				if(!value.startsWith(this.placeholderStart)){
+					script.append("'").append(value).append("'");
+				}else{
+					value = new String(value.toCharArray(),this.placeholderStart.length(),value.length()-this.placeholderStart.length()-this.placeholderEnd.length());
+					script.append(value);
+				}
+				script.append(",");
+			}
+			
+			script.setLength(script.length()-1);				
+			if(map.size()!=0){
+				script.append("}");
+			}
+			
+			script.append("){");
+			if(html.isEmptyTag()){
+				script.append("}");
+			}else{
+				htmlTagStack.push(tagName);
+			}
+					
+			sb.append(script);
+			this.index = html.getIndex();
+			status = 1;
+		}catch(RuntimeException re){
+			ErrorToken token = new ErrorToken();
+			if(tagName==null){
+				tagName="未知标签";
+			}
+			token.set(tagName,this.totalLineCount+1);
+			HTMLTagParserException ex = new HTMLTagParserException(re.getMessage());
+			ex.token = token;
+			ex.line = totalLineCount+1;			
+			throw ex;		}
+		
+		
+	}
+	
+	public void readHTMLTagEnd() throws HTMLTagParserException{
+		String tagName = null;
+		try{
+			HTMLTagParser html = new HTMLTagParser(cs,index,false);
+		
+			html.parser();
+			 tagName = html.getTagName();
+			if(htmlTagStack.empty()){
+				throw new RuntimeException("解析html tag出错");
+			}
+			String lastTag = (String)this.htmlTagStack.peek();
+			if(tagName.equals(lastTag)){
+				this.htmlTagStack.pop();
+				sb.append("}");
+			}else{
+				throw new RuntimeException("解析html tag出错,期望匹配标签"+lastTag);
+			}
+			this.index = html.getIndex();
+			status = 1;
+		}catch(RuntimeException re){
+			ErrorToken token = new ErrorToken();
+			if(tagName==null){
+				tagName="未知标签";
+			}
+			token.set(tagName,this.totalLineCount+1);
+			HTMLTagParserException ex = new HTMLTagParserException(re.getMessage());
+			ex.token = token;
+			ex.line = totalLineCount+1;			
+			throw ex;
+		}
+		
+	
+		
 	}
 
 	public void readPlaceHolder()
@@ -305,12 +440,14 @@ public class Transformator
 				if (ch == '\r' || ch == '\n')
 				{
 
+					totalLineCount++;
 					sb.append(this.lineSeparator);
 					if (this.lineSeparator.length() == 2)
 					{
 						index++;
 					}
 					this.lineStatus.reset();
+					
 
 				}
 				else
@@ -382,12 +519,52 @@ public class Transformator
 				status = 2;
 				return;
 			}
+			else if(isSupportHtmlTag&&match(htmlTagEnd)){
+				
+				if (temp.length() != 0)
+				{
+					if (lineCount >= 1)
+					{
+						createMutipleLineTextNode(temp);
+						lineCount = 0;
+					}
+					else
+					{
+						createTextNode(temp);
+					}
+				}
+				index= index+3;
+				status = 6;
+				return ;
+
+
+			}
+			else if(isSupportHtmlTag&&match(htmlTagStart)){
+				
+				if (temp.length() != 0)
+				{
+					if (lineCount >= 1)
+					{
+						createMutipleLineTextNode(temp);
+						lineCount = 0;
+					}
+					else
+					{
+						createTextNode(temp);
+					}
+				}
+				status = 5;
+				index = index+2;
+				return ;
+				
+
+			}
 			else if (status != 4)
 			{
 				char ch = cs[index++];
 				if (ch == '\r' || ch == '\n')
 				{
-
+					totalLineCount++;
 					if (this.lineSeparator.length() == 2)
 					{
 						index++;
@@ -622,14 +799,12 @@ public class Transformator
 	{
 		char c = '\\';
 		Transformator p = new Transformator("${", "}", "<%","%>");
+		p.enableHtmlTagSupport("<#", "</#");
 		try
 		{
 
 			// String str = "   #:var u='hello';:#  \n  $u$";
-			String str = "<%p%> b\n"
-					//+"\n"
-					+ "c <%p();%> d\n"
-					;
+			String str = "<#a id='123'/>" ;					
 			
 			BufferedReader reader = new BufferedReader(p.transform(str));
 			String line = null;
@@ -650,7 +825,7 @@ public class Transformator
 	public void clear()
 	{
 		this.cs = null;
-		this.lineList = null;
+		
 		this.sb = null;
 	}
 
