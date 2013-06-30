@@ -414,6 +414,29 @@ public class GroupTemplate
 
 		}
 	}
+	
+	
+	/**
+	 * 
+	 * 判断模板是否存在
+	 *  @param child 模板的key
+	 */
+	public boolean hasTemplate(String key){
+		if (this.optimize)
+		{
+			
+			return this.classMap.hasLoaded(key)||stringTemplateList.contains(key);
+		
+
+		}
+		else
+		{
+
+			
+			return this.cachedRuntime.contain(key);
+
+		}
+	}
 
 	/**
 	 * 得到一个文件模板,调用此方法，必须首先以模版root目录为参数构造GroupTemplate

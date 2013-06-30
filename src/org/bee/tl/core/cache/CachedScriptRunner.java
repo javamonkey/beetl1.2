@@ -91,6 +91,10 @@ public class CachedScriptRunner
 		}
 
 	}
+	
+	public boolean contain(String key){
+		return cache.containsKey(key);
+	}
 
 	public void updateCache(CoreScriptRunner t, Resource res)
 	{

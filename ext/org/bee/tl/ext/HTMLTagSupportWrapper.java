@@ -43,6 +43,8 @@ public class HTMLTagSupportWrapper  extends GeneralBeetlTag {
 		//只复制这些serlvet变量
 		t.set("servlet", ctx.getVarWithoutException("servlet"));
 		t.set("ctxPath", ctx.getVarWithoutException("ctxPath"));
+		t.set("request", ctx.getVarWithoutException("request"));
+		
 		t.setRawValue("session", ctx.getVarWithoutException("session"));
 		if(isByte){
 			t.set("tagBody",this.inputBytes );
