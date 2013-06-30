@@ -22,5 +22,6 @@
 	<classpathentry kind="lib" path="lib/spring-webmvc-3.2.2.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/struts2-core-2.3.12.jar"/>
 	<classpathentry kind="lib" path="lib/xwork-core-2.3.12.jar"/>
+	<classpathentry kind="lib" path="lib/freemarker.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
