@@ -11,6 +11,7 @@ public class Test
 {
 
 	public int i = 12;
+	public User[] users = new User[]{new User(),new User()};
 
 	public static void main(String[] args) throws Exception
 	{

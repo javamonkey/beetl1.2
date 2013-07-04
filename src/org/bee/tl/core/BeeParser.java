@@ -1,4 +1,4 @@
-// $ANTLR 3.3 Nov 30, 2010 12:50:56 E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g 2013-07-04 11:10:03
+// $ANTLR 3.3 Nov 30, 2010 12:50:56 E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g 2013-07-04 18:18:50
 
 package org.bee.tl.core;
 import org.bee.tl.core.exception.*;
@@ -154,7 +154,7 @@ public class BeeParser extends Parser {
         }
         public BeeParser(TokenStream input, RecognizerSharedState state) {
             super(input, state);
-            this.state.ruleMemo = new HashMap[128+1];
+            this.state.ruleMemo = new HashMap[131+1];
              
              
         }
@@ -825,7 +825,7 @@ public class BeeParser extends Parser {
 
 
             // AST REWRITE
-            // elements: g_caseStatment, g_defaultStatment, base
+            // elements: base, g_defaultStatment, g_caseStatment
             // token labels: 
             // rule labels: retval, base
             // token list labels: 
@@ -1200,7 +1200,7 @@ public class BeeParser extends Parser {
 
 
             // AST REWRITE
-            // elements: Identifier, StringLiteral
+            // elements: StringLiteral, Identifier
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -1868,7 +1868,7 @@ public class BeeParser extends Parser {
 
 
             // AST REWRITE
-            // elements: functionFullName, exp, exp, functionFullName
+            // elements: exp, exp, functionFullName, functionFullName
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -2170,7 +2170,7 @@ public class BeeParser extends Parser {
 
 
             // AST REWRITE
-            // elements: aaa, c, a, d
+            // elements: c, aaa, d, a
             // token labels: a
             // rule labels: retval, d, aaa, c
             // token list labels: 
@@ -2288,7 +2288,7 @@ public class BeeParser extends Parser {
 
 
             // AST REWRITE
-            // elements: a, statmentBlock
+            // elements: statmentBlock, a
             // token labels: 
             // rule labels: retval, a
             // token list labels: 
@@ -2431,7 +2431,7 @@ public class BeeParser extends Parser {
 
 
             // AST REWRITE
-            // elements: l, condExp, n
+            // elements: n, condExp, l
             // token labels: 
             // rule labels: retval, n, l
             // token list labels: 
@@ -2962,7 +2962,7 @@ public class BeeParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: fm, StringLiteral
+                    // elements: StringLiteral, fm
                     // token labels: 
                     // rule labels: retval, fm
                     // token list labels: 
@@ -3438,7 +3438,7 @@ public class BeeParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: Identifier, statmentBlock
+                    // elements: statmentBlock, Identifier
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -3743,7 +3743,7 @@ public class BeeParser extends Parser {
 
 
                     // AST REWRITE
-                    // elements: varAttribute, Identifier, safeOutput
+                    // elements: Identifier, varAttribute, safeOutput
                     // token labels: 
                     // rule labels: retval
                     // token list labels: 
@@ -5445,7 +5445,7 @@ public class BeeParser extends Parser {
     };
 
     // $ANTLR start "nativeMethod"
-    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:292:1: nativeMethod[boolean statmentCall] : a= '@' Identifier ( '.' Identifier )* ( classNextExp )* -> {statmentCall}? ^( DIRECT_CALL ^( CLASS_FUNCTION[$a] ( Identifier )* ( classNextExp )* ) ) -> ^( CLASS_FUNCTION[$a] ( Identifier )* ( classNextExp )* ) ;
+    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:292:1: nativeMethod[boolean statmentCall] : a= '@' Identifier ( '.' Identifier )* ( classMutileExp )? -> {statmentCall}? ^( DIRECT_CALL ^( CLASS_FUNCTION[$a] ( Identifier )* ( classMutileExp )? ) ) -> ^( CLASS_FUNCTION[$a] ( Identifier )* ( classMutileExp )? ) ;
     public final BeeParser.nativeMethod_return nativeMethod(boolean statmentCall) throws RecognitionException {
         BeeParser.nativeMethod_return retval = new BeeParser.nativeMethod_return();
         retval.start = input.LT(1);
@@ -5456,7 +5456,7 @@ public class BeeParser extends Parser {
         Token Identifier147=null;
         Token char_literal148=null;
         Token Identifier149=null;
-        BeeParser.classNextExp_return classNextExp150 = null;
+        BeeParser.classMutileExp_return classMutileExp150 = null;
 
 
         BeeCommonNodeTree a_tree=null;
@@ -5466,11 +5466,11 @@ public class BeeParser extends Parser {
         RewriteRuleTokenStream stream_125=new RewriteRuleTokenStream(adaptor,"token 125");
         RewriteRuleTokenStream stream_121=new RewriteRuleTokenStream(adaptor,"token 121");
         RewriteRuleTokenStream stream_Identifier=new RewriteRuleTokenStream(adaptor,"token Identifier");
-        RewriteRuleSubtreeStream stream_classNextExp=new RewriteRuleSubtreeStream(adaptor,"rule classNextExp");
+        RewriteRuleSubtreeStream stream_classMutileExp=new RewriteRuleSubtreeStream(adaptor,"rule classMutileExp");
         try {
             if ( state.backtracking>0 && alreadyParsedRule(input, 38) ) { return retval; }
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:292:37: (a= '@' Identifier ( '.' Identifier )* ( classNextExp )* -> {statmentCall}? ^( DIRECT_CALL ^( CLASS_FUNCTION[$a] ( Identifier )* ( classNextExp )* ) ) -> ^( CLASS_FUNCTION[$a] ( Identifier )* ( classNextExp )* ) )
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:292:38: a= '@' Identifier ( '.' Identifier )* ( classNextExp )*
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:292:37: (a= '@' Identifier ( '.' Identifier )* ( classMutileExp )? -> {statmentCall}? ^( DIRECT_CALL ^( CLASS_FUNCTION[$a] ( Identifier )* ( classMutileExp )? ) ) -> ^( CLASS_FUNCTION[$a] ( Identifier )* ( classMutileExp )? ) )
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:292:38: a= '@' Identifier ( '.' Identifier )* ( classMutileExp )?
             {
             a=(Token)match(input,125,FOLLOW_125_in_nativeMethod1785); if (state.failed) return retval; 
             if ( state.backtracking==0 ) stream_125.add(a);
@@ -5520,35 +5520,28 @@ public class BeeParser extends Parser {
                 }
             } while (true);
 
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:292:73: ( classNextExp )*
-            loop40:
-            do {
-                int alt40=2;
-                int LA40_0 = input.LA(1);
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:292:73: ( classMutileExp )?
+            int alt40=2;
+            int LA40_0 = input.LA(1);
 
-                if ( (LA40_0==121||LA40_0==123) ) {
-                    alt40=1;
-                }
+            if ( (LA40_0==121||LA40_0==123) ) {
+                alt40=1;
+            }
+            switch (alt40) {
+                case 1 :
+                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:0:0: classMutileExp
+                    {
+                    pushFollow(FOLLOW_classMutileExp_in_nativeMethod1796);
+                    classMutileExp150=classMutileExp();
 
+                    state._fsp--;
+                    if (state.failed) return retval;
+                    if ( state.backtracking==0 ) stream_classMutileExp.add(classMutileExp150.getTree());
 
-                switch (alt40) {
-            	case 1 :
-            	    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:292:74: classNextExp
-            	    {
-            	    pushFollow(FOLLOW_classNextExp_in_nativeMethod1797);
-            	    classNextExp150=classNextExp();
+                    }
+                    break;
 
-            	    state._fsp--;
-            	    if (state.failed) return retval;
-            	    if ( state.backtracking==0 ) stream_classNextExp.add(classNextExp150.getTree());
-
-            	    }
-            	    break;
-
-            	default :
-            	    break loop40;
-                }
-            } while (true);
+            }
 
             if ( state.backtracking==0 ) {
               if(!openBackdoor||isStrictMVC) throw new MVCStrictException(a);
@@ -5556,7 +5549,7 @@ public class BeeParser extends Parser {
 
 
             // AST REWRITE
-            // elements: Identifier, classNextExp, classNextExp, Identifier
+            // elements: Identifier, classMutileExp, Identifier, classMutileExp
             // token labels: 
             // rule labels: retval
             // token list labels: 
@@ -5567,14 +5560,14 @@ public class BeeParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (BeeCommonNodeTree)adaptor.nil();
-            // 293:4: -> {statmentCall}? ^( DIRECT_CALL ^( CLASS_FUNCTION[$a] ( Identifier )* ( classNextExp )* ) )
+            // 293:4: -> {statmentCall}? ^( DIRECT_CALL ^( CLASS_FUNCTION[$a] ( Identifier )* ( classMutileExp )? ) )
             if (statmentCall) {
-                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:293:25: ^( DIRECT_CALL ^( CLASS_FUNCTION[$a] ( Identifier )* ( classNextExp )* ) )
+                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:293:25: ^( DIRECT_CALL ^( CLASS_FUNCTION[$a] ( Identifier )* ( classMutileExp )? ) )
                 {
                 BeeCommonNodeTree root_1 = (BeeCommonNodeTree)adaptor.nil();
                 root_1 = (BeeCommonNodeTree)adaptor.becomeRoot((BeeCommonNodeTree)adaptor.create(DIRECT_CALL, "DIRECT_CALL"), root_1);
 
-                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:293:39: ^( CLASS_FUNCTION[$a] ( Identifier )* ( classNextExp )* )
+                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:293:39: ^( CLASS_FUNCTION[$a] ( Identifier )* ( classMutileExp )? )
                 {
                 BeeCommonNodeTree root_2 = (BeeCommonNodeTree)adaptor.nil();
                 root_2 = (BeeCommonNodeTree)adaptor.becomeRoot((BeeCommonNodeTree)adaptor.create(CLASS_FUNCTION, a), root_2);
@@ -5585,12 +5578,12 @@ public class BeeParser extends Parser {
 
                 }
                 stream_Identifier.reset();
-                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:293:72: ( classNextExp )*
-                while ( stream_classNextExp.hasNext() ) {
-                    adaptor.addChild(root_2, stream_classNextExp.nextTree());
+                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:293:72: ( classMutileExp )?
+                if ( stream_classMutileExp.hasNext() ) {
+                    adaptor.addChild(root_2, stream_classMutileExp.nextTree());
 
                 }
-                stream_classNextExp.reset();
+                stream_classMutileExp.reset();
 
                 adaptor.addChild(root_1, root_2);
                 }
@@ -5599,9 +5592,9 @@ public class BeeParser extends Parser {
                 }
 
             }
-            else // 294:4: -> ^( CLASS_FUNCTION[$a] ( Identifier )* ( classNextExp )* )
+            else // 294:4: -> ^( CLASS_FUNCTION[$a] ( Identifier )* ( classMutileExp )? )
             {
-                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:294:7: ^( CLASS_FUNCTION[$a] ( Identifier )* ( classNextExp )* )
+                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:294:7: ^( CLASS_FUNCTION[$a] ( Identifier )* ( classMutileExp )? )
                 {
                 BeeCommonNodeTree root_1 = (BeeCommonNodeTree)adaptor.nil();
                 root_1 = (BeeCommonNodeTree)adaptor.becomeRoot((BeeCommonNodeTree)adaptor.create(CLASS_FUNCTION, a), root_1);
@@ -5612,12 +5605,12 @@ public class BeeParser extends Parser {
 
                 }
                 stream_Identifier.reset();
-                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:294:40: ( classNextExp )*
-                while ( stream_classNextExp.hasNext() ) {
-                    adaptor.addChild(root_1, stream_classNextExp.nextTree());
+                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:294:40: ( classMutileExp )?
+                if ( stream_classMutileExp.hasNext() ) {
+                    adaptor.addChild(root_1, stream_classMutileExp.nextTree());
 
                 }
-                stream_classNextExp.reset();
+                stream_classMutileExp.reset();
 
                 adaptor.addChild(root_0, root_1);
                 }
@@ -5647,70 +5640,189 @@ public class BeeParser extends Parser {
     }
     // $ANTLR end "nativeMethod"
 
+    public static class classMutileExp_return extends ParserRuleReturnScope {
+        BeeCommonNodeTree tree;
+        public Object getTree() { return tree; }
+    };
+
+    // $ANTLR start "classMutileExp"
+    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:296:2: classMutileExp : classNextExp ( classNextExp | '.' Identifier )* ;
+    public final BeeParser.classMutileExp_return classMutileExp() throws RecognitionException {
+        BeeParser.classMutileExp_return retval = new BeeParser.classMutileExp_return();
+        retval.start = input.LT(1);
+        int classMutileExp_StartIndex = input.index();
+        BeeCommonNodeTree root_0 = null;
+
+        Token char_literal153=null;
+        Token Identifier154=null;
+        BeeParser.classNextExp_return classNextExp151 = null;
+
+        BeeParser.classNextExp_return classNextExp152 = null;
+
+
+        BeeCommonNodeTree char_literal153_tree=null;
+        BeeCommonNodeTree Identifier154_tree=null;
+
+        try {
+            if ( state.backtracking>0 && alreadyParsedRule(input, 39) ) { return retval; }
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:297:2: ( classNextExp ( classNextExp | '.' Identifier )* )
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:297:4: classNextExp ( classNextExp | '.' Identifier )*
+            {
+            root_0 = (BeeCommonNodeTree)adaptor.nil();
+
+            pushFollow(FOLLOW_classNextExp_in_classMutileExp1855);
+            classNextExp151=classNextExp();
+
+            state._fsp--;
+            if (state.failed) return retval;
+            if ( state.backtracking==0 ) adaptor.addChild(root_0, classNextExp151.getTree());
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:297:17: ( classNextExp | '.' Identifier )*
+            loop41:
+            do {
+                int alt41=3;
+                int LA41_0 = input.LA(1);
+
+                if ( (LA41_0==121) ) {
+                    int LA41_2 = input.LA(2);
+
+                    if ( (LA41_2==Identifier) ) {
+                        int LA41_4 = input.LA(3);
+
+                        if ( (LA41_4==102) ) {
+                            alt41=1;
+                        }
+                        else if ( (LA41_4==EOF||LA41_4==RIGHT_BRACE||LA41_4==RIGHT_TOKEN||(LA41_4>=OR && LA41_4<=MOD)||LA41_4==100||LA41_4==103||(LA41_4>=105 && LA41_4<=106)||LA41_4==121||(LA41_4>=123 && LA41_4<=124)) ) {
+                            alt41=2;
+                        }
+
+
+                    }
+
+
+                }
+                else if ( (LA41_0==123) ) {
+                    alt41=1;
+                }
+
+
+                switch (alt41) {
+            	case 1 :
+            	    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:297:18: classNextExp
+            	    {
+            	    pushFollow(FOLLOW_classNextExp_in_classMutileExp1858);
+            	    classNextExp152=classNextExp();
+
+            	    state._fsp--;
+            	    if (state.failed) return retval;
+            	    if ( state.backtracking==0 ) adaptor.addChild(root_0, classNextExp152.getTree());
+
+            	    }
+            	    break;
+            	case 2 :
+            	    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:297:32: '.' Identifier
+            	    {
+            	    char_literal153=(Token)match(input,121,FOLLOW_121_in_classMutileExp1861); if (state.failed) return retval;
+            	    Identifier154=(Token)match(input,Identifier,FOLLOW_Identifier_in_classMutileExp1864); if (state.failed) return retval;
+            	    if ( state.backtracking==0 ) {
+            	    Identifier154_tree = (BeeCommonNodeTree)adaptor.create(Identifier154);
+            	    adaptor.addChild(root_0, Identifier154_tree);
+            	    }
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop41;
+                }
+            } while (true);
+
+
+            }
+
+            retval.stop = input.LT(-1);
+
+            if ( state.backtracking==0 ) {
+
+            retval.tree = (BeeCommonNodeTree)adaptor.rulePostProcessing(root_0);
+            adaptor.setTokenBoundaries(retval.tree, retval.start, retval.stop);
+            }
+        }
+
+        catch (RecognitionException e) {
+        reportError(e); 
+        throw e;
+        }
+        finally {
+            if ( state.backtracking>0 ) { memoize(input, 39, classMutileExp_StartIndex); }
+        }
+        return retval;
+    }
+    // $ANTLR end "classMutileExp"
+
     public static class classNextExp_return extends ParserRuleReturnScope {
         BeeCommonNodeTree tree;
         public Object getTree() { return tree; }
     };
 
     // $ANTLR start "classNextExp"
-    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:297:2: classNextExp : ( classMethod | classArray );
+    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:298:2: classNextExp : ( classMethod | classArray );
     public final BeeParser.classNextExp_return classNextExp() throws RecognitionException {
         BeeParser.classNextExp_return retval = new BeeParser.classNextExp_return();
         retval.start = input.LT(1);
         int classNextExp_StartIndex = input.index();
         BeeCommonNodeTree root_0 = null;
 
-        BeeParser.classMethod_return classMethod151 = null;
+        BeeParser.classMethod_return classMethod155 = null;
 
-        BeeParser.classArray_return classArray152 = null;
+        BeeParser.classArray_return classArray156 = null;
 
 
 
         try {
-            if ( state.backtracking>0 && alreadyParsedRule(input, 39) ) { return retval; }
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:298:2: ( classMethod | classArray )
-            int alt41=2;
-            int LA41_0 = input.LA(1);
+            if ( state.backtracking>0 && alreadyParsedRule(input, 40) ) { return retval; }
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:299:2: ( classMethod | classArray )
+            int alt42=2;
+            int LA42_0 = input.LA(1);
 
-            if ( (LA41_0==121) ) {
-                alt41=1;
+            if ( (LA42_0==121) ) {
+                alt42=1;
             }
-            else if ( (LA41_0==123) ) {
-                alt41=2;
+            else if ( (LA42_0==123) ) {
+                alt42=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return retval;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 41, 0, input);
+                    new NoViableAltException("", 42, 0, input);
 
                 throw nvae;
             }
-            switch (alt41) {
+            switch (alt42) {
                 case 1 :
-                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:298:5: classMethod
+                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:299:5: classMethod
                     {
                     root_0 = (BeeCommonNodeTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_classMethod_in_classNextExp1862);
-                    classMethod151=classMethod();
+                    pushFollow(FOLLOW_classMethod_in_classNextExp1877);
+                    classMethod155=classMethod();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) adaptor.addChild(root_0, classMethod151.getTree());
+                    if ( state.backtracking==0 ) adaptor.addChild(root_0, classMethod155.getTree());
 
                     }
                     break;
                 case 2 :
-                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:298:17: classArray
+                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:299:17: classArray
                     {
                     root_0 = (BeeCommonNodeTree)adaptor.nil();
 
-                    pushFollow(FOLLOW_classArray_in_classNextExp1864);
-                    classArray152=classArray();
+                    pushFollow(FOLLOW_classArray_in_classNextExp1879);
+                    classArray156=classArray();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) adaptor.addChild(root_0, classArray152.getTree());
+                    if ( state.backtracking==0 ) adaptor.addChild(root_0, classArray156.getTree());
 
                     }
                     break;
@@ -5730,7 +5842,7 @@ public class BeeParser extends Parser {
         throw e;
         }
         finally {
-            if ( state.backtracking>0 ) { memoize(input, 39, classNextExp_StartIndex); }
+            if ( state.backtracking>0 ) { memoize(input, 40, classNextExp_StartIndex); }
         }
         return retval;
     }
@@ -5742,28 +5854,28 @@ public class BeeParser extends Parser {
     };
 
     // $ANTLR start "classMethod"
-    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:300:1: classMethod : '.' Identifier '(' ( exp ( ',' exp )* )? ')' -> ^( CLASS_METHOD[$Identifier] Identifier ( exp )* ) ;
+    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:301:1: classMethod : '.' Identifier '(' ( exp ( ',' exp )* )? ')' -> ^( CLASS_METHOD[$Identifier] Identifier ( exp )* ) ;
     public final BeeParser.classMethod_return classMethod() throws RecognitionException {
         BeeParser.classMethod_return retval = new BeeParser.classMethod_return();
         retval.start = input.LT(1);
         int classMethod_StartIndex = input.index();
         BeeCommonNodeTree root_0 = null;
 
-        Token char_literal153=null;
-        Token Identifier154=null;
-        Token char_literal155=null;
         Token char_literal157=null;
+        Token Identifier158=null;
         Token char_literal159=null;
-        BeeParser.exp_return exp156 = null;
+        Token char_literal161=null;
+        Token char_literal163=null;
+        BeeParser.exp_return exp160 = null;
 
-        BeeParser.exp_return exp158 = null;
+        BeeParser.exp_return exp162 = null;
 
 
-        BeeCommonNodeTree char_literal153_tree=null;
-        BeeCommonNodeTree Identifier154_tree=null;
-        BeeCommonNodeTree char_literal155_tree=null;
         BeeCommonNodeTree char_literal157_tree=null;
+        BeeCommonNodeTree Identifier158_tree=null;
         BeeCommonNodeTree char_literal159_tree=null;
+        BeeCommonNodeTree char_literal161_tree=null;
+        BeeCommonNodeTree char_literal163_tree=null;
         RewriteRuleTokenStream stream_121=new RewriteRuleTokenStream(adaptor,"token 121");
         RewriteRuleTokenStream stream_105=new RewriteRuleTokenStream(adaptor,"token 105");
         RewriteRuleTokenStream stream_103=new RewriteRuleTokenStream(adaptor,"token 103");
@@ -5771,66 +5883,66 @@ public class BeeParser extends Parser {
         RewriteRuleTokenStream stream_102=new RewriteRuleTokenStream(adaptor,"token 102");
         RewriteRuleSubtreeStream stream_exp=new RewriteRuleSubtreeStream(adaptor,"rule exp");
         try {
-            if ( state.backtracking>0 && alreadyParsedRule(input, 40) ) { return retval; }
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:301:2: ( '.' Identifier '(' ( exp ( ',' exp )* )? ')' -> ^( CLASS_METHOD[$Identifier] Identifier ( exp )* ) )
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:301:4: '.' Identifier '(' ( exp ( ',' exp )* )? ')'
+            if ( state.backtracking>0 && alreadyParsedRule(input, 41) ) { return retval; }
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:302:2: ( '.' Identifier '(' ( exp ( ',' exp )* )? ')' -> ^( CLASS_METHOD[$Identifier] Identifier ( exp )* ) )
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:302:4: '.' Identifier '(' ( exp ( ',' exp )* )? ')'
             {
-            char_literal153=(Token)match(input,121,FOLLOW_121_in_classMethod1874); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_121.add(char_literal153);
+            char_literal157=(Token)match(input,121,FOLLOW_121_in_classMethod1889); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_121.add(char_literal157);
 
-            Identifier154=(Token)match(input,Identifier,FOLLOW_Identifier_in_classMethod1877); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_Identifier.add(Identifier154);
+            Identifier158=(Token)match(input,Identifier,FOLLOW_Identifier_in_classMethod1892); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_Identifier.add(Identifier158);
 
-            char_literal155=(Token)match(input,102,FOLLOW_102_in_classMethod1879); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_102.add(char_literal155);
+            char_literal159=(Token)match(input,102,FOLLOW_102_in_classMethod1894); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_102.add(char_literal159);
 
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:301:24: ( exp ( ',' exp )* )?
-            int alt43=2;
-            int LA43_0 = input.LA(1);
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:302:24: ( exp ( ',' exp )* )?
+            int alt44=2;
+            int LA44_0 = input.LA(1);
 
-            if ( ((LA43_0>=Identifier && LA43_0<=LEFT_BRACE)||(LA43_0>=ADD && LA43_0<=MINUS)||(LA43_0>=BOOLEAN && LA43_0<=DOUBLE)||LA43_0==102||LA43_0==120||LA43_0==123||LA43_0==125) ) {
-                alt43=1;
+            if ( ((LA44_0>=Identifier && LA44_0<=LEFT_BRACE)||(LA44_0>=ADD && LA44_0<=MINUS)||(LA44_0>=BOOLEAN && LA44_0<=DOUBLE)||LA44_0==102||LA44_0==120||LA44_0==123||LA44_0==125) ) {
+                alt44=1;
             }
-            switch (alt43) {
+            switch (alt44) {
                 case 1 :
-                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:301:25: exp ( ',' exp )*
+                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:302:25: exp ( ',' exp )*
                     {
-                    pushFollow(FOLLOW_exp_in_classMethod1882);
-                    exp156=exp();
+                    pushFollow(FOLLOW_exp_in_classMethod1897);
+                    exp160=exp();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) stream_exp.add(exp156.getTree());
-                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:301:29: ( ',' exp )*
-                    loop42:
+                    if ( state.backtracking==0 ) stream_exp.add(exp160.getTree());
+                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:302:29: ( ',' exp )*
+                    loop43:
                     do {
-                        int alt42=2;
-                        int LA42_0 = input.LA(1);
+                        int alt43=2;
+                        int LA43_0 = input.LA(1);
 
-                        if ( (LA42_0==105) ) {
-                            alt42=1;
+                        if ( (LA43_0==105) ) {
+                            alt43=1;
                         }
 
 
-                        switch (alt42) {
+                        switch (alt43) {
                     	case 1 :
-                    	    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:301:30: ',' exp
+                    	    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:302:30: ',' exp
                     	    {
-                    	    char_literal157=(Token)match(input,105,FOLLOW_105_in_classMethod1885); if (state.failed) return retval; 
-                    	    if ( state.backtracking==0 ) stream_105.add(char_literal157);
+                    	    char_literal161=(Token)match(input,105,FOLLOW_105_in_classMethod1900); if (state.failed) return retval; 
+                    	    if ( state.backtracking==0 ) stream_105.add(char_literal161);
 
-                    	    pushFollow(FOLLOW_exp_in_classMethod1887);
-                    	    exp158=exp();
+                    	    pushFollow(FOLLOW_exp_in_classMethod1902);
+                    	    exp162=exp();
 
                     	    state._fsp--;
                     	    if (state.failed) return retval;
-                    	    if ( state.backtracking==0 ) stream_exp.add(exp158.getTree());
+                    	    if ( state.backtracking==0 ) stream_exp.add(exp162.getTree());
 
                     	    }
                     	    break;
 
                     	default :
-                    	    break loop42;
+                    	    break loop43;
                         }
                     } while (true);
 
@@ -5840,8 +5952,8 @@ public class BeeParser extends Parser {
 
             }
 
-            char_literal159=(Token)match(input,103,FOLLOW_103_in_classMethod1894); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_103.add(char_literal159);
+            char_literal163=(Token)match(input,103,FOLLOW_103_in_classMethod1909); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_103.add(char_literal163);
 
 
 
@@ -5857,15 +5969,15 @@ public class BeeParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (BeeCommonNodeTree)adaptor.nil();
-            // 301:47: -> ^( CLASS_METHOD[$Identifier] Identifier ( exp )* )
+            // 302:47: -> ^( CLASS_METHOD[$Identifier] Identifier ( exp )* )
             {
-                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:301:49: ^( CLASS_METHOD[$Identifier] Identifier ( exp )* )
+                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:302:49: ^( CLASS_METHOD[$Identifier] Identifier ( exp )* )
                 {
                 BeeCommonNodeTree root_1 = (BeeCommonNodeTree)adaptor.nil();
-                root_1 = (BeeCommonNodeTree)adaptor.becomeRoot((BeeCommonNodeTree)adaptor.create(CLASS_METHOD, Identifier154), root_1);
+                root_1 = (BeeCommonNodeTree)adaptor.becomeRoot((BeeCommonNodeTree)adaptor.create(CLASS_METHOD, Identifier158), root_1);
 
                 adaptor.addChild(root_1, stream_Identifier.nextNode());
-                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:301:88: ( exp )*
+                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:302:88: ( exp )*
                 while ( stream_exp.hasNext() ) {
                     adaptor.addChild(root_1, stream_exp.nextTree());
 
@@ -5894,7 +6006,7 @@ public class BeeParser extends Parser {
         throw e;
         }
         finally {
-            if ( state.backtracking>0 ) { memoize(input, 40, classMethod_StartIndex); }
+            if ( state.backtracking>0 ) { memoize(input, 41, classMethod_StartIndex); }
         }
         return retval;
     }
@@ -5906,39 +6018,39 @@ public class BeeParser extends Parser {
     };
 
     // $ANTLR start "classArray"
-    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:302:1: classArray : '[' exp ']' -> ^( CLASS_ARRAY exp ) ;
+    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:303:1: classArray : '[' exp ']' -> ^( CLASS_ARRAY exp ) ;
     public final BeeParser.classArray_return classArray() throws RecognitionException {
         BeeParser.classArray_return retval = new BeeParser.classArray_return();
         retval.start = input.LT(1);
         int classArray_StartIndex = input.index();
         BeeCommonNodeTree root_0 = null;
 
-        Token char_literal160=null;
-        Token char_literal162=null;
-        BeeParser.exp_return exp161 = null;
+        Token char_literal164=null;
+        Token char_literal166=null;
+        BeeParser.exp_return exp165 = null;
 
 
-        BeeCommonNodeTree char_literal160_tree=null;
-        BeeCommonNodeTree char_literal162_tree=null;
+        BeeCommonNodeTree char_literal164_tree=null;
+        BeeCommonNodeTree char_literal166_tree=null;
         RewriteRuleTokenStream stream_123=new RewriteRuleTokenStream(adaptor,"token 123");
         RewriteRuleTokenStream stream_124=new RewriteRuleTokenStream(adaptor,"token 124");
         RewriteRuleSubtreeStream stream_exp=new RewriteRuleSubtreeStream(adaptor,"rule exp");
         try {
-            if ( state.backtracking>0 && alreadyParsedRule(input, 41) ) { return retval; }
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:303:2: ( '[' exp ']' -> ^( CLASS_ARRAY exp ) )
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:303:4: '[' exp ']'
+            if ( state.backtracking>0 && alreadyParsedRule(input, 42) ) { return retval; }
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:304:2: ( '[' exp ']' -> ^( CLASS_ARRAY exp ) )
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:304:4: '[' exp ']'
             {
-            char_literal160=(Token)match(input,123,FOLLOW_123_in_classArray1915); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_123.add(char_literal160);
+            char_literal164=(Token)match(input,123,FOLLOW_123_in_classArray1930); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_123.add(char_literal164);
 
-            pushFollow(FOLLOW_exp_in_classArray1917);
-            exp161=exp();
+            pushFollow(FOLLOW_exp_in_classArray1932);
+            exp165=exp();
 
             state._fsp--;
             if (state.failed) return retval;
-            if ( state.backtracking==0 ) stream_exp.add(exp161.getTree());
-            char_literal162=(Token)match(input,124,FOLLOW_124_in_classArray1919); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_124.add(char_literal162);
+            if ( state.backtracking==0 ) stream_exp.add(exp165.getTree());
+            char_literal166=(Token)match(input,124,FOLLOW_124_in_classArray1934); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_124.add(char_literal166);
 
 
 
@@ -5954,9 +6066,9 @@ public class BeeParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (BeeCommonNodeTree)adaptor.nil();
-            // 303:16: -> ^( CLASS_ARRAY exp )
+            // 304:16: -> ^( CLASS_ARRAY exp )
             {
-                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:303:19: ^( CLASS_ARRAY exp )
+                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:304:19: ^( CLASS_ARRAY exp )
                 {
                 BeeCommonNodeTree root_1 = (BeeCommonNodeTree)adaptor.nil();
                 root_1 = (BeeCommonNodeTree)adaptor.becomeRoot((BeeCommonNodeTree)adaptor.create(CLASS_ARRAY, "CLASS_ARRAY"), root_1);
@@ -5985,7 +6097,7 @@ public class BeeParser extends Parser {
         throw e;
         }
         finally {
-            if ( state.backtracking>0 ) { memoize(input, 41, classArray_StartIndex); }
+            if ( state.backtracking>0 ) { memoize(input, 42, classArray_StartIndex); }
         }
         return retval;
     }
@@ -5997,7 +6109,7 @@ public class BeeParser extends Parser {
     };
 
     // $ANTLR start "functionFullName"
-    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:306:1: functionFullName : a= Identifier ( '.' Identifier )? -> ^( FUNCTION_FULL_NAME[$a] ( Identifier )* ) ;
+    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:307:1: functionFullName : a= Identifier ( '.' Identifier )? -> ^( FUNCTION_FULL_NAME[$a] ( Identifier )* ) ;
     public final BeeParser.functionFullName_return functionFullName() throws RecognitionException {
         BeeParser.functionFullName_return retval = new BeeParser.functionFullName_return();
         retval.start = input.LT(1);
@@ -6005,39 +6117,39 @@ public class BeeParser extends Parser {
         BeeCommonNodeTree root_0 = null;
 
         Token a=null;
-        Token char_literal163=null;
-        Token Identifier164=null;
+        Token char_literal167=null;
+        Token Identifier168=null;
 
         BeeCommonNodeTree a_tree=null;
-        BeeCommonNodeTree char_literal163_tree=null;
-        BeeCommonNodeTree Identifier164_tree=null;
+        BeeCommonNodeTree char_literal167_tree=null;
+        BeeCommonNodeTree Identifier168_tree=null;
         RewriteRuleTokenStream stream_121=new RewriteRuleTokenStream(adaptor,"token 121");
         RewriteRuleTokenStream stream_Identifier=new RewriteRuleTokenStream(adaptor,"token Identifier");
 
         try {
-            if ( state.backtracking>0 && alreadyParsedRule(input, 42) ) { return retval; }
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:306:18: (a= Identifier ( '.' Identifier )? -> ^( FUNCTION_FULL_NAME[$a] ( Identifier )* ) )
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:306:19: a= Identifier ( '.' Identifier )?
+            if ( state.backtracking>0 && alreadyParsedRule(input, 43) ) { return retval; }
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:307:18: (a= Identifier ( '.' Identifier )? -> ^( FUNCTION_FULL_NAME[$a] ( Identifier )* ) )
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:307:19: a= Identifier ( '.' Identifier )?
             {
-            a=(Token)match(input,Identifier,FOLLOW_Identifier_in_functionFullName1938); if (state.failed) return retval; 
+            a=(Token)match(input,Identifier,FOLLOW_Identifier_in_functionFullName1953); if (state.failed) return retval; 
             if ( state.backtracking==0 ) stream_Identifier.add(a);
 
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:306:32: ( '.' Identifier )?
-            int alt44=2;
-            int LA44_0 = input.LA(1);
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:307:32: ( '.' Identifier )?
+            int alt45=2;
+            int LA45_0 = input.LA(1);
 
-            if ( (LA44_0==121) ) {
-                alt44=1;
+            if ( (LA45_0==121) ) {
+                alt45=1;
             }
-            switch (alt44) {
+            switch (alt45) {
                 case 1 :
-                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:306:33: '.' Identifier
+                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:307:33: '.' Identifier
                     {
-                    char_literal163=(Token)match(input,121,FOLLOW_121_in_functionFullName1941); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_121.add(char_literal163);
+                    char_literal167=(Token)match(input,121,FOLLOW_121_in_functionFullName1956); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_121.add(char_literal167);
 
-                    Identifier164=(Token)match(input,Identifier,FOLLOW_Identifier_in_functionFullName1943); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_Identifier.add(Identifier164);
+                    Identifier168=(Token)match(input,Identifier,FOLLOW_Identifier_in_functionFullName1958); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_Identifier.add(Identifier168);
 
 
                     }
@@ -6059,14 +6171,14 @@ public class BeeParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (BeeCommonNodeTree)adaptor.nil();
-            // 306:51: -> ^( FUNCTION_FULL_NAME[$a] ( Identifier )* )
+            // 307:51: -> ^( FUNCTION_FULL_NAME[$a] ( Identifier )* )
             {
-                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:306:54: ^( FUNCTION_FULL_NAME[$a] ( Identifier )* )
+                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:307:54: ^( FUNCTION_FULL_NAME[$a] ( Identifier )* )
                 {
                 BeeCommonNodeTree root_1 = (BeeCommonNodeTree)adaptor.nil();
                 root_1 = (BeeCommonNodeTree)adaptor.becomeRoot((BeeCommonNodeTree)adaptor.create(FUNCTION_FULL_NAME, a), root_1);
 
-                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:306:80: ( Identifier )*
+                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:307:80: ( Identifier )*
                 while ( stream_Identifier.hasNext() ) {
                     adaptor.addChild(root_1, stream_Identifier.nextNode());
 
@@ -6095,7 +6207,7 @@ public class BeeParser extends Parser {
         throw e;
         }
         finally {
-            if ( state.backtracking>0 ) { memoize(input, 42, functionFullName_StartIndex); }
+            if ( state.backtracking>0 ) { memoize(input, 43, functionFullName_StartIndex); }
         }
         return retval;
     }
@@ -6107,7 +6219,7 @@ public class BeeParser extends Parser {
     };
 
     // $ANTLR start "switchStatment"
-    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:308:1: switchStatment : a= 'switch' '(' base= exp ')' '{' ( caseStatment )* ( defaultStatment )? '}' -> ^( SWITCH[$a] $base ( caseStatment )* ( defaultStatment )? ) ;
+    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:309:1: switchStatment : a= 'switch' '(' base= exp ')' '{' ( caseStatment )* ( defaultStatment )? '}' -> ^( SWITCH[$a] $base ( caseStatment )* ( defaultStatment )? ) ;
     public final BeeParser.switchStatment_return switchStatment() throws RecognitionException {
         BeeParser.switchStatment_return retval = new BeeParser.switchStatment_return();
         retval.start = input.LT(1);
@@ -6115,22 +6227,22 @@ public class BeeParser extends Parser {
         BeeCommonNodeTree root_0 = null;
 
         Token a=null;
-        Token char_literal165=null;
-        Token char_literal166=null;
-        Token char_literal167=null;
+        Token char_literal169=null;
         Token char_literal170=null;
+        Token char_literal171=null;
+        Token char_literal174=null;
         BeeParser.exp_return base = null;
 
-        BeeParser.caseStatment_return caseStatment168 = null;
+        BeeParser.caseStatment_return caseStatment172 = null;
 
-        BeeParser.defaultStatment_return defaultStatment169 = null;
+        BeeParser.defaultStatment_return defaultStatment173 = null;
 
 
         BeeCommonNodeTree a_tree=null;
-        BeeCommonNodeTree char_literal165_tree=null;
-        BeeCommonNodeTree char_literal166_tree=null;
-        BeeCommonNodeTree char_literal167_tree=null;
+        BeeCommonNodeTree char_literal169_tree=null;
         BeeCommonNodeTree char_literal170_tree=null;
+        BeeCommonNodeTree char_literal171_tree=null;
+        BeeCommonNodeTree char_literal174_tree=null;
         RewriteRuleTokenStream stream_RIGHT_BRACE=new RewriteRuleTokenStream(adaptor,"token RIGHT_BRACE");
         RewriteRuleTokenStream stream_126=new RewriteRuleTokenStream(adaptor,"token 126");
         RewriteRuleTokenStream stream_LEFT_BRACE=new RewriteRuleTokenStream(adaptor,"token LEFT_BRACE");
@@ -6140,83 +6252,83 @@ public class BeeParser extends Parser {
         RewriteRuleSubtreeStream stream_caseStatment=new RewriteRuleSubtreeStream(adaptor,"rule caseStatment");
         RewriteRuleSubtreeStream stream_defaultStatment=new RewriteRuleSubtreeStream(adaptor,"rule defaultStatment");
         try {
-            if ( state.backtracking>0 && alreadyParsedRule(input, 43) ) { return retval; }
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:309:2: (a= 'switch' '(' base= exp ')' '{' ( caseStatment )* ( defaultStatment )? '}' -> ^( SWITCH[$a] $base ( caseStatment )* ( defaultStatment )? ) )
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:309:4: a= 'switch' '(' base= exp ')' '{' ( caseStatment )* ( defaultStatment )? '}'
+            if ( state.backtracking>0 && alreadyParsedRule(input, 44) ) { return retval; }
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:310:2: (a= 'switch' '(' base= exp ')' '{' ( caseStatment )* ( defaultStatment )? '}' -> ^( SWITCH[$a] $base ( caseStatment )* ( defaultStatment )? ) )
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:310:4: a= 'switch' '(' base= exp ')' '{' ( caseStatment )* ( defaultStatment )? '}'
             {
-            a=(Token)match(input,126,FOLLOW_126_in_switchStatment1968); if (state.failed) return retval; 
+            a=(Token)match(input,126,FOLLOW_126_in_switchStatment1983); if (state.failed) return retval; 
             if ( state.backtracking==0 ) stream_126.add(a);
 
-            char_literal165=(Token)match(input,102,FOLLOW_102_in_switchStatment1970); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_102.add(char_literal165);
+            char_literal169=(Token)match(input,102,FOLLOW_102_in_switchStatment1985); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_102.add(char_literal169);
 
-            pushFollow(FOLLOW_exp_in_switchStatment1974);
+            pushFollow(FOLLOW_exp_in_switchStatment1989);
             base=exp();
 
             state._fsp--;
             if (state.failed) return retval;
             if ( state.backtracking==0 ) stream_exp.add(base.getTree());
-            char_literal166=(Token)match(input,103,FOLLOW_103_in_switchStatment1976); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_103.add(char_literal166);
+            char_literal170=(Token)match(input,103,FOLLOW_103_in_switchStatment1991); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_103.add(char_literal170);
 
-            char_literal167=(Token)match(input,LEFT_BRACE,FOLLOW_LEFT_BRACE_in_switchStatment1978); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_LEFT_BRACE.add(char_literal167);
+            char_literal171=(Token)match(input,LEFT_BRACE,FOLLOW_LEFT_BRACE_in_switchStatment1993); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_LEFT_BRACE.add(char_literal171);
 
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:309:36: ( caseStatment )*
-            loop45:
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:310:36: ( caseStatment )*
+            loop46:
             do {
-                int alt45=2;
-                int LA45_0 = input.LA(1);
+                int alt46=2;
+                int LA46_0 = input.LA(1);
 
-                if ( (LA45_0==104) ) {
-                    alt45=1;
+                if ( (LA46_0==104) ) {
+                    alt46=1;
                 }
 
 
-                switch (alt45) {
+                switch (alt46) {
             	case 1 :
             	    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:0:0: caseStatment
             	    {
-            	    pushFollow(FOLLOW_caseStatment_in_switchStatment1980);
-            	    caseStatment168=caseStatment();
+            	    pushFollow(FOLLOW_caseStatment_in_switchStatment1995);
+            	    caseStatment172=caseStatment();
 
             	    state._fsp--;
             	    if (state.failed) return retval;
-            	    if ( state.backtracking==0 ) stream_caseStatment.add(caseStatment168.getTree());
+            	    if ( state.backtracking==0 ) stream_caseStatment.add(caseStatment172.getTree());
 
             	    }
             	    break;
 
             	default :
-            	    break loop45;
+            	    break loop46;
                 }
             } while (true);
 
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:309:50: ( defaultStatment )?
-            int alt46=2;
-            int LA46_0 = input.LA(1);
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:310:50: ( defaultStatment )?
+            int alt47=2;
+            int LA47_0 = input.LA(1);
 
-            if ( (LA46_0==107) ) {
-                alt46=1;
+            if ( (LA47_0==107) ) {
+                alt47=1;
             }
-            switch (alt46) {
+            switch (alt47) {
                 case 1 :
                     // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:0:0: defaultStatment
                     {
-                    pushFollow(FOLLOW_defaultStatment_in_switchStatment1983);
-                    defaultStatment169=defaultStatment();
+                    pushFollow(FOLLOW_defaultStatment_in_switchStatment1998);
+                    defaultStatment173=defaultStatment();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) stream_defaultStatment.add(defaultStatment169.getTree());
+                    if ( state.backtracking==0 ) stream_defaultStatment.add(defaultStatment173.getTree());
 
                     }
                     break;
 
             }
 
-            char_literal170=(Token)match(input,RIGHT_BRACE,FOLLOW_RIGHT_BRACE_in_switchStatment1986); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_RIGHT_BRACE.add(char_literal170);
+            char_literal174=(Token)match(input,RIGHT_BRACE,FOLLOW_RIGHT_BRACE_in_switchStatment2001); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_RIGHT_BRACE.add(char_literal174);
 
 
 
@@ -6233,21 +6345,21 @@ public class BeeParser extends Parser {
             RewriteRuleSubtreeStream stream_base=new RewriteRuleSubtreeStream(adaptor,"rule base",base!=null?base.tree:null);
 
             root_0 = (BeeCommonNodeTree)adaptor.nil();
-            // 310:3: -> ^( SWITCH[$a] $base ( caseStatment )* ( defaultStatment )? )
+            // 311:3: -> ^( SWITCH[$a] $base ( caseStatment )* ( defaultStatment )? )
             {
-                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:310:5: ^( SWITCH[$a] $base ( caseStatment )* ( defaultStatment )? )
+                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:311:5: ^( SWITCH[$a] $base ( caseStatment )* ( defaultStatment )? )
                 {
                 BeeCommonNodeTree root_1 = (BeeCommonNodeTree)adaptor.nil();
                 root_1 = (BeeCommonNodeTree)adaptor.becomeRoot((BeeCommonNodeTree)adaptor.create(SWITCH, a), root_1);
 
                 adaptor.addChild(root_1, stream_base.nextTree());
-                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:310:24: ( caseStatment )*
+                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:311:24: ( caseStatment )*
                 while ( stream_caseStatment.hasNext() ) {
                     adaptor.addChild(root_1, stream_caseStatment.nextTree());
 
                 }
                 stream_caseStatment.reset();
-                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:310:38: ( defaultStatment )?
+                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:311:38: ( defaultStatment )?
                 if ( stream_defaultStatment.hasNext() ) {
                     adaptor.addChild(root_1, stream_defaultStatment.nextTree());
 
@@ -6276,7 +6388,7 @@ public class BeeParser extends Parser {
         throw e;
         }
         finally {
-            if ( state.backtracking>0 ) { memoize(input, 43, switchStatment_StartIndex); }
+            if ( state.backtracking>0 ) { memoize(input, 44, switchStatment_StartIndex); }
         }
         return retval;
     }
@@ -6288,7 +6400,7 @@ public class BeeParser extends Parser {
     };
 
     // $ANTLR start "caseStatment"
-    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:311:1: caseStatment : a= 'case' exp ':' statements -> ^( CASE[$a] exp statements ) ;
+    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:312:1: caseStatment : a= 'case' exp ':' statements -> ^( CASE[$a] exp statements ) ;
     public final BeeParser.caseStatment_return caseStatment() throws RecognitionException {
         BeeParser.caseStatment_return retval = new BeeParser.caseStatment_return();
         retval.start = input.LT(1);
@@ -6296,41 +6408,41 @@ public class BeeParser extends Parser {
         BeeCommonNodeTree root_0 = null;
 
         Token a=null;
-        Token char_literal172=null;
-        BeeParser.exp_return exp171 = null;
+        Token char_literal176=null;
+        BeeParser.exp_return exp175 = null;
 
-        BeeParser.statements_return statements173 = null;
+        BeeParser.statements_return statements177 = null;
 
 
         BeeCommonNodeTree a_tree=null;
-        BeeCommonNodeTree char_literal172_tree=null;
+        BeeCommonNodeTree char_literal176_tree=null;
         RewriteRuleTokenStream stream_106=new RewriteRuleTokenStream(adaptor,"token 106");
         RewriteRuleTokenStream stream_104=new RewriteRuleTokenStream(adaptor,"token 104");
         RewriteRuleSubtreeStream stream_exp=new RewriteRuleSubtreeStream(adaptor,"rule exp");
         RewriteRuleSubtreeStream stream_statements=new RewriteRuleSubtreeStream(adaptor,"rule statements");
         try {
-            if ( state.backtracking>0 && alreadyParsedRule(input, 44) ) { return retval; }
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:312:2: (a= 'case' exp ':' statements -> ^( CASE[$a] exp statements ) )
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:312:4: a= 'case' exp ':' statements
+            if ( state.backtracking>0 && alreadyParsedRule(input, 45) ) { return retval; }
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:313:2: (a= 'case' exp ':' statements -> ^( CASE[$a] exp statements ) )
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:313:4: a= 'case' exp ':' statements
             {
-            a=(Token)match(input,104,FOLLOW_104_in_caseStatment2015); if (state.failed) return retval; 
+            a=(Token)match(input,104,FOLLOW_104_in_caseStatment2030); if (state.failed) return retval; 
             if ( state.backtracking==0 ) stream_104.add(a);
 
-            pushFollow(FOLLOW_exp_in_caseStatment2017);
-            exp171=exp();
+            pushFollow(FOLLOW_exp_in_caseStatment2032);
+            exp175=exp();
 
             state._fsp--;
             if (state.failed) return retval;
-            if ( state.backtracking==0 ) stream_exp.add(exp171.getTree());
-            char_literal172=(Token)match(input,106,FOLLOW_106_in_caseStatment2019); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_106.add(char_literal172);
+            if ( state.backtracking==0 ) stream_exp.add(exp175.getTree());
+            char_literal176=(Token)match(input,106,FOLLOW_106_in_caseStatment2034); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_106.add(char_literal176);
 
-            pushFollow(FOLLOW_statements_in_caseStatment2021);
-            statements173=statements();
+            pushFollow(FOLLOW_statements_in_caseStatment2036);
+            statements177=statements();
 
             state._fsp--;
             if (state.failed) return retval;
-            if ( state.backtracking==0 ) stream_statements.add(statements173.getTree());
+            if ( state.backtracking==0 ) stream_statements.add(statements177.getTree());
 
 
             // AST REWRITE
@@ -6345,9 +6457,9 @@ public class BeeParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (BeeCommonNodeTree)adaptor.nil();
-            // 312:32: -> ^( CASE[$a] exp statements )
+            // 313:32: -> ^( CASE[$a] exp statements )
             {
-                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:312:34: ^( CASE[$a] exp statements )
+                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:313:34: ^( CASE[$a] exp statements )
                 {
                 BeeCommonNodeTree root_1 = (BeeCommonNodeTree)adaptor.nil();
                 root_1 = (BeeCommonNodeTree)adaptor.becomeRoot((BeeCommonNodeTree)adaptor.create(CASE, a), root_1);
@@ -6377,7 +6489,7 @@ public class BeeParser extends Parser {
         throw e;
         }
         finally {
-            if ( state.backtracking>0 ) { memoize(input, 44, caseStatment_StartIndex); }
+            if ( state.backtracking>0 ) { memoize(input, 45, caseStatment_StartIndex); }
         }
         return retval;
     }
@@ -6389,7 +6501,7 @@ public class BeeParser extends Parser {
     };
 
     // $ANTLR start "defaultStatment"
-    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:313:1: defaultStatment : a= 'default' ':' statements -> ^( DEFAULT[$a] statements ) ;
+    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:314:1: defaultStatment : a= 'default' ':' statements -> ^( DEFAULT[$a] statements ) ;
     public final BeeParser.defaultStatment_return defaultStatment() throws RecognitionException {
         BeeParser.defaultStatment_return retval = new BeeParser.defaultStatment_return();
         retval.start = input.LT(1);
@@ -6397,32 +6509,32 @@ public class BeeParser extends Parser {
         BeeCommonNodeTree root_0 = null;
 
         Token a=null;
-        Token char_literal174=null;
-        BeeParser.statements_return statements175 = null;
+        Token char_literal178=null;
+        BeeParser.statements_return statements179 = null;
 
 
         BeeCommonNodeTree a_tree=null;
-        BeeCommonNodeTree char_literal174_tree=null;
+        BeeCommonNodeTree char_literal178_tree=null;
         RewriteRuleTokenStream stream_107=new RewriteRuleTokenStream(adaptor,"token 107");
         RewriteRuleTokenStream stream_106=new RewriteRuleTokenStream(adaptor,"token 106");
         RewriteRuleSubtreeStream stream_statements=new RewriteRuleSubtreeStream(adaptor,"rule statements");
         try {
-            if ( state.backtracking>0 && alreadyParsedRule(input, 45) ) { return retval; }
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:314:2: (a= 'default' ':' statements -> ^( DEFAULT[$a] statements ) )
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:314:4: a= 'default' ':' statements
+            if ( state.backtracking>0 && alreadyParsedRule(input, 46) ) { return retval; }
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:315:2: (a= 'default' ':' statements -> ^( DEFAULT[$a] statements ) )
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:315:4: a= 'default' ':' statements
             {
-            a=(Token)match(input,107,FOLLOW_107_in_defaultStatment2041); if (state.failed) return retval; 
+            a=(Token)match(input,107,FOLLOW_107_in_defaultStatment2056); if (state.failed) return retval; 
             if ( state.backtracking==0 ) stream_107.add(a);
 
-            char_literal174=(Token)match(input,106,FOLLOW_106_in_defaultStatment2043); if (state.failed) return retval; 
-            if ( state.backtracking==0 ) stream_106.add(char_literal174);
+            char_literal178=(Token)match(input,106,FOLLOW_106_in_defaultStatment2058); if (state.failed) return retval; 
+            if ( state.backtracking==0 ) stream_106.add(char_literal178);
 
-            pushFollow(FOLLOW_statements_in_defaultStatment2045);
-            statements175=statements();
+            pushFollow(FOLLOW_statements_in_defaultStatment2060);
+            statements179=statements();
 
             state._fsp--;
             if (state.failed) return retval;
-            if ( state.backtracking==0 ) stream_statements.add(statements175.getTree());
+            if ( state.backtracking==0 ) stream_statements.add(statements179.getTree());
 
 
             // AST REWRITE
@@ -6437,9 +6549,9 @@ public class BeeParser extends Parser {
             RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
             root_0 = (BeeCommonNodeTree)adaptor.nil();
-            // 314:31: -> ^( DEFAULT[$a] statements )
+            // 315:31: -> ^( DEFAULT[$a] statements )
             {
-                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:314:34: ^( DEFAULT[$a] statements )
+                // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:315:34: ^( DEFAULT[$a] statements )
                 {
                 BeeCommonNodeTree root_1 = (BeeCommonNodeTree)adaptor.nil();
                 root_1 = (BeeCommonNodeTree)adaptor.becomeRoot((BeeCommonNodeTree)adaptor.create(DEFAULT, a), root_1);
@@ -6468,7 +6580,7 @@ public class BeeParser extends Parser {
         throw e;
         }
         finally {
-            if ( state.backtracking>0 ) { memoize(input, 45, defaultStatment_StartIndex); }
+            if ( state.backtracking>0 ) { memoize(input, 46, defaultStatment_StartIndex); }
         }
         return retval;
     }
@@ -6480,34 +6592,34 @@ public class BeeParser extends Parser {
     };
 
     // $ANTLR start "json"
-    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:315:1: json : ( '[' ( exp ( ',' exp )* )? ']' -> ^( JSONARRAY ( exp )* ) | '{' ( jsonKeyValue ( ',' jsonKeyValue )* )? '}' -> ^( JSONMAP ( jsonKeyValue )* ) );
+    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:316:1: json : ( '[' ( exp ( ',' exp )* )? ']' -> ^( JSONARRAY ( exp )* ) | '{' ( jsonKeyValue ( ',' jsonKeyValue )* )? '}' -> ^( JSONMAP ( jsonKeyValue )* ) );
     public final BeeParser.json_return json() throws RecognitionException {
         BeeParser.json_return retval = new BeeParser.json_return();
         retval.start = input.LT(1);
         int json_StartIndex = input.index();
         BeeCommonNodeTree root_0 = null;
 
-        Token char_literal176=null;
-        Token char_literal178=null;
         Token char_literal180=null;
-        Token char_literal181=null;
-        Token char_literal183=null;
+        Token char_literal182=null;
+        Token char_literal184=null;
         Token char_literal185=null;
-        BeeParser.exp_return exp177 = null;
+        Token char_literal187=null;
+        Token char_literal189=null;
+        BeeParser.exp_return exp181 = null;
 
-        BeeParser.exp_return exp179 = null;
+        BeeParser.exp_return exp183 = null;
 
-        BeeParser.jsonKeyValue_return jsonKeyValue182 = null;
+        BeeParser.jsonKeyValue_return jsonKeyValue186 = null;
 
-        BeeParser.jsonKeyValue_return jsonKeyValue184 = null;
+        BeeParser.jsonKeyValue_return jsonKeyValue188 = null;
 
 
-        BeeCommonNodeTree char_literal176_tree=null;
-        BeeCommonNodeTree char_literal178_tree=null;
         BeeCommonNodeTree char_literal180_tree=null;
-        BeeCommonNodeTree char_literal181_tree=null;
-        BeeCommonNodeTree char_literal183_tree=null;
+        BeeCommonNodeTree char_literal182_tree=null;
+        BeeCommonNodeTree char_literal184_tree=null;
         BeeCommonNodeTree char_literal185_tree=null;
+        BeeCommonNodeTree char_literal187_tree=null;
+        BeeCommonNodeTree char_literal189_tree=null;
         RewriteRuleTokenStream stream_RIGHT_BRACE=new RewriteRuleTokenStream(adaptor,"token RIGHT_BRACE");
         RewriteRuleTokenStream stream_123=new RewriteRuleTokenStream(adaptor,"token 123");
         RewriteRuleTokenStream stream_124=new RewriteRuleTokenStream(adaptor,"token 124");
@@ -6516,78 +6628,78 @@ public class BeeParser extends Parser {
         RewriteRuleSubtreeStream stream_exp=new RewriteRuleSubtreeStream(adaptor,"rule exp");
         RewriteRuleSubtreeStream stream_jsonKeyValue=new RewriteRuleSubtreeStream(adaptor,"rule jsonKeyValue");
         try {
-            if ( state.backtracking>0 && alreadyParsedRule(input, 46) ) { return retval; }
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:315:6: ( '[' ( exp ( ',' exp )* )? ']' -> ^( JSONARRAY ( exp )* ) | '{' ( jsonKeyValue ( ',' jsonKeyValue )* )? '}' -> ^( JSONMAP ( jsonKeyValue )* ) )
-            int alt51=2;
-            int LA51_0 = input.LA(1);
+            if ( state.backtracking>0 && alreadyParsedRule(input, 47) ) { return retval; }
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:316:6: ( '[' ( exp ( ',' exp )* )? ']' -> ^( JSONARRAY ( exp )* ) | '{' ( jsonKeyValue ( ',' jsonKeyValue )* )? '}' -> ^( JSONMAP ( jsonKeyValue )* ) )
+            int alt52=2;
+            int LA52_0 = input.LA(1);
 
-            if ( (LA51_0==123) ) {
-                alt51=1;
+            if ( (LA52_0==123) ) {
+                alt52=1;
             }
-            else if ( (LA51_0==LEFT_BRACE) ) {
-                alt51=2;
+            else if ( (LA52_0==LEFT_BRACE) ) {
+                alt52=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return retval;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 51, 0, input);
+                    new NoViableAltException("", 52, 0, input);
 
                 throw nvae;
             }
-            switch (alt51) {
+            switch (alt52) {
                 case 1 :
-                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:315:8: '[' ( exp ( ',' exp )* )? ']'
+                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:316:8: '[' ( exp ( ',' exp )* )? ']'
                     {
-                    char_literal176=(Token)match(input,123,FOLLOW_123_in_json2061); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_123.add(char_literal176);
+                    char_literal180=(Token)match(input,123,FOLLOW_123_in_json2076); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_123.add(char_literal180);
 
-                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:315:12: ( exp ( ',' exp )* )?
-                    int alt48=2;
-                    int LA48_0 = input.LA(1);
+                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:316:12: ( exp ( ',' exp )* )?
+                    int alt49=2;
+                    int LA49_0 = input.LA(1);
 
-                    if ( ((LA48_0>=Identifier && LA48_0<=LEFT_BRACE)||(LA48_0>=ADD && LA48_0<=MINUS)||(LA48_0>=BOOLEAN && LA48_0<=DOUBLE)||LA48_0==102||LA48_0==120||LA48_0==123||LA48_0==125) ) {
-                        alt48=1;
+                    if ( ((LA49_0>=Identifier && LA49_0<=LEFT_BRACE)||(LA49_0>=ADD && LA49_0<=MINUS)||(LA49_0>=BOOLEAN && LA49_0<=DOUBLE)||LA49_0==102||LA49_0==120||LA49_0==123||LA49_0==125) ) {
+                        alt49=1;
                     }
-                    switch (alt48) {
+                    switch (alt49) {
                         case 1 :
-                            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:315:13: exp ( ',' exp )*
+                            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:316:13: exp ( ',' exp )*
                             {
-                            pushFollow(FOLLOW_exp_in_json2064);
-                            exp177=exp();
+                            pushFollow(FOLLOW_exp_in_json2079);
+                            exp181=exp();
 
                             state._fsp--;
                             if (state.failed) return retval;
-                            if ( state.backtracking==0 ) stream_exp.add(exp177.getTree());
-                            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:315:18: ( ',' exp )*
-                            loop47:
+                            if ( state.backtracking==0 ) stream_exp.add(exp181.getTree());
+                            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:316:18: ( ',' exp )*
+                            loop48:
                             do {
-                                int alt47=2;
-                                int LA47_0 = input.LA(1);
+                                int alt48=2;
+                                int LA48_0 = input.LA(1);
 
-                                if ( (LA47_0==105) ) {
-                                    alt47=1;
+                                if ( (LA48_0==105) ) {
+                                    alt48=1;
                                 }
 
 
-                                switch (alt47) {
+                                switch (alt48) {
                             	case 1 :
-                            	    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:315:19: ',' exp
+                            	    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:316:19: ',' exp
                             	    {
-                            	    char_literal178=(Token)match(input,105,FOLLOW_105_in_json2068); if (state.failed) return retval; 
-                            	    if ( state.backtracking==0 ) stream_105.add(char_literal178);
+                            	    char_literal182=(Token)match(input,105,FOLLOW_105_in_json2083); if (state.failed) return retval; 
+                            	    if ( state.backtracking==0 ) stream_105.add(char_literal182);
 
-                            	    pushFollow(FOLLOW_exp_in_json2070);
-                            	    exp179=exp();
+                            	    pushFollow(FOLLOW_exp_in_json2085);
+                            	    exp183=exp();
 
                             	    state._fsp--;
                             	    if (state.failed) return retval;
-                            	    if ( state.backtracking==0 ) stream_exp.add(exp179.getTree());
+                            	    if ( state.backtracking==0 ) stream_exp.add(exp183.getTree());
 
                             	    }
                             	    break;
 
                             	default :
-                            	    break loop47;
+                            	    break loop48;
                                 }
                             } while (true);
 
@@ -6597,8 +6709,8 @@ public class BeeParser extends Parser {
 
                     }
 
-                    char_literal180=(Token)match(input,124,FOLLOW_124_in_json2076); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_124.add(char_literal180);
+                    char_literal184=(Token)match(input,124,FOLLOW_124_in_json2091); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_124.add(char_literal184);
 
 
 
@@ -6614,14 +6726,14 @@ public class BeeParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (BeeCommonNodeTree)adaptor.nil();
-                    // 315:35: -> ^( JSONARRAY ( exp )* )
+                    // 316:35: -> ^( JSONARRAY ( exp )* )
                     {
-                        // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:315:37: ^( JSONARRAY ( exp )* )
+                        // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:316:37: ^( JSONARRAY ( exp )* )
                         {
                         BeeCommonNodeTree root_1 = (BeeCommonNodeTree)adaptor.nil();
                         root_1 = (BeeCommonNodeTree)adaptor.becomeRoot((BeeCommonNodeTree)adaptor.create(JSONARRAY, "JSONARRAY"), root_1);
 
-                        // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:315:49: ( exp )*
+                        // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:316:49: ( exp )*
                         while ( stream_exp.hasNext() ) {
                             adaptor.addChild(root_1, stream_exp.nextTree());
 
@@ -6637,58 +6749,58 @@ public class BeeParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:316:4: '{' ( jsonKeyValue ( ',' jsonKeyValue )* )? '}'
+                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:317:4: '{' ( jsonKeyValue ( ',' jsonKeyValue )* )? '}'
                     {
-                    char_literal181=(Token)match(input,LEFT_BRACE,FOLLOW_LEFT_BRACE_in_json2089); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_LEFT_BRACE.add(char_literal181);
+                    char_literal185=(Token)match(input,LEFT_BRACE,FOLLOW_LEFT_BRACE_in_json2104); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_LEFT_BRACE.add(char_literal185);
 
-                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:316:8: ( jsonKeyValue ( ',' jsonKeyValue )* )?
-                    int alt50=2;
-                    int LA50_0 = input.LA(1);
+                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:317:8: ( jsonKeyValue ( ',' jsonKeyValue )* )?
+                    int alt51=2;
+                    int LA51_0 = input.LA(1);
 
-                    if ( ((LA50_0>=Identifier && LA50_0<=StringLiteral)) ) {
-                        alt50=1;
+                    if ( ((LA51_0>=Identifier && LA51_0<=StringLiteral)) ) {
+                        alt51=1;
                     }
-                    switch (alt50) {
+                    switch (alt51) {
                         case 1 :
-                            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:316:9: jsonKeyValue ( ',' jsonKeyValue )*
+                            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:317:9: jsonKeyValue ( ',' jsonKeyValue )*
                             {
-                            pushFollow(FOLLOW_jsonKeyValue_in_json2092);
-                            jsonKeyValue182=jsonKeyValue();
+                            pushFollow(FOLLOW_jsonKeyValue_in_json2107);
+                            jsonKeyValue186=jsonKeyValue();
 
                             state._fsp--;
                             if (state.failed) return retval;
-                            if ( state.backtracking==0 ) stream_jsonKeyValue.add(jsonKeyValue182.getTree());
-                            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:316:22: ( ',' jsonKeyValue )*
-                            loop49:
+                            if ( state.backtracking==0 ) stream_jsonKeyValue.add(jsonKeyValue186.getTree());
+                            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:317:22: ( ',' jsonKeyValue )*
+                            loop50:
                             do {
-                                int alt49=2;
-                                int LA49_0 = input.LA(1);
+                                int alt50=2;
+                                int LA50_0 = input.LA(1);
 
-                                if ( (LA49_0==105) ) {
-                                    alt49=1;
+                                if ( (LA50_0==105) ) {
+                                    alt50=1;
                                 }
 
 
-                                switch (alt49) {
+                                switch (alt50) {
                             	case 1 :
-                            	    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:316:23: ',' jsonKeyValue
+                            	    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:317:23: ',' jsonKeyValue
                             	    {
-                            	    char_literal183=(Token)match(input,105,FOLLOW_105_in_json2095); if (state.failed) return retval; 
-                            	    if ( state.backtracking==0 ) stream_105.add(char_literal183);
+                            	    char_literal187=(Token)match(input,105,FOLLOW_105_in_json2110); if (state.failed) return retval; 
+                            	    if ( state.backtracking==0 ) stream_105.add(char_literal187);
 
-                            	    pushFollow(FOLLOW_jsonKeyValue_in_json2097);
-                            	    jsonKeyValue184=jsonKeyValue();
+                            	    pushFollow(FOLLOW_jsonKeyValue_in_json2112);
+                            	    jsonKeyValue188=jsonKeyValue();
 
                             	    state._fsp--;
                             	    if (state.failed) return retval;
-                            	    if ( state.backtracking==0 ) stream_jsonKeyValue.add(jsonKeyValue184.getTree());
+                            	    if ( state.backtracking==0 ) stream_jsonKeyValue.add(jsonKeyValue188.getTree());
 
                             	    }
                             	    break;
 
                             	default :
-                            	    break loop49;
+                            	    break loop50;
                                 }
                             } while (true);
 
@@ -6698,8 +6810,8 @@ public class BeeParser extends Parser {
 
                     }
 
-                    char_literal185=(Token)match(input,RIGHT_BRACE,FOLLOW_RIGHT_BRACE_in_json2103); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_RIGHT_BRACE.add(char_literal185);
+                    char_literal189=(Token)match(input,RIGHT_BRACE,FOLLOW_RIGHT_BRACE_in_json2118); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_RIGHT_BRACE.add(char_literal189);
 
 
 
@@ -6715,14 +6827,14 @@ public class BeeParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (BeeCommonNodeTree)adaptor.nil();
-                    // 316:48: -> ^( JSONMAP ( jsonKeyValue )* )
+                    // 317:48: -> ^( JSONMAP ( jsonKeyValue )* )
                     {
-                        // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:316:50: ^( JSONMAP ( jsonKeyValue )* )
+                        // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:317:50: ^( JSONMAP ( jsonKeyValue )* )
                         {
                         BeeCommonNodeTree root_1 = (BeeCommonNodeTree)adaptor.nil();
                         root_1 = (BeeCommonNodeTree)adaptor.becomeRoot((BeeCommonNodeTree)adaptor.create(JSONMAP, "JSONMAP"), root_1);
 
-                        // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:316:60: ( jsonKeyValue )*
+                        // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:317:60: ( jsonKeyValue )*
                         while ( stream_jsonKeyValue.hasNext() ) {
                             adaptor.addChild(root_1, stream_jsonKeyValue.nextTree());
 
@@ -6753,7 +6865,7 @@ public class BeeParser extends Parser {
         throw e;
         }
         finally {
-            if ( state.backtracking>0 ) { memoize(input, 46, json_StartIndex); }
+            if ( state.backtracking>0 ) { memoize(input, 47, json_StartIndex); }
         }
         return retval;
     }
@@ -6765,65 +6877,65 @@ public class BeeParser extends Parser {
     };
 
     // $ANTLR start "jsonKeyValue"
-    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:318:1: jsonKeyValue : ( StringLiteral ':' exp -> ^( JSONKEYVALUE StringLiteral exp ) | Identifier ':' exp -> ^( JSONKEYVALUE Identifier exp ) );
+    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:319:1: jsonKeyValue : ( StringLiteral ':' exp -> ^( JSONKEYVALUE StringLiteral exp ) | Identifier ':' exp -> ^( JSONKEYVALUE Identifier exp ) );
     public final BeeParser.jsonKeyValue_return jsonKeyValue() throws RecognitionException {
         BeeParser.jsonKeyValue_return retval = new BeeParser.jsonKeyValue_return();
         retval.start = input.LT(1);
         int jsonKeyValue_StartIndex = input.index();
         BeeCommonNodeTree root_0 = null;
 
-        Token StringLiteral186=null;
-        Token char_literal187=null;
-        Token Identifier189=null;
-        Token char_literal190=null;
-        BeeParser.exp_return exp188 = null;
+        Token StringLiteral190=null;
+        Token char_literal191=null;
+        Token Identifier193=null;
+        Token char_literal194=null;
+        BeeParser.exp_return exp192 = null;
 
-        BeeParser.exp_return exp191 = null;
+        BeeParser.exp_return exp195 = null;
 
 
-        BeeCommonNodeTree StringLiteral186_tree=null;
-        BeeCommonNodeTree char_literal187_tree=null;
-        BeeCommonNodeTree Identifier189_tree=null;
-        BeeCommonNodeTree char_literal190_tree=null;
+        BeeCommonNodeTree StringLiteral190_tree=null;
+        BeeCommonNodeTree char_literal191_tree=null;
+        BeeCommonNodeTree Identifier193_tree=null;
+        BeeCommonNodeTree char_literal194_tree=null;
         RewriteRuleTokenStream stream_StringLiteral=new RewriteRuleTokenStream(adaptor,"token StringLiteral");
         RewriteRuleTokenStream stream_106=new RewriteRuleTokenStream(adaptor,"token 106");
         RewriteRuleTokenStream stream_Identifier=new RewriteRuleTokenStream(adaptor,"token Identifier");
         RewriteRuleSubtreeStream stream_exp=new RewriteRuleSubtreeStream(adaptor,"rule exp");
         try {
-            if ( state.backtracking>0 && alreadyParsedRule(input, 47) ) { return retval; }
-            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:319:2: ( StringLiteral ':' exp -> ^( JSONKEYVALUE StringLiteral exp ) | Identifier ':' exp -> ^( JSONKEYVALUE Identifier exp ) )
-            int alt52=2;
-            int LA52_0 = input.LA(1);
+            if ( state.backtracking>0 && alreadyParsedRule(input, 48) ) { return retval; }
+            // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:320:2: ( StringLiteral ':' exp -> ^( JSONKEYVALUE StringLiteral exp ) | Identifier ':' exp -> ^( JSONKEYVALUE Identifier exp ) )
+            int alt53=2;
+            int LA53_0 = input.LA(1);
 
-            if ( (LA52_0==StringLiteral) ) {
-                alt52=1;
+            if ( (LA53_0==StringLiteral) ) {
+                alt53=1;
             }
-            else if ( (LA52_0==Identifier) ) {
-                alt52=2;
+            else if ( (LA53_0==Identifier) ) {
+                alt53=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return retval;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 52, 0, input);
+                    new NoViableAltException("", 53, 0, input);
 
                 throw nvae;
             }
-            switch (alt52) {
+            switch (alt53) {
                 case 1 :
-                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:319:4: StringLiteral ':' exp
+                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:320:4: StringLiteral ':' exp
                     {
-                    StringLiteral186=(Token)match(input,StringLiteral,FOLLOW_StringLiteral_in_jsonKeyValue2121); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_StringLiteral.add(StringLiteral186);
+                    StringLiteral190=(Token)match(input,StringLiteral,FOLLOW_StringLiteral_in_jsonKeyValue2136); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_StringLiteral.add(StringLiteral190);
 
-                    char_literal187=(Token)match(input,106,FOLLOW_106_in_jsonKeyValue2123); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_106.add(char_literal187);
+                    char_literal191=(Token)match(input,106,FOLLOW_106_in_jsonKeyValue2138); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_106.add(char_literal191);
 
-                    pushFollow(FOLLOW_exp_in_jsonKeyValue2125);
-                    exp188=exp();
+                    pushFollow(FOLLOW_exp_in_jsonKeyValue2140);
+                    exp192=exp();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) stream_exp.add(exp188.getTree());
+                    if ( state.backtracking==0 ) stream_exp.add(exp192.getTree());
 
 
                     // AST REWRITE
@@ -6838,9 +6950,9 @@ public class BeeParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (BeeCommonNodeTree)adaptor.nil();
-                    // 319:26: -> ^( JSONKEYVALUE StringLiteral exp )
+                    // 320:26: -> ^( JSONKEYVALUE StringLiteral exp )
                     {
-                        // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:319:28: ^( JSONKEYVALUE StringLiteral exp )
+                        // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:320:28: ^( JSONKEYVALUE StringLiteral exp )
                         {
                         BeeCommonNodeTree root_1 = (BeeCommonNodeTree)adaptor.nil();
                         root_1 = (BeeCommonNodeTree)adaptor.becomeRoot((BeeCommonNodeTree)adaptor.create(JSONKEYVALUE, "JSONKEYVALUE"), root_1);
@@ -6857,20 +6969,20 @@ public class BeeParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:320:4: Identifier ':' exp
+                    // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:321:4: Identifier ':' exp
                     {
-                    Identifier189=(Token)match(input,Identifier,FOLLOW_Identifier_in_jsonKeyValue2141); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_Identifier.add(Identifier189);
+                    Identifier193=(Token)match(input,Identifier,FOLLOW_Identifier_in_jsonKeyValue2156); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_Identifier.add(Identifier193);
 
-                    char_literal190=(Token)match(input,106,FOLLOW_106_in_jsonKeyValue2143); if (state.failed) return retval; 
-                    if ( state.backtracking==0 ) stream_106.add(char_literal190);
+                    char_literal194=(Token)match(input,106,FOLLOW_106_in_jsonKeyValue2158); if (state.failed) return retval; 
+                    if ( state.backtracking==0 ) stream_106.add(char_literal194);
 
-                    pushFollow(FOLLOW_exp_in_jsonKeyValue2145);
-                    exp191=exp();
+                    pushFollow(FOLLOW_exp_in_jsonKeyValue2160);
+                    exp195=exp();
 
                     state._fsp--;
                     if (state.failed) return retval;
-                    if ( state.backtracking==0 ) stream_exp.add(exp191.getTree());
+                    if ( state.backtracking==0 ) stream_exp.add(exp195.getTree());
 
 
                     // AST REWRITE
@@ -6885,9 +6997,9 @@ public class BeeParser extends Parser {
                     RewriteRuleSubtreeStream stream_retval=new RewriteRuleSubtreeStream(adaptor,"rule retval",retval!=null?retval.tree:null);
 
                     root_0 = (BeeCommonNodeTree)adaptor.nil();
-                    // 320:23: -> ^( JSONKEYVALUE Identifier exp )
+                    // 321:23: -> ^( JSONKEYVALUE Identifier exp )
                     {
-                        // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:320:25: ^( JSONKEYVALUE Identifier exp )
+                        // E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\Bee.g:321:25: ^( JSONKEYVALUE Identifier exp )
                         {
                         BeeCommonNodeTree root_1 = (BeeCommonNodeTree)adaptor.nil();
                         root_1 = (BeeCommonNodeTree)adaptor.becomeRoot((BeeCommonNodeTree)adaptor.create(JSONKEYVALUE, "JSONKEYVALUE"), root_1);
@@ -6919,7 +7031,7 @@ public class BeeParser extends Parser {
         throw e;
         }
         finally {
-            if ( state.backtracking>0 ) { memoize(input, 47, jsonKeyValue_StartIndex); }
+            if ( state.backtracking>0 ) { memoize(input, 48, jsonKeyValue_StartIndex); }
         }
         return retval;
     }
@@ -7344,53 +7456,57 @@ public class BeeParser extends Parser {
     public static final BitSet FOLLOW_Identifier_in_nativeMethod1787 = new BitSet(new long[]{0x0000000000000002L,0x0A00000000000000L});
     public static final BitSet FOLLOW_121_in_nativeMethod1790 = new BitSet(new long[]{0x0004000000000000L});
     public static final BitSet FOLLOW_Identifier_in_nativeMethod1792 = new BitSet(new long[]{0x0000000000000002L,0x0A00000000000000L});
-    public static final BitSet FOLLOW_classNextExp_in_nativeMethod1797 = new BitSet(new long[]{0x0000000000000002L,0x0A00000000000000L});
-    public static final BitSet FOLLOW_classMethod_in_classNextExp1862 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_classArray_in_classNextExp1864 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_121_in_classMethod1874 = new BitSet(new long[]{0x0004000000000000L});
-    public static final BitSet FOLLOW_Identifier_in_classMethod1877 = new BitSet(new long[]{0x0000000000000000L,0x0000004000000000L});
-    public static final BitSet FOLLOW_102_in_classMethod1879 = new BitSet(new long[]{0x001C000000000000L,0x290000C00000078CL});
-    public static final BitSet FOLLOW_exp_in_classMethod1882 = new BitSet(new long[]{0x0000000000000000L,0x0000028000000000L});
-    public static final BitSet FOLLOW_105_in_classMethod1885 = new BitSet(new long[]{0x001C000000000000L,0x290000400000078CL});
-    public static final BitSet FOLLOW_exp_in_classMethod1887 = new BitSet(new long[]{0x0000000000000000L,0x0000028000000000L});
-    public static final BitSet FOLLOW_103_in_classMethod1894 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_123_in_classArray1915 = new BitSet(new long[]{0x001C000000000000L,0x290000400000078CL});
-    public static final BitSet FOLLOW_exp_in_classArray1917 = new BitSet(new long[]{0x0000000000000000L,0x1000000000000000L});
-    public static final BitSet FOLLOW_124_in_classArray1919 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_Identifier_in_functionFullName1938 = new BitSet(new long[]{0x0000000000000002L,0x0200000000000000L});
-    public static final BitSet FOLLOW_121_in_functionFullName1941 = new BitSet(new long[]{0x0004000000000000L});
-    public static final BitSet FOLLOW_Identifier_in_functionFullName1943 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_126_in_switchStatment1968 = new BitSet(new long[]{0x0000000000000000L,0x0000004000000000L});
-    public static final BitSet FOLLOW_102_in_switchStatment1970 = new BitSet(new long[]{0x001C000000000000L,0x290000400000078CL});
-    public static final BitSet FOLLOW_exp_in_switchStatment1974 = new BitSet(new long[]{0x0000000000000000L,0x0000008000000000L});
-    public static final BitSet FOLLOW_103_in_switchStatment1976 = new BitSet(new long[]{0x0010000000000000L});
-    public static final BitSet FOLLOW_LEFT_BRACE_in_switchStatment1978 = new BitSet(new long[]{0x0020000000000000L,0x0000090000000000L});
-    public static final BitSet FOLLOW_caseStatment_in_switchStatment1980 = new BitSet(new long[]{0x0020000000000000L,0x0000090000000000L});
-    public static final BitSet FOLLOW_defaultStatment_in_switchStatment1983 = new BitSet(new long[]{0x0020000000000000L});
-    public static final BitSet FOLLOW_RIGHT_BRACE_in_switchStatment1986 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_104_in_caseStatment2015 = new BitSet(new long[]{0x001C000000000000L,0x290000400000078CL});
-    public static final BitSet FOLLOW_exp_in_caseStatment2017 = new BitSet(new long[]{0x0000000000000000L,0x0000040000000000L});
-    public static final BitSet FOLLOW_106_in_caseStatment2019 = new BitSet(new long[]{0x0354000000000000L,0x6019F02000000000L});
-    public static final BitSet FOLLOW_statements_in_caseStatment2021 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_107_in_defaultStatment2041 = new BitSet(new long[]{0x0000000000000000L,0x0000040000000000L});
-    public static final BitSet FOLLOW_106_in_defaultStatment2043 = new BitSet(new long[]{0x0354000000000000L,0x6019F02000000000L});
-    public static final BitSet FOLLOW_statements_in_defaultStatment2045 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_123_in_json2061 = new BitSet(new long[]{0x001C000000000000L,0x390000400000078CL});
-    public static final BitSet FOLLOW_exp_in_json2064 = new BitSet(new long[]{0x0000000000000000L,0x1000020000000000L});
-    public static final BitSet FOLLOW_105_in_json2068 = new BitSet(new long[]{0x001C000000000000L,0x290000400000078CL});
-    public static final BitSet FOLLOW_exp_in_json2070 = new BitSet(new long[]{0x0000000000000000L,0x1000020000000000L});
-    public static final BitSet FOLLOW_124_in_json2076 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_LEFT_BRACE_in_json2089 = new BitSet(new long[]{0x002C000000000000L});
-    public static final BitSet FOLLOW_jsonKeyValue_in_json2092 = new BitSet(new long[]{0x0020000000000000L,0x0000020000000000L});
-    public static final BitSet FOLLOW_105_in_json2095 = new BitSet(new long[]{0x000C000000000000L});
-    public static final BitSet FOLLOW_jsonKeyValue_in_json2097 = new BitSet(new long[]{0x0020000000000000L,0x0000020000000000L});
-    public static final BitSet FOLLOW_RIGHT_BRACE_in_json2103 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_StringLiteral_in_jsonKeyValue2121 = new BitSet(new long[]{0x0000000000000000L,0x0000040000000000L});
-    public static final BitSet FOLLOW_106_in_jsonKeyValue2123 = new BitSet(new long[]{0x001C000000000000L,0x290000400000078CL});
-    public static final BitSet FOLLOW_exp_in_jsonKeyValue2125 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_Identifier_in_jsonKeyValue2141 = new BitSet(new long[]{0x0000000000000000L,0x0000040000000000L});
-    public static final BitSet FOLLOW_106_in_jsonKeyValue2143 = new BitSet(new long[]{0x001C000000000000L,0x290000400000078CL});
-    public static final BitSet FOLLOW_exp_in_jsonKeyValue2145 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_classMutileExp_in_nativeMethod1796 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_classNextExp_in_classMutileExp1855 = new BitSet(new long[]{0x0000000000000002L,0x0A00000000000000L});
+    public static final BitSet FOLLOW_classNextExp_in_classMutileExp1858 = new BitSet(new long[]{0x0000000000000002L,0x0A00000000000000L});
+    public static final BitSet FOLLOW_121_in_classMutileExp1861 = new BitSet(new long[]{0x0004000000000000L});
+    public static final BitSet FOLLOW_Identifier_in_classMutileExp1864 = new BitSet(new long[]{0x0000000000000002L,0x0A00000000000000L});
+    public static final BitSet FOLLOW_classMethod_in_classNextExp1877 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_classArray_in_classNextExp1879 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_121_in_classMethod1889 = new BitSet(new long[]{0x0004000000000000L});
+    public static final BitSet FOLLOW_Identifier_in_classMethod1892 = new BitSet(new long[]{0x0000000000000000L,0x0000004000000000L});
+    public static final BitSet FOLLOW_102_in_classMethod1894 = new BitSet(new long[]{0x001C000000000000L,0x290000C00000078CL});
+    public static final BitSet FOLLOW_exp_in_classMethod1897 = new BitSet(new long[]{0x0000000000000000L,0x0000028000000000L});
+    public static final BitSet FOLLOW_105_in_classMethod1900 = new BitSet(new long[]{0x001C000000000000L,0x290000400000078CL});
+    public static final BitSet FOLLOW_exp_in_classMethod1902 = new BitSet(new long[]{0x0000000000000000L,0x0000028000000000L});
+    public static final BitSet FOLLOW_103_in_classMethod1909 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_123_in_classArray1930 = new BitSet(new long[]{0x001C000000000000L,0x290000400000078CL});
+    public static final BitSet FOLLOW_exp_in_classArray1932 = new BitSet(new long[]{0x0000000000000000L,0x1000000000000000L});
+    public static final BitSet FOLLOW_124_in_classArray1934 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_Identifier_in_functionFullName1953 = new BitSet(new long[]{0x0000000000000002L,0x0200000000000000L});
+    public static final BitSet FOLLOW_121_in_functionFullName1956 = new BitSet(new long[]{0x0004000000000000L});
+    public static final BitSet FOLLOW_Identifier_in_functionFullName1958 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_126_in_switchStatment1983 = new BitSet(new long[]{0x0000000000000000L,0x0000004000000000L});
+    public static final BitSet FOLLOW_102_in_switchStatment1985 = new BitSet(new long[]{0x001C000000000000L,0x290000400000078CL});
+    public static final BitSet FOLLOW_exp_in_switchStatment1989 = new BitSet(new long[]{0x0000000000000000L,0x0000008000000000L});
+    public static final BitSet FOLLOW_103_in_switchStatment1991 = new BitSet(new long[]{0x0010000000000000L});
+    public static final BitSet FOLLOW_LEFT_BRACE_in_switchStatment1993 = new BitSet(new long[]{0x0020000000000000L,0x0000090000000000L});
+    public static final BitSet FOLLOW_caseStatment_in_switchStatment1995 = new BitSet(new long[]{0x0020000000000000L,0x0000090000000000L});
+    public static final BitSet FOLLOW_defaultStatment_in_switchStatment1998 = new BitSet(new long[]{0x0020000000000000L});
+    public static final BitSet FOLLOW_RIGHT_BRACE_in_switchStatment2001 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_104_in_caseStatment2030 = new BitSet(new long[]{0x001C000000000000L,0x290000400000078CL});
+    public static final BitSet FOLLOW_exp_in_caseStatment2032 = new BitSet(new long[]{0x0000000000000000L,0x0000040000000000L});
+    public static final BitSet FOLLOW_106_in_caseStatment2034 = new BitSet(new long[]{0x0354000000000000L,0x6019F02000000000L});
+    public static final BitSet FOLLOW_statements_in_caseStatment2036 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_107_in_defaultStatment2056 = new BitSet(new long[]{0x0000000000000000L,0x0000040000000000L});
+    public static final BitSet FOLLOW_106_in_defaultStatment2058 = new BitSet(new long[]{0x0354000000000000L,0x6019F02000000000L});
+    public static final BitSet FOLLOW_statements_in_defaultStatment2060 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_123_in_json2076 = new BitSet(new long[]{0x001C000000000000L,0x390000400000078CL});
+    public static final BitSet FOLLOW_exp_in_json2079 = new BitSet(new long[]{0x0000000000000000L,0x1000020000000000L});
+    public static final BitSet FOLLOW_105_in_json2083 = new BitSet(new long[]{0x001C000000000000L,0x290000400000078CL});
+    public static final BitSet FOLLOW_exp_in_json2085 = new BitSet(new long[]{0x0000000000000000L,0x1000020000000000L});
+    public static final BitSet FOLLOW_124_in_json2091 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_LEFT_BRACE_in_json2104 = new BitSet(new long[]{0x002C000000000000L});
+    public static final BitSet FOLLOW_jsonKeyValue_in_json2107 = new BitSet(new long[]{0x0020000000000000L,0x0000020000000000L});
+    public static final BitSet FOLLOW_105_in_json2110 = new BitSet(new long[]{0x000C000000000000L});
+    public static final BitSet FOLLOW_jsonKeyValue_in_json2112 = new BitSet(new long[]{0x0020000000000000L,0x0000020000000000L});
+    public static final BitSet FOLLOW_RIGHT_BRACE_in_json2118 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_StringLiteral_in_jsonKeyValue2136 = new BitSet(new long[]{0x0000000000000000L,0x0000040000000000L});
+    public static final BitSet FOLLOW_106_in_jsonKeyValue2138 = new BitSet(new long[]{0x001C000000000000L,0x290000400000078CL});
+    public static final BitSet FOLLOW_exp_in_jsonKeyValue2140 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_Identifier_in_jsonKeyValue2156 = new BitSet(new long[]{0x0000000000000000L,0x0000040000000000L});
+    public static final BitSet FOLLOW_106_in_jsonKeyValue2158 = new BitSet(new long[]{0x001C000000000000L,0x290000400000078CL});
+    public static final BitSet FOLLOW_exp_in_jsonKeyValue2160 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_117_in_synpred29_Bee934 = new BitSet(new long[]{0x0354000000000000L,0x6019F02000000000L});
     public static final BitSet FOLLOW_statement_in_synpred29_Bee938 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_Identifier_in_synpred36_Bee1185 = new BitSet(new long[]{0x0000000000000000L,0x0080000000000000L});

@@ -289,11 +289,12 @@ unaryAtom
 	|	MINUS a=atom ->^(NEGATOM atom)
 	|	ADD atom -> atom ;
 	
-nativeMethod [boolean statmentCall]	:a='@'	Identifier ('.' Identifier)* (classNextExp )*  {if(!openBackdoor||isStrictMVC) throw new MVCStrictException($a);} 
-   ->  {statmentCall}?  ^(DIRECT_CALL ^(CLASS_FUNCTION[$a] Identifier* classNextExp* ))
-   -> ^(CLASS_FUNCTION[$a] Identifier* classNextExp* )
+nativeMethod [boolean statmentCall]	:a='@'	Identifier ('.' Identifier)* classMutileExp?  {if(!openBackdoor||isStrictMVC) throw new MVCStrictException($a);} 
+   ->  {statmentCall}?  ^(DIRECT_CALL ^(CLASS_FUNCTION[$a] Identifier* classMutileExp?))
+   -> ^(CLASS_FUNCTION[$a] Identifier* classMutileExp?)
    ;
- 
+ classMutileExp 
+	:	classNextExp (classNextExp| '.'! Identifier)* ;
  classNextExp
 	:	 classMethod|classArray;
 	

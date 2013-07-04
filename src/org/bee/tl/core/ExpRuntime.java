@@ -395,7 +395,7 @@ public class ExpRuntime
 		for(int i=index;i<exp1.getChildCount();i++){
 			BeeCommonNodeTree n = (BeeCommonNodeTree) exp1.getChild(i);
 			if(n.getType()==BeeParser.Identifier){
-				//属性方法
+				   //属性方法
 					try{
 						targetObject = targetClass.getDeclaredField(n.getText()).get(targetObject);
 						//todo 空指针
@@ -520,6 +520,7 @@ public class ExpRuntime
 				char firstChar = name.charAt(0);
 				if(firstChar>'A'&&firstChar<'Z'){
 					callType = 1;
+					i++;
 					break ;
 				}
 				
