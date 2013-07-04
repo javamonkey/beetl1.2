@@ -46,7 +46,7 @@ public class AntlrCodeGen
 	public static void main(String[] args) throws Exception
 	{
 
-		String root = "E:\\lijz\\javamonkey\\bee\\github\\xdfbeetl1.2_goswitch\\src\\org\\bee\\tl\\core\\";
+		String root = "E:\\lijz\\javamonkey\\git\\xdfbeetl1.25\\src\\org\\bee\\tl\\core\\";
 		//		{
 		//			// String tree = root+"CMinusWalker.g";
 		//			// String parser = root+"CMinus.g";

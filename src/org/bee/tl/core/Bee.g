@@ -46,6 +46,7 @@ tokens {
   CLASS_STATIC_FUNCTION;
   CLASS_FUNCTION;
   CLASS_METHOD;
+  CLASS_ARRAY;
   VARIABLE_VAR_REFER;
   TEXT_VAR_REFER;
   MISSING_VARIABLE_VAR_REFER;
@@ -288,13 +289,19 @@ unaryAtom
 	|	MINUS a=atom ->^(NEGATOM atom)
 	|	ADD atom -> atom ;
 	
-nativeMethod [boolean statmentCall]	:a='@'	Identifier ('.' Identifier)* ('.' classMethod )?  {if(!openBackdoor||isStrictMVC) throw new MVCStrictException($a);} 
-   ->  {statmentCall}?  ^(DIRECT_CALL ^(CLASS_FUNCTION[$a] Identifier* classMethod? ))
-   -> ^(CLASS_FUNCTION[$a] Identifier* classMethod? )
+nativeMethod [boolean statmentCall]	:a='@'	Identifier ('.' Identifier)* (classNextExp )*  {if(!openBackdoor||isStrictMVC) throw new MVCStrictException($a);} 
+   ->  {statmentCall}?  ^(DIRECT_CALL ^(CLASS_FUNCTION[$a] Identifier* classNextExp* ))
+   -> ^(CLASS_FUNCTION[$a] Identifier* classNextExp* )
    ;
-   
+ 
+ classNextExp
+	:	 classMethod|classArray;
+	
 classMethod
-	:	Identifier '(' (exp (',' exp) *)? ')' ->^(CLASS_METHOD[$Identifier] Identifier exp* ) ;
+	:	'.'  Identifier '(' (exp (',' exp) *)? ')' ->^(CLASS_METHOD[$Identifier] Identifier exp* ) ;
+classArray
+	:	'[' exp ']' -> ^(CLASS_ARRAY exp); 
+
 
 functionFullName :a=Identifier ('.' Identifier)?  -> ^(FUNCTION_FULL_NAME[$a]  Identifier*);
 
