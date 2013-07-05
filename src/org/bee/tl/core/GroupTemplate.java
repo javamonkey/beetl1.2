@@ -394,25 +394,25 @@ public class GroupTemplate
 		if (this.optimize)
 		{
 			this.classMap.removeClass(key);
-			if (stringTemplateList.contains(key))
-			{
-
-				File file = new File(this.tempFolder + File.separator + "strtemp" + File.separator + key + ".txt");
-				if (!file.delete())
-				{
-					logger.info("删除String模板失败");
-				}
-
-			}
-			//@todo：有问题，对于字符串模板，需要删除文件
-
-		}
+		}	
 		else
 		{
 
 			this.cachedRuntime.removeCache(key);
 
 		}
+		
+		if (stringTemplateList.contains(key))
+		{
+
+			File file = new File(this.tempFolder + File.separator + "strtemp" + File.separator + key + ".txt");
+			if (!file.delete())
+			{
+				logger.info("删除String模板失败");
+			}
+
+		}
+	
 	}
 	
 	
