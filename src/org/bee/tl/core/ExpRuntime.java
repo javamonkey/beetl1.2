@@ -507,30 +507,44 @@ public class ExpRuntime
 	{
 
 		BeeCommonNodeTree exp = (BeeCommonNodeTree) node;
-		//找到所有的Identifier，并根据Identifier来判断是引用的静态还是实例
+		Object[] cached = (Object[])exp.getCached() ;
 		int callType = 0;
-		StringBuilder sb = new StringBuilder();
-		int i=0;
-		for(;i<exp.getChildCount();i++){
-			BeeCommonNodeTree n = (BeeCommonNodeTree) exp.getChild(i);
+		int i = 0;
+		String instance = "";
+		if(cached==null){
+			//找到所有的Identifier，并根据Identifier来判断是引用的静态还是实例
 			
-			if(n.getType() == BeeParser.Identifier){
-				String name = n.getText();
-				sb.append(name).append(".");
-				char firstChar = name.charAt(0);
-				if(firstChar>'A'&&firstChar<'Z'){
-					callType = 1;
-					i++;
+			StringBuilder sb = new StringBuilder();
+			
+			for(;i<exp.getChildCount();i++){
+				BeeCommonNodeTree n = (BeeCommonNodeTree) exp.getChild(i);
+				
+				if(n.getType() == BeeParser.Identifier){
+					String name = n.getText();
+					sb.append(name).append(".");
+					char firstChar = name.charAt(0);
+					if(firstChar>'A'&&firstChar<'Z'){
+						callType = 1;
+						i++;
+						break ;
+					}
+					
+				}else{
+					//遇到了方法，或者数组
 					break ;
 				}
-				
-			}else{
-				//遇到了方法，或者数组
-				break ;
 			}
+			
+			sb.setLength(sb.length()-1);
+			instance = sb.toString();
+			exp.setCached(new Object[]{callType,i,instance});
+		}else{
+			callType = (Integer)cached[0];
+			i = (Integer)cached[1];
+			instance = (String)cached[2];
+			
 		}
-		
-		sb.setLength(sb.length()-1);
+	
 		Object objectTarget = null;
 		Class targetClass = null;
 		if(callType==0){	
@@ -541,13 +555,13 @@ public class ExpRuntime
 			}else{
 				
 			}
-		   objectTarget = ctx.getVar(sb.toString());
+		   objectTarget = ctx.getVar(instance);
 		   targetClass = objectTarget.getClass();
 		   
 		}else{
 			try
 			{
-				targetClass = Class.forName(sb.toString());
+				targetClass = Class.forName(instance);
 
 			}
 			catch (SecurityException e)
