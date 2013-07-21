@@ -507,54 +507,14 @@ public class ExpRuntime
 	{
 
 		BeeCommonNodeTree exp = (BeeCommonNodeTree) node;
+		BeetlUtil.analyzeNativeNode(exp);
 		Object[] cached = (Object[])exp.getCached() ;
-		int callType = 0;
-		int i = 0;
-		String instance = "";
-		if(cached==null){
-			//找到所有的Identifier，并根据Identifier来判断是引用的静态还是实例
-			
-			StringBuilder sb = new StringBuilder();
-			
-			for(;i<exp.getChildCount();i++){
-				BeeCommonNodeTree n = (BeeCommonNodeTree) exp.getChild(i);
-				
-				if(n.getType() == BeeParser.Identifier){
-					String name = n.getText();
-					sb.append(name).append(".");
-					char firstChar = name.charAt(0);
-					if(firstChar>'A'&&firstChar<'Z'){
-						callType = 1;
-						i++;
-						break ;
-					}
-					
-				}else{
-					//遇到了方法，或者数组
-					break ;
-				}
-			}
-			
-			sb.setLength(sb.length()-1);
-			instance = sb.toString();
-			exp.setCached(new Object[]{callType,i,instance});
-		}else{
-			callType = (Integer)cached[0];
-			i = (Integer)cached[1];
-			instance = (String)cached[2];
-			
-		}
-	
+		int callType =  (Integer)cached[0]; //0 代表实例，1代表静态class调用
+		int i = (Integer)cached[1];;
+		String instance =(String)cached[2]; //class 或者是 实例变量名
 		Object objectTarget = null;
 		Class targetClass = null;
-		if(callType==0){	
-			if(i==exp.getChildCount()){
-				objectTarget = ctx.getVar(exp.getChild(0).getText());
-				targetClass = objectTarget.getClass();
-				i=1;
-			}else{
-				
-			}
+		if(callType==0){
 		   objectTarget = ctx.getVar(instance);
 		   targetClass = objectTarget.getClass();
 		   

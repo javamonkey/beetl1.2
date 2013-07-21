@@ -298,6 +298,49 @@ public class BeetlUtil
 		
 	}
 	
+	/**
+	 * 分析本地调用，确定是静态方法（属性）还是实例方法（属性），分析结果缓存到cache里	 * 
+	 * joelli
+	 * 
+	 */
+	public static void  analyzeNativeNode(BeeCommonNodeTree exp ){
+		Object[] cached = (Object[])exp.getCached() ;
+		if(cached!=null) return  ;
+		int callType = 0; //0 代表实例，1代表静态class调用
+		int i = 0;
+		String instance = ""; //class 或者是 实例变量名
+			//找到所有的Identifier，并根据Identifier来判断是引用的静态还是实例			
+			StringBuilder sb = new StringBuilder();			
+			for(;i<exp.getChildCount();i++){
+				BeeCommonNodeTree n = (BeeCommonNodeTree) exp.getChild(i);				
+				if(n.getType() == BeeParser.Identifier){
+					String name = n.getText();
+					sb.append(name).append(".");
+					char firstChar = name.charAt(0);
+					if(firstChar>'A'&&firstChar<'Z'){
+						callType = 1;
+						i++;
+						break ;
+					}
+					
+				}else{
+					//遇到了方法，或者数组
+					break ;
+				}
+			}
+			if(callType==0){
+				i=1;
+				instance = exp.getChild(0).getText();
+				
+			}else{
+				sb.setLength(sb.length()-1);
+				instance = sb.toString();
+			
+			}
+			exp.setCached(new Object[]{callType,i,instance});
+		
+	}
+	
 
 
 }

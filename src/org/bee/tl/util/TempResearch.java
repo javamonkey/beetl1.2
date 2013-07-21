@@ -7,14 +7,14 @@ public class TempResearch
 
 	public static void main(String[] args) throws Exception
 	{
-		//		Function f = new NVLFunction();
-		//		f.getClass().getMethod("call", new Class[]{new Class[],Context.class});
+		Object o = TempResearch.get();
+		
 
 	}
 
-	public static void test(Object o)
+	public static Object get()
 	{
-		o = new Object();
+		return new int[]{1,2};
 	}
 
 }
