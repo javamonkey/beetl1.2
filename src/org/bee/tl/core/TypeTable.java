@@ -37,7 +37,6 @@ import java.util.logging.Logger;
 
 import org.antlr.runtime.tree.CommonTree;
 import org.bee.tl.core.compile.NullClass;
-import org.bee.tl.core.exception.BeeRuntimeException;
 import org.bee.tl.core.exception.PreCompileException;
 
 /**
@@ -925,8 +924,8 @@ public class TypeTable {
 			if (n.getType() == BeeParser.Identifier) {
 				// 属性方法
 				try {
-					targetClass = targetClass.getDeclaredField(n.getText())
-							.getDeclaringClass();
+					targetClass = targetClass.getDeclaredField(n.getText()).getType();
+							
 
 				} catch (Exception ex) {
 					throw new PreCompileException("预编译出错,非法的属性," + n.getText()
@@ -937,13 +936,18 @@ public class TypeTable {
 				String methodName = ((BeeCommonNodeTree) n.getChild(0))
 						.getToken().getText();
 				Class[] parameterType = new Class[n.getChildCount() - 1];
-				for (int j = 1; j < parameterType.length; j++) {
+				for (int j = 1; j < n.getChildCount(); j++) {
 					BeeCommonNodeTree para = (BeeCommonNodeTree) n.getChild(j);
 					this.infer(para, ctx);
 					parameterType[j - 1] = para.getTypeClass().getRawType();
 				}
-				MethodConf mc = MethodUtil.findMethod(targetClass, methodName,
-						parameterType);
+				MethodConf mc = (MethodConf) n.getCached();
+				if(mc==null){
+					 mc = MethodUtil.findMethod(targetClass, methodName,
+							parameterType);
+					 n.setCached(mc);
+				}
+				
 				if (mc == null) {
 					throw new PreCompileException("预编译出错,找不到对应的方法,"
 							+ methodName);
@@ -953,15 +957,18 @@ public class TypeTable {
 					throw new PreCompileException("此本地调用不允许 "
 							+ mc.method.getName());
 				}
+				
 				targetClass = mc.method.getReturnType();
 
 			} else if (n.getType() == BeeParser.CLASS_ARRAY) {
 
 				BeeCommonNodeTree para = (BeeCommonNodeTree) n.getChild(0);
 				this.infer(para, ctx);
-				targetClass = Object.class;
-				// 数组调用总是设置结果为Object
-				break;
+				targetClass = targetClass.getComponentType();
+				if(targetClass==null){
+					throw new PreCompileException("本地调用碰到了非数组调用 "+n.getText()+"[]");
+				}
+				
 
 			} else {
 				throw new RuntimeException("暂时不支持");

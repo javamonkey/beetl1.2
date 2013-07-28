@@ -399,7 +399,13 @@ public class ExpRuntime
 					try{
 						targetObject = targetClass.getDeclaredField(n.getText()).get(targetObject);
 						//todo 空指针
-						targetClass = targetObject.getClass();
+						if(targetObject!=null){
+							targetClass = targetObject.getClass();
+						}else{
+							targetClass = null;
+						}
+						
+						
 					}catch (IllegalArgumentException e)
 					{
 						throw new BeeRuntimeException(BeeRuntimeException.NATIVE_CALL_INVALID, exp1.getToken(),
@@ -465,9 +471,13 @@ public class ExpRuntime
 					n.setCached(mc);
 				}
 				try{
-					//todo 空指针
-					targetObject = MethodUtil.invoke(targetObject, mc, args);
-					targetClass = targetObject.getClass();
+					
+					targetObject = MethodUtil.invoke(targetObject, mc, args);				
+					if(targetObject!=null){
+						targetClass = targetObject.getClass();
+					}else{
+						targetClass = null;
+					}
 					
 				}catch (Exception ex)
 				{
@@ -485,7 +495,12 @@ public class ExpRuntime
 					if(Number.class.isAssignableFrom(o.getClass())){
 						//todo 空指针
 						targetObject =  ((Object[])targetObject)[((Number)o).intValue()];
-						targetClass = targetObject.getClass();
+						if(targetObject!=null){
+							targetClass = targetObject.getClass();
+						}else{
+							targetClass = null;
+						}
+						
 					}else{
 						throw new BeeRuntimeException(BeeRuntimeException.NATIVE_CALL_EXCEPTION, n.getToken(), "数组指针应该为整形");
 					}

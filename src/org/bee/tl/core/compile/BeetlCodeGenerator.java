@@ -1254,102 +1254,52 @@ public class BeetlCodeGenerator
 				case BeeParser.CLASS_FUNCTION:
 				{
 					BeeCommonNodeTree exp = (BeeCommonNodeTree) t;
-
+					if (exp.getExpType().equals(BeeNumber.class)){
+						print("nf.y(");
+					}
 					this.lineMap.put(this.currentLine, t.getToken().getLine());
-					if (((CommonTree) exp.getChild(exp.getChildCount() - 1)).getToken().getType() == BeeParser.CLASS_METHOD)
-					{
-
-						if (t.getParent() != null && t.getParent().getType() == BeeParser.DIRECT_CALL)
-						{
-							printStart("");
-						}
-						if (exp.getExpType().equals(BeeNumber.class))
-						{
-							print("nf.y(");
-						}
-						StringBuilder sb = new StringBuilder();
-
-						for (int i = 0; i < exp.getChildCount() - 1; i++)
-						{
-							sb.append(exp.getChild(i).getText()).append(".");
-						}
-						sb.setLength(sb.length() - 1);
-
-						if (scriptRunner.containIllegalNativeCall(sb.toString()))
-						{
-							throw new PreCompileException("不允许调用:" + sb.toString());
-						}
-						print(sb.toString() + ".");
-
-						String methodName = null;
-
-						BeeCommonNodeTree classMethodNode = (BeeCommonNodeTree) exp.getChild(exp.getChildCount() - 1);
-						methodName = ((CommonTree) classMethodNode.getChild(0)).getToken().getText();
-						print(methodName);
-						print("(");
-
-						Object[] args = new Object[classMethodNode.getChildCount() - 1];
-						MethodConf mc = (MethodConf) exp.getCached();
-						for (int j = 1; j < classMethodNode.getChildCount(); j++)
-						{
-							BeeCommonNodeTree para = (BeeCommonNodeTree) classMethodNode.getChild(j);
-							this.writeTree(para);
-							if (para.getTypeClass().getRawType().equals(BeeNumber.class))
+					Object[] cached = (Object[]) exp.getCached();
+					int callType = (Integer) cached[0]; // 0 代表实例，1代表静态class调用
+					int index = (Integer) cached[1];
+					String instance = (String) cached[2]; // class 或者是 实例变量名					
+					print(instance);
+					for(int i=index;i<exp.getChildCount();i++){
+						BeeCommonNodeTree n = (BeeCommonNodeTree) exp.getChild(i);
+						if (n.getType() == BeeParser.Identifier) {
+							print("."+n.getText());
+						} else if (n.getType() == BeeParser.CLASS_METHOD) {
+							String methodName = ((BeeCommonNodeTree) n.getChild(0))
+							.getToken().getText();
+							print("."+methodName+"(");							
+							MethodConf mc = (MethodConf) n.getCached();
+							for (int j = 1; j < n.getChildCount(); j++)
 							{
-								this.print(mc.getOutputType(j - 1));
+								BeeCommonNodeTree para = (BeeCommonNodeTree) n.getChild(j);
+								this.writeTree(para);
+								if (para.getTypeClass().getRawType().equals(BeeNumber.class))
+								{
+									this.print(mc.getOutputType(j - 1));
+								}
+								if (j != n.getChildCount() - 1)
+									this.print(",");
 							}
-							if (j != classMethodNode.getChildCount() - 1)
-								this.print(",");
-						}
-
-						if (exp.getExpType().equals(BeeNumber.class))
-						{
 							print(")");
+						} else if (n.getType() == BeeParser.CLASS_ARRAY) {
+							BeeCommonNodeTree para = (BeeCommonNodeTree) n.getChild(0);
+							print("[");
+							this.writeTree(para);
+							print(".intValue()");
+							print("]");
 						}
-
-						if (t.getParent() != null && t.getParent().getType() == BeeParser.DIRECT_CALL)
-						{
-							print(");");
-							printCR();
-						}
-						else
-						{
-							print(")");
-						}
-
+						
 					}
-					else
-					{
-
-						StringBuilder sb = new StringBuilder();
-						if (t.getParent() != null && t.getParent().getType() == BeeParser.DIRECT_CALL)
-						{
-							// 无意义，忽略此代码
-							break;
-						}
-						if (exp.getExpType().equals(BeeNumber.class))
-						{
-							print("nf.y(");
-						}
-						Object o;
-						for (int i = 0; i < exp.getChildCount() - 1; i++)
-						{
-							sb.append(exp.getChild(i).getText()).append(".");
-						}
-						sb.setLength(sb.length() - 1);
-						print(sb.toString() + ".");
-
-						String propertyName = null;
-
-						CommonTree propertyNode = (CommonTree) exp.getChild(exp.getChildCount() - 1);
-						propertyName = propertyNode.getToken().getText();
-						print(propertyName);
-						if (exp.getExpType().equals(BeeNumber.class))
-						{
-							print(")");
-						}
-
+					if (exp.getExpType().equals(BeeNumber.class)){
+						print(")");
 					}
+					if (exp.getParent() != null && exp.getParent().getType() == BeeParser.DIRECT_CALL){
+						print(";");
+					}					
+					
 					break;
 				}
 

@@ -11,7 +11,7 @@ public class Test
 {
 
 	public int i = 12;
-	public User[] users = new User[]{new User(),new User()};
+	static public User[] users = new User[]{new User(),new User()};
 
 	public static void main(String[] args) throws Exception
 	{
@@ -25,7 +25,7 @@ public class Test
 		 		//group.enableDirectOutputByte();
 		 		Map compileConfig = new HashMap();
 	 		    compileConfig.put(GroupTemplate.OPTIMIZE_KEEP_SOURCE, true);
-	 	//	    group.enableOptimize(compileConfig);
+	 		    group.enableOptimize(compileConfig);
 		 		 //		group.enableOptimize();
 //		 		  group.enableDirectOutputByte();
 		 		 
@@ -43,7 +43,7 @@ public class Test
 	
 	}
 	
-	public User getUser(){
+	public static User getUser(){
 		return new User();
 	}
 	
