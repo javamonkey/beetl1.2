@@ -9,9 +9,22 @@ public class IteratorStatus {
 	Iterator it ;
 	int size = -1;
 	int index = 0;
+	boolean hasData = false ;
 	
-	public IteratorStatus(Object o){
-		
+	public static IteratorStatus getIteratorStatus(Object o){
+		if(o instanceof Collection ){
+			return new IteratorStatus((Collection)o);
+			
+		}else if(o instanceof Map){
+			return new IteratorStatus((Map)o);
+		}else if(o instanceof Iterable){
+			return new IteratorStatus((Iterable)o);
+		}else if (o.getClass().isArray()){
+			return new IteratorStatus((Object[])o);
+		}else {
+			//throw new RuntimeException("Object:"+o.getClass()+" 不能使用在For循环里");
+			return null;
+		}
 	}
 	
 	public IteratorStatus(Iterator it){
@@ -47,6 +60,7 @@ public class IteratorStatus {
 	
 	public Object next(){
 		index++;
+		if(!hasData)hasData = true ;
 		return this.it.next();
 	}
 	
@@ -70,6 +84,10 @@ public class IteratorStatus {
 		}else{
 			throw new RuntimeException("集合长度未知,请勿使用size");
 		}
+	}
+	
+	public boolean hasData(){
+		return hasData;
 	}
 	
 	
