@@ -258,13 +258,13 @@ public class CoreScriptRunner {
 				if (t.getChildCount() == 2) {
 					// SAFE OUTPUT
 					try {
-						parserHolder(t, localCtx, pw, control);
+						parseHolder(t, localCtx, pw, control);
 					} catch (Exception ex) {
 						// do nothing for save output
 					}
 
 				} else {
-					parserHolder(t, localCtx, pw, control);
+					parseHolder(t, localCtx, pw, control);
 				}
 				// Log.key2End();
 				break;
@@ -638,32 +638,28 @@ public class CoreScriptRunner {
 					varRef.getToken());
 		}
 		int index = 0;
-		// 下面代码可以简化，使用CanLoopObject
-		if(itStatus.getSize()>=0){
+		if(itStatus.hasSize()){
 			localCtx.defineVar(name + "_size", itStatus.getSize(),idNode.getToken());
 			
 		}
 		localCtx.defineVar(name, null,idNode.getToken());	
-		localCtx.defineVar(name+"LP", null,idNode.getToken());	
+		localCtx.defineVar(name+"LP", itStatus,idNode.getToken());
+		String indexName = name+"_index" ;
 		
 		while(itStatus.hasNext()){
 			Object temp = itStatus.next();
 			localCtx.fastSetVar(name, temp);
+			localCtx.fastSetVar(indexName, index++);
 			 
 			BeeCommonNodeTree slist = (BeeCommonNodeTree) t.getChild(2);
 
 			this.print(slist, localCtx, pw, control);
-
-			if (control.jump == control.FOR_BREAK) {
-				control.jump = control.FOR_RESET;
-				return;
-			} else if (control.jump == control.FOR_CONTINUE) {
-				control.jump = control.FOR_RESET;
-				continue;
-			} else if (control.jump == control.RETURN) {
-				// beetl return ;
-				return;
+			switch(control.jump){
+			case 2 /*control.FOR_BREAK*/:control.jump = control.FOR_RESET;return;
+			case 1 /*control.FOR_CONTINUE*/:control.jump = control.FOR_RESET;continue;
+			case 4 /*control.RETURN*/: return ;
 			}
+			
 		}
 		
 		if(hasElseFor&&itStatus.hasData()){
@@ -771,7 +767,7 @@ public class CoreScriptRunner {
 
 	}
 
-	private void parserHolder(BeeCommonNodeTree t, Context localCtx,
+	private void parseHolder(BeeCommonNodeTree t, Context localCtx,
 			ByteWriter pw, RuntimeControl control) throws IOException {
 
 		List list = t.getChildren();

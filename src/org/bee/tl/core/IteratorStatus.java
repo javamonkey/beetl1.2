@@ -70,14 +70,26 @@ public class IteratorStatus {
 	}
 	
 	public boolean isFirst(){
-		return index==0;
+		return index==1;
 	}
 	
 	public boolean isLast(){
-		return index==(size-1);
+		return index==size;
+	}
+	
+	public boolean isEven(){
+		
+		return index%2==0;
+	}
+	public boolean isOdd(){
+		return index%2==1;
 	}
 	
 	
+	
+	public boolean hasSize(){
+		return size!=-1;
+	}
 	public int getSize(){
 		if(size!=-1){
 			return size;
@@ -100,7 +112,7 @@ public class IteratorStatus {
 		}
 		public boolean hasNext() {
 			// TODO Auto-generated method stub
-			return array.length>i+1;
+			return array.length>i;
 		}
 
 		public Object next() {
