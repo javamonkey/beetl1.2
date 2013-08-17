@@ -1757,15 +1757,10 @@ public class BeetlCodeGenerator
 					BeeCommonNodeTree varRef = (BeeCommonNodeTree) t.getChild(1);
 					boolean hasElseFor = t.getChildCount() == 4;
 					boolean hasSafeOutput = varRef.getChild(varRef.getChildCount() - 1).getType() == BeeParser.SAFE_OUTPUT;
-					String loopName = "inLoop_" + this.currentLine;
+					println("IteratorStatus "+idNode.getToken().getText()+"LP = null;");
 					if (hasSafeOutput)
 					{
-						// 安全输出
-						if (hasElseFor)
-						{
-							printStart("boolean " + loopName + "  = false;");
-							printCR();
-						}
+						
 						printStart("if(");
 						writeTree(varRef);
 						print("!=null){");
@@ -1773,6 +1768,10 @@ public class BeetlCodeGenerator
 						this.addIndent();
 					}
 					println("int " + idNode.getToken().getText() + "_index = 0;");
+					printStart(idNode.getToken().getText()+"LP = new IteratorStatus(");
+					writeTree(varRef);
+					print(");");
+					printCR();
 					Class type = varRef.getTypeClass().getRawType();
 
 					if (Collection.class.isAssignableFrom(type) || Map.class.isAssignableFrom(type))
@@ -1781,155 +1780,99 @@ public class BeetlCodeGenerator
 
 						writeTree(varRef);
 						print(".size();");
-						if (hasElseFor && !hasSafeOutput)
-						{
-							printCR();
-							println("if(" + idNode.getToken().getText() + "_size !=0){ ");
-							this.addIndent();
-							if (hasSafeOutput)
-							{
-								printStart(loopName + " = true;");
-							}
-
-						}
+						
 					}
+					
 					//数组
 					else if (!Iterable.class.isAssignableFrom(type))
 					{
 						printStart("int " + idNode.getToken().getText() + "_size = ");
 						writeTree(varRef);
 						print(".length;");
-						if (hasElseFor)
-						{
-
-							printCR();
-							println("if(" + idNode.getToken().getText() + "_size !=0){ ");
-							this.addIndent();
-							if (hasSafeOutput)
-							{
-								printStart(loopName + " = true;");
-							}
-						}
+						
 					}
-					else
-					{
-						// Iterable 
-						if (hasElseFor && !hasSafeOutput)
-						{
-							printStart("boolean " + loopName + "  = false;");
-						}
-
-					}
+					
 
 					printCR();
-
-					printStart("for(");
+					
+					String castType = null;					
+					
 					if (idNode.getTypeClass().getRawType().equals(MapEntry.class))
 					{
 
 						if (idNode.getTypeClass().getPtypeMap().get("K").equals(Object.class)
 								&& idNode.getTypeClass().getPtypeMap().get("V").equals(Object.class))
 						{
-							print("Object ");
+							castType  = "Object " ;
 						}
 						else
 						{
-							print("Entry<");
-							print(idNode.getTypeClass().getPtypeMap().get("K").getSimpleName());
-							print(",");
-							print(idNode.getTypeClass().getPtypeMap().get("V").getSimpleName());
-							print(">");
+							castType = "Entry<"+idNode.getTypeClass().getPtypeMap().get("K").getSimpleName()+","+
+							idNode.getTypeClass().getPtypeMap().get("V").getSimpleName()+">";
+							
 						}
 
 					}
 					else
 					{
-						print(idNode.getTypeClass().getRawType().getSimpleName());
+						castType = idNode.getTypeClass().getRawType().getSimpleName();
 					}
 
-					print(" " + idNode.getToken().getText());
-					print(" : ");
-					writeTree(varRef);
-					if (Map.class.isAssignableFrom(varRef.getTypeClass().getRawType()))
-					{
-						print(".entrySet() ");
-					}
-					print(")");
-					//for循环主体
+					println(castType+" " + idNode.getToken().getText()+" = null;");
+					
+					
+					//循环开始
+					printStart("while("+idNode.getToken().getText()+"LP.hasNext())");
+					
+					String firstStatment = idNode.getToken().getText() +" = ("+ castType+")"+ idNode.getToken().getText()+"LP.next();";
 					if (Collection.class.isAssignableFrom(type) || Map.class.isAssignableFrom(type)
 							|| !Iterable.class.isAssignableFrom(type))
 					{
 
-						writeBlock((BeeCommonNodeTree) t.getChild(2), "", idNode.getToken().getText() + "_index++;");
+						writeBlock((BeeCommonNodeTree) t.getChild(2), firstStatment, idNode.getToken().getText() + "_index++;");
 					}
 					else
 					{
 						//iterate
 						if (hasElseFor)
 						{
-							writeBlock((BeeCommonNodeTree) t.getChild(2), loopName + " = true;", idNode.getToken()
+							writeBlock((BeeCommonNodeTree) t.getChild(2), firstStatment, idNode.getToken()
 									.getText() + "_index++;");
 						}
 						else
 						{
-							writeBlock((BeeCommonNodeTree) t.getChild(2), "", idNode.getToken().getText() + "_index++;");
+							writeBlock((BeeCommonNodeTree) t.getChild(2), firstStatment, idNode.getToken().getText() + "_index++;");
 						}
 
 					}
-					//for主体结束
+					//循环结束,如果只有elsefor，没有安全输出
 					if (hasElseFor && !hasSafeOutput)
 					{
 
-						if (Collection.class.isAssignableFrom(type) || Map.class.isAssignableFrom(type)
-								|| !Iterable.class.isAssignableFrom(type))
-						{
-
-							this.decIndent();
-							printStart("} else");
-						}
-						else
-						{
-							//iterate情况
-							printStart("if(!" + loopName + ")");
-						}
-
+						
+						printStart("if(!"+idNode.getToken().getText()+"LP.hasData())");
 						writeBlock((BeeCommonNodeTree) t.getChild(3), "", "");
+						this.decIndent();
 
 					}
+					//如果有安全输出，先结束安全输出
 					else if (hasSafeOutput)
 					{
-						// 安全输出
-
-						if (!hasElseFor)
-						{
-							this.decIndent();
-							println("}");
-						}
-						else
-						{
-
-							if (Iterable.class.isAssignableFrom(type))
-							{
-								this.decIndent();
-								println("}");
-								printStart("if(!" + loopName + ")");
-								writeBlock((BeeCommonNodeTree) t.getChild(3), "", "");
-							}
-							else
-							{
-								this.decIndent();
-								println("}");
-								this.decIndent();
-								println("}");
-								printStart("if(!" + loopName + ")");
-								writeBlock((BeeCommonNodeTree) t.getChild(3), "", "");
-							}
-
+						// 结束安全输出
+						this.decIndent();
+						println("}");
+						if(hasElseFor){
+							printStart("if("+idNode.getToken().getText()+"LP==null||!"+idNode.getToken().getText()+"LP.hasData())");
+							writeBlock((BeeCommonNodeTree) t.getChild(3), "", "");
 						}
 
+					
+
+					}else{
+						this.decIndent();
 					}
 
-					this.decIndent();
+					
 					println("}");
 
 					break;
