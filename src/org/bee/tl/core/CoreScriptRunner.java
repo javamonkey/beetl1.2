@@ -313,7 +313,7 @@ public class CoreScriptRunner {
 				List list = t.getChildren();
 				BeeCommonNodeTree conditionNode = (BeeCommonNodeTree) list
 						.get(0);
-				boolean st1 = ExpRuntime.condition(conditionNode, localCtx,
+				boolean st1 = (Boolean)ExpRuntime.condition(conditionNode, localCtx,
 						control);
 				if (st1) {
 					BeeCommonNodeTree block = (BeeCommonNodeTree) list.get(1);
@@ -662,7 +662,7 @@ public class CoreScriptRunner {
 			
 		}
 		
-		if(hasElseFor&&itStatus.hasData()){
+		if(hasElseFor&&!itStatus.hasData()){
 			BeeCommonNodeTree elseForBlock = (BeeCommonNodeTree) t
 			.getChild(3);
 			this.print(elseForBlock, localCtx, pw, control);

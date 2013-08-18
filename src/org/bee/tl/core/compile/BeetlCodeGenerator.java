@@ -1463,7 +1463,7 @@ public class BeetlCodeGenerator
 							writeTree(right);
 
 						}
-						else if (right.getTypeClass().getRawType().equals(BeeNumber.class))
+						else if (BeeNumber.class.isAssignableFrom(right.getTypeClass().getRawType()))
 						{
 							print("nf.y(");
 							writeTree(left);
@@ -1512,7 +1512,7 @@ public class BeetlCodeGenerator
 						{
 							writeTree(left);
 						}
-						else if (left.getTypeClass().getRawType().equals(BeeNumber.class))
+						else if (BeeNumber.class.isAssignableFrom(left.getTypeClass().getRawType()))
 						{
 							writeTree(left);
 							print(".longValue()");
@@ -1529,7 +1529,7 @@ public class BeetlCodeGenerator
 						{
 							writeTree(right);
 						}
-						else if (right.getTypeClass().getRawType().equals(BeeNumber.class))
+						else if (BeeNumber.class.isAssignableFrom(right.getTypeClass().getRawType()))
 						{
 							writeTree(right);
 							print(".longValue()");

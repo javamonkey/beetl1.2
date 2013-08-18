@@ -204,9 +204,10 @@ public class TypeTable {
 					break;
 				int size = list.size();
 				BeeCommonNodeTree node = null;
+				Context ctx = new Context(localCtx);
 				for (int i = 0; i < size; i++) {
 					node = (BeeCommonNodeTree) list.get(i);
-					iterateForTypeTable(node, new Context(localCtx), tempObject);
+					iterateForTypeTable(node, ctx, tempObject);
 				}
 				break;
 			}
@@ -335,6 +336,8 @@ public class TypeTable {
 		case BeeParser.LARGE_EQUAL:
 		case BeeParser.LESS:
 		case BeeParser.LESS_EQUAL: {
+			
+			
 			BeeCommonNodeTree left = (BeeCommonNodeTree) tree.getChild(0);
 			BeeCommonNodeTree right = (BeeCommonNodeTree) tree.getChild(1);
 			if (left.getExpType() == null) {

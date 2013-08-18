@@ -56,6 +56,10 @@ tokens {
   NEGATOM;
   WHILE;
   DIRECTIVE;
+  COND;
+  SIMPLE_CASE;
+  SIMPLE_LEFT_CASE;
+  SIMPLE_RIGHT_CASE;
   
   
   
@@ -105,6 +109,22 @@ public boolean isTextProcessFunction(TokenStream input){
 }
 public void setNativeCall(boolean canNativeCall ){
 	this.openBackdoor = canNativeCall;
+}
+
+public void addCase(conditionalOrExpression_return exp, BeeParser.exp_return  left, BeeParser.exp_return  right){
+ 		BeeCommonNodeTree t = (BeeCommonNodeTree)exp.getTree();
+	    if(left!=null){
+	    	 BeeCommonNodeTree t1 = (BeeCommonNodeTree)left.getTree();
+	    	 t.expLeft = t1 ;
+	    }
+	    
+	    if(right!=null){
+	   	 BeeCommonNodeTree t1 = (BeeCommonNodeTree)right.getTree();
+	   	 t.expRight = t1 ;
+	   }
+
+
+
 }
 protected Object recoverFromMismatchedToken(IntStream input, int ttype, BitSet follow)
 	throws RecognitionException
@@ -252,7 +272,8 @@ varAttribute
 exp	:	 condExp 
 	;
 
-condExp	:	conditionalOrExpression ;
+condExp	:	c=conditionalOrExpression ('?'!  a=exp! ? ':'! b=exp!? )? {addCase(c,a,b);} ;
+	
 		
 conditionalOrExpression 
     :   conditionalAndExpression

@@ -211,6 +211,8 @@ public class ExpRuntime
 		try
 		{
 			int tokeType = exp.getType();
+			
+			Object r = null;
 			switch (tokeType)
 			{
 
@@ -221,24 +223,10 @@ public class ExpRuntime
 					String varName = textNode.getToken().getText();
 					Object text = ctx.getTextVar(varName);
 					((BeeCommonNodeTree) exp.getParent().getParent()).setCached(text);
-					return text;
+					return text ;
 
 				}
-				case BeeParser.VAR_REFER:
-				{
-
-					Object o = evalVarRef(exp.getChildren(), ctx, exp, control);
-					if (o instanceof Number)
-					{
-						return control.nf.y((Number)o);
-
-					}else{
-						return o;
-					}
-
-					
-
-				}
+			
 
 				case BeeParser.JSONARRAY:
 				{
@@ -277,7 +265,8 @@ public class ExpRuntime
 
 						map.put(varName, eval(valueTree, ctx, control));
 					}
-					return map;
+					return  map;
+					
 				}
 				case BeeParser.ADD:
 				{
@@ -324,39 +313,18 @@ public class ExpRuntime
 					return o;
 
 				}
-				case BeeParser.BOOLEAN:
-				{
-					return new Boolean(exp.getToken().getText());
-				}
+				
 				case BeeParser.StringLiteral:
 				{
 					return exp.getToken().getText();
 
 				}
-				case BeeParser.FUNCTION:
-				{
-					return function(exp, ctx, control);
-				}
-				case BeeParser.CLASS_FUNCTION:
-				{
-					Object o = classNativeCall(exp, ctx, control);
-					if (o instanceof Number)
-					{
-						return control.nf.y((Number)o);
-						
-					
-					}
-					else
-					{
-						return o;
-
-					}
-
-				}
+				
 				case BeeParser.NULL:
 				{
 					return null;
 				}
+				//??
 				case BeeParser.SAFE_OUTPUT:
 				{
 					if (exp.getChildCount() != 0)
@@ -368,13 +336,91 @@ public class ExpRuntime
 						return null;
 					}
 				}
+				//以下表达式可能是三元表达式
+				case BeeParser.BOOLEAN:
+				{
+					r =  new Boolean(exp.getToken().getText());
+					break ;
+				}
+				case BeeParser.FUNCTION:
+				{
+					r =  function(exp, ctx, control);
+					break ;
+				}
+				case BeeParser.CLASS_FUNCTION:
+				{
+					Object o = classNativeCall(exp, ctx, control);
+					if (o instanceof Number)
+					{
+						r =  control.nf.y((Number)o);
+						
+					
+					}
+					else
+					{
+						r =  o;
+
+					}
+					break;
+
+				}
+				case BeeParser.VAR_REFER:
+				{
+
+					Object o = evalVarRef(exp.getChildren(), ctx, exp, control);
+					if (o instanceof Number)
+					{
+						r =  control.nf.y((Number)o);
+
+					}else{
+						r =  o;
+					}
+					break ;
+
+					
+
+				}
 				default:
 				{
 					//为啥是这个？忘记了.........
-					return condition(exp, ctx, control);
+					r =  condition(exp, ctx, control);
 					// throw new BeeRuntimeException(
 					// BeeRuntimeException.DO_NOT_SUPPORT, exp.getToken());
 				}
+			}
+			
+		
+			
+			if(exp.expLeft!=null&&exp.expRight!=null){				
+				
+				if( r instanceof Boolean){
+					// a==1 ? a:b
+					boolean isBoolean = (Boolean)r;					
+					
+					if(isBoolean){
+						//lfetcase
+						if(exp.expLeft!=null){
+							return eval(exp.expLeft, ctx, control);
+						}else{
+							//如果没有，返回null
+							return null;
+						}
+					}else{
+						if(exp.expRight!=null){
+							return eval(exp.expRight, ctx, control);
+						}else{
+							//如果没有，返回null
+							return null;
+						}
+					}
+				}else{
+					throw new BeeRuntimeException(BeeRuntimeException.BOOLEAN_EXPECTED_ERROR, exp.getToken());
+				}
+				
+				
+				
+			}else{
+				return r ;
 			}
 
 		}
@@ -386,6 +432,8 @@ public class ExpRuntime
 		{
 			throw new BeeRuntimeException(BeeRuntimeException.EXPRESSION_INVALID, exp.getToken(), ex);
 		}
+
+	
 
 	}
 	
