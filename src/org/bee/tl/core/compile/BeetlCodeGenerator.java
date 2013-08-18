@@ -644,6 +644,7 @@ public class BeetlCodeGenerator
 			println("}catch(ClassCastException ex){");
 			addIndent();
 			println("//转入解释模式执行");
+			println("ex.printStackTrace();");
 			println("throw new VaribaleCastException(ex);");
 			decIndent();
 			println("}");
@@ -658,12 +659,14 @@ public class BeetlCodeGenerator
 		this.decIndent();
 		println("}catch(Exception ex){");
 		this.addIndent();
+		
 		// this.println("if(group.isDebug())ex.printStackTrace();");
 		println("throw getException(ex,lineMap);");
 		this.decIndent();
 		println("}finally{");
 		this.addIndent();
-		println("out.flush();");
+		//println("out.flush();");
+		
 		this.decIndent();
 		println("}");
 		decIndent();
@@ -854,6 +857,8 @@ public class BeetlCodeGenerator
 						writeVarRef(t, -1);
 						this.lineMap.put(this.currentLine, t.getToken().getLine());
 					}
+					
+					this.writeSimpleCaseIfNecessary(t);
 					break;
 
 				}
@@ -964,49 +969,7 @@ public class BeetlCodeGenerator
 							
 							print(")");
 							
-							
-							/*
-							String equal = ".equals(";
-							if (left.getTypeClass().getRawType().equals(NullClass.class)
-									|| right.getTypeClass().getRawType().equals(NullClass.class))
-							{
-								equal = "==(";
-							}
-
-							if (tokeType == BeeParser.NOT_EQUAL)
-							{
-								print("!(");
-							}
-							if (left.getTypeClass().isPrimitive())
-							{
-								print("nf.y(");
-								writeTree(left);
-								print(")");
-							}
-							else
-							{
-								writeTree(left);
-							}
-
-							print(equal);
-
-							if (right.getTypeClass().isPrimitive())
-							{
-								print("nf.y(");
-								writeTree(right);
-								print(")");
-							}
-							else
-							{
-								writeTree(right);
-							}
-							if (tokeType == BeeParser.NOT_EQUAL)
-							{
-								print(")");
-							}
-							print(")");
-							
-							*/
+						
 
 						}
 
@@ -1079,6 +1042,8 @@ public class BeetlCodeGenerator
 						}
 
 					}
+					
+					this.writeSimpleCaseIfNecessary(t);
 					break;
 				}
 
@@ -1110,6 +1075,7 @@ public class BeetlCodeGenerator
 					BeeCommonNodeTree condition = (BeeCommonNodeTree) t.getChild(0);
 					print("!");
 					writeTree(condition);
+					this.writeSimpleCaseIfNecessary(t);
 					break;
 				}
 				case BeeParser.NULL:
@@ -1167,6 +1133,7 @@ public class BeetlCodeGenerator
 					}
 
 					this.lineMap.put(this.currentLine, t.getToken().getLine());
+					this.writeSimpleCaseIfNecessary(t);
 					break;
 				}
 
@@ -1298,7 +1265,9 @@ public class BeetlCodeGenerator
 					}
 					if (exp.getParent() != null && exp.getParent().getType() == BeeParser.DIRECT_CALL){
 						print(";");
-					}					
+					}
+					
+					this.writeSimpleCaseIfNecessary(t);
 					
 					break;
 				}
@@ -1563,6 +1532,7 @@ public class BeetlCodeGenerator
 				{
 					String text = t.getToken().getText();
 					print(text);
+					this.writeSimpleCaseIfNecessary(t);
 					break;
 				}
 
@@ -1913,6 +1883,7 @@ public class BeetlCodeGenerator
 						print("||");
 					}
 					writeTree(right);
+					this.writeSimpleCaseIfNecessary(t);
 
 					break;
 				}
@@ -1947,6 +1918,25 @@ public class BeetlCodeGenerator
 			}
 		}
 
+	}
+	
+	
+	private void writeSimpleCaseIfNecessary(BeeCommonNodeTree t) throws IOException{
+		if(t.expLeft!=null||t.expRight!=null){
+			print("?");
+			if(t.expLeft!=null){
+				this.writeTree(t.expLeft);
+			}else{
+				this.print("null");
+			}
+			print(":");
+			if(t.expRight!=null){
+				this.writeTree(t.expRight);
+			}else{
+				this.print("null");
+			}
+			
+		}
 	}
 
 	private boolean isClassName(CommonTree node)

@@ -906,6 +906,16 @@ public class TypeTable {
 		}
 
 		}
+		
+		//似乎没有必要推测
+		BeeCommonNodeTree exp = (BeeCommonNodeTree) tree ;
+		if(exp.expLeft!=null){
+			this.infer(exp.expLeft, ctx);
+		}
+		if(exp.expRight!=null){
+			this.infer(exp.expRight, ctx);
+		}
+		
 
 	}
 

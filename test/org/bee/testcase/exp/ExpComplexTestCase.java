@@ -28,21 +28,21 @@ public class ExpComplexTestCase extends BasicTestCase {
 
 	}
 	
-//	public void testComplex() throws IOException, BeeException {
-//
-//		Template t = this.gt.getFileTemplate("/exp/exp_complex_template.html");
-//		String str = t.getTextAsString();
-//		this.assertEquals(this.getFileContent("/exp/exp_complex_expected.html"),
-//				str);
-//	}
-//	
-//	public void testBig() throws IOException, BeeException {
-//
-//		Template t = this.gt.getFileTemplate("/exp/exp_big_template.html");
-//		String str = t.getTextAsString();
-//		this.assertEquals(this.getFileContent("/exp/exp_big_expected.html"),
-//				str);
-//	}
+	public void testComplex() throws IOException, BeeException {
+
+		Template t = this.gt.getFileTemplate("/exp/exp_complex_template.html");
+		String str = t.getTextAsString();
+		this.assertEquals(this.getFileContent("/exp/exp_complex_expected.html"),
+				str);
+	}
+	
+	public void testBig() throws IOException, BeeException {
+
+		Template t = this.gt.getFileTemplate("/exp/exp_big_template.html");
+		String str = t.getTextAsString();
+		this.assertEquals(this.getFileContent("/exp/exp_big_expected.html"),
+				str);
+	}
 
 	
 

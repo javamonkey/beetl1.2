@@ -29,7 +29,7 @@ public class Test
 		 		//group.enableDirectOutputByte();
 		 		Map compileConfig = new HashMap();
 	 		    compileConfig.put(GroupTemplate.OPTIMIZE_KEEP_SOURCE, true);
-	 		   // group.enableOptimize(compileConfig);
+	 		    group.enableOptimize(compileConfig);
 //		 		 	group.enableOptimize();
 //		 		  group.enableDirectOutputByte();
 		 		 
@@ -42,11 +42,11 @@ public class Test
 		 		int c = i==12?j==1?3:4:2;
 		 		System.out.println(template.getTextAsString());
 		 		
-//	 		template = group.getFileTemplate("/helloworld.html");
-//	 		template.set("t", new Test());
-//	 		template.set("b", 4);
-//	 		template.set("aa", null);
-//	 		System.out.println(template.getTextAsString());
+	 		template = group.getFileTemplate("/helloworld.html");
+	 		template.set("t", new Test());
+	 		template.set("b", 4);
+	 		template.set("aa", null);
+	 		System.out.println(template.getTextAsString());
 //		 		
 
 		
@@ -59,6 +59,10 @@ public class Test
 	
 	public Test getTest(){
 		return this;
+	}
+	
+	public boolean isOk(){
+		return true;
 	}
 
 	public static boolean isTrue(int a, int b, int c)
