@@ -67,7 +67,12 @@ public class BigDecimalNumber  extends GeneralNumber{
 	public String toString() {
 		
 		if(this.bigNum==null){
-			return this.num.toString();
+			if(this.num!=null){
+				return this.num.toString();
+			}else{
+				return null;
+			}
+			
 		}else{
 			return trim(this.bigNum.toString());
 		}

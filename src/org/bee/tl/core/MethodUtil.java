@@ -1,5 +1,6 @@
 package org.bee.tl.core;
 
+import static org.bee.tl.core.MethodConf.BIGDECIMAL_CONVERT;
 import static org.bee.tl.core.MethodConf.DOUBLE_CONVERT;
 import static org.bee.tl.core.MethodConf.FLOAT_CONVERT;
 import static org.bee.tl.core.MethodConf.INT_CONVERT;
@@ -233,6 +234,10 @@ public class MethodUtil {
 					convert[j] = FLOAT_CONVERT;
 				} else if (paras[j] == Short.class) {
 					convert[j] = SHORT_CONVERT;
+				} else if(paras[j] == BigDecimal.class){
+					convert[j] = BIGDECIMAL_CONVERT;
+				} else {
+					throw new RuntimeException("");
 				}
 			}
 			else if (paras[j] == Boolean.class) {

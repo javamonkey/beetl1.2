@@ -1,6 +1,7 @@
 package org.bee.tl.samples;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,10 +30,15 @@ public class Test
 //		 		  group.enableDirectOutputByte();
 		 		 
 		 		 Template template = group.getFileTemplate("/helloworld.html");
+		 		 template.set("t", new Test());
+		 		 template.set("d", new BigDecimal("12.33"));
 		 		
 		 		System.out.println(template.getTextAsString());
 		 		
 	 		template = group.getFileTemplate("/helloworld.html");
+	 		 template.set("t", new Test());
+	 		template.set("d", new BigDecimal("12.33"));
+	 			
 	 		System.out.println(template.getTextAsString());
 		 		
 
@@ -43,6 +49,14 @@ public class Test
 	public static boolean isTrue(int a, int b, int c)
 	{
 		return true;
+	}
+	
+	public  int  intData(BigDecimal b){
+		return b.intValue();
+	}
+	
+	public int intData2(BigDecimal b){
+		return b.intValue();
 	}
 
 }

@@ -13,6 +13,8 @@ public class MethodConf
 	public final static int  DOUBLE_CONVERT =3 ;
 	public final static int  FLOAT_CONVERT =4 ;
 	public final static int  SHORT_CONVERT =5 ;
+	public final static int  BIGDECIMAL_CONVERT =6 ;
+	
 	public final static int  ORGINAL_CONVERT =11 ;
 	public final static int  NO_CONVERT =0 ;
 	
@@ -63,6 +65,9 @@ public class MethodConf
 			{
 				return ".orginalObject()";
 			}
+			case BIGDECIMAL_CONVERT:{
+				return ".getBigDecimal()";
+			}
 			default:
 			{
 				throw new RuntimeException("not support converty type " + i);
@@ -102,6 +107,9 @@ public class MethodConf
 			case ORGINAL_CONVERT:
 			{
 				return ((BeeNumber) o).orginalObject();
+			}
+			case BIGDECIMAL_CONVERT:{
+				return ((BeeNumber)o).getBigDecimal();
 			}
 			default:
 			{

@@ -1033,7 +1033,7 @@ public class BeetlCodeGenerator
 							else if (Number.class.isAssignableFrom(left.getTypeClass().getRawType())
 									&& Number.class.isAssignableFrom(right.getTypeClass().getRawType()))
 							{
-								if (left.getTypeClass().getRawType().equals(BeeNumber.class))
+								if (BeeNumber.class.isAssignableFrom(left.getTypeClass().getRawType()))
 								{
 									writeTree(left);
 								}
@@ -1044,7 +1044,7 @@ public class BeetlCodeGenerator
 									print(")");
 								}
 								print(".compareTo(");
-								if (right.getTypeClass().getRawType().equals(BeeNumber.class))
+								if (BeeNumber.class.isAssignableFrom(right.getTypeClass().getRawType()))
 								{
 									writeTree(right);
 								}
@@ -1263,7 +1263,7 @@ public class BeetlCodeGenerator
 						{
 							printStart("");
 						}
-						if (exp.getExpType().equals(BeeNumber.class))
+						if (BeeNumber.class.isAssignableFrom(exp.getExpType()))
 						{
 							print("nf.y(");
 						}
@@ -1294,7 +1294,7 @@ public class BeetlCodeGenerator
 						{
 							BeeCommonNodeTree para = (BeeCommonNodeTree) classMethodNode.getChild(j);
 							this.writeTree(para);
-							if (para.getTypeClass().getRawType().equals(BeeNumber.class))
+							if ( BeeNumber.class.isAssignableFrom(para.getTypeClass().getRawType()))
 							{
 								this.print(mc.getOutputType(j - 1));
 							}
@@ -1302,7 +1302,7 @@ public class BeetlCodeGenerator
 								this.print(",");
 						}
 
-						if (exp.getExpType().equals(BeeNumber.class))
+						if (BeeNumber.class.isAssignableFrom(exp.getExpType()))
 						{
 							print(")");
 						}
@@ -1327,7 +1327,7 @@ public class BeetlCodeGenerator
 							// 无意义，忽略此代码
 							break;
 						}
-						if (exp.getExpType().equals(BeeNumber.class))
+						if (BeeNumber.class.isAssignableFrom(exp.getExpType()))
 						{
 							print("nf.y(");
 						}
@@ -1344,7 +1344,7 @@ public class BeetlCodeGenerator
 						CommonTree propertyNode = (CommonTree) exp.getChild(exp.getChildCount() - 1);
 						propertyName = propertyNode.getToken().getText();
 						print(propertyName);
-						if (exp.getExpType().equals(BeeNumber.class))
+						if (BeeNumber.class.isAssignableFrom(exp.getExpType()))
 						{
 							print(")");
 						}
@@ -1489,7 +1489,7 @@ public class BeetlCodeGenerator
 							}
 
 						}
-						else if (left.getTypeClass().getRawType().equals(BeeNumber.class))
+						else if (BeeNumber.class.isAssignableFrom(left.getTypeClass().getRawType()))
 						{
 							// double类型，以及除法，在beetl中总是精度计算:new
 							// BigDecimal(aValue.toString()).subtract(new
@@ -1513,7 +1513,7 @@ public class BeetlCodeGenerator
 							writeTree(right);
 
 						}
-						else if (right.getTypeClass().getRawType().equals(BeeNumber.class))
+						else if (BeeNumber.class.isAssignableFrom(right.getTypeClass().getRawType()))
 						{
 							print("nf.y(");
 							writeTree(left);
@@ -1562,7 +1562,7 @@ public class BeetlCodeGenerator
 						{
 							writeTree(left);
 						}
-						else if (left.getTypeClass().getRawType().equals(BeeNumber.class))
+						else if (BeeNumber.class.isAssignableFrom(left.getTypeClass().getRawType()))
 						{
 							writeTree(left);
 							print(".longValue()");
@@ -1579,7 +1579,7 @@ public class BeetlCodeGenerator
 						{
 							writeTree(right);
 						}
-						else if (right.getTypeClass().getRawType().equals(BeeNumber.class))
+						else if (BeeNumber.class.isAssignableFrom(right.getTypeClass().getRawType()))
 						{
 							writeTree(right);
 							print(".longValue()");
@@ -2274,7 +2274,7 @@ public class BeetlCodeGenerator
 
 		String finalExp = this.fw.toString();
 		// 转成BeeNumber类型
-		if (t.getChildCount() > 1 && type.getRawType().equals(BeeNumber.class))
+		if (t.getChildCount() > 1 && BeeNumber.class.isAssignableFrom(type.getRawType()))
 		{
 			finalExp = "nf.y(" + this.fw.toString() + ")";
 		}
