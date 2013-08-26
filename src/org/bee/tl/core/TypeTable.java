@@ -202,6 +202,19 @@ public class TypeTable
 										tempObject);
 							}
 
+						}else{
+							//静态方法调用：
+							
+							BeeCommonNodeTree classMethodNode = (BeeCommonNodeTree) t.getChild(t.getChildCount() - 1);
+							//推测其他参数
+							for (int j = 1; j < classMethodNode.getChildCount(); j++)
+							{
+								BeeCommonNodeTree para = (BeeCommonNodeTree) classMethodNode.getChild(j);
+								this.iterateForTypeTable(para, localCtx,tempObject);
+								
+							}
+							
+							
 						}
 
 					}
