@@ -59,7 +59,7 @@ import org.bee.tl.ext.Println;
  */
 public class CoreScriptRunner {
 
-	ScriptGlobal global = ScriptGlobal.defaultScriptGlobal;
+	ScriptGlobal global = null;
 	// 脚本
 	Reader reader = null;
 	// 脚本运行输出的字符集 ,默认是咱中国的,不再是ISO889-1,:) ,必须初始化这俩个属性

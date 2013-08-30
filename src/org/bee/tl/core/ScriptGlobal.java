@@ -57,11 +57,7 @@ import org.bee.tl.ext.TruncFunction;
 import org.bee.tl.ext.cache.CacheTag;
 
 public class ScriptGlobal {
-	public static ScriptGlobal defaultScriptGlobal = new ScriptGlobal();
 
-	static {
-		initEmbed(defaultScriptGlobal);
-	}
 
 	Map<String, Function> fnMap = new HashMap<String, Function>();
 	Map<String, Class> textProcessMap = new HashMap<String, Class>();

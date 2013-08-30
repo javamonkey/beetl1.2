@@ -153,7 +153,7 @@ import org.bee.tl.core.exception.HTMLTagParserException;
 public class GroupTemplate
 {
 
-	public static GroupTemplate defaultGroup = new GroupTemplate();
+	
 
 	String placeholderStart = "${";
 	String placeholderEnd = "}";
