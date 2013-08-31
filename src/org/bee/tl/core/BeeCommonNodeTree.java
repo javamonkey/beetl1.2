@@ -34,30 +34,28 @@ import org.bee.tl.core.exception.PreCompileException;
 /**
  * 
  * 
- * eache node could be keep two extra infomation,one is the cached value on runtime,another is 
+ * eache node could be keep two extra infomation,one is the cached value on
+ * runtime,another is
  * 
- * java class type of this node. beetl awlays suppose one java class type  for one node .
+ * java class type of this node. beetl awlays suppose one java class type for
+ * one node .
  * 
  * @author joelli
  * @see TypeTable
  * 
  */
-public class BeeCommonNodeTree extends CommonTree
-{
+public class BeeCommonNodeTree extends CommonTree {
 	private TypeClass typeClass;
 	private Object cached = null;
-	
-	public BeeCommonNodeTree expLeft ;
-	public BeeCommonNodeTree expRight ;
-	
 
-	public BeeCommonNodeTree()
-	{
+	public BeeCommonNodeTree expLeft;
+	public BeeCommonNodeTree expRight;
+
+	public BeeCommonNodeTree() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BeeCommonNodeTree(CommonTree node)
-	{
+	public BeeCommonNodeTree(CommonTree node) {
 		super(node);
 		this.token = node.token;
 		this.startIndex = node.getTokenStartIndex();
@@ -65,69 +63,73 @@ public class BeeCommonNodeTree extends CommonTree
 		// TODO Auto-generated constructor stub
 	}
 
-	public BeeCommonNodeTree(Token t)
-	{
+	public BeeCommonNodeTree(Token t) {
 		super(t);
 		// TODO Auto-generated constructor stub
 	}
 
-	/**get the java class type of this node.
+	/**
+	 * get the java class type of this node.
+	 * 
 	 * @return
 	 */
-	public TypeClass getTypeClass()
-	{
-		if (typeClass == null)
-		{
+	public TypeClass getTypeClass() {
+		if (typeClass == null) {
 			typeClass = new TypeClass();
 		}
 		return typeClass;
 	}
 
-	/** set the java class type of this node with generic infomation.such as List<User>
+	/**
+	 * set the java class type of this node with generic infomation.such as
+	 * List<User>
+	 * 
 	 * @param typeClass
 	 */
-	public void setTypeClass(TypeClass typeClass)
-	{
+	public void setTypeClass(TypeClass typeClass) {
 		this.typeClass = typeClass;
 	}
 
-	/** set the java class type of this node without generic ,for example ,StringLiteral node is java.lang.String.
+	/**
+	 * set the java class type of this node without generic ,for example
+	 * ,StringLiteral node is java.lang.String.
 	 * 
 	 * @param c
 	 */
-	public void setExpType(Class c)
-	{
-		if (c == null)
-		{
-			throw new PreCompileException("预编译bug，未能判断表达式类型" + this.getToken().getText() + " "
+	public void setExpType(Class c) {
+		if (c == null) {
+			throw new PreCompileException("预编译bug，未能判断表达式类型"
+					+ this.getToken().getText() + " "
 					+ this.getToken().getLine());
 		}
 		this.typeClass = new TypeClass(c);
 	}
 
-	public Class getExpType()
-	{
+	public Class getExpType() {
 		if (this.typeClass == null)
 			return null;
 		else
 			return this.typeClass.getRawType();
 	}
 
-	/** get the cached runtime value  of this node
+	/**
+	 * get the cached runtime value of this node
+	 * 
 	 * @return
 	 */
-	public Object getCached()
-	{
+	public Object getCached() {
 		return cached;
 	}
 
-	/**set the cached value of this node. a few node can cache the runtime value such as
-	 * <p/>TEXT_HOLDER,FUNCTION_FULL_NAME,varRef,etc.
+	/**
+	 * set the cached value of this node. a few node can cache the runtime value
+	 * such as
+	 * <p/>
+	 * TEXT_HOLDER,FUNCTION_FULL_NAME,varRef,etc.
 	 * 
 	 * @param cached
 	 */
-	public void setCached(Object cached)
-	{
+	public void setCached(Object cached) {
 		this.cached = cached;
 	}
 

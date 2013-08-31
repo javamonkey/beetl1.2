@@ -39,44 +39,37 @@ import org.bee.tl.core.io.ByteWriter;
 import org.bee.tl.core.io.ByteWriter_Char;
 import org.bee.tl.core.number.NumberFactory;
 
-public class BeeTemplate extends AbstractTemplate
-{
-	
+public class BeeTemplate extends AbstractTemplate {
+
 	String placeholderStart = "${";
 	String placeholderEnd = "}";
 	String statementStart = "<%";
 	String statementEnd = "%>";
-	
-	
+
 	String htmlTagStart = "<#";
-	String htmlTagEnd= "</#";
+	String htmlTagEnd = "</#";
 	boolean isHtmlTagSupport = false;
-	
-	
-	public BeeTemplate(String input)
-	{
+
+	public BeeTemplate(String input) {
 
 		this.resource = new Resource(input);
 		scriptRunner = new CoreScriptRunner();
 
 	}
 
-	public BeeTemplate(File file) throws IOException
-	{
+	public BeeTemplate(File file) throws IOException {
 		resource = new Resource(file, "UTF-8");
 		scriptRunner = new CoreScriptRunner();
 
 	}
 
-	public BeeTemplate(File file, String charset) throws IOException
-	{
+	public BeeTemplate(File file, String charset) throws IOException {
 		this.resource = new Resource(file, charset);
 		scriptRunner = new CoreScriptRunner();
 
 	}
 
-	public BeeTemplate(Reader reader) throws IOException
-	{
+	public BeeTemplate(Reader reader) throws IOException {
 
 		this.resource = new Resource(BeetlUtil.getString(reader));
 		scriptRunner = new CoreScriptRunner();
@@ -84,23 +77,23 @@ public class BeeTemplate extends AbstractTemplate
 	}
 
 	//
-	//	public BeeTemplate(File file, Context ctx) throws IOException
-	//	{
-	//		this.reader = new FileReader(file);
-	//		this.context = ctx;
-	//		resource = new Resource(file, group.charset);
-	//		scriptRunner = new CoreScriptRunner();
+	// public BeeTemplate(File file, Context ctx) throws IOException
+	// {
+	// this.reader = new FileReader(file);
+	// this.context = ctx;
+	// resource = new Resource(file, group.charset);
+	// scriptRunner = new CoreScriptRunner();
 	//
-	//	}
+	// }
 
-	//	public BeeTemplate(String input, Context ctx) throws IOException
-	//	{
-	//		resource = new Resource(input);
-	//		this.reader = resource.getReader();
-	//		this.context = ctx;
-	//		scriptRunner = new CoreScriptRunner();
+	// public BeeTemplate(String input, Context ctx) throws IOException
+	// {
+	// resource = new Resource(input);
+	// this.reader = resource.getReader();
+	// this.context = ctx;
+	// scriptRunner = new CoreScriptRunner();
 	//
-	//	}
+	// }
 
 	public BeeTemplate(Resource res, CoreScriptRunner scriptRunner)
 
@@ -110,48 +103,43 @@ public class BeeTemplate extends AbstractTemplate
 
 	}
 
-	public String getContent(int start, int end) throws IOException
-	{
+	public String getContent(int start, int end) throws IOException {
 		return resource.getLines(start, end);
 	}
-	
 
-	protected void initScriptRunner() throws IOException
-	{
+	protected void initScriptRunner() throws IOException {
 
-		Transformator tf = new Transformator(placeholderStart, placeholderEnd, this.statementStart, this.statementEnd);
-		if(this.isHtmlTagSupport){
+		Transformator tf = new Transformator(placeholderStart, placeholderEnd,
+				this.statementStart, this.statementEnd);
+		if (this.isHtmlTagSupport) {
 			tf.enableHtmlTagSupport(this.htmlTagStart, this.htmlTagEnd);
 		}
 		Reader textReader = this.resource.getReader();
 		Reader scriptReader = null;
-		
-		
+
 		try {
 			scriptReader = tf.transform(textReader);
 		} catch (HTMLTagParserException e) {
-			//返回一个错误的模板
-			scriptRunner.lasetRe =e ;
+			// 返回一个错误的模板
+			scriptRunner.lasetRe = e;
 			scriptRunner.isParseSuccess = false;
 			tf.clear();
-			return ;
+			return;
 		}
 		scriptRunner.setScriptInputReader(scriptReader);
 
-		if (scriptRunner.directByteOutput)
-		{
+		if (scriptRunner.directByteOutput) {
 			// 直接二进制输出
 			Map<String, String> texts = tf.getTextMap();
-			Map<String, byte[]> byteMap = new HashMap<String, byte[]>(texts.size());
-			for (Map.Entry<String, String> entry : texts.entrySet())
-			{
-				byteMap.put(entry.getKey(), entry.getValue().getBytes(group.getCharset()));
+			Map<String, byte[]> byteMap = new HashMap<String, byte[]>(
+					texts.size());
+			for (Map.Entry<String, String> entry : texts.entrySet()) {
+				byteMap.put(entry.getKey(),
+						entry.getValue().getBytes(group.getCharset()));
 			}
 
 			scriptRunner.textVar = byteMap;
-		}
-		else
-		{
+		} else {
 
 			scriptRunner.textVar = tf.getTextMap();
 		}
@@ -163,17 +151,16 @@ public class BeeTemplate extends AbstractTemplate
 
 	}
 
-	public void config(String statementStart, String statementEnd, String holderStart, String holderEnd)
-	{
+	public void config(String statementStart, String statementEnd,
+			String holderStart, String holderEnd) {
 		this.setStatementStart(statementStart);
 		this.setStatementEnd(statementEnd);
 		this.setPlaceholderStart(holderStart);
 		this.setPlaceholderEnd(holderEnd);
 	}
 
-	public void config(String statementStart, String statementEnd, String holderStart, String holderEnd,
-			boolean nativeCall)
-	{
+	public void config(String statementStart, String statementEnd,
+			String holderStart, String holderEnd, boolean nativeCall) {
 		this.setStatementStart(statementStart);
 		this.setStatementEnd(statementEnd);
 		this.setPlaceholderStart(holderStart);
@@ -182,48 +169,37 @@ public class BeeTemplate extends AbstractTemplate
 			this.enableNativeCall();
 	}
 
-	public void getTextByByteWriter(ByteWriter pw) throws IOException, BeeException
-	{
-		if (!scriptRunner.hasParsed)
-		{
+	public void getTextByByteWriter(ByteWriter pw) throws IOException,
+			BeeException {
+		if (!scriptRunner.hasParsed) {
 			initScriptRunner();
 		}
-		try
-		{
-			this.context.text = this.scriptRunner.textVar;			
+		try {
+			this.context.text = this.scriptRunner.textVar;
 			this.context.set("__group", this.group);
-			if(this.scriptRunner.isBigNumberSupport()){
-				this.context.nf =  NumberFactory.big;
-			}else{
-				this.context.nf =  NumberFactory.general;
+			if (this.scriptRunner.isBigNumberSupport()) {
+				this.context.nf = NumberFactory.big;
+			} else {
+				this.context.nf = NumberFactory.general;
 			}
-			
+
 			this.scriptRunner.runScript(pw, new Context(context));
 			pw.flush();
 
-		}
-		catch (BeeException ex)
-		{
+		} catch (BeeException ex) {
 
 			if (ex.getResource() == null)
 				ex.setResource(this.resource);
-			if (group == null)
-			{
+			if (group == null) {
 				new DefaultErrorHandler().processExcption(ex);
-			}
-			else if (group.getErrorHandler() != null)
-			{
+			} else if (group.getErrorHandler() != null) {
 				group.getErrorHandler().processExcption(ex);
 				return;
-			}
-			else
-			{
+			} else {
 				throw ex;
 			}
 
-		}
-		catch (Exception ex)
-		{
+		} catch (Exception ex) {
 			// todo,如何处理，不应该发生
 			ex.printStackTrace();
 
@@ -231,8 +207,7 @@ public class BeeTemplate extends AbstractTemplate
 
 	}
 
-	public void getText(Writer pw) throws IOException, BeeException
-	{
+	public void getText(Writer pw) throws IOException, BeeException {
 
 		ByteWriter_Char bw = new ByteWriter_Char(pw, group.getCharset());
 
@@ -240,8 +215,7 @@ public class BeeTemplate extends AbstractTemplate
 
 	}
 
-	public static void main(String[] args) throws Exception
-	{
+	public static void main(String[] args) throws Exception {
 
 		{
 			DefaultErrorHandler.OFFSET = 10;
@@ -256,109 +230,85 @@ public class BeeTemplate extends AbstractTemplate
 
 		}
 
-		//		{
-		//			BeeTemplate t = new BeeTemplate("@{'/'+namespace}");
-		//			t.config("<%", "%>", "@{", "}");
-		//			t.set("namespace", "system");
-		//			String result = t.getTextAsString();
-		//			System.out.println(result);
-		//		}
+		// {
+		// BeeTemplate t = new BeeTemplate("@{'/'+namespace}");
+		// t.config("<%", "%>", "@{", "}");
+		// t.set("namespace", "system");
+		// String result = t.getTextAsString();
+		// System.out.println(result);
+		// }
 
 	}
 
-	
-	public String getCR()
-	{
+	public String getCR() {
 		return this.resource.CR;
 	}
 
 	@Override
-	public Context getContext()
-	{
+	public Context getContext() {
 		return this.context;
 	}
-	
-	public String getPlaceholderStart()
-	{
+
+	public String getPlaceholderStart() {
 		return placeholderStart;
 	}
 
 	public void setPlaceholderStart(String placeholderStart)
 
 	{
-		if (scriptRunner == null || !scriptRunner.hasParsed)
-		{
+		if (scriptRunner == null || !scriptRunner.hasParsed) {
 			this.placeholderStart = placeholderStart;
-		}
-		else
-		{
+		} else {
 			throw new IllegalStateException("设置不允许，因为CoreScriptRunner已经初始化完毕");
 		}
 
 	}
 
-	public String getPlaceholderEnd()
-	{
+	public String getPlaceholderEnd() {
 		return placeholderEnd;
 	}
 
-	public void setPlaceholderEnd(String placeholderEnd)
-	{
+	public void setPlaceholderEnd(String placeholderEnd) {
 
-		if (scriptRunner == null || !scriptRunner.hasParsed)
-		{
+		if (scriptRunner == null || !scriptRunner.hasParsed) {
 			this.placeholderEnd = placeholderEnd;
-		}
-		else
-		{
+		} else {
 			throw new IllegalStateException("设置不允许，因为CoreScriptRunner已经初始化完毕");
 		}
 
 	}
 
-	public String getStatementStart()
-	{
+	public String getStatementStart() {
 		return statementStart;
 	}
 
-	public void setStatementStart(String statementStart)
-	{
+	public void setStatementStart(String statementStart) {
 
-		if (scriptRunner == null || !scriptRunner.hasParsed)
-		{
+		if (scriptRunner == null || !scriptRunner.hasParsed) {
 			this.statementStart = statementStart;
-		}
-		else
-		{
+		} else {
 			throw new IllegalStateException("设置不允许，因为CoreScriptRunner已经初始化完毕");
 		}
 
 	}
 
-	public String getStatementEnd()
-	{
+	public String getStatementEnd() {
 		return statementEnd;
 	}
 
-	public void setStatementEnd(String statementEnd)
-	{
-		if (scriptRunner == null || !scriptRunner.hasParsed)
-		{
+	public void setStatementEnd(String statementEnd) {
+		if (scriptRunner == null || !scriptRunner.hasParsed) {
 			this.statementEnd = statementEnd;
-		}
-		else
-		{
+		} else {
 			throw new IllegalStateException("设置不允许，因为CoreScriptRunner已经初始化完毕");
 		}
 
 	}
-	
-	public void enableHtmlTagSupport(String tagFlag){
-		this.isHtmlTagSupport = true ;
-		this.htmlTagEnd = "<"+tagFlag;
-		this.htmlTagStart = "</"+tagFlag;
+
+	public void enableHtmlTagSupport(String tagFlag) {
+		this.isHtmlTagSupport = true;
+		this.htmlTagEnd = "<" + tagFlag;
+		this.htmlTagStart = "</" + tagFlag;
 	}
-
-
 
 }

@@ -32,92 +32,76 @@ import java.util.Map;
 
 /**
  * 节点类型，用于推测变量用
+ * 
  * @author joelli
- *
+ * 
  */
-public class TypeClass
-{
+public class TypeClass {
 
-	
 	Class rawType = Object.class;
 	Map<String, Class> ptypeMap = new HashMap<String, Class>(1);
 	Object ref = null;
 
-	public TypeClass()
-	{
+	public TypeClass() {
 
 	}
 
-	public TypeClass(Class rawType)
-	{
+	public TypeClass(Class rawType) {
 
 		this.rawType = rawType;
 	}
 
-	public Class getRawType()
-	{
+	public Class getRawType() {
 		return rawType;
 	}
 
-	public void setRawType(Class rawType)
-	{
+	public void setRawType(Class rawType) {
 		this.rawType = rawType;
 	}
 
-	/**如果节点可能是泛型，返回泛型对应的class
+	/**
+	 * 如果节点可能是泛型，返回泛型对应的class
+	 * 
 	 * @return
 	 */
-	public Map<String, Class> getPtypeMap()
-	{
+	public Map<String, Class> getPtypeMap() {
 		return ptypeMap;
 	}
 
-	public void setPtypeMap(Map<String, Class> ptypeMap)
-	{
+	public void setPtypeMap(Map<String, Class> ptypeMap) {
 		this.ptypeMap = ptypeMap;
 	}
 
-	public boolean isRawType()
-	{
+	public boolean isRawType() {
 		return ptypeMap.size() == 0;
 	}
 
-	public Object getRef()
-	{
+	public Object getRef() {
 		return ref;
 	}
 
-	public void setRef(Object ref)
-	{
+	public void setRef(Object ref) {
 		this.ref = ref;
 	}
 
-	public boolean isPrimitive()
-	{
-		if (this.rawType.isPrimitive())
-		{
+	public boolean isPrimitive() {
+		if (this.rawType.isPrimitive()) {
 			return true;
 		}
-		if (this.rawType.equals(Integer.class) || rawType.equals(Boolean.class) || rawType.equals(Double.class))
-		{
+		if (this.rawType.equals(Integer.class) || rawType.equals(Boolean.class)
+				|| rawType.equals(Double.class)) {
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 
 	}
 
-	public boolean equals(Object o)
-	{
+	public boolean equals(Object o) {
 		TypeClass other = (TypeClass) o;
-		if (this.rawType.equals(other.rawType))
-		{
+		if (this.rawType.equals(other.rawType)) {
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}

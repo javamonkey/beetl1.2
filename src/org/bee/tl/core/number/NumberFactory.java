@@ -18,9 +18,6 @@ public class NumberFactory {
 	 * 默认是四舍五入
 	 */
 	public static int roundingMode = BigDecimal.ROUND_HALF_UP;
-	
-	
-	
 
 	public NumberFactory(boolean isBig) {
 		this.isBig = isBig;

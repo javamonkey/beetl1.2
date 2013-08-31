@@ -44,63 +44,47 @@ import org.bee.tl.core.Function;
  * <li>变量存在，但是空集合</li>
  * <li>变量存在，但是空数组</li>
  * </ul>
- * 参数可以一个到多个,如<p>
+ * 参数可以一个到多个,如
+ * <p>
  * ${empty("list")}
+ * 
  * @author joelli
- *
+ * 
  */
-public class EmptyFunction implements Function
-{
+public class EmptyFunction implements Function {
 
-	public Boolean call(Object[] paras, Context ctx)
-	{
+	public Boolean call(Object[] paras, Context ctx) {
 
 		String key = null;
-		for (Object o : paras)
-		{
+		for (Object o : paras) {
 			key = (String) o;
-			if (ctx.contain(key))
-			{
+			if (ctx.contain(key)) {
 				Object result = ctx.getVar(key);
-				if (result != null)
-				{
+				if (result != null) {
 
-					if (result instanceof String)
-					{
+					if (result instanceof String) {
 
-						if (((String) result).length() != 0)
-						{
+						if (((String) result).length() != 0) {
 							return false;
 						}
 
-					}
-					else if (result instanceof Collection)
-					{
-						if (((Collection) result).size() != 0)
-						{
+					} else if (result instanceof Collection) {
+						if (((Collection) result).size() != 0) {
 							return false;
 						}
-					}
-					else if (result instanceof Map)
-					{
-						if (((Map) result).size() != 0)
-						{
+					} else if (result instanceof Map) {
+						if (((Map) result).size() != 0) {
 							return false;
 						}
-					}
-					else if (result.getClass().isArray())
-					{
-						if (((Object[]) result).length != 0)
-						{
+					} else if (result.getClass().isArray()) {
+						if (((Object[]) result).length != 0) {
 							return false;
 						}
-					}else{
+					} else {
 						return false;
 					}
 
-				}
-				else
-				{
+				} else {
 
 					continue;
 				}
@@ -113,24 +97,17 @@ public class EmptyFunction implements Function
 
 	}
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		EmptyFunction fn = new EmptyFunction();
 		Context ctx = new Context();
 		ctx.set("list", new ArrayList());
-		ctx.set("array", new Object[]
-		{});
+		ctx.set("array", new Object[] {});
 
-		ctx.set("array1", new Object[]
-		{ 1, 2 });
-		System.out.println(fn.call(new Object[]
-		{ "lijz" }, ctx));
-		System.out.println(fn.call(new Object[]
-		{ "list" }, ctx));
-		System.out.println(fn.call(new Object[]
-		{ "array" }, ctx));
-		System.out.println(fn.call(new Object[]
-		{ "array1" }, ctx));
+		ctx.set("array1", new Object[] { 1, 2 });
+		System.out.println(fn.call(new Object[] { "lijz" }, ctx));
+		System.out.println(fn.call(new Object[] { "list" }, ctx));
+		System.out.println(fn.call(new Object[] { "array" }, ctx));
+		System.out.println(fn.call(new Object[] { "array1" }, ctx));
 
 	}
 

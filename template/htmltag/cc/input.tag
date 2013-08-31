@@ -1,3 +1,1 @@
-hell,this is ${value}
-
-${tagBody}
+hell,this is ${value} ${tagBody}

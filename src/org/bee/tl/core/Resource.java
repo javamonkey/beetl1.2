@@ -14,8 +14,7 @@ import java.io.StringReader;
  * @author javamonkey
  * @create 2011-9-10
  */
-public class Resource
-{
+public class Resource {
 
 	int type = 0;
 	String input = null;
@@ -27,16 +26,14 @@ public class Resource
 	String resourceKey = null;
 	long resourceVersion = 0;
 
-	public Resource(String input)
-	{
+	public Resource(String input) {
 		type = 0;
 		this.input = input;
 		resourceKey = input;
 
 	}
 
-	public Resource(File file, String charset)
-	{
+	public Resource(File file, String charset) {
 		type = 1;
 		this.file = file;
 		this.charset = charset;
@@ -44,8 +41,7 @@ public class Resource
 		this.resourceVersion = file.lastModified();
 	}
 
-	public Resource(String child, File root, String charset)
-	{
+	public Resource(String child, File root, String charset) {
 		type = 1;
 		this.file = new File(root, child);
 		this.charset = charset;
@@ -55,12 +51,12 @@ public class Resource
 
 	}
 
-	/** 
+	/**
 	 * 设置Resource的回车换行符，用于显示指定错误行数的信息，被Transformator类来设置
+	 * 
 	 * @param cr
 	 */
-	public void setCR(String cr)
-	{
+	public void setCR(String cr) {
 		this.CR = cr;
 	}
 
@@ -68,8 +64,7 @@ public class Resource
 	 * 得到指定开头行之间的内容，从1行开始
 	 * 
 	 */
-	public String getLines(int start, int end) throws IOException
-	{
+	public String getLines(int start, int end) throws IOException {
 
 		char[] cr = this.CR.toCharArray();
 		Reader br = getReader();
@@ -80,22 +75,17 @@ public class Resource
 		char c;
 		boolean hasStart = false;
 		StringBuilder sb = new StringBuilder(1024);
-		while ((ch = br.read()) != -1)
-		{
+		while ((ch = br.read()) != -1) {
 			c = (char) ch;
-			if (!hasStart && line == start)
-			{
+			if (!hasStart && line == start) {
 				hasStart = true;
 			}
-			if (line == end)
-			{
+			if (line == end) {
 
 				break;
 			}
-			if (c == cr[0])
-			{
-				if (cr.length == 2)
-				{
+			if (c == cr[0]) {
+				if (cr.length == 2) {
 					br.read();
 				}
 				line++;
@@ -103,8 +93,7 @@ public class Resource
 					sb.append(CR);
 				continue;
 			}
-			if (hasStart)
-			{
+			if (hasStart) {
 				sb.append(c);
 			}
 
@@ -114,55 +103,43 @@ public class Resource
 
 	}
 
-	public Reader getReader() throws IOException
-	{
+	public Reader getReader() throws IOException {
 
 		Reader br = null;
-		if (type == 0)
-		{
+		if (type == 0) {
 			br = new StringReader(this.input);
-		}
-		else if (type == 1)
-		{
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(file), charset));
+		} else if (type == 1) {
+			br = new BufferedReader(new InputStreamReader(new FileInputStream(
+					file), charset));
 		}
 
 		return br;
 	}
 
-	public File getFile()
-	{
+	public File getFile() {
 		return file;
 	}
 
-	public void setFile(File file)
-	{
+	public void setFile(File file) {
 		this.file = file;
 	}
 
-	public File getRoot()
-	{
+	public File getRoot() {
 		return root;
 	}
 
-	public void setRoot(File root)
-	{
+	public void setRoot(File root) {
 		this.root = root;
 	}
 
-	public String getKey()
-	{
+	public String getKey() {
 		return this.resourceKey;
 	}
 
-	public boolean expired()
-	{
-		if (this.type == 1)
-		{
+	public boolean expired() {
+		if (this.type == 1) {
 			return this.resourceVersion != this.file.lastModified();
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}

@@ -1,5 +1,7 @@
 package org.bee.tl.samples;
+
 import org.bee.tl.core.GroupTemplate;
+
 public class GroupTemplateUtil {
 
 	static GroupTemplate group = new GroupTemplate();
@@ -13,18 +15,19 @@ public class GroupTemplateUtil {
 		group.enableChecker(10);
 		addCommonFunction();
 		addCommonFormat();
-		
-		
+
 	}
-	public static GroupTemplate getGroup (){
+
+	public static GroupTemplate getGroup() {
 		return group;
 	}
-	public static void addCommonFunction(){
-		
+
+	public static void addCommonFunction() {
+
 	}
-	
-	public static void addCommonFormat(){
-		
+
+	public static void addCommonFormat() {
+
 	}
-	
+
 }

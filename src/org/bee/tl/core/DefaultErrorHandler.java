@@ -46,8 +46,7 @@ import org.bee.tl.core.exception.WrapperAntlrLexerException;
  * @since 0.5
  * @see GroupTemplate
  */
-public class DefaultErrorHandler extends ErrorHandler
-{
+public class DefaultErrorHandler extends ErrorHandler {
 
 	/**
 	 * 显示错误行数上下OFFSET行，默认是上下3行
@@ -61,137 +60,111 @@ public class DefaultErrorHandler extends ErrorHandler
 	 * org.bee.tl.core.ErrorHandler#processExcption(org.bee.tl.core.BeeException
 	 * , java.io.PrintStream)
 	 */
-	public void processExcption(BeeException beeException, PrintWriter os)
-	{
+	public void processExcption(BeeException beeException, PrintWriter os) {
 		Throwable ex = beeException.getCause();
-		if (ex instanceof BeeRuntimeException)
-		{
-			runtimeError((BeeRuntimeException) ex, beeException.getResource(), os);
-			os.println("=============================================================".intern());
+		if (ex instanceof BeeRuntimeException) {
+			runtimeError((BeeRuntimeException) ex, beeException.getResource(),
+					os);
+			os.println("============================================================="
+					.intern());
 			os.println("错误栈:".intern());
 
-			if (ex.getCause() != null)
-			{
+			if (ex.getCause() != null) {
 				ex.getCause().printStackTrace(os);
-			}
-			else
-			{
+			} else {
 				ex.printStackTrace(os);
 			}
 
-		}
-		else if (ex instanceof WrapperAntlrLexerException)
-		{
-			handle((RecognitionException) ex.getCause(), beeException.getResource(), os);
+		} else if (ex instanceof WrapperAntlrLexerException) {
+			handle((RecognitionException) ex.getCause(),
+					beeException.getResource(), os);
 			ex.printStackTrace(os);
 		}
 
-		else if (ex instanceof RecognitionException)
-		{
+		else if (ex instanceof RecognitionException) {
 			handle((RecognitionException) ex, beeException.getResource(), os);
 			ex.printStackTrace(os);
-		}
-		else
-		{
+		} else {
 			ex.printStackTrace(os);
 		}
 	}
 
-	protected void runtimeError(BeeRuntimeException ex, Resource resource, PrintWriter os)
-	{
+	protected void runtimeError(BeeRuntimeException ex, Resource resource,
+			PrintWriter os) {
 		String fileTip = getFileTip(resource);
-		try
-		{
+		try {
 			os.println("" + ex.detailCode + " ");
-			if (ex.getToken().getText().length() != 0)
-			{
-				os.println(("位于" + ex.token.getLine() + "行，符号 " + ex.token.getText() + fileTip));
-			}
-			else
-			{
+			if (ex.getToken().getText().length() != 0) {
+				os.println(("位于" + ex.token.getLine() + "行，符号 "
+						+ ex.token.getText() + fileTip));
+			} else {
 				os.println(("位于" + ex.token.getLine() + "行\n"));
 			}
 			writeLines(ex.token.getLine(), resource, os);
 
-			if (ex.getMsg() != null)
-			{
+			if (ex.getMsg() != null) {
 				os.println((ex.getMsg()));
 			}
 
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
-	protected void handle(RecognitionException ex, Resource resource, PrintWriter os)
-	{
+	protected void handle(RecognitionException ex, Resource resource,
+			PrintWriter os) {
 
 		// ex.printStackTrace();
 		String fileTip = getFileTip(resource);
 		int errorLine = ex.line;
-		try
-		{
-			if (ex instanceof MVCStrictException)
-			{
-				os.println((">>严格MVC控制：" + ex.token.getText() + errorLine + " 行" + fileTip));
-			}
-			else if (ex instanceof MismatchedTokenException)
-			{
+		try {
+			if (ex instanceof MVCStrictException) {
+				os.println((">>严格MVC控制：" + ex.token.getText() + errorLine
+						+ " 行" + fileTip));
+			} else if (ex instanceof MismatchedTokenException) {
 				MismatchedTokenException misError = (MismatchedTokenException) ex;
 				String errorText = null;
 
-				if (misError.expecting != -1)
-				{
+				if (misError.expecting != -1) {
 					errorText = BeeParser.tokenNames[misError.expecting];
-				}
-				else if (misError.token != null)
-				{
+				} else if (misError.token != null) {
 					errorText = misError.token.getText();
-				}
-				else
-				{
+				} else {
 					errorText = "未知";
 				}
 
 				os.println((">>语法错：缺少符号" + errorText + "," + errorLine + " 行" + fileTip));
-			}
-			else if(ex instanceof HTMLTagParserException){
-				HTMLTagParserException htmle = (HTMLTagParserException)ex;
+			} else if (ex instanceof HTMLTagParserException) {
+				HTMLTagParserException htmle = (HTMLTagParserException) ex;
 				String errorText = htmle.token.getText();
 				errorLine = htmle.token.getLine();
-				os.println((">>HTML Tag 格式错," + errorLine + " 行" + fileTip+",原因:"+htmle.getHtmlTagErrorMsg()));
-				
-			}
-			else
-			{
+				os.println((">>HTML Tag 格式错," + errorLine + " 行" + fileTip
+						+ ",原因:" + htmle.getHtmlTagErrorMsg()));
+
+			} else {
 				String errorText = ex.token != null ? ex.token.getText() : "未知";
 				os.println((">>语法错：" + errorText + "," + errorLine + " 行" + fileTip));
 			}
 			writeLines(errorLine, resource, os);
 			os.print(("<<").getBytes());
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
-	protected void writeLines(int errorLine, Resource resource, PrintWriter os) throws IOException
-	{
+	protected void writeLines(int errorLine, Resource resource, PrintWriter os)
+			throws IOException {
 
 		int start = errorLine - OFFSET <= 0 ? 1 : (errorLine - OFFSET);
 		int end = errorLine + OFFSET;
 		String content = resource.getLines(start, end);
 		String[] strs = content.split(resource.CR);
 		int lineNumber = start;
-		for (int i = 0; i < strs.length; i++)
-		{
+		for (int i = 0; i < strs.length; i++) {
 			os.print(("" + lineNumber));
 			os.print("|");
 			os.println(strs[i]);
@@ -200,22 +173,17 @@ public class DefaultErrorHandler extends ErrorHandler
 
 	}
 
-	protected String getFileTip(Resource resource)
-	{
+	protected String getFileTip(Resource resource) {
 		// ex.printStackTrace();
 		String fileTip = "";
 		File file = resource.getFile();
-		if (file != null)
-		{
+		if (file != null) {
 			File root = resource.getRoot();
-			if (root != null)
-			{
+			if (root != null) {
 				int length = root.toString().length();
 				fileTip = file.toString().substring(length);
 				fileTip = " 文件 " + fileTip;
-			}
-			else
-			{
+			} else {
 				fileTip = file.getName();
 				fileTip = " 文件 " + fileTip;
 			}

@@ -1,9 +1,2 @@
-总共:${list.~size}.
-<%
-
-for(user in list){
-%>
-${user_index+1}:${user.name}
-<%
-}
-%>
+总共:${list.~size}. <% for(user in list){ %> ${user_index+1}:${user.name}
+<% } %>

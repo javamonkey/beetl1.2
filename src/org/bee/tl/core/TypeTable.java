@@ -336,8 +336,7 @@ public class TypeTable {
 		case BeeParser.LARGE_EQUAL:
 		case BeeParser.LESS:
 		case BeeParser.LESS_EQUAL: {
-			
-			
+
 			BeeCommonNodeTree left = (BeeCommonNodeTree) tree.getChild(0);
 			BeeCommonNodeTree right = (BeeCommonNodeTree) tree.getChild(1);
 			if (left.getExpType() == null) {
@@ -649,14 +648,14 @@ public class TypeTable {
 			if (callType == 0) {
 				targetClass = ((TypeClass) ctx.getVar(instance)).getRawType();
 			} else {
-				try{
+				try {
 					targetClass = Class.forName(instance);
-				}catch(Exception ex){
-					//不可能发生，因为前面已经检测过了
+				} catch (Exception ex) {
+					// 不可能发生，因为前面已经检测过了
 					throw new PreCompileException("预编译出错,Class不能实例化,"
 							+ instance);
 				}
-				
+
 			}
 			this.classChainInfer(targetClass, exp, i, ctx);
 			break;
@@ -906,16 +905,15 @@ public class TypeTable {
 		}
 
 		}
-		
-		//似乎没有必要推测
-		BeeCommonNodeTree exp = (BeeCommonNodeTree) tree ;
-		if(exp.expLeft!=null){
+
+		// 似乎没有必要推测
+		BeeCommonNodeTree exp = (BeeCommonNodeTree) tree;
+		if (exp.expLeft != null) {
 			this.infer(exp.expLeft, ctx);
 		}
-		if(exp.expRight!=null){
+		if (exp.expRight != null) {
 			this.infer(exp.expRight, ctx);
 		}
-		
 
 	}
 
@@ -937,8 +935,8 @@ public class TypeTable {
 			if (n.getType() == BeeParser.Identifier) {
 				// 属性方法
 				try {
-					targetClass = targetClass.getDeclaredField(n.getText()).getType();
-							
+					targetClass = targetClass.getDeclaredField(n.getText())
+							.getType();
 
 				} catch (Exception ex) {
 					throw new PreCompileException("预编译出错,非法的属性," + n.getText()
@@ -955,12 +953,12 @@ public class TypeTable {
 					parameterType[j - 1] = para.getTypeClass().getRawType();
 				}
 				MethodConf mc = (MethodConf) n.getCached();
-				if(mc==null){
-					 mc = MethodUtil.findMethod(targetClass, methodName,
+				if (mc == null) {
+					mc = MethodUtil.findMethod(targetClass, methodName,
 							parameterType);
-					 n.setCached(mc);
+					n.setCached(mc);
 				}
-				
+
 				if (mc == null) {
 					throw new PreCompileException("预编译出错,找不到对应的方法,"
 							+ methodName);
@@ -970,7 +968,7 @@ public class TypeTable {
 					throw new PreCompileException("此本地调用不允许 "
 							+ mc.method.getName());
 				}
-				
+
 				targetClass = mc.method.getReturnType();
 
 			} else if (n.getType() == BeeParser.CLASS_ARRAY) {
@@ -978,10 +976,10 @@ public class TypeTable {
 				BeeCommonNodeTree para = (BeeCommonNodeTree) n.getChild(0);
 				this.infer(para, ctx);
 				targetClass = targetClass.getComponentType();
-				if(targetClass==null){
-					throw new PreCompileException("本地调用碰到了非数组调用 "+n.getText()+"[]");
+				if (targetClass == null) {
+					throw new PreCompileException("本地调用碰到了非数组调用 " + n.getText()
+							+ "[]");
 				}
-				
 
 			} else {
 				throw new RuntimeException("暂时不支持");

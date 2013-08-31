@@ -29,28 +29,22 @@ package org.bee.tl.core;
  */
 
 /**
- * beetl tag 和 html tag 应该实现此类的方法makeout，
- * 单独实现Tag以及ByteSupportTag 不再被推荐，因为前者不能很好支持二级制
- * 而后者可以，但实现此接口有点难以理解<p>
+ * beetl tag 和 html tag 应该实现此类的方法makeout， 单独实现Tag以及ByteSupportTag
+ * 不再被推荐，因为前者不能很好支持二级制 而后者可以，但实现此接口有点难以理解
+ * <p>
  * 
- * GeneralBeetlTag 提供如下参数来完成标签
- * args:标签参数
- * group:GroupTemplate的引用
- * writer: 用于输出内容到writer里
- * byteContent:用于判断是在byte 还是 char模式。
- * inputBytes：如果是byte模式，则inputBytes包含了标签体的内容
- * input:如果是char模式，则input包含了标签体的内容
+ * GeneralBeetlTag 提供如下参数来完成标签 args:标签参数 group:GroupTemplate的引用 writer:
+ * 用于输出内容到writer里 byteContent:用于判断是在byte 还是 char模式。
+ * inputBytes：如果是byte模式，则inputBytes包含了标签体的内容 input:如果是char模式，则input包含了标签体的内容
  * 
  * @author joelli
  * @since 1.24
  * 
  */
-public abstract class GeneralBeetlTag extends ByteSupportTag
-{
+public abstract class GeneralBeetlTag extends ByteSupportTag {
 
 	@Override
-	public boolean requriedInput()
-	{
+	public boolean requriedInput() {
 		return false;
 	}
 
@@ -59,18 +53,15 @@ public abstract class GeneralBeetlTag extends ByteSupportTag
 	 * joelli
 	 */
 	protected abstract void makeOutput();
-	
 
 	@Override
-	public final String getOutput()
-	{
+	public final String getOutput() {
 		makeOutput();
 		return null;
 	}
 
 	@Override
-	public final byte[]  getOutputAsByte()
-	{
+	public final byte[] getOutputAsByte() {
 		makeOutput();
 
 		return NULL_BYTE;

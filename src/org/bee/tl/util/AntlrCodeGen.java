@@ -37,33 +37,30 @@ import org.antlr.Tool;
  * 
  * 
  */
-public class AntlrCodeGen
-{
+public class AntlrCodeGen {
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) throws Exception
-	{
+	public static void main(String[] args) throws Exception {
 
 		String root = "E:\\lijz\\javamonkey\\bee\\github\\beetl1.25\\src\\org\\bee\\tl\\core\\";
-		//		{
-		//			// String tree = root+"CMinusWalker.g";
-		//			// String parser = root+"CMinus.g";
-		//			// String dest = root;
-		//			// Tool parserGen = new Tool(new String[]{"-o",dest, parser});
-		//			// parserGen.process();
-		//			//
-		//			// Tool treeGen = new Tool(new String[]{"-o",dest,"-debug", tree});
-		//			// // Tool treeGen = new Tool(new String[]{"-o",dest, tree});
-		//			// treeGen.process();
-		//		}
+		// {
+		// // String tree = root+"CMinusWalker.g";
+		// // String parser = root+"CMinus.g";
+		// // String dest = root;
+		// // Tool parserGen = new Tool(new String[]{"-o",dest, parser});
+		// // parserGen.process();
+		// //
+		// // Tool treeGen = new Tool(new String[]{"-o",dest,"-debug", tree});
+		// // // Tool treeGen = new Tool(new String[]{"-o",dest, tree});
+		// // treeGen.process();
+		// }
 		//
-		//		// String tree = root + "BeeWalker.g";
+		// // String tree = root + "BeeWalker.g";
 		String parser = root + "Bee.g";
 		String dest = root;
-		Tool parserGen = new Tool(new String[]
-		{ "-o", dest, parser });
+		Tool parserGen = new Tool(new String[] { "-o", dest, parser });
 		parserGen.process();
 		System.out.println("success! don't forget to refresh project :)");
 		//

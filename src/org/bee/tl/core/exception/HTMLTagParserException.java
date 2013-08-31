@@ -31,16 +31,19 @@ import org.antlr.runtime.RecognitionException;
 
 /**
  * html解析支持
+ * 
  * @author joelli
- *
+ * 
  */
 public class HTMLTagParserException extends RecognitionException {
 	String msg = null;
-	public HTMLTagParserException(String message){
+
+	public HTMLTagParserException(String message) {
 		this.msg = message;
-		
+
 	}
-	public String getHtmlTagErrorMsg(){
+
+	public String getHtmlTagErrorMsg() {
 		return msg;
 	}
 }

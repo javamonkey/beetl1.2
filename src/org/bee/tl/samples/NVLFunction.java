@@ -31,15 +31,15 @@ import org.bee.tl.core.Context;
 import org.bee.tl.core.Function;
 
 public class NVLFunction implements Function {
-	public Object call(Object[] paras,Context ctx){
-		if(paras.length!=2){
+	public Object call(Object[] paras, Context ctx) {
+		if (paras.length != 2) {
 			throw new RuntimeException("参数错误，期望Object,Object");
 		}
-		if(paras[0]==null){
+		if (paras[0] == null) {
 			return paras[1];
-		}else{
+		} else {
 			return paras[0];
 		}
-			
+
 	}
 }

@@ -50,84 +50,64 @@ import org.bee.tl.core.Template;
  * includeFileTemplate(path,{paraName1:value1,paraName2：value2})
  * <p>
  * beetl1.2也可以使用include,跟inlcudeFileTemplate一样
+ * 
  * @author joello
  * @since 1.2
  * 
  */
-public class IncludeFileTemplateTag extends GeneralBeetlTag
-{
+public class IncludeFileTemplateTag extends GeneralBeetlTag {
 
-	
-	public boolean requriedInput()
-	{
+	public boolean requriedInput() {
 		return false;
 	}
 
-	protected void makeOutput()
-	{
+	protected void makeOutput() {
 
-		if (args.length == 0 || args.length > 2)
-		{
+		if (args.length == 0 || args.length > 2) {
 			throw new RuntimeException("参数错误，期望child,Map .....");
 		}
 		String child = (String) args[0];
 
-		if(BeetlUtil.isOutsideOfRoot(child)){
-			throw new RuntimeException("include 文件非法，不在根目录里:"+child);
+		if (BeetlUtil.isOutsideOfRoot(child)) {
+			throw new RuntimeException("include 文件非法，不在根目录里:" + child);
 		}
-		
+
 		Template t = null;
-		try
-		{
+		try {
 			t = group.getFileTemplate(child);
-		}
-		catch (IOException e1)
-		{
+		} catch (IOException e1) {
 			throw new RuntimeException(e1);
 		}
 
-		if (args.length == 2)
-		{
+		if (args.length == 2) {
 			Map<String, Object> map = (Map<String, Object>) args[1];
-			for (Entry<String, Object> entry : map.entrySet())
-			{
+			for (Entry<String, Object> entry : map.entrySet()) {
 				t.set(entry.getKey(), entry.getValue());
 			}
 		}
 
 		String key = null;
-		for (Entry<String, Object> entry : ctx.getRootVars().entrySet())
-		{
+		for (Entry<String, Object> entry : ctx.getRootVars().entrySet()) {
 			key = entry.getKey();
 
-			if (ctx.getRawList() != null && ctx.getRawList().contains(key))
-			{
+			if (ctx.getRawList() != null && ctx.getRawList().contains(key)) {
 				t.setRawValue(key, entry.getValue());
-			}
-			else
-			{
+			} else {
 				t.set(entry.getKey(), entry.getValue());
 			}
 
 		}
 
-		try
-		{
-			//			t.getText(writer);
+		try {
+			// t.getText(writer);
 			t.getTextByByteWriter(writer);
 
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			throw new RuntimeException(e);
-		}
-		catch (BeeException e)
-		{
+		} catch (BeeException e) {
 			throw new RuntimeException(e);
 		}
 
 	}
-
-	
 
 }

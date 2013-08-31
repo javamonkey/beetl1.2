@@ -2,23 +2,18 @@ package org.bee.tl.core.compile;
 
 import org.bee.tl.core.PreCompiledClass;
 
-
 public class CompileTask implements Runnable {
-	PreCompiledClass pc ;
-	boolean isDone = false ;
-	
-	public CompileTask(){
-		
+	PreCompiledClass pc;
+	boolean isDone = false;
+
+	public CompileTask() {
+
 	}
-	
-	
-	
+
 	public void run() {
-		
-	
+
 	}
-	
-	
+
 	public PreCompiledClass getPc() {
 		return pc;
 	}
@@ -34,9 +29,5 @@ public class CompileTask implements Runnable {
 	public void setDone(boolean isDone) {
 		this.isDone = isDone;
 	}
-	
-	
-	
-	
 
 }

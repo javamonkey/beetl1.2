@@ -35,37 +35,31 @@ import org.bee.tl.core.Context;
 import org.bee.tl.core.Function;
 
 /**
- * 日期函数，如<p>
- * today is ${date()},或者<p>
- * <% var time = date('2011-1-1','yyyy-MM-dd')  %>
+ * 日期函数，如
  * <p>
- * time对象是java.util.Date对象  
+ * today is ${date()},或者
+ * <p>
+ * <% var time = date('2011-1-1','yyyy-MM-dd') %>
+ * <p>
+ * time对象是java.util.Date对象
+ * 
  * @author joelli
- *
+ * 
  */
-public class DateFunction implements Function
-{
+public class DateFunction implements Function {
 
-	public Date call(Object[] paras, Context ctx)
-	{
-		if (paras.length == 0)
-		{
+	public Date call(Object[] paras, Context ctx) {
+		if (paras.length == 0) {
 			return new Date();
-		}
-		else
-		{
-			if (paras.length == 2)
-			{
+		} else {
+			if (paras.length == 2) {
 
-				if (paras[0] instanceof String && paras[1] instanceof String)
-				{
-					SimpleDateFormat sdf = new SimpleDateFormat((String) paras[1]);
-					try
-					{
+				if (paras[0] instanceof String && paras[1] instanceof String) {
+					SimpleDateFormat sdf = new SimpleDateFormat(
+							(String) paras[1]);
+					try {
 						return sdf.parse((String) paras[0]);
-					}
-					catch (ParseException e)
-					{
+					} catch (ParseException e) {
 						throw new RuntimeException("Parse date Error");
 					}
 				}

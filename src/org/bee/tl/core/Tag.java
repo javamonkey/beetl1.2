@@ -30,15 +30,18 @@ package org.bee.tl.core;
 import org.bee.tl.core.io.ByteWriter;
 
 /**
- * Beetl Tag like JSP Simple Tag. 
+ * Beetl Tag like JSP Simple Tag.
  * 
- * Beetl  retrive Tag content  through method getOutput. before call getOutput,Beetl Tag will pass 
+ * Beetl retrive Tag content through method getOutput. before call
+ * getOutput,Beetl Tag will pass
  * 
- * parameter by method setParas, and call requriedInput to check weather evaluate the Tag body .
+ * parameter by method setParas, and call requriedInput to check weather
+ * evaluate the Tag body .
  * 
- * if true, Beetl will evaluate the Tag body and call setInput to pass the content body 
+ * if true, Beetl will evaluate the Tag body and call setInput to pass the
+ * content body
  * 
- *
+ * 
  * <p/>
  * &lt;% cache(key){ %>
  * <p/>
@@ -49,44 +52,44 @@ import org.bee.tl.core.io.ByteWriter;
  * &lt;%}%>
  * 
  * <p/>
+ * 
  * @author joeli
  * @create 2011-5-31
  */
-public abstract class Tag
-{
+public abstract class Tag {
 	protected Object[] args = null;
 	protected String input = null;
 	protected ByteWriter writer;
 	protected GroupTemplate group;
 	protected Context ctx;
 
-	public void setParas(Object[] args)
-	{
+	public void setParas(Object[] args) {
 		this.args = args;
 	}
 
 	/**
-	 * 是否需要解析运行标签体，有些情况是不用输入文本的，譬如{@link org.bee.tl.ext.includeFileTemplate includeFileTemplate}标签，
-	 * 有些情况下是要用，如{@link org.bee.tl.ext.LayoutTag layout} 标签
+	 * 是否需要解析运行标签体，有些情况是不用输入文本的，譬如{@link org.bee.tl.ext.includeFileTemplate
+	 * includeFileTemplate}标签， 有些情况下是要用，如{@link org.bee.tl.ext.LayoutTag layout}
+	 * 标签
 	 */
-	public boolean requriedInput()
-	{
+	public boolean requriedInput() {
 		return true;
 	}
 
 	/**
-	 * @param input 标签体的内容
+	 * @param input
+	 *            标签体的内容
 	 */
-	public void setInput(String input)
-	{
+	public void setInput(String input) {
 		this.input = input;
 	}
 
 	/**
-	 * @param ctx 上下文，可以通过__this获取template，通过__pw获取Writer， __group 获取GroupTemplate
+	 * @param ctx
+	 *            上下文，可以通过__this获取template，通过__pw获取Writer， __group
+	 *            获取GroupTemplate
 	 */
-	public void setContext(Context ctx)
-	{
+	public void setContext(Context ctx) {
 
 		this.ctx = ctx;
 		this.group = (GroupTemplate) ctx.getVar("__group");
@@ -96,6 +99,7 @@ public abstract class Tag
 
 	/**
 	 * 得到Tag的内容，string方式
+	 * 
 	 * @return
 	 */
 	public abstract String getOutput();

@@ -8,9 +8,9 @@ public class WebVariable {
 	HttpServletRequest request;
 	HttpServletResponse response;
 	HttpSession session;
-	
-	public WebVariable(){
-		
+
+	public WebVariable() {
+
 	}
 
 	public HttpServletRequest getRequest() {
@@ -36,5 +36,5 @@ public class WebVariable {
 	public void setSession(HttpSession session) {
 		this.session = session;
 	}
-	
+
 }

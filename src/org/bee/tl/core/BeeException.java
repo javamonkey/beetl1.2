@@ -1,13 +1,13 @@
 package org.bee.tl.core;
 
 public class BeeException extends Exception {
-	
-	
+
 	private Resource resource = null;
-//	public BeeException(String message, Throwable cause) {
-//		super(message, cause);
-//	}
-	
+
+	// public BeeException(String message, Throwable cause) {
+	// super(message, cause);
+	// }
+
 	public BeeException(Throwable cause) {
 		super(cause);
 	}
@@ -19,11 +19,9 @@ public class BeeException extends Exception {
 	public void setResource(Resource resource) {
 		this.resource = resource;
 	}
-	public String toString(){
+
+	public String toString() {
 		return this.getCause().toString();
 	}
-	
-	
-	
-	
+
 }

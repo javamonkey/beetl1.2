@@ -313,8 +313,8 @@ public class CoreScriptRunner {
 				List list = t.getChildren();
 				BeeCommonNodeTree conditionNode = (BeeCommonNodeTree) list
 						.get(0);
-				boolean st1 = (Boolean)ExpRuntime.condition(conditionNode, localCtx,
-						control);
+				boolean st1 = (Boolean) ExpRuntime.condition(conditionNode,
+						localCtx, control);
 				if (st1) {
 					BeeCommonNodeTree block = (BeeCommonNodeTree) list.get(1);
 					print(block, localCtx, pw, control);
@@ -531,79 +531,78 @@ public class CoreScriptRunner {
 			ByteWriter pw, RuntimeControl control) throws IOException {
 		BeeCommonNodeTree firstNode = (BeeCommonNodeTree) t.getChild(0);
 		Object o = null;
-		boolean hasExp = true;		
+		boolean hasExp = true;
 		int startCase = 0;
-		if(firstNode.getType()==BeeParser.G_CASE||firstNode.getType()==BeeParser.G_DEFAULT){
+		if (firstNode.getType() == BeeParser.G_CASE
+				|| firstNode.getType() == BeeParser.G_DEFAULT) {
 			hasExp = false;
-			startCase = 0;;
-			
-		}else{		
-			o = ExpRuntime.eval(firstNode, localCtx, control);		
+			startCase = 0;
+			;
+
+		} else {
+			o = ExpRuntime.eval(firstNode, localCtx, control);
 			hasExp = true;
 			startCase = 1;
-			
+
 		}
-	
-		
+
 		BeeCommonNodeTree caseTree = null;
 		BeeCommonNodeTree expTreeList = null;
-	
+
 		BeeCommonNodeTree blockTree = null;
-		
+
 		for (int i = startCase; i < t.getChildCount(); i++) {
 			caseTree = (BeeCommonNodeTree) t.getChild(i);
-			
-			if (caseTree.getToken().getType() != BeeParser.G_DEFAULT)
-			{
+
+			if (caseTree.getToken().getType() != BeeParser.G_DEFAULT) {
 				expTreeList = (BeeCommonNodeTree) caseTree.getChild(0);
 				boolean expListHasTrue = false;
-				for(int j=0;j<expTreeList.getChildCount();j++){
-					
-					
-					BeeCommonNodeTree exp = (BeeCommonNodeTree) expTreeList.getChild(j);
+				for (int j = 0; j < expTreeList.getChildCount(); j++) {
+
+					BeeCommonNodeTree exp = (BeeCommonNodeTree) expTreeList
+							.getChild(j);
 					Object expValue = ExpRuntime.eval(exp, localCtx, control);
-					if(hasExp){
-						if(BeetlUtil.isObjectSame(o,expValue)){
+					if (hasExp) {
+						if (BeetlUtil.isObjectSame(o, expValue)) {
 							expListHasTrue = true;
 							break;
 						}
-					}else{
-						if(expValue instanceof Boolean){
-							if(((Boolean)expValue).booleanValue()){
+					} else {
+						if (expValue instanceof Boolean) {
+							if (((Boolean) expValue).booleanValue()) {
 								expListHasTrue = true;
 								break;
-							}else{
+							} else {
 								continue;
 							}
-						}else{
-							throw new BeeRuntimeException(BeeRuntimeException.BOOLEAN_EXPECTED_ERROR, exp.getToken());
+						} else {
+							throw new BeeRuntimeException(
+									BeeRuntimeException.BOOLEAN_EXPECTED_ERROR,
+									exp.getToken());
 
 						}
 					}
-					
+
 				}
-				if(expListHasTrue){
-					//执行
-					blockTree = (BeeCommonNodeTree)caseTree.getChild(1);
+				if (expListHasTrue) {
+					// 执行
+					blockTree = (BeeCommonNodeTree) caseTree.getChild(1);
 					this.print(blockTree, localCtx, pw, control);
-				
+
 					break;
 				}
-			}else{
-				//default
-				BeeCommonNodeTree defaultTree = caseTree ;
+			} else {
+				// default
+				BeeCommonNodeTree defaultTree = caseTree;
 				BeeCommonNodeTree expTree = null;
 				for (int j = 0; j < defaultTree.getChildCount(); j++) {
 					expTree = (BeeCommonNodeTree) defaultTree.getChild(j);
 					this.print(expTree, localCtx, pw, control);
 				}
 			}
-			
-			
-			
+
 		}
 
-		
 	}
 
 	private void parseFor(BeeCommonNodeTree t, Context localCtx, ByteWriter pw,
@@ -633,45 +632,48 @@ public class CoreScriptRunner {
 		String name = idNode.getToken().getText();
 		localCtx.defineVar(name + "_index", 0, idNode.getToken());
 		IteratorStatus itStatus = IteratorStatus.getIteratorStatus(o);
-		if(itStatus==null){
+		if (itStatus == null) {
 			throw new BeeRuntimeException(BeeRuntimeException.DO_NOT_SUPPORT,
 					varRef.getToken());
 		}
 		int index = 0;
-		if(itStatus.hasSize()){
-			localCtx.defineVar(name + "_size", itStatus.getSize(),idNode.getToken());
-			
+		if (itStatus.hasSize()) {
+			localCtx.defineVar(name + "_size", itStatus.getSize(),
+					idNode.getToken());
+
 		}
-		localCtx.defineVar(name, null,idNode.getToken());	
-		localCtx.defineVar(name+"LP", itStatus,idNode.getToken());
-		String indexName = name+"_index" ;
-		
-		while(itStatus.hasNext()){
+		localCtx.defineVar(name, null, idNode.getToken());
+		localCtx.defineVar(name + "LP", itStatus, idNode.getToken());
+		String indexName = name + "_index";
+
+		while (itStatus.hasNext()) {
 			Object temp = itStatus.next();
 			localCtx.fastSetVar(name, temp);
 			localCtx.fastSetVar(indexName, index++);
-			 
+
 			BeeCommonNodeTree slist = (BeeCommonNodeTree) t.getChild(2);
 
 			this.print(slist, localCtx, pw, control);
-			switch(control.jump){
-			case 2 /*control.FOR_BREAK*/:control.jump = control.FOR_RESET;return;
-			case 1 /*control.FOR_CONTINUE*/:control.jump = control.FOR_RESET;continue;
-			case 4 /*control.RETURN*/: return ;
+			switch (control.jump) {
+			case 2 /* control.FOR_BREAK */:
+				control.jump = control.FOR_RESET;
+				return;
+			case 1 /* control.FOR_CONTINUE */:
+				control.jump = control.FOR_RESET;
+				continue;
+			case 4 /* control.RETURN */:
+				return;
 			}
-			
+
 		}
-		
-		if(hasElseFor&&!itStatus.hasData()){
-			BeeCommonNodeTree elseForBlock = (BeeCommonNodeTree) t
-			.getChild(3);
+
+		if (hasElseFor && !itStatus.hasData()) {
+			BeeCommonNodeTree elseForBlock = (BeeCommonNodeTree) t.getChild(3);
 			this.print(elseForBlock, localCtx, pw, control);
 
 			return;
 
 		}
-			
-		
 
 	}
 
@@ -817,7 +819,7 @@ public class CoreScriptRunner {
 						.getChild(0);
 				pattern = pattenNode.getText();
 				pattern = pattern.substring(1, pattern.length() - 1);
-				if(value!=null){
+				if (value != null) {
 					Class type = value.getClass();
 					format = this.getDefaultFormat(type);
 					if (format == null) {
@@ -832,11 +834,10 @@ public class CoreScriptRunner {
 					} catch (Exception ex) {
 						throw new BeeRuntimeException(
 								BeeRuntimeException.NATIVE_CALL_EXCEPTION,
-								((BeeCommonNodeTree) fmNode.getChild(0)).getToken(),
-								ex);
+								((BeeCommonNodeTree) fmNode.getChild(0))
+										.getToken(), ex);
 					}
 				}
-			
 
 			}
 		}

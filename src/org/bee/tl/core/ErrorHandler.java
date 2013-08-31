@@ -34,24 +34,27 @@ import java.io.PrintWriter;
  * 
  * @author joelli
  * @since 1.1
- *
+ * 
  */
-public abstract class ErrorHandler
-{
+public abstract class ErrorHandler {
 
-	/** 处理错误，错误输出到System.out
+	/**
+	 * 处理错误，错误输出到System.out
+	 * 
 	 * @param ex
 	 */
 
-	public void processExcption(BeeException ex)
-	{
+	public void processExcption(BeeException ex) {
 		this.processExcption(ex, new PrintWriter(System.out, true));
 	}
 
-	/** 处理错误，错误输出到os流
+	/**
+	 * 处理错误，错误输出到os流
+	 * 
 	 * @param beeException
 	 * @param os
 	 */
-	public abstract void processExcption(BeeException beeException, PrintWriter os);
+	public abstract void processExcption(BeeException beeException,
+			PrintWriter os);
 
 }

@@ -34,74 +34,65 @@ import java.util.Date;
 import org.bee.tl.core.BeeNumber;
 
 /**
- *  操作字符串的简便方法，如：<p>
- *  ${strutil.startWith("hello",'he')}
+ * 操作字符串的简便方法，如：
+ * <p>
+ * ${strutil.startWith("hello",'he')}
+ * 
  * @author joeli
- *
+ * 
  */
-public class StringUtil
-{
-	public String trim(String str){
+public class StringUtil {
+	public String trim(String str) {
 		return str.trim();
 	}
-	public boolean startWith(String str, String key)
-	{
+
+	public boolean startWith(String str, String key) {
 		return str.startsWith(key);
 	}
 
-	public boolean endWith(String str, String key)
-	{
+	public boolean endWith(String str, String key) {
 		return str.endsWith(key);
 	}
 
-	public int length(String str)
-	{
+	public int length(String str) {
 		return str.length();
 	}
 
-	public String subStringTo(String str, BeeNumber start, BeeNumber end)
-	{
+	public String subStringTo(String str, BeeNumber start, BeeNumber end) {
 		return str.substring(start.intValue(), end.intValue());
 	}
 
-	public String subString(String str, BeeNumber start)
-	{
+	public String subString(String str, BeeNumber start) {
 		return str.substring(start.intValue());
 	}
 
-	public String[] split(String str, String key)
-	{
+	public String[] split(String str, String key) {
 		return str.split(key);
 	}
 
-	public boolean contain(String str, String key)
-	{
+	public boolean contain(String str, String key) {
 		return str.indexOf(key) != -1;
 	}
 
-	public String toUpperCase(String str)
-	{
+	public String toUpperCase(String str) {
 		return str.toUpperCase();
 	}
 
-	public String toLowerCase(String str)
-	{
+	public String toLowerCase(String str) {
 		return str.toLowerCase();
 	}
 
-	public String replace(String str, String oldValue, String newValue)
-	{
+	public String replace(String str, String oldValue, String newValue) {
 		return str.replace(oldValue, newValue);
 	}
 
-	public String format(String str, Object[] args)
-	{
+	public String format(String str, Object[] args) {
 		String result = MessageFormat.format(str, args);
 		return result;
 	}
-	
-	public String formatDate(Date o,String args){
-		SimpleDateFormat sd = new  SimpleDateFormat(args);
+
+	public String formatDate(Date o, String args) {
+		SimpleDateFormat sd = new SimpleDateFormat(args);
 		return sd.format(o);
 	}
 

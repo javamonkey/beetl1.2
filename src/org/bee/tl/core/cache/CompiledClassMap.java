@@ -48,8 +48,7 @@ import org.bee.tl.core.compile.CompiledClass;
  * @author jzli
  * @create 2011-11-4
  */
-public class CompiledClassMap
-{
+public class CompiledClassMap {
 	Object lock = new Object();
 	Map<String, CompiledClass> cahce = new ConcurrentHashMap<String, CompiledClass>();
 	Set<String> oldSet = new HashSet<String>();
@@ -59,32 +58,24 @@ public class CompiledClassMap
 	static Logger logger = Logger.getLogger(CompiledClassMap.class.toString());
 	private boolean debug = false;
 
-	public CompiledClassMap(GroupTemplate group)
-	{
+	public CompiledClassMap(GroupTemplate group) {
 		this.group = group;
 		debug = group.isDebug();
 	}
 
-	public CompiledClass getClass(String key)
-	{
+	public CompiledClass getClass(String key) {
 
 		CompiledClass cls = cahce.get(key);
-		if (cls == null)
-		{
+		if (cls == null) {
 
 			// 没有预编译或者正在预编译
-			if (group.getFutureComplileExecutor() != null)
-			{
+			if (group.getFutureComplileExecutor() != null) {
 				CompileTask future = futureMap.get(key);
-				if (future != null)
-				{
-					if (!future.isDone())
-					{
+				if (future != null) {
+					if (!future.isDone()) {
 						// 没有编译完成，暂时解释执行
 						return future.getPc();
-					}
-					else
-					{
+					} else {
 						futureMap.remove(key);
 					}
 
@@ -92,81 +83,65 @@ public class CompiledClassMap
 			}
 
 			String[] str = BeetlUtil.getPackage2Class(key);
-			File classFile = new File(group.getTempFolder() + File.separator + group.getRootAlias() + File.separator
-					+ "classes" + File.separator + str[0].replace(".", File.separator), str[1] + ".class");
-			if (classFile.exists() && !group.isDebug())
-			{
-				try
-				{
+			File classFile = new File(group.getTempFolder() + File.separator
+					+ group.getRootAlias() + File.separator + "classes"
+					+ File.separator + str[0].replace(".", File.separator),
+					str[1] + ".class");
+			if (classFile.exists() && !group.isDebug()) {
+				try {
 
-					Class c = group.getClassLoader().loadClass(BeetlUtil.getClassFullName(str[0], str[1]));
+					Class c = group.getClassLoader().loadClass(
+							BeetlUtil.getClassFullName(str[0], str[1]));
 
 					cls = (CompiledClass) c.newInstance();
 
 					File f = new File(group.getRoot().toString(), key);
-					if (cls.getVersion() == f.lastModified() && !debug)
-					{
+					if (cls.getVersion() == f.lastModified() && !debug) {
 						this.cacheCompiledClass(key, cls);
 						return cls;
-					}
-					else
-					{
+					} else {
 						return null;
 					}
 
-				}
-				catch (ClassNotFoundException e)
-				{
+				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
-					logger.warning("发现一错误的class文件 ,指定文件未找到" + group.getRoot().toString() + File.separator + key + ":"
-							+ e.getMessage());
+					logger.warning("发现一错误的class文件 ,指定文件未找到"
+							+ group.getRoot().toString() + File.separator + key
+							+ ":" + e.getMessage());
 
 					return null;
-				}
-				catch (InstantiationException e)
-				{
-					logger.warning("发现一错误的class文件，不能初始化该类 " + group.getRoot().toString() + File.separator + key + ":"
-							+ e.getMessage());
+				} catch (InstantiationException e) {
+					logger.warning("发现一错误的class文件，不能初始化该类 "
+							+ group.getRoot().toString() + File.separator + key
+							+ ":" + e.getMessage());
 
 					return null;
-				}
-				catch (UnsupportedClassVersionError e)
-				{
-					logger.warning("java版本不一致件 " + group.getRoot().toString() + File.separator + key + ":"
-							+ e.getMessage());
+				} catch (UnsupportedClassVersionError e) {
+					logger.warning("java版本不一致件 " + group.getRoot().toString()
+							+ File.separator + key + ":" + e.getMessage());
 
 					return null;
-				}
-				catch (IllegalAccessException e)
-				{
-					logger.warning("发现一错误的class文件 " + group.getRoot().toString() + File.separator + key + ":"
-							+ e.getMessage());
+				} catch (IllegalAccessException e) {
+					logger.warning("发现一错误的class文件 "
+							+ group.getRoot().toString() + File.separator + key
+							+ ":" + e.getMessage());
 
 					return null;
 
-				}
-				catch (RuntimeException re)
-				{
-					//没有注释，忘记什么意思了？
-					if (re.getMessage().startsWith("Wrong"))
-					{
+				} catch (RuntimeException re) {
+					// 没有注释，忘记什么意思了？
+					if (re.getMessage().startsWith("Wrong")) {
 						this.oldSet.add(key);
 						return null;
-					}
-					else
-					{
+					} else {
 						throw re;
 					}
 				}
-			}
-			else
-			{
+			} else {
 				return null;
 			}
 
-		}
-		else
-		{
+		} else {
 			return cls;
 
 		}
@@ -180,68 +155,54 @@ public class CompiledClassMap
 	 * @param key
 	 * @return
 	 */
-	public boolean hasLoaded(String key)
-	{
+	public boolean hasLoaded(String key) {
 		CompiledClass cls = cahce.get(key);
-		if (cls != null && !(cls instanceof PreCompiledClass))
-		{
+		if (cls != null && !(cls instanceof PreCompiledClass)) {
 			return true;
-		}
-		else
-		{
-			if (oldSet.contains(key))
-			{
+		} else {
+			if (oldSet.contains(key)) {
 				// 曾经被classLoader装载过
 				return true;
-			}
-			else
-			{
+			} else {
 				return false;
 			}
 
 		}
 	}
 
-	public void cacheCompiledClass(String key, CompiledClass cls)
-	{
+	public void cacheCompiledClass(String key, CompiledClass cls) {
 		cahce.put(key, cls);
 	}
 
-	public void removeClass(String key)
-	{
+	public void removeClass(String key) {
 		cahce.remove(key);
 	}
 
 	/**
 	 * 用于后台检测是否已经更新 2012-1-4 jzli
 	 */
-	public void checkTemplateUpdate()
-	{
+	public void checkTemplateUpdate() {
 		if (cahce.size() == 0)
 			return;
 		Set<Map.Entry<String, CompiledClass>> set = cahce.entrySet();
 		List<String> list = new LinkedList<String>();
 		String key = null;
 		CompiledClass c = null;
-		for (Map.Entry<String, CompiledClass> entry : set)
-		{
+		for (Map.Entry<String, CompiledClass> entry : set) {
 			key = entry.getKey();
 			c = entry.getValue();
 			File f = new File(group.getRoot(), key);
-			if (f.lastModified() != c.getVersion())
-			{
+			if (f.lastModified() != c.getVersion()) {
 				list.add(key);
 				// System.out.println("delete " + f + "f.lastModified()=" +
 				// f.lastModified() + " but " + c.getVersion());
 			}
 		}
 
-		for (String file : list)
-		{
+		for (String file : list) {
 
 			cahce.remove(file);
-			if (!oldSet.contains(file))
-			{
+			if (!oldSet.contains(file)) {
 				oldSet.add(file);
 			}
 
@@ -249,13 +210,11 @@ public class CompiledClassMap
 
 	}
 
-	public Map<String, CompileTask> getFutureMap()
-	{
+	public Map<String, CompileTask> getFutureMap() {
 		return futureMap;
 	}
 
-	public void setFutureMap(Map<String, CompileTask> futureMap)
-	{
+	public void setFutureMap(Map<String, CompileTask> futureMap) {
 		this.futureMap = futureMap;
 	}
 

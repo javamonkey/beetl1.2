@@ -10,32 +10,29 @@ public class ExpComplexTestCase extends BasicTestCase {
 	public ExpComplexTestCase() {
 		super();
 	}
-	
-	public void testVarAdd()throws IOException, BeeException {
+
+	public void testVarAdd() throws IOException, BeeException {
 		Template t = this.gt.getFileTemplate("/exp/var_add_template.html");
 		t.set("j", 3);
 		String str = t.getTextAsString();
-//		//for infer
+		// //for infer
 		t = this.gt.getFileTemplate("/exp/var_add_template.html");
 		t.set("j", 3);
 		str = t.getTextAsString();
-		
-		this.assertEquals(this
-				.getFileContent("/exp/var_add_expected.html"), str);
-		
-		
-		
+
+		this.assertEquals(this.getFileContent("/exp/var_add_expected.html"),
+				str);
 
 	}
-	
+
 	public void testComplex() throws IOException, BeeException {
 
 		Template t = this.gt.getFileTemplate("/exp/exp_complex_template.html");
 		String str = t.getTextAsString();
-		this.assertEquals(this.getFileContent("/exp/exp_complex_expected.html"),
-				str);
+		this.assertEquals(
+				this.getFileContent("/exp/exp_complex_expected.html"), str);
 	}
-	
+
 	public void testBig() throws IOException, BeeException {
 
 		Template t = this.gt.getFileTemplate("/exp/exp_big_template.html");
@@ -43,7 +40,5 @@ public class ExpComplexTestCase extends BasicTestCase {
 		this.assertEquals(this.getFileContent("/exp/exp_big_expected.html"),
 				str);
 	}
-
-	
 
 }

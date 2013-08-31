@@ -24,10 +24,9 @@ public class Perforamce {
 		//
 		// }
 		int max = 1000000;
-		
+
 		{
 			long start = System.currentTimeMillis();
-			
 
 			for (int i = 0; i < max; i++) {
 				String s = "12.00300";
@@ -35,11 +34,11 @@ public class Perforamce {
 				s = s.replaceAll("[.]$", "");// 如最后一位是.则去掉
 			}
 			long end = System.currentTimeMillis();
-			System.out.println("time " + (end - start) + " value=" );
+			System.out.println("time " + (end - start) + " value=");
 		}
 		{
 			long start = System.currentTimeMillis();
-			
+
 			Pattern p = Pattern.compile("0+?$");
 			Pattern p2 = Pattern.compile("[.]$");
 
@@ -51,10 +50,10 @@ public class Perforamce {
 			long end = System.currentTimeMillis();
 			System.out.println("time2 " + (end - start) + " value=");
 		}
-		
+
 		{
 			long start = System.currentTimeMillis();
-			
+
 			Pattern p = Pattern.compile("0+?$");
 			Pattern p2 = Pattern.compile("[.]$");
 
@@ -63,39 +62,32 @@ public class Perforamce {
 				s = trim(s);// 如最后一位是.则去掉
 			}
 			long end = System.currentTimeMillis();
-			
-			System.out.println("time3 " + (end - start) + " value="+trim("12.00300"));
-			
+
+			System.out.println("time3 " + (end - start) + " value="
+					+ trim("12.00300"));
+
 		}
 
 	}
-	
-	public static String trim(String str){
-		
+
+	public static String trim(String str) {
+
 		int index = -1;
-		if ((index = str.indexOf('.')) != -1)
-		{
+		if ((index = str.indexOf('.')) != -1) {
 			char[] array = str.toCharArray();
 			int i = str.length() - 1;
-			for (; i > index; i--)
-			{
-				if (array[i] != '0')
-				{
+			for (; i > index; i--) {
+				if (array[i] != '0') {
 					break;
 				}
 			}
-			if (i == index)
-			{
+			if (i == index) {
 				return new String(array, 0, i);
-			}
-			else
-			{
+			} else {
 				return new String(array, 0, i + 1);
 			}
 
-		}
-		else
-		{
+		} else {
 			return str;
 		}
 	}
