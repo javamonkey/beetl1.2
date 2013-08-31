@@ -1,1 +1,1 @@
-<input id="${id}" value=""/>
+<input id="${id}" value="" />

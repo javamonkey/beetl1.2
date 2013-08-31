@@ -35,29 +35,30 @@ import javax.servlet.ServletContext;
 import org.bee.tl.core.GroupTemplate;
 import org.springframework.web.context.ServletContextAware;
 
-
 /**
  * 
  * 
- *  <pre>&lt;bean id="beetlConfig" class="org.bee.tl.ext.spring.BeetlGroupUtilConfiguration" init-method="init">
-		&lt;property name="root" value="/"/>		
-		&lt;property name="optimize" value="true"/>
-		&lt;property name="nativeCall" value="true"/>
-		&lt;property name="check" value="2"/>		
-	&lt;/bean>
-	
-	&lt;bean id="viewResolver" class="org.bee.tl.ext.spring.BeetlSpringViewResolver">
-		&lt;property name="contentType" value="text/html;charset=UTF-8"></property>
-	&lt;/bean>
-	</pre>
+ * <pre>
+ * &lt;bean id="beetlConfig" class="org.bee.tl.ext.spring.BeetlGroupUtilConfiguration" init-method="init">
+ * 		&lt;property name="root" value="/"/>		
+ * 		&lt;property name="optimize" value="true"/>
+ * 		&lt;property name="nativeCall" value="true"/>
+ * 		&lt;property name="check" value="2"/>		
+ * 	&lt;/bean>
+ * 	
+ * 	&lt;bean id="viewResolver" class="org.bee.tl.ext.spring.BeetlSpringViewResolver">
+ * 		&lt;property name="contentType" value="text/html;charset=UTF-8"></property>
+ * 	&lt;/bean>
+ * </pre>
+ * 
  * beetl 在spring mvc 中的配置
  * <p>
  * 用户继承此类，并实现 initOther方法,以注册自己的函数，标签等
+ * 
  * @author javamonkey
- *
+ * 
  */
-public class BeetlGroupUtilConfiguration implements ServletContextAware
-{
+public class BeetlGroupUtilConfiguration implements ServletContextAware {
 	protected GroupTemplate group;
 	protected String root = "/";
 	protected String webPath = null;
@@ -70,60 +71,52 @@ public class BeetlGroupUtilConfiguration implements ServletContextAware
 	protected String placeholderEnd = "}";
 	protected String charset = "GBK";
 	protected String suffix = "";
-	Logger logger = Logger.getLogger(BeetlGroupUtilConfiguration.class.toString());
-	//每2秒检测一次,用于开发
+	Logger logger = Logger.getLogger(BeetlGroupUtilConfiguration.class
+			.toString());
+	// 每2秒检测一次,用于开发
 	int check = 2;
 
-	public void setServletContext(ServletContext sc)
-	{
+	public void setServletContext(ServletContext sc) {
 
 		webPath = sc.getRealPath("/");
 		root = webPath + root;
 
 	}
 
-	public String getCharset()
-	{
+	public String getCharset() {
 		return charset;
 	}
 
-	public void setCharset(String charset)
-	{
+	public void setCharset(String charset) {
 		this.charset = charset;
 	}
 
-	public String getRoot()
-	{
+	public String getRoot() {
 		return root;
 	}
 
-	public void setRoot(String root)
-	{
+	public void setRoot(String root) {
 		this.root = root;
 	}
 
-	public boolean isOptimize()
-	{
+	public boolean isOptimize() {
 		return optimize;
 	}
 
-	public void setOptimize(boolean optimize)
-	{
+	public void setOptimize(boolean optimize) {
 		this.optimize = optimize;
 	}
 
-	public void init()
-	{
+	public void init() {
 
 		group = new GroupTemplate(new File(root));
-		group.config(statementStart, statementEnd, placeholderStart, placeholderEnd);
-		if (tempFolder != null)
-		{
+		group.config(statementStart, statementEnd, placeholderStart,
+				placeholderEnd);
+		if (tempFolder != null) {
 			group.setTempFolder(tempFolder);
-		}
-		else
-		{
-			File target = new File(webPath + File.separator + "WEB-INF", ".temp");
+		} else {
+			File target = new File(webPath + File.separator + "WEB-INF",
+					".temp");
 			target.mkdirs();
 			tempFolder = target.toString();
 			group.setTempFolder(target.toString());
@@ -131,8 +124,7 @@ public class BeetlGroupUtilConfiguration implements ServletContextAware
 
 		if (nativeCall)
 			group.enableNativeCall();
-		if (optimize)
-		{
+		if (optimize) {
 			group.enableOptimize();
 			logger.info("Beetl允许优化，位于:" + tempFolder);
 		}
@@ -143,86 +135,70 @@ public class BeetlGroupUtilConfiguration implements ServletContextAware
 
 	}
 
-	public void initOther()
-	{
-		//如注册方法，格式化函数等
+	public void initOther() {
+		// 如注册方法，格式化函数等
 		/**
 		 * group.register......
 		 */
 	}
 
-	public GroupTemplate getGroupTemplate()
-	{
+	public GroupTemplate getGroupTemplate() {
 		return this.group;
 	}
 
-	public String getTempFolder()
-	{
+	public String getTempFolder() {
 		return tempFolder;
 	}
 
-	public void setTempFolder(String tempFolder)
-	{
+	public void setTempFolder(String tempFolder) {
 		this.tempFolder = tempFolder;
 	}
 
-	public String getStatementStart()
-	{
+	public String getStatementStart() {
 		return statementStart;
 	}
 
-	public void setStatementStart(String statementStart)
-	{
+	public void setStatementStart(String statementStart) {
 		this.statementStart = statementStart;
 	}
 
-	public String getStatementEnd()
-	{
+	public String getStatementEnd() {
 		return statementEnd;
 	}
 
-	public void setStatementEnd(String statementEnd)
-	{
+	public void setStatementEnd(String statementEnd) {
 		this.statementEnd = statementEnd;
 	}
 
-	public String getPlaceholderStart()
-	{
+	public String getPlaceholderStart() {
 		return placeholderStart;
 	}
 
-	public void setPlaceholderStart(String placeholderStart)
-	{
+	public void setPlaceholderStart(String placeholderStart) {
 		this.placeholderStart = placeholderStart;
 	}
 
-	public String getPlaceholderEnd()
-	{
+	public String getPlaceholderEnd() {
 		return placeholderEnd;
 	}
 
-	public void setPlaceholderEnd(String placeholderEnd)
-	{
+	public void setPlaceholderEnd(String placeholderEnd) {
 		this.placeholderEnd = placeholderEnd;
 	}
 
-	public boolean isNativeCall()
-	{
+	public boolean isNativeCall() {
 		return nativeCall;
 	}
 
-	public void setNativeCall(boolean nativeCall)
-	{
+	public void setNativeCall(boolean nativeCall) {
 		this.nativeCall = nativeCall;
 	}
 
-	public int getCheck()
-	{
+	public int getCheck() {
 		return check;
 	}
 
-	public void setCheck(int check)
-	{
+	public void setCheck(int check) {
 		this.check = check;
 	}
 

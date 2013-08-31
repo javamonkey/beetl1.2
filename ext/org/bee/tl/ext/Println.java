@@ -36,27 +36,22 @@ import org.bee.tl.core.io.ByteWriter;
 
 /**
  * &lt;% println("hello") %>
+ * 
  * @author jeolli
- *
+ * 
  */
-public class Println implements Function
-{
+public class Println implements Function {
 
-	public String call(Object[] paras, Context ctx)
-	{
+	public String call(Object[] paras, Context ctx) {
 		Object o = paras[0];
 		ByteWriter w = (ByteWriter) ctx.getVar("__pw");
 		CoreScriptRunner csr = (CoreScriptRunner) ctx.getVar("__core");
 		String cr = csr.getCR();
-		if (o != null)
-		{
-			try
-			{
+		if (o != null) {
+			try {
 				w.write(o.toString());
 				w.write(cr);
-			}
-			catch (IOException e)
-			{
+			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
 		}

@@ -9,12 +9,11 @@ import org.bee.tl.core.BeeException;
 import org.bee.tl.core.GroupTemplate;
 import org.bee.tl.core.Template;
 
-public class StrTemplateTestCase extends BasicTestCase
-{
-	public void testSimple() throws IOException, BeeException
-	{
+public class StrTemplateTestCase extends BasicTestCase {
+	public void testSimple() throws IOException, BeeException {
 
-		//		System.setProperty("BEETL_EXTRA_CLASSPATH", "c:/affd;d:/ddff/xx.jar");
+		// System.setProperty("BEETL_EXTRA_CLASSPATH",
+		// "c:/affd;d:/ddff/xx.jar");
 		String input = "${a}";
 		GroupTemplate gt = new GroupTemplate();
 		gt.enableOptimize();

@@ -27,8 +27,6 @@
  */
 package org.bee.tl.core;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * 格式化函数，用于模版里占位符里的变量格式化后输出，如:
@@ -39,38 +37,34 @@ import java.util.Date;
  * 字符串是需要格式化的样式，如果没有，可以不写，如：
  * <p/>
  * ${user.birthday,dateFormat},格式化函数应该支持pattern为null的情况
+ * 
  * <pre>
- * public Object format(Object data, String pattern)
-	{
-		if (data instanceof Date)
-		{
-			SimpleDateFormat sdf = null;
-			if (pattern == null)
-			{
-				sdf = new SimpleDateFormat();
-			}
-			else
-			{
-				sdf = new SimpleDateFormat(pattern);
-			}
-			return sdf.format(data);
-
-		}
-		else
-		{
-			throw new RuntimeException("Arg Error:Type should be Date");
-		}
-	}
+ * public Object format(Object data, String pattern) {
+ * 	if (data instanceof Date) {
+ * 		SimpleDateFormat sdf = null;
+ * 		if (pattern == null) {
+ * 			sdf = new SimpleDateFormat();
+ * 		} else {
+ * 			sdf = new SimpleDateFormat(pattern);
+ * 		}
+ * 		return sdf.format(data);
+ * 
+ * 	} else {
+ * 		throw new RuntimeException(&quot;Arg Error:Type should be Date&quot;);
+ * 	}
+ * }
  * </pre>
+ * 
  * @author joelli
- *
+ * 
  */
-public interface Format
-{
+public interface Format {
 
 	/**
-	 * @param data  格式化对象
-	 * @param pattern，模式，格式换函数需要考虑到pattern为null的情况
+	 * @param data
+	 *            格式化对象
+	 * @param pattern
+	 *            ，模式，格式换函数需要考虑到pattern为null的情况
 	 * @return
 	 */
 	public Object format(Object data, String pattern);

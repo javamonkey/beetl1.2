@@ -13,7 +13,6 @@ import org.springframework.web.servlet.view.AbstractTemplateView;
 
 public class BeetlSpringView extends AbstractTemplateView {
 
-	
 	protected void renderMergedTemplateModel(Map model,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {

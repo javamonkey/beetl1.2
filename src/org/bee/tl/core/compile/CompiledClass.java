@@ -54,8 +54,7 @@ import org.bee.tl.core.exception.PreCompileException;
 import org.bee.tl.core.io.ByteWriter;
 import org.bee.tl.core.number.NumberFactory;
 
-public class CompiledClass
-{
+public class CompiledClass {
 	static Logger logger = Logger.getLogger(CompiledClass.class.toString());
 
 	protected Resource resource = null;
@@ -65,46 +64,41 @@ public class CompiledClass
 	public static int version = 129;
 	protected NumberFactory nf = null;
 
-	public Resource getResource()
-	{
+	public Resource getResource() {
 		return resource;
 	}
 
-	public void setResource(Resource resource)
-	{
+	public void setResource(Resource resource) {
 		this.resource = resource;
 	}
 
-	public CoreScriptRunner getScriptRunner()
-	{
+	public CoreScriptRunner getScriptRunner() {
 		return scriptRunner;
 	}
 
-	public void setScriptRunner(CoreScriptRunner scriptRunner)
-	{
+	public void setScriptRunner(CoreScriptRunner scriptRunner) {
 		this.scriptRunner = scriptRunner;
 	}
 
-	public long getVersion()
-	{
+	public long getVersion() {
 		// return 1320461026890l;
 		throw new UnsupportedOperationException("必须在生成的代码中实现");
 	}
 
-	public void service(ByteWriter out, Context ctx) throws IOException, BeeException
-	{
+	public void service(ByteWriter out, Context ctx) throws IOException,
+			BeeException {
 
 	}
 
-	public Object callFunction(String funName, Context ctx, Object... paras) throws Exception
-	{
+	public Object callFunction(String funName, Context ctx, Object... paras)
+			throws Exception {
 		Function fun = scriptRunner.getFunction(funName);
 		return fun.call(paras, ctx);
 
 	}
 
-	public Object callFunction(String funName, int line, Context ctx, Object... paras) throws Exception
-	{
+	public Object callFunction(String funName, int line, Context ctx,
+			Object... paras) throws Exception {
 		Function fun = scriptRunner.getFunction(funName);
 		return fun.call(paras, ctx);
 
@@ -118,13 +112,11 @@ public class CompiledClass
 	 *            类似这个，key1,value1,key2,value2
 	 * @return
 	 */
-	public Map<String, Object> createMapFromJson(Object... paras)
-	{
+	public Map<String, Object> createMapFromJson(Object... paras) {
 		Map<String, Object> map = new HashMap<String, Object>(paras.length / 2);
 		String key = null;
 		Object value = null;
-		for (int i = 0; i < paras.length; i = i + 2)
-		{
+		for (int i = 0; i < paras.length; i = i + 2) {
 			key = (String) paras[i];
 			value = paras[i + 1];
 			map.put(key, value);
@@ -132,168 +124,134 @@ public class CompiledClass
 		return map;
 	}
 
-	public List<Object> createListFromJson(Object... paras)
-	{
+	public List<Object> createListFromJson(Object... paras) {
 		return Arrays.asList(paras);
 	}
 
-	public Object defaultFormat(Object input,String pattern){
-		if(input==null){
+	public Object defaultFormat(Object input, String pattern) {
+		if (input == null) {
 			return "";
 		}
 		Format format = scriptRunner.getDefaultFormat(input.getClass());
-		if (format == null)
-		{
-			throw new PreCompileException("can not find default format for class " + input.getClass());
+		if (format == null) {
+			throw new PreCompileException(
+					"can not find default format for class " + input.getClass());
 		}
 		return format.format(input, pattern);
 	}
-	public Object format(String funName, Object input, String pattern)
-	{
+
+	public Object format(String funName, Object input, String pattern) {
 		Format format = scriptRunner.getFormat(funName);
-		if (format == null)
-		{
+		if (format == null) {
 			throw new PreCompileException("can not find format " + funName);
 		}
 		return format.format(input, pattern);
 	}
 
-	public Object evalVirtualAttribute(Object o, String attrName, Context ctx)
-	{
-		VirtualAttributeEval eval = scriptRunner.getVirtualAttributeEval(o.getClass(), attrName);
+	public Object evalVirtualAttribute(Object o, String attrName, Context ctx) {
+		VirtualAttributeEval eval = scriptRunner.getVirtualAttributeEval(
+				o.getClass(), attrName);
 		Object result = eval.eval(o, attrName, ctx);
-		if (result instanceof Number)
-		{
-			if (result instanceof BigDecimal)
-			{
+		if (result instanceof Number) {
+			if (result instanceof BigDecimal) {
 				return nf.y((BigDecimal) result);
+			} else {
+				return nf.y((Number) result);
 			}
-			else
-			{
-				return nf.y((Number)result);
-			}
-		}
-		else
-		{
+		} else {
 			return result;
 		}
 	}
 
-	public String stringValue(Object o)
-	{
-		if (o != null)
-		{
+	public String stringValue(Object o) {
+		if (o != null) {
 			return o.toString();
-		}
-		else
-		{
+		} else {
 			return "";
 		}
 	}
 
-	public Tag getTag(String funName)
-	{
+	public Tag getTag(String funName) {
 		Tag tpf = scriptRunner.getTag(funName);
 		return tpf;
 
 	}
 
-	public Object arithmetic_add(Object a, Object b)
-	{
-		if (a instanceof String || b instanceof String)
-		{
-			return a != null ? a.toString() : "" + b != null ? b.toString() : "";
-		}
-		else if (a instanceof Number && b instanceof Number)
-		{
-			
-			return nf.y((Number)a).add((Number)b);
-			
-		}
-		else
-		{
-			throw new RuntimeException("type mismatch," + a.getClass() + "+" + b.getClass() + " for add");
+	public Object arithmetic_add(Object a, Object b) {
+		if (a instanceof String || b instanceof String) {
+			return a != null ? a.toString() : "" + b != null ? b.toString()
+					: "";
+		} else if (a instanceof Number && b instanceof Number) {
+
+			return nf.y((Number) a).add((Number) b);
+
+		} else {
+			throw new RuntimeException("type mismatch," + a.getClass() + "+"
+					+ b.getClass() + " for add");
 		}
 	}
 
-	public Object arithmetic_min(Object a, Object b)
-	{
-		if (a instanceof Number && b instanceof Number)
-		{
-			return nf.y((Number)a).min((Number)b);
-		}
-		else
-		{
-			throw new RuntimeException("type mismatch," + a.getClass() + "+" + b.getClass() + " for minus");
+	public Object arithmetic_min(Object a, Object b) {
+		if (a instanceof Number && b instanceof Number) {
+			return nf.y((Number) a).min((Number) b);
+		} else {
+			throw new RuntimeException("type mismatch," + a.getClass() + "+"
+					+ b.getClass() + " for minus");
 		}
 	}
 
-	public Object arithmetic_multiply(Object a, Object b)
-	{
-		if (a instanceof Number && b instanceof Number)
-		{
-			return nf.y((Number)a).multiply((Number)b);
-		}
-		else
-		{
-			throw new RuntimeException("type mismatch," + a.getClass() + "+" + b.getClass() + " for multiply");
+	public Object arithmetic_multiply(Object a, Object b) {
+		if (a instanceof Number && b instanceof Number) {
+			return nf.y((Number) a).multiply((Number) b);
+		} else {
+			throw new RuntimeException("type mismatch," + a.getClass() + "+"
+					+ b.getClass() + " for multiply");
 		}
 	}
 
-	public Object arithmetic_divide(Object a, Object b)
-	{
-		if (a instanceof Number && b instanceof Number)
-		{
-			return nf.y((Number)a).divide((Number)b);
-		}
-		else
-		{
-			throw new RuntimeException("type mismatch," + a.getClass() + "+" + b.getClass() + " for divide");
+	public Object arithmetic_divide(Object a, Object b) {
+		if (a instanceof Number && b instanceof Number) {
+			return nf.y((Number) a).divide((Number) b);
+		} else {
+			throw new RuntimeException("type mismatch," + a.getClass() + "+"
+					+ b.getClass() + " for divide");
 		}
 	}
 
 	public int objectCompare(Object a, Object b/*
 												 * ,ErrorToken aToken,ErrorToken
 												 * bToken
-												 */)
-	{
+												 */) {
 
-		if (a instanceof Number && b instanceof Number)
-		{
-			return nf.y((Number)a).compareTo((Number)b);
-		}
-		else
-		{
+		if (a instanceof Number && b instanceof Number) {
+			return nf.y((Number) a).compareTo((Number) b);
+		} else {
 			Comparable c1;
 			Comparable c2;
-			if (a instanceof Comparable)
-			{
+			if (a instanceof Comparable) {
 				c1 = (Comparable) a;
-			}
-			else
-			{
-				throw new RuntimeException(BeeRuntimeException.BOOLEAN_EXPECTED_ERROR);
+			} else {
+				throw new RuntimeException(
+						BeeRuntimeException.BOOLEAN_EXPECTED_ERROR);
 			}
 
-			if (b instanceof Comparable)
-			{
+			if (b instanceof Comparable) {
 				c2 = (Comparable) b;
-			}
-			else
-			{
-				throw new RuntimeException(BeeRuntimeException.BOOLEAN_EXPECTED_ERROR);
+			} else {
+				throw new RuntimeException(
+						BeeRuntimeException.BOOLEAN_EXPECTED_ERROR);
 			}
 
 			return c1.compareTo(c2);
 		}
 
 	}
-	
-	public boolean isObjectNotSame(Object v1,Object v2){
+
+	public boolean isObjectNotSame(Object v1, Object v2) {
 		return !this.isObjectSame(v1, v2);
 	}
-	
-	public boolean isObjectSame(Object v1,Object v2){
+
+	public boolean isObjectSame(Object v1, Object v2) {
 		return BeetlUtil.isObjectSame(v1, v2);
 	}
 
@@ -326,166 +284,137 @@ public class CompiledClass
 	// }
 	//
 
-	public boolean isCompileError()
-	{
+	public boolean isCompileError() {
 		return compileError;
 	}
 
-	public void setCompileError(boolean compileError)
-	{
+	public void setCompileError(boolean compileError) {
 		this.compileError = compileError;
 	}
 
-	protected BeeException getException(Exception ex, String lineMap)
-	{
+	protected BeeException getException(Exception ex, String lineMap) {
 
-		if (ex.getCause() != null && ex.getCause() instanceof BeeException)
-		{
+		if (ex.getCause() != null && ex.getCause() instanceof BeeException) {
 			return (BeeException) ex.getCause();
 		}
 		int codeLine = -1;
-		for (StackTraceElement st : ex.getStackTrace())
-		{
-			if (st.getMethodName().equals("service") && st.getClassName().equals(this.getClass().getName()))
-			{
+		for (StackTraceElement st : ex.getStackTrace()) {
+			if (st.getMethodName().equals("service")
+					&& st.getClassName().equals(this.getClass().getName())) {
 				codeLine = st.getLineNumber();
 				break;
 			}
 		}
 
 		int from = lineMap.indexOf("-" + codeLine + "=");
-		if (from == -1)
-		{
+		if (from == -1) {
 			// 没有找到对应的行数，返回此异常,不太可能发生，除非代码没有测试
 			return new BeeException(ex);
 		}
 		int to = lineMap.indexOf("-", from + 1);
-		String tempLine = lineMap.substring(from + 1 + (codeLine + "").length() + 1, to);
+		String tempLine = lineMap.substring(from + 1 + (codeLine + "").length()
+				+ 1, to);
 		int templateLine = Integer.parseInt(tempLine);
 		ErrorToken token = new ErrorToken();
 		token.set("", templateLine);
-		BeeRuntimeException beeRuntimeException = new BeeRuntimeException(BeeRuntimeException.ERROR, token, ex);
+		BeeRuntimeException beeRuntimeException = new BeeRuntimeException(
+				BeeRuntimeException.ERROR, token, ex);
 		return new BeeException(beeRuntimeException);
 
 	}
 
-	public Object evalObjectAttribute(Object o, String attrName)
-	{
+	public Object evalObjectAttribute(Object o, String attrName) {
 
 		Method m = PropertyUtil.getReadMethod(o.getClass(), attrName);
-		if (m == null)
-		{
-			throw new RuntimeException("Object '" + o + "' call attrbute " + attrName + " with error:no read method "
-					+ attrName);
+		if (m == null) {
+			throw new RuntimeException("Object '" + o + "' call attrbute "
+					+ attrName + " with error:no read method " + attrName);
 		}
 
-		try
-		{
-			if (m.getParameterTypes().length == 0)
-			{
+		try {
+			if (m.getParameterTypes().length == 0) {
 				Object r = m.invoke(o, new Object[0]);
 				return r;
-			}
-			else
-			{
-				//generic get
-				Object r = m.invoke(o, new Object[]
-				{ attrName });
+			} else {
+				// generic get
+				Object r = m.invoke(o, new Object[] { attrName });
 				return r;
 			}
 
-		}
-		catch (IllegalArgumentException e)
-		{
+		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
-			throw new RuntimeException("Object '" + o + "' call attrbute " + attrName + " with error:" + e.getMessage());
-		}
-		catch (IllegalAccessException e)
-		{
+			throw new RuntimeException("Object '" + o + "' call attrbute "
+					+ attrName + " with error:" + e.getMessage());
+		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
-			throw new RuntimeException("Object '" + o + "' call attrbute " + attrName + " with error:" + e.getMessage());
-		}
-		catch (InvocationTargetException e)
-		{
+			throw new RuntimeException("Object '" + o + "' call attrbute "
+					+ attrName + " with error:" + e.getMessage());
+		} catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
-			throw new RuntimeException("Object '" + o + "' call attrbute " + attrName + " with error:" + e.getMessage());
+			throw new RuntimeException("Object '" + o + "' call attrbute "
+					+ attrName + " with error:" + e.getMessage());
 		}
 
 	}
 
-	public Object evalKey(Object o, Object key)
-	{
-		if (o instanceof Map)
-		{
+	public Object evalKey(Object o, Object key) {
+		if (o instanceof Map) {
 			return ((Map) o).get(key);
-		}
-		else if (o instanceof List)
-		{
-			if (key instanceof Number)
-			{
+		} else if (o instanceof List) {
+			if (key instanceof Number) {
 				int index = ((Number) key).intValue();
 				return ((List) o).get(index);
 			}
-		}
-		else if (o.getClass().isArray())
-		{
+		} else if (o.getClass().isArray()) {
 			Object[] array = ((Object[]) o);
-			if (key instanceof Number)
-			{
+			if (key instanceof Number) {
 				int index = ((Number) key).intValue();
 				return array[index];
 			}
-		}
-		else
-		{
-			//generic get
+		} else {
+			// generic get
 			Method m = PropertyUtil.getGetMehod(o.getClass(), null);
-			if (m != null)
-			{
-				try
-				{
+			if (m != null) {
+				try {
 					return m.invoke(o, (String) key);
-				}
-				catch (Exception e)
-				{
-					//could not happen since runtime has called
-					throw new RuntimeException("Generic Get error " + e.getMessage());
+				} catch (Exception e) {
+					// could not happen since runtime has called
+					throw new RuntimeException("Generic Get error "
+							+ e.getMessage());
 				}
 			}
 
 		}
-		throw new RuntimeException("wrong type object= " + o.getClass() + "key=" + key.getClass());
+		throw new RuntimeException("wrong type object= " + o.getClass()
+				+ "key=" + key.getClass());
 
 	}
 
-	public String getCR()
-	{
+	public String getCR() {
 		return CR;
 	}
-	
-	public static char[] connectString(String[] strs){
+
+	public static char[] connectString(String[] strs) {
 		StringBuilder sb = new StringBuilder();
-		for(String s:strs){
+		for (String s : strs) {
 			sb.append(s);
 		}
 		return sb.toString().toCharArray();
 	}
-	
-	public static byte[] connectByte(byte[][] bs,int length){
-		try{
+
+	public static byte[] connectByte(byte[][] bs, int length) {
+		try {
 			ByteArrayOutputStream bw = new ByteArrayOutputStream(length);
-			for(int i=0;i<bs.length;i++){
+			for (int i = 0; i < bs.length; i++) {
 				bw.write(bs[i]);
 			}
 			return bw.toByteArray();
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
-			//不可能发生
+			// 不可能发生
 			throw new RuntimeException(ex);
 		}
-		
-		
-		
+
 	}
 
 }

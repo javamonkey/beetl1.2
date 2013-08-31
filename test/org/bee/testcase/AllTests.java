@@ -33,14 +33,12 @@ import org.bee.testcase.strtemplate.StrTemplateTestCase;
 import org.bee.testcase.type.CollectionTestCase;
 import org.bee.testcase.type.PrimitiveTestCase;
 
-public class AllTests
-{
+public class AllTests {
 
-	public static Test suite()
-	{
+	public static Test suite() {
 
 		TestSuite suite = new TestSuite("Test for org.bee.testcase");
-		//$JUnit-BEGIN$
+		// $JUnit-BEGIN$
 		suite.addTestSuite(CommentTestCase.class);
 		suite.addTestSuite(ForTestCase.class);
 		suite.addTestSuite(ElseForTestCase.class);
@@ -72,19 +70,19 @@ public class AllTests
 		suite.addTestSuite(ObjectRefTest.class);
 		suite.addTestSuite(ComplicatedModelTestCase.class);
 
-		//hard to test,ignore it
-		//		suite.addTestSuite(DivdeZeorTestCase.class);
-		//		suite.addTestSuite(JavaErrorTestCase.class);
+		// hard to test,ignore it
+		// suite.addTestSuite(DivdeZeorTestCase.class);
+		// suite.addTestSuite(JavaErrorTestCase.class);
 
 		suite.addTestSuite(PrimitiveTestCase.class);
 		suite.addTestSuite(CollectionTestCase.class);
 
 		suite.addTestSuite(StrTemplateTestCase.class);
 		suite.addTestSuite(DirectiveSafeOutputTestCase.class);
-		
+
 		suite.addTestSuite(HtmlTagTestCase.class);
 
-		//$JUnit-END$
+		// $JUnit-END$
 		return suite;
 	}
 

@@ -7,7 +7,7 @@ import org.bee.tl.core.Function;
 
 public class NowFunction implements Function {
 
-	public Date call(Object[] paras,Context ctx) {
+	public Date call(Object[] paras, Context ctx) {
 		return new java.util.Date();
 	}
 

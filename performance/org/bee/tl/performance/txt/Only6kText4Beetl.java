@@ -6,14 +6,12 @@ import org.bee.tl.performance.BeetlConfig;
 import org.bee.tl.performance.DoNothingOutputSteam;
 import org.bee.tl.util.Log;
 
-public class Only6kText4Beetl
-{
+public class Only6kText4Beetl {
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) throws Exception
-	{
+	public static void main(String[] args) throws Exception {
 		GroupTemplate group = BeetlConfig.base;
 
 		int loopCount = 50000;
@@ -27,8 +25,7 @@ public class Only6kText4Beetl
 		long start = System.currentTimeMillis();
 
 		Log.startAll();
-		for (int i = 0; i < loopCount; i++)
-		{
+		for (int i = 0; i < loopCount; i++) {
 
 			t = group.getFileTemplate(child);
 			t.set("a", "bbbbb");

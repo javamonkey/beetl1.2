@@ -49,16 +49,14 @@ import org.bee.tl.core.io.ByteWriter_Char;
  * @author joelli
  * 
  */
-public class SimpleTemplateTestUtil
-{
+public class SimpleTemplateTestUtil {
 	String input;
 	String json;
 	GroupTemplate gt = null;
 	Writer os;
 	boolean isOk = false;
 
-	public SimpleTemplateTestUtil(String template, String json, Writer w)
-	{
+	public SimpleTemplateTestUtil(String template, String json, Writer w) {
 		this.gt = new GroupTemplate();
 		gt.setErrorHandler(null);
 		this.input = template;
@@ -66,8 +64,8 @@ public class SimpleTemplateTestUtil
 		this.os = w;
 	}
 
-	public SimpleTemplateTestUtil(GroupTemplate gt, String template, String json, Writer w)
-	{
+	public SimpleTemplateTestUtil(GroupTemplate gt, String template,
+			String json, Writer w) {
 		this.gt = gt;
 		gt.setErrorHandler(null);
 		this.input = template;
@@ -75,40 +73,29 @@ public class SimpleTemplateTestUtil
 		this.os = w;
 	}
 
-	public GroupTemplate getGroupTemplate()
-	{
+	public GroupTemplate getGroupTemplate() {
 		return gt;
 	}
 
-	public void run()
-	{
+	public void run() {
 		run(null);
 	}
 
-	public void run(Map paras)
-	{
+	public void run(Map paras) {
 		DefaultErrorHandler h = new DefaultErrorHandler();
 		Context ctx = null;
-		if (json == null || json.length() == 0)
-		{
+		if (json == null || json.length() == 0) {
 			ctx = new Context();
-		}
-		else
-		{
+		} else {
 			CoreScriptRunner scriptRunner = new CoreScriptRunner(json);
 			ctx = new Context();
-			try
-			{
+			try {
 				scriptRunner.parse();
 				scriptRunner.runScript(new ByteWriter_Char(os, "UTF-8"), ctx);
 
-			}
-			catch (IOException e)
-			{
+			} catch (IOException e) {
 				throw new RuntimeException(e.getMessage());
-			}
-			catch (BeeException e)
-			{
+			} catch (BeeException e) {
 				e.setResource(new Resource(json));
 				h.processExcption(e, new PrintWriter(this.os));
 
@@ -121,32 +108,24 @@ public class SimpleTemplateTestUtil
 		Map map = ctx.getVars();
 		Iterator it = map.keySet().iterator();
 		Object key = null;
-		while (it.hasNext())
-		{
+		while (it.hasNext()) {
 			key = it.next();
 			t.set(key.toString(), map.get(key));
 		}
 
-		if (paras != null)
-		{
+		if (paras != null) {
 			it = paras.keySet().iterator();
-			while (it.hasNext())
-			{
+			while (it.hasNext()) {
 				key = it.next();
 				t.set(key.toString(), paras.get(key));
 			}
 		}
 
-		try
-		{
+		try {
 			t.getText(os);
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			throw new RuntimeException(e.getMessage());
-		}
-		catch (BeeException e)
-		{
+		} catch (BeeException e) {
 			h.processExcption(e, new PrintWriter(this.os));
 			return;
 		}
@@ -155,18 +134,15 @@ public class SimpleTemplateTestUtil
 
 	}
 
-	public boolean isOk()
-	{
+	public boolean isOk() {
 		return isOk;
 	}
 
-	public void setOk(boolean isOk)
-	{
+	public void setOk(boolean isOk) {
 		this.isOk = isOk;
 	}
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		String input = "this is template,${user.name},${sessions['userId']}";
 		String json = "var user = {'name':'joel'},sessions={'userId':'12345'};";
 		Writer w = new StringWriter();

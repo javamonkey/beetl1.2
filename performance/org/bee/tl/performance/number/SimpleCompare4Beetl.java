@@ -7,31 +7,28 @@ import org.bee.tl.performance.BeetlConfig;
 import org.bee.tl.performance.DoNothingOutputSteam;
 import org.bee.tl.util.Log;
 
-public class SimpleCompare4Beetl
-{
-	public static void main(String[] args) throws Exception
-	{
+public class SimpleCompare4Beetl {
+	public static void main(String[] args) throws Exception {
 		OutputStreamByteWriter.DEFAULT_BYTE_BUFFER_SIZE = 512;
-		GroupTemplate group = BeetlConfig.base;		
+		GroupTemplate group = BeetlConfig.base;
 		int loopCount = 50000;
 		String child = "\\beetl\\numberCompare.txt";
 		Template t = group.getFileTemplate(child);
 		t.set("a", 123);
 		String str = t.getTextAsString();
-	
+
 		System.out.println(str);
-		
+
 		DoNothingOutputSteam byteStream = new DoNothingOutputSteam();
-//		t.getText(byteStream);
-//		byteStream.close();
-//		System.out.println(byteStream);
+		// t.getText(byteStream);
+		// byteStream.close();
+		// System.out.println(byteStream);
 		long start = System.currentTimeMillis();
 
 		Log.startAll();
-		for (int i = 0; i < loopCount; i++)
-		{
+		for (int i = 0; i < loopCount; i++) {
 
-			t = group.getFileTemplate(child);		
+			t = group.getFileTemplate(child);
 			byteStream = new DoNothingOutputSteam();
 			t.set("a", 123);
 			t.getText(byteStream);

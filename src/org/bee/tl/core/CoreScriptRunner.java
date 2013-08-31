@@ -533,79 +533,78 @@ public class CoreScriptRunner {
 			ByteWriter pw, RuntimeControl control) throws IOException {
 		BeeCommonNodeTree firstNode = (BeeCommonNodeTree) t.getChild(0);
 		Object o = null;
-		boolean hasExp = true;		
+		boolean hasExp = true;
 		int startCase = 0;
-		if(firstNode.getType()==BeeParser.G_CASE||firstNode.getType()==BeeParser.G_DEFAULT){
+		if (firstNode.getType() == BeeParser.G_CASE
+				|| firstNode.getType() == BeeParser.G_DEFAULT) {
 			hasExp = false;
-			startCase = 0;;
-			
-		}else{		
-			o = ExpRuntime.eval(firstNode, localCtx, control);		
+			startCase = 0;
+			;
+
+		} else {
+			o = ExpRuntime.eval(firstNode, localCtx, control);
 			hasExp = true;
 			startCase = 1;
-			
+
 		}
-	
-		
+
 		BeeCommonNodeTree caseTree = null;
 		BeeCommonNodeTree expTreeList = null;
-	
+
 		BeeCommonNodeTree blockTree = null;
-		
+
 		for (int i = startCase; i < t.getChildCount(); i++) {
 			caseTree = (BeeCommonNodeTree) t.getChild(i);
-			
-			if (caseTree.getToken().getType() != BeeParser.G_DEFAULT)
-			{
+
+			if (caseTree.getToken().getType() != BeeParser.G_DEFAULT) {
 				expTreeList = (BeeCommonNodeTree) caseTree.getChild(0);
 				boolean expListHasTrue = false;
-				for(int j=0;j<expTreeList.getChildCount();j++){
-					
-					
-					BeeCommonNodeTree exp = (BeeCommonNodeTree) expTreeList.getChild(j);
+				for (int j = 0; j < expTreeList.getChildCount(); j++) {
+
+					BeeCommonNodeTree exp = (BeeCommonNodeTree) expTreeList
+							.getChild(j);
 					Object expValue = ExpRuntime.eval(exp, localCtx, control);
-					if(hasExp){
-						if(BeetlUtil.isObjectSame(o,expValue)){
+					if (hasExp) {
+						if (BeetlUtil.isObjectSame(o, expValue)) {
 							expListHasTrue = true;
 							break;
 						}
-					}else{
-						if(expValue instanceof Boolean){
-							if(((Boolean)expValue).booleanValue()){
+					} else {
+						if (expValue instanceof Boolean) {
+							if (((Boolean) expValue).booleanValue()) {
 								expListHasTrue = true;
 								break;
-							}else{
+							} else {
 								continue;
 							}
-						}else{
-							throw new BeeRuntimeException(BeeRuntimeException.BOOLEAN_EXPECTED_ERROR, exp.getToken());
+						} else {
+							throw new BeeRuntimeException(
+									BeeRuntimeException.BOOLEAN_EXPECTED_ERROR,
+									exp.getToken());
 
 						}
 					}
-					
+
 				}
-				if(expListHasTrue){
-					//执行
-					blockTree = (BeeCommonNodeTree)caseTree.getChild(1);
+				if (expListHasTrue) {
+					// 执行
+					blockTree = (BeeCommonNodeTree) caseTree.getChild(1);
 					this.print(blockTree, localCtx, pw, control);
-				
+
 					break;
 				}
-			}else{
-				//default
-				BeeCommonNodeTree defaultTree = caseTree ;
+			} else {
+				// default
+				BeeCommonNodeTree defaultTree = caseTree;
 				BeeCommonNodeTree expTree = null;
 				for (int j = 0; j < defaultTree.getChildCount(); j++) {
 					expTree = (BeeCommonNodeTree) defaultTree.getChild(j);
 					this.print(expTree, localCtx, pw, control);
 				}
 			}
-			
-			
-			
+
 		}
 
-		
 	}
 
 	private void parseFor(BeeCommonNodeTree t, Context localCtx, ByteWriter pw,
@@ -646,9 +645,9 @@ public class CoreScriptRunner {
 				return;
 			}
 			Iterator it = c.iterator();
-			// @todo:如果未用此变量，这不需要设置，可性能优化，下同		
-			localCtx.defineVar(name + "_size", c.size(),idNode.getToken());
-			localCtx.defineVar(name, null,idNode.getToken());
+			// @todo:如果未用此变量，这不需要设置，可性能优化，下同
+			localCtx.defineVar(name + "_size", c.size(), idNode.getToken());
+			localCtx.defineVar(name, null, idNode.getToken());
 			while (it.hasNext()) {
 				Object temp = it.next();
 				localCtx.fastSetVar(name, temp);
@@ -927,7 +926,7 @@ public class CoreScriptRunner {
 						.getChild(0);
 				pattern = pattenNode.getText();
 				pattern = pattern.substring(1, pattern.length() - 1);
-				if(value!=null){
+				if (value != null) {
 					Class type = value.getClass();
 					format = this.getDefaultFormat(type);
 					if (format == null) {
@@ -942,11 +941,10 @@ public class CoreScriptRunner {
 					} catch (Exception ex) {
 						throw new BeeRuntimeException(
 								BeeRuntimeException.NATIVE_CALL_EXCEPTION,
-								((BeeCommonNodeTree) fmNode.getChild(0)).getToken(),
-								ex);
+								((BeeCommonNodeTree) fmNode.getChild(0))
+										.getToken(), ex);
 					}
 				}
-			
 
 			}
 		}

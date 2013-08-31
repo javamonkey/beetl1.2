@@ -11,11 +11,10 @@ import java.util.Properties;
 import org.bee.tl.performance.DoNothingOutputSteam;
 import org.bee.tl.util.Log;
 
-public class Empty4Httl
-{
-	public static void main(String[] args) throws Exception
-	{
-		String home = System.getProperty("user.dir") + File.separator + "performance" + File.separator;
+public class Empty4Httl {
+	public static void main(String[] args) throws Exception {
+		String home = System.getProperty("user.dir") + File.separator
+				+ "performance" + File.separator;
 		Engine engine = null;
 		String templateFile = "/httl/nothing.txt";
 		Properties prop = new Properties();
@@ -24,7 +23,7 @@ public class Empty4Httl
 		prop.setProperty("logger", "null");
 		engine = Engine.getEngine(prop);
 		Map<String, Object> params = new HashMap();
-		//        params.put("items", items);
+		// params.put("items", items);
 		Template template = engine.getTemplate(templateFile);
 		DoNothingOutputSteam byteStream = new DoNothingOutputSteam();
 		template.render(params, byteStream);
@@ -32,8 +31,7 @@ public class Empty4Httl
 		long start = System.currentTimeMillis();
 
 		Log.startAll();
-		for (int i = 0; i < loopCount; i++)
-		{
+		for (int i = 0; i < loopCount; i++) {
 
 			template = engine.getTemplate(templateFile);
 			byteStream = new DoNothingOutputSteam();

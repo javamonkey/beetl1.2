@@ -35,7 +35,8 @@ import org.bee.tl.core.GroupTemplate;
 import org.bee.tl.core.exception.PreCompileException;
 
 /**
- * 用于一个获取编译java代码的JavaCompiler,如果java版本高于1.6,则使用Jdk16Javac，使用javax.tools.JavaCompiler,如果版本低于1.6，则会使用tools.jar里的com.sun.tools.javac.Main,
+ * 用于一个获取编译java代码的JavaCompiler,如果java版本高于1.6,则使用Jdk16Javac，使用javax.tools.
+ * JavaCompiler,如果版本低于1.6，则会使用tools.jar里的com.sun.tools.javac.Main,
  * 如果所处的虚拟机没有tools.jar，则需要继承JavaCompiler实现public int compile()
  * 方法，并注册键值为beetl.compiler的系统属性
  * <p>
@@ -49,31 +50,22 @@ import org.bee.tl.core.exception.PreCompileException;
  * @since 1.1
  * 
  */
-public class CompileFactory
-{
+public class CompileFactory {
 	static String cls = System.getProperty("beetl.compiler");
 	static String javaVersion = System.getProperty("java.version", "1.5");
 
-	public static JavaCompiler getCompiler()
-	{
+	public static JavaCompiler getCompiler() {
 		JavaCompiler jc = null;
-		try
-		{
-			if (cls != null)
-			{
+		try {
+			if (cls != null) {
 				jc = (JavaCompiler) Class.forName(cls).newInstance();
 
-			}
-			else
-			{
+			} else {
 
-				if (javaVersion.compareTo("1.6") >= 0)
-				{
+				if (javaVersion.compareTo("1.6") >= 0) {
 					jc = new Jdk16Javac();
 
-				}
-				else
-				{
+				} else {
 
 					jc = new SunJdk15Javac();
 
@@ -82,27 +74,24 @@ public class CompileFactory
 			return jc;
 
 			// return (JavaCompiler)Class.forName(cls).newInstance();
-		}
-		catch (Exception ex)
-		{
-			throw new PreCompileException("can not found compiler:" + ex.getMessage());
+		} catch (Exception ex) {
+			throw new PreCompileException("can not found compiler:"
+					+ ex.getMessage());
 		}
 
 	}
 
-	public static boolean compileSupport(GroupTemplate gt)
-	{
-		
-		
+	public static boolean compileSupport(GroupTemplate gt) {
+
 		JavaCompiler jc = getCompiler();
 		StringBuilder sb = new StringBuilder();
 		sb.append("import org.bee.tl.core.ErrorToken;").append("\n");
 		sb.append("public class TestBeetlEnv{ ErrorToken e = new ErrorToken();}");
-		String tempFolder = System.getProperty("user.home") + File.separator + ".bee";
+		String tempFolder = System.getProperty("user.home") + File.separator
+				+ ".bee";
 		new File(tempFolder).mkdirs();
 		File file = new File(tempFolder, "TestBeetlEnv.java");
-		try
-		{
+		try {
 			FileWriter fw = new FileWriter(file);
 			fw.write(sb.toString());
 			fw.close();
@@ -116,16 +105,13 @@ public class CompileFactory
 
 			return result == 0;
 
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			// 不可能发生
 			e.printStackTrace();
 			return false;
-		}
-		catch(Exception ex){
-			
-			return false ;
+		} catch (Exception ex) {
+
+			return false;
 		}
 
 	}

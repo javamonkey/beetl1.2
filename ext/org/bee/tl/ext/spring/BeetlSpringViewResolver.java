@@ -30,10 +30,8 @@ package org.bee.tl.ext.spring;
 import org.springframework.web.servlet.view.AbstractTemplateViewResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
 
-public class BeetlSpringViewResolver extends AbstractTemplateViewResolver
-{
-	public BeetlSpringViewResolver()
-	{
+public class BeetlSpringViewResolver extends AbstractTemplateViewResolver {
+	public BeetlSpringViewResolver() {
 		setViewClass(requiredViewClass());
 	}
 
@@ -41,8 +39,7 @@ public class BeetlSpringViewResolver extends AbstractTemplateViewResolver
 	 * Requires {@link FreeMarkerView}.
 	 */
 
-	protected Class requiredViewClass()
-	{
+	protected Class requiredViewClass() {
 
 		return BeetlSpringView.class;
 	}

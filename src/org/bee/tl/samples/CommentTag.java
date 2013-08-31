@@ -6,12 +6,11 @@ public class CommentTag extends Tag {
 
 	@Override
 	public String getOutput() {
-		return "<!--  comment by comment Tag \n"+this.input +"-->" ;
+		return "<!--  comment by comment Tag \n" + this.input + "-->";
 	}
 
 	/**
-	 * 2013-6-23
-	 * Administrator
+	 * 2013-6-23 Administrator
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

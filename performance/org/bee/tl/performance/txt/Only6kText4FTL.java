@@ -9,14 +9,12 @@ import org.bee.tl.performance.FTLConfig;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
-public class Only6kText4FTL
-{
+public class Only6kText4FTL {
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) throws Exception
-	{
+	public static void main(String[] args) throws Exception {
 		Configuration cfg = FTLConfig.cfg;
 		String child = "\\beetl\\Only6KText.txt";
 		Template template = cfg.getTemplate(child);
@@ -26,8 +24,7 @@ public class Only6kText4FTL
 		template.process(root, writer);
 		int loopCount = 50000;
 		long start = System.currentTimeMillis();
-		for (int i = 0; i < loopCount; i++)
-		{
+		for (int i = 0; i < loopCount; i++) {
 
 			template = cfg.getTemplate(child);
 			root = new HashMap();

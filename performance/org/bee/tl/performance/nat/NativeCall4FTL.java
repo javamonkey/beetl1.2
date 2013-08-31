@@ -10,10 +10,8 @@ import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
-public class NativeCall4FTL
-{
-	public static void main(String[] args) throws Exception
-	{
+public class NativeCall4FTL {
+	public static void main(String[] args) throws Exception {
 		Configuration cfg = FTLConfig.cfg;
 		String child = "\\freemarker\\ftl_native-call.txt";
 		Template template = cfg.getTemplate(child);
@@ -27,8 +25,7 @@ public class NativeCall4FTL
 		template.process(root, writer);
 		int loopCount = 50000;
 		long start = System.currentTimeMillis();
-		for (int i = 0; i < loopCount; i++)
-		{
+		for (int i = 0; i < loopCount; i++) {
 
 			template = cfg.getTemplate(child);
 			root = new HashMap();
@@ -43,13 +40,11 @@ public class NativeCall4FTL
 
 	}
 
-	public String getText(String str, int a)
-	{
+	public String getText(String str, int a) {
 		return str + a;
 	}
 
-	public String getText()
-	{
+	public String getText() {
 		return "";
 	}
 }

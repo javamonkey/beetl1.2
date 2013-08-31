@@ -6,17 +6,14 @@ import org.bee.tl.core.GroupTemplate;
 import org.bee.tl.core.Template;
 import org.bee.tl.performance.BeetlConfig;
 import org.bee.tl.performance.DoNothingOutputSteam;
-import org.bee.tl.performance.DoNothingWriter;
 import org.bee.tl.util.Log;
 
-public class Stock4Beetl
-{
+public class Stock4Beetl {
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) throws Exception
-	{
+	public static void main(String[] args) throws Exception {
 
 		GroupTemplate group = BeetlConfig.base;
 
@@ -32,19 +29,18 @@ public class Stock4Beetl
 		long start = System.currentTimeMillis();
 
 		Log.startAll();
-		for (int i = 0; i < loopCount; i++)
-		{
+		for (int i = 0; i < loopCount; i++) {
 
 			t = group.getFileTemplate(child);
 			t.set("items", items);
-//			writer = new DoNothingWriter("UTF-8");
-//			t.getText(writer);
+			// writer = new DoNothingWriter("UTF-8");
+			// t.getText(writer);
 			os = new DoNothingOutputSteam();
 			t.getText(os);
-			//			byteStream = new DoNothingOutputSteam();
-			//			t.getText(byteStream);
+			// byteStream = new DoNothingOutputSteam();
+			// t.getText(byteStream);
 
-			//			byteStream.close();
+			// byteStream.close();
 
 		}
 		long end = System.currentTimeMillis();

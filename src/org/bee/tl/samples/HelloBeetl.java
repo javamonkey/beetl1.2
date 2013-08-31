@@ -57,37 +57,29 @@ public class HelloBeetl {
 		}
 
 	}
-	
-	public static GroupTemplate getGroupTemplate(){
-		GroupTemplate group = new GroupTemplate(
-				new File(
-						"e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\tl\\beetls"),
+
+	public static GroupTemplate getGroupTemplate() {
+		GroupTemplate group = new GroupTemplate(new File(
+				"e:\\lijz\\javamonkey\\bee\\trunk\\workspace\\tl\\beetls"),
 				"beetls");
 		group.enableOptimize();
 		group.setStatementStart("<%");
 		group.setStatementEnd("%>");
 		group.registerVirtualAttributeEval(new VirtualAttributeEval() {
-			public String eval(Object o, String attributeName, Context ctx)
-			{
-				if (attributeName.equals("display"))
-				{
+			public String eval(Object o, String attributeName, Context ctx) {
+				if (attributeName.equals("display")) {
 					return "2008-01-03";
-				}
-				else
-				{
+				} else {
 					throw new IllegalArgumentException();
 				}
 
 			}
 
-			public boolean isSuppoert(Class c, String attributeName)
-			{
-				if (c.isAssignableFrom(java.util.Date.class)&&attributeName.equals("display"))
-				{
+			public boolean isSuppoert(Class c, String attributeName) {
+				if (c.isAssignableFrom(java.util.Date.class)
+						&& attributeName.equals("display")) {
 					return true;
-				}
-				else
-				{
+				} else {
 					return false;
 				}
 			}

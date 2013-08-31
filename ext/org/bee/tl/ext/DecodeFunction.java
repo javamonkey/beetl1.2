@@ -31,66 +31,54 @@ import org.bee.tl.core.Context;
 import org.bee.tl.core.Function;
 
 /**
- * if else 函数的简单实现
- *${decode(a,1,"a=1",2,"a=2","不知道了")}
- * 如果a是1，这decode输出"a=1",如果a是2，则输出"a==2",
- * 如果是其他值，则输出"不知道了"
+ * if else 函数的简单实现 ${decode(a,1,"a=1",2,"a=2","不知道了")}
+ * 如果a是1，这decode输出"a=1",如果a是2，则输出"a==2", 如果是其他值，则输出"不知道了"
+ * 
  * @author jeolli
- *
+ * 
  */
-public class DecodeFunction implements Function
-{
+public class DecodeFunction implements Function {
 
-	public Object call(Object[] paras, Context ctx)
-	{
-		try
-		{
+	public Object call(Object[] paras, Context ctx) {
+		try {
 			Object o = paras[0];
 			int i = 1;
-			while (true)
-			{
-				if (same(o,paras[i]))
-				{
+			while (true) {
+				if (same(o, paras[i])) {
 					return paras[i + 1];
-				}
-				else
-				{
-					if (paras.length - 1 == i + 2)
-					{
-						//default
+				} else {
+					if (paras.length - 1 == i + 2) {
+						// default
 						return paras[i + 2];
-					}
-					else
-					{
+					} else {
 						i = i + 2;
 						continue;
 					}
 				}
 			}
-		}
-		catch (ArrayIndexOutOfBoundsException ex)
-		{
+		} catch (ArrayIndexOutOfBoundsException ex) {
 
-			throw new RuntimeException("decode函数使用错误:DECODE(value, if1, then1, if2,then2, if3,then3, . . . else )");
+			throw new RuntimeException(
+					"decode函数使用错误:DECODE(value, if1, then1, if2,then2, if3,then3, . . . else )");
 		}
 
 	}
-	
-	private boolean same(Object a,Object b){
-		if(a==null&&b==null) return true;
-		else if(a!=null&&b!=null){
+
+	private boolean same(Object a, Object b) {
+		if (a == null && b == null)
+			return true;
+		else if (a != null && b != null) {
 			return a.equals(b);
-		}else{
+		} else {
 			return false;
 		}
 	}
 
-	public static void main(String args[])
-	{
+	public static void main(String args[]) {
 		DecodeFunction f = new DecodeFunction();
 		int a = 5;
-		Object result = f.call(new Object[]
-		{ a, 1, "a=1", 2, "a=2", "不知道了", 1 }, null);
+		Object result = f.call(
+				new Object[] { a, 1, "a=1", 2, "a=2", "不知道了", 1 }, null);
 		System.out.println(result);
 
 	}

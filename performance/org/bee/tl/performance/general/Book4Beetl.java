@@ -12,14 +12,12 @@ import org.bee.tl.performance.DoNothingOutputSteam;
 import org.bee.tl.performance.DoNothingWriter;
 import org.bee.tl.util.Log;
 
-public class Book4Beetl
-{
+public class Book4Beetl {
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) throws Exception
-	{
+	public static void main(String[] args) throws Exception {
 
 		OutputStreamByteWriter.DEFAULT_BYTE_BUFFER_SIZE = 1024;
 		List list = new ArrayList();
@@ -54,24 +52,23 @@ public class Book4Beetl
 		t.set("books", list);
 		DoNothingOutputSteam byteStream = new DoNothingOutputSteam();
 		DoNothingWriter writer = new DoNothingWriter("UTF-8");
-		//		t.getText(byteStream);
+		// t.getText(byteStream);
 		t.getText(writer);
 		byteStream.close();
 		long start = System.currentTimeMillis();
 
 		Log.startAll();
-		for (int i = 0; i < loopCount; i++)
-		{
+		for (int i = 0; i < loopCount; i++) {
 
 			t = group.getFileTemplate(child);
 			t.set("user", user);
 			t.set("books", list);
 			writer = new DoNothingWriter("UTF-8");
 			t.getText(writer);
-			//			byteStream = new DoNothingOutputSteam();
-			//			t.getText(byteStream);
+			// byteStream = new DoNothingOutputSteam();
+			// t.getText(byteStream);
 
-			//			byteStream.close();
+			// byteStream.close();
 
 		}
 		long end = System.currentTimeMillis();

@@ -35,36 +35,29 @@ import org.bee.tl.core.Context;
 import org.bee.tl.core.Function;
 
 /**
- * 截取数字，剩下指定位数,如果输入0，则取整
- * 如
- * ${trunc(12.333,1)},输出是12.3
- *
+ * 截取数字，剩下指定位数,如果输入0，则取整 如 ${trunc(12.333,1)},输出是12.3
+ * 
  */
-public class TruncFunction implements Function
-{
+public class TruncFunction implements Function {
 
-	public Object call(Object[] paras, Context ctx)
-	{
+	public Object call(Object[] paras, Context ctx) {
 		BeeNumber n = (BeeNumber) paras[0];
 		int pos = 0;
-		if (paras.length != 1)
-		{
+		if (paras.length != 1) {
 			pos = ((BeeNumber) paras[1]).intValue();
 		}
 		if (pos == 0)
 			return n.longValue();
-		else
-		{
+		else {
 			BigDecimal c = n.getBigDecimal().setScale(pos, RoundingMode.UP);
 			return c;
 		}
 
 	}
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		BigDecimal b = new BigDecimal("1212.2632");
-		//		b.setScale(0);
+		// b.setScale(0);
 		BigDecimal c = b.setScale(1, RoundingMode.UP);
 
 		System.out.println(c);

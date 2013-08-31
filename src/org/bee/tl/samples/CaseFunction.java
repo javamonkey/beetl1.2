@@ -31,33 +31,30 @@ import org.bee.tl.core.Context;
 import org.bee.tl.core.Function;
 
 public class CaseFunction implements Function {
-	public Object call(Object[] paras,Context ctx){
-		boolean hasDefault = true ;
+	public Object call(Object[] paras, Context ctx) {
+		boolean hasDefault = true;
 		int size = paras.length;
-		if(paras.length%2==1){
+		if (paras.length % 2 == 1) {
 			hasDefault = false;
-			
-		}else{
-			size = size-1;
+
+		} else {
+			size = size - 1;
 		}
-		
+
 		Object o = paras[0];
-		for(int i=1;i<size;i++){
-			if(o.equals(paras[i])){
-				return paras[i+1];
-			}else{
+		for (int i = 1; i < size; i++) {
+			if (o.equals(paras[i])) {
+				return paras[i + 1];
+			} else {
 				i++;
 			}
 		}
-		
-		if(hasDefault){
-			return paras[paras.length-1];
-		}else{
+
+		if (hasDefault) {
+			return paras[paras.length - 1];
+		} else {
 			throw new RuntimeException("没有找到匹配的值");
 		}
-		
-		
-	
-			
+
 	}
 }

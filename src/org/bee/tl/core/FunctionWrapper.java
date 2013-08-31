@@ -113,8 +113,8 @@ public class FunctionWrapper implements Function {
 					args[i++] = null;
 				}
 			}
-		
-			//模糊匹配
+
+			// 模糊匹配
 			MethodConf methodConf = MethodUtil.match(
 					m,
 					args,
@@ -131,19 +131,21 @@ public class FunctionWrapper implements Function {
 			}
 
 		}
-		
+
 		if (matchMethodList.size() != 0) {
 			// 得到最匹配的
 			MethodConf methodConf = (MethodConf) matchMethodList.get(0)[0];
 			MethodContext mc = (MethodContext) matchMethodList.get(0)[1];
-			if(!methodConf.isExactMatch){
-				if(matchMethodList.size()>=2){
-					throw new RuntimeException("最匹配的方法有"+matchMethodList.size()+"个，不知道调用哪个?"+this.functionName);
+			if (!methodConf.isExactMatch) {
+				if (matchMethodList.size() >= 2) {
+					throw new RuntimeException("最匹配的方法有"
+							+ matchMethodList.size() + "个，不知道调用哪个?"
+							+ this.functionName);
 				}
 			}
 			try {
-				
-				Class[]  types = methodConf.method.getParameterTypes();
+
+				Class[] types = methodConf.method.getParameterTypes();
 				int i = 0;
 				Object[] args = new Object[types.length];
 				for (; i < paras.length; i++) {
@@ -156,10 +158,9 @@ public class FunctionWrapper implements Function {
 				if (mc.contextRequired) {
 					args[args.length - 1] = ctx;
 				}
-				
+
 				return MethodUtil.invoke(target, methodConf, args);
-				
-			
+
 			} catch (IllegalArgumentException e) {
 				throw new RuntimeException("参数错误" + e.getMessage());
 			} catch (IllegalAccessException e) {

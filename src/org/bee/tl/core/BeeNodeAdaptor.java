@@ -33,5 +33,5 @@ import org.antlr.runtime.tree.CommonTreeAdaptor;
 public class BeeNodeAdaptor extends CommonTreeAdaptor {
 	public Object create(Token payload) {
 		return new BeeCommonNodeTree(payload);
-		}
-		}
+	}
+}

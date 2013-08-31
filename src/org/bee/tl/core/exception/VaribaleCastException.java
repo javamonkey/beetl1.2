@@ -28,25 +28,21 @@
 package org.bee.tl.core.exception;
 
 /**
- * 预编译生成的class在运行前，从context获取变量出现cast错误的时候，抛此异常
- *表示模板需要类型推倒，并重新编译。
+ * 预编译生成的class在运行前，从context获取变量出现cast错误的时候，抛此异常 表示模板需要类型推倒，并重新编译。
+ * 
  * @author joelli
- *
+ * 
  */
-public class VaribaleCastException extends RuntimeException
-{
-	public VaribaleCastException(String msg)
-	{
+public class VaribaleCastException extends RuntimeException {
+	public VaribaleCastException(String msg) {
 		super(msg);
 	}
 
-	public VaribaleCastException(String msg, Throwable t)
-	{
+	public VaribaleCastException(String msg, Throwable t) {
 		super(msg, t);
 	}
 
-	public VaribaleCastException(Throwable t)
-	{
+	public VaribaleCastException(Throwable t) {
 		super(t);
 	}
 }

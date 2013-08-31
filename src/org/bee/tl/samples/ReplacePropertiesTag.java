@@ -30,27 +30,27 @@ package org.bee.tl.samples;
 import org.bee.tl.core.Tag;
 
 public class ReplacePropertiesTag extends Tag {
-	public String getOutput(){
+	public String getOutput() {
 		String[] lines = this.input.split("\n");
 		String line = null;
-		int index = 0 ;
+		int index = 0;
 		StringBuilder sb = new StringBuilder();
 		int paraIndex = 0;
-		for(int i=0;i<lines.length;i++){
+		for (int i = 0; i < lines.length; i++) {
 			line = lines[i];
 			index = line.indexOf('=');
-			if(index==-1){
+			if (index == -1) {
 				continue;
-				
+
 			}
-			sb.append(line.substring(0,index)).append("=").append(this.args[paraIndex++].toString()).append("\n");
-			
+			sb.append(line.substring(0, index)).append("=")
+					.append(this.args[paraIndex++].toString()).append("\n");
+
 		}
-		
+
 		String output = sb.toString();
 		return output;
 
 	}
-	
-	
+
 }

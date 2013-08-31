@@ -28,21 +28,22 @@
 package org.bee.tl.core.exception;
 
 /**
- * 指示在类型推测，或者代码编译的时候，出现beetl暂时不支持的预编译情况。
- * Beetl将放弃预编译，转为解释执行
+ * 指示在类型推测，或者代码编译的时候，出现beetl暂时不支持的预编译情况。 Beetl将放弃预编译，转为解释执行
+ * 
  * @author joelli
  * @since 1.1
- *
+ * 
  */
 public class PreCompileException extends RuntimeException {
-	public PreCompileException(String msg){
+	public PreCompileException(String msg) {
 		super(msg);
 	}
-	
-	public PreCompileException(String msg,Throwable t){
-		super(msg,t);
+
+	public PreCompileException(String msg, Throwable t) {
+		super(msg, t);
 	}
-	public PreCompileException(Throwable t){
+
+	public PreCompileException(Throwable t) {
 		super(t);
 	}
 }
