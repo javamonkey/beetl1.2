@@ -48,12 +48,18 @@ public class BeeCommonNodeTree extends CommonTree {
 	private TypeClass typeClass;
 	private Object cached = null;
 
+	public BeeCommonNodeTree expLeft;
+	public BeeCommonNodeTree expRight;
+
 	public BeeCommonNodeTree() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public BeeCommonNodeTree(CommonTree node) {
 		super(node);
+		this.token = node.token;
+		this.startIndex = node.getTokenStartIndex();
+		this.stopIndex = node.getTokenStartIndex();
 		// TODO Auto-generated constructor stub
 	}
 

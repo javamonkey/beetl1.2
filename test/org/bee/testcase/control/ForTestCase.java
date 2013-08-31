@@ -38,21 +38,20 @@ public class ForTestCase extends BasicTestCase {
 
 	}
 
-	// public void testSimple() throws IOException, BeeException
-	// {
-	//
-	// Template t = this.gt.getFileTemplate("/control/for_template.html");
-	// t.set("list", list);
-	// String str = t.getTextAsString();
-	//
-	// // 第二次预编译
-	// t = this.gt.getFileTemplate("/control/for_template.html");
-	// t.set("list", list);
-	// str = t.getTextAsString();
-	// Assert.assertEquals(this.getFileContent("/control/for_expected.html"),
-	// str);
-	//
-	// }
+	public void testSimple() throws IOException, BeeException {
+
+		Template t = this.gt.getFileTemplate("/control/for_template.html");
+		t.set("list", list);
+		String str = t.getTextAsString();
+
+		// 第二次预编译
+		t = this.gt.getFileTemplate("/control/for_template.html");
+		t.set("list", list);
+		str = t.getTextAsString();
+		Assert.assertEquals(this.getFileContent("/control/for_expected.html"),
+				str);
+
+	}
 
 	public void testSimple1() throws IOException, BeeException {
 
@@ -98,6 +97,23 @@ public class ForTestCase extends BasicTestCase {
 		str = t.getTextAsString();
 
 		Assert.assertEquals(this.getFileContent("/control/for3_expected.html"),
+				str);
+	}
+
+	public void testSimple6() throws IOException, BeeException {
+
+		Template t = this.gt.getFileTemplate("/control/for6_template.html");
+		t.set("array", users);
+		String str = t.getTextAsString();
+		Assert.assertEquals(this.getFileContent("/control/for6_expected.html"),
+				str);
+
+		// 第二次预编译
+		t = this.gt.getFileTemplate("/control/for6_template.html");
+		t.set("array", users);
+		str = t.getTextAsString();
+
+		Assert.assertEquals(this.getFileContent("/control/for6_expected.html"),
 				str);
 	}
 

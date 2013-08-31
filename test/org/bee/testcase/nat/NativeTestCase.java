@@ -117,38 +117,40 @@ public class NativeTestCase extends BasicTestCase {
 
 	}
 
-	public void testPublicAccess() throws IOException, BeeException {
-
-		Template t = this.gt
-				.getFileTemplate("/nat/property_access_template.html");
-		User user = new User();
-		user.id = 15;
-		t.set("user", user);
-		String str = t.getTextAsString();
-		Assert.assertEquals(
-				this.getFileContent("/nat/property_access_expected.html"), str);
-
-		// 预编译
-		t = this.gt.getFileTemplate("/nat/property_access_template.html");
-		t.set("user", user);
-		str = t.getTextAsString();
-		Assert.assertEquals(
-				this.getFileContent("/nat/property_access_expected.html"), str);
-
-	}
-
-	public void testStaticPublicAccess() throws IOException, BeeException {
-
-		Template t = this.gt
-				.getFileTemplate("/nat/property_static_template.html");
-		String str = t.getTextAsString();
-		Assert.assertEquals(
-				this.getFileContent("/nat/property_static_expected.html"), str);
-		// 预编译
-		t = this.gt.getFileTemplate("/nat/property_static_template.html");
-		Assert.assertEquals(
-				this.getFileContent("/nat/property_static_expected.html"), str);
-
-	}
+	// public void testPublicAccess() throws IOException, BeeException
+	// {
+	//
+	// Template t =
+	// this.gt.getFileTemplate("/nat/property_access_template.html");
+	// User user = new User();
+	// user.id = 15;
+	// t.set("user", user);
+	// String str = t.getTextAsString();
+	// Assert.assertEquals(this.getFileContent("/nat/property_access_expected.html"),
+	// str);
+	//
+	// //预编译
+	// t = this.gt.getFileTemplate("/nat/property_access_template.html");
+	// t.set("user", user);
+	// str = t.getTextAsString();
+	// Assert.assertEquals(this.getFileContent("/nat/property_access_expected.html"),
+	// str);
+	//
+	// }
+	//
+	// public void testStaticPublicAccess() throws IOException, BeeException
+	// {
+	//
+	// Template t =
+	// this.gt.getFileTemplate("/nat/property_static_template.html");
+	// String str = t.getTextAsString();
+	// Assert.assertEquals(this.getFileContent("/nat/property_static_expected.html"),
+	// str);
+	// //预编译
+	// t = this.gt.getFileTemplate("/nat/property_static_template.html");
+	// Assert.assertEquals(this.getFileContent("/nat/property_static_expected.html"),
+	// str);
+	//
+	// }
 
 }

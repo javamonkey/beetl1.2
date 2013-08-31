@@ -33,9 +33,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -260,13 +258,13 @@ public class CoreScriptRunner {
 				if (t.getChildCount() == 2) {
 					// SAFE OUTPUT
 					try {
-						parserHolder(t, localCtx, pw, control);
+						parseHolder(t, localCtx, pw, control);
 					} catch (Exception ex) {
 						// do nothing for save output
 					}
 
 				} else {
-					parserHolder(t, localCtx, pw, control);
+					parseHolder(t, localCtx, pw, control);
 				}
 				// Log.key2End();
 				break;
@@ -315,8 +313,8 @@ public class CoreScriptRunner {
 				List list = t.getChildren();
 				BeeCommonNodeTree conditionNode = (BeeCommonNodeTree) list
 						.get(0);
-				boolean st1 = ExpRuntime.condition(conditionNode, localCtx,
-						control);
+				boolean st1 = (Boolean) ExpRuntime.condition(conditionNode,
+						localCtx, control);
 				if (st1) {
 					BeeCommonNodeTree block = (BeeCommonNodeTree) list.get(1);
 					print(block, localCtx, pw, control);
@@ -633,153 +631,48 @@ public class CoreScriptRunner {
 
 		String name = idNode.getToken().getText();
 		localCtx.defineVar(name + "_index", 0, idNode.getToken());
-		int index = 0;
-		// 下面代码可以简化，使用CanLoopObject
-		if (o instanceof Collection) {
-			Collection c = (Collection) o;
-			if (hasElseFor && c.size() == 0) {
-				BeeCommonNodeTree elseForBlock = (BeeCommonNodeTree) t
-						.getChild(3);
-				this.print(elseForBlock, localCtx, pw, control);
-
-				return;
-			}
-			Iterator it = c.iterator();
-			// @todo:如果未用此变量，这不需要设置，可性能优化，下同
-			localCtx.defineVar(name + "_size", c.size(), idNode.getToken());
-			localCtx.defineVar(name, null, idNode.getToken());
-			while (it.hasNext()) {
-				Object temp = it.next();
-				localCtx.fastSetVar(name, temp);
-				localCtx.fastSetVar(name + "_index", index++);
-
-				BeeCommonNodeTree slist = (BeeCommonNodeTree) t.getChild(2);
-
-				this.print(slist, localCtx, pw, control);
-
-				if (control.jump == control.FOR_BREAK) {
-					control.jump = control.FOR_RESET;
-					return;
-				} else if (control.jump == control.FOR_CONTINUE) {
-					control.jump = control.FOR_RESET;
-					continue;
-				} else if (control.jump == control.RETURN) {
-					// beetl return ;
-					return;
-				}
-
-			}
-
-			control.jump = control.FOR_RESET;
-
-		} else if (o instanceof Map) {
-			Map map = (Map) o;
-			if (hasElseFor && map.size() == 0) {
-				BeeCommonNodeTree elseForBlock = (BeeCommonNodeTree) t
-						.getChild(3);
-				this.print(elseForBlock, localCtx, pw, control);
-
-				return;
-			}
-			Iterator<Entry> it = map.entrySet().iterator();
-			Entry entry0 = null;
-			Object key = null;
-			Object value = null;
-			MapEntry entry = null;
-			localCtx.defineVar(name + "_size", map.size());
-			localCtx.defineVar(name, null);
-			while (it.hasNext()) {
-				entry0 = it.next();
-				entry = new MapEntry(entry0.getKey(), entry0.getValue());
-				localCtx.fastSetVar(name, entry);
-				localCtx.fastSetVar(name + "_index", index++);
-
-				BeeCommonNodeTree slist = (BeeCommonNodeTree) t.getChild(2);
-				this.print(slist, localCtx, pw, control);
-				if (control.jump == control.FOR_BREAK) {
-					control.jump = control.FOR_RESET;
-					return;
-				} else if (control.jump == control.FOR_CONTINUE) {
-					control.jump = control.FOR_RESET;
-					continue;
-				} else if (control.jump == control.RETURN) {
-					// beetl return ;
-					return;
-				}
-
-			}
-
-		} else if (o.getClass().isArray()) {
-			Object[] array = (Object[]) o;
-			if (hasElseFor && array.length == 0) {
-				BeeCommonNodeTree elseForBlock = (BeeCommonNodeTree) t
-						.getChild(3);
-				this.print(elseForBlock, localCtx, pw, control);
-
-				return;
-			}
-			localCtx.defineVar(name + "_size", array.length);
-			localCtx.defineVar(name, null, idNode.getToken());
-			for (Object temp : array) {
-
-				localCtx.fastSetVar(name, temp);
-				localCtx.fastSetVar(name + "_index", index++);
-				BeeCommonNodeTree slist = (BeeCommonNodeTree) t.getChild(2);
-				this.print(slist, localCtx, pw, control);
-				if (control.jump == control.FOR_BREAK) {
-					control.jump = control.FOR_RESET;
-					return;
-				} else if (control.jump == control.FOR_CONTINUE) {
-					control.jump = control.FOR_RESET;
-					continue;
-				} else if (control.jump == control.RETURN) {
-					// beetl return ;
-					return;
-				}
-
-			}
-
-			control.jump = control.FOR_RESET;
-		} else if (o instanceof Iterable) {
-
-			Iterable iterable = (Iterable) o;
-			localCtx.defineVar(name, null);
-			Iterator it = iterable.iterator();
-			boolean inLoop = false;
-			while (it.hasNext()) {
-				inLoop = true;
-				Object temp = it.next();
-				localCtx.fastSetVar(name, temp);
-				localCtx.fastSetVar(name + "_index", index++);
-
-				BeeCommonNodeTree slist = (BeeCommonNodeTree) t.getChild(2);
-
-				this.print(slist, localCtx, pw, control);
-
-				if (control.jump == control.FOR_BREAK) {
-					control.jump = control.FOR_RESET;
-					return;
-				} else if (control.jump == control.FOR_CONTINUE) {
-					control.jump = control.FOR_RESET;
-					continue;
-				} else if (control.jump == control.RETURN) {
-					// beetl return ;
-					return;
-				}
-
-			}
-
-			if (hasElseFor && !inLoop) {
-				BeeCommonNodeTree elseForBlock = (BeeCommonNodeTree) t
-						.getChild(3);
-				this.print(elseForBlock, localCtx, pw, control);
-				return;
-			}
-
-			control.jump = control.FOR_RESET;
-		} else {
+		IteratorStatus itStatus = IteratorStatus.getIteratorStatus(o);
+		if (itStatus == null) {
 			throw new BeeRuntimeException(BeeRuntimeException.DO_NOT_SUPPORT,
 					varRef.getToken());
+		}
+		int index = 0;
+		if (itStatus.hasSize()) {
+			localCtx.defineVar(name + "_size", itStatus.getSize(),
+					idNode.getToken());
+
+		}
+		localCtx.defineVar(name, null, idNode.getToken());
+		localCtx.defineVar(name + "LP", itStatus, idNode.getToken());
+		String indexName = name + "_index";
+
+		while (itStatus.hasNext()) {
+			Object temp = itStatus.next();
+			localCtx.fastSetVar(name, temp);
+			localCtx.fastSetVar(indexName, index++);
+
+			BeeCommonNodeTree slist = (BeeCommonNodeTree) t.getChild(2);
+
+			this.print(slist, localCtx, pw, control);
+			switch (control.jump) {
+			case 2 /* control.FOR_BREAK */:
+				control.jump = control.FOR_RESET;
+				return;
+			case 1 /* control.FOR_CONTINUE */:
+				control.jump = control.FOR_RESET;
+				continue;
+			case 4 /* control.RETURN */:
+				return;
+			}
+
+		}
+
+		if (hasElseFor && !itStatus.hasData()) {
+			BeeCommonNodeTree elseForBlock = (BeeCommonNodeTree) t.getChild(3);
+			this.print(elseForBlock, localCtx, pw, control);
+
+			return;
+
 		}
 
 	}
@@ -876,7 +769,7 @@ public class CoreScriptRunner {
 
 	}
 
-	private void parserHolder(BeeCommonNodeTree t, Context localCtx,
+	private void parseHolder(BeeCommonNodeTree t, Context localCtx,
 			ByteWriter pw, RuntimeControl control) throws IOException {
 
 		List list = t.getChildren();

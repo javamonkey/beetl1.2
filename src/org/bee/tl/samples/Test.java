@@ -1,7 +1,6 @@
 package org.bee.tl.samples;
 
 import java.io.File;
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +9,9 @@ import org.bee.tl.core.Template;
 
 public class Test {
 
-	public int i = 12;
+	public static int i = 12;
+	public static int j = 1;
+	static public User[] users = new User[] { new User(), new User() };
 
 	public static void main(String[] args) throws Exception {
 
@@ -19,6 +20,8 @@ public class Test {
 		GroupTemplate group = new GroupTemplate(new File(home));
 		group.setCharset("GBK");
 		group.config("<%", "%>", "${", "}");
+		// group.config("<!--[", "]-->", "<!--[=", "]-->");
+
 		group.setDebug(true);
 		group.enableNativeCall();
 		// group.enableDirectOutputByte();
@@ -29,29 +32,37 @@ public class Test {
 		// group.enableDirectOutputByte();
 
 		Template template = group.getFileTemplate("/helloworld.html");
+		String[] aa = new String[] { "tt", "123" };
 		template.set("t", new Test());
-		template.set("d", new BigDecimal("12.33"));
+		// template.set("b", 4);
+		template.set("aa", null);
 
+		int c = i == 12 ? j == 1 ? 3 : 4 : 2;
 		System.out.println(template.getTextAsString());
 
 		template = group.getFileTemplate("/helloworld.html");
 		template.set("t", new Test());
-		template.set("d", new BigDecimal("12.33"));
-
+		template.set("b", 4);
+		template.set("aa", null);
 		System.out.println(template.getTextAsString());
+		//
 
+	}
+
+	public static User getUser() {
+		return new User();
+	}
+
+	public Test getTest() {
+		return this;
+	}
+
+	public boolean isOk() {
+		return true;
 	}
 
 	public static boolean isTrue(int a, int b, int c) {
 		return true;
-	}
-
-	public int intData(BigDecimal b) {
-		return b.intValue();
-	}
-
-	public int intData2(BigDecimal b) {
-		return b.intValue();
 	}
 
 }

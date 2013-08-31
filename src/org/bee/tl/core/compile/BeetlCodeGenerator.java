@@ -598,6 +598,7 @@ public class BeetlCodeGenerator {
 			println("}catch(ClassCastException ex){");
 			addIndent();
 			println("//转入解释模式执行");
+			println("ex.printStackTrace();");
 			println("throw new VaribaleCastException(ex);");
 			decIndent();
 			println("}");
@@ -611,12 +612,14 @@ public class BeetlCodeGenerator {
 		this.decIndent();
 		println("}catch(Exception ex){");
 		this.addIndent();
+
 		// this.println("if(group.isDebug())ex.printStackTrace();");
 		println("throw getException(ex,lineMap);");
 		this.decIndent();
 		println("}finally{");
 		this.addIndent();
-		println("out.flush();");
+		// println("out.flush();");
+
 		this.decIndent();
 		println("}");
 		decIndent();
@@ -774,6 +777,8 @@ public class BeetlCodeGenerator {
 					writeVarRef(t, -1);
 					this.lineMap.put(this.currentLine, t.getToken().getLine());
 				}
+
+				this.writeSimpleCaseIfNecessary(t);
 				break;
 
 			}
@@ -874,26 +879,6 @@ public class BeetlCodeGenerator {
 
 						print(")");
 
-						/*
-						 * String equal = ".equals("; if
-						 * (left.getTypeClass().getRawType
-						 * ().equals(NullClass.class) ||
-						 * right.getTypeClass().getRawType
-						 * ().equals(NullClass.class)) { equal = "==("; }
-						 * 
-						 * if (tokeType == BeeParser.NOT_EQUAL) { print("!("); }
-						 * if (left.getTypeClass().isPrimitive()) {
-						 * print("nf.y("); writeTree(left); print(")"); } else {
-						 * writeTree(left); }
-						 * 
-						 * print(equal);
-						 * 
-						 * if (right.getTypeClass().isPrimitive()) {
-						 * print("nf.y("); writeTree(right); print(")"); } else
-						 * { writeTree(right); } if (tokeType ==
-						 * BeeParser.NOT_EQUAL) { print(")"); } print(")");
-						 */
-
 					}
 
 					else {
@@ -919,8 +904,9 @@ public class BeetlCodeGenerator {
 								.getTypeClass().getRawType())
 								&& Number.class.isAssignableFrom(right
 										.getTypeClass().getRawType())) {
-							if (BeeNumber.class.isAssignableFrom(left
-									.getTypeClass().getRawType())) {
+							
+							if (BeeNumber.class.isAssignableFrom(left.getTypeClass().getRawType())){	
+								
 								writeTree(left);
 							} else {
 								print("nf.y(");
@@ -928,8 +914,7 @@ public class BeetlCodeGenerator {
 								print(")");
 							}
 							print(".compareTo(");
-							if (BeeNumber.class.isAssignableFrom(right
-									.getTypeClass().getRawType())) {
+							if (BeeNumber.class.isAssignableFrom(right.getTypeClass().getRawType())){
 								writeTree(right);
 							} else {
 								print("nf.y(");
@@ -960,6 +945,8 @@ public class BeetlCodeGenerator {
 					}
 
 				}
+
+				this.writeSimpleCaseIfNecessary(t);
 				break;
 			}
 
@@ -986,6 +973,7 @@ public class BeetlCodeGenerator {
 				BeeCommonNodeTree condition = (BeeCommonNodeTree) t.getChild(0);
 				print("!");
 				writeTree(condition);
+				this.writeSimpleCaseIfNecessary(t);
 				break;
 			}
 			case BeeParser.NULL: {
@@ -1037,6 +1025,7 @@ public class BeetlCodeGenerator {
 				}
 
 				this.lineMap.put(this.currentLine, t.getToken().getLine());
+				this.writeSimpleCaseIfNecessary(t);
 				break;
 			}
 
@@ -1121,94 +1110,55 @@ public class BeetlCodeGenerator {
 
 			case BeeParser.CLASS_FUNCTION: {
 				BeeCommonNodeTree exp = (BeeCommonNodeTree) t;
-
+				if (BeeNumber.class.isAssignableFrom(exp.getExpType())){
+					print("nf.y(");
+				}
 				this.lineMap.put(this.currentLine, t.getToken().getLine());
-				if (((CommonTree) exp.getChild(exp.getChildCount() - 1))
-						.getToken().getType() == BeeParser.CLASS_METHOD) {
-
-					if (t.getParent() != null
-							&& t.getParent().getType() == BeeParser.DIRECT_CALL) {
-						printStart("");
-					}
-					if (BeeNumber.class.isAssignableFrom(exp.getExpType())) {
-						print("nf.y(");
-					}
-					StringBuilder sb = new StringBuilder();
-
-					for (int i = 0; i < exp.getChildCount() - 1; i++) {
-						sb.append(exp.getChild(i).getText()).append(".");
-					}
-					sb.setLength(sb.length() - 1);
-
-					if (scriptRunner.containIllegalNativeCall(sb.toString())) {
-						throw new PreCompileException("不允许调用:" + sb.toString());
-					}
-					print(sb.toString() + ".");
-
-					String methodName = null;
-
-					BeeCommonNodeTree classMethodNode = (BeeCommonNodeTree) exp
-							.getChild(exp.getChildCount() - 1);
-					methodName = ((CommonTree) classMethodNode.getChild(0))
-							.getToken().getText();
-					print(methodName);
-					print("(");
-
-					Object[] args = new Object[classMethodNode.getChildCount() - 1];
-					MethodConf mc = (MethodConf) exp.getCached();
-					for (int j = 1; j < classMethodNode.getChildCount(); j++) {
-						BeeCommonNodeTree para = (BeeCommonNodeTree) classMethodNode
-								.getChild(j);
-						this.writeTree(para);
-						if (BeeNumber.class.isAssignableFrom(para
-								.getTypeClass().getRawType())) {
-							this.print(mc.getOutputType(j - 1));
+				Object[] cached = (Object[]) exp.getCached();
+				int callType = (Integer) cached[0]; // 0 代表实例，1代表静态class调用
+				int index = (Integer) cached[1];
+				String instance = (String) cached[2]; // class 或者是 实例变量名
+				print(instance);
+				for (int i = index; i < exp.getChildCount(); i++) {
+					BeeCommonNodeTree n = (BeeCommonNodeTree) exp.getChild(i);
+					if (n.getType() == BeeParser.Identifier) {
+						print("." + n.getText());
+					} else if (n.getType() == BeeParser.CLASS_METHOD) {
+						String methodName = ((BeeCommonNodeTree) n.getChild(0))
+								.getToken().getText();
+						print("." + methodName + "(");
+						MethodConf mc = (MethodConf) n.getCached();
+						for (int j = 1; j < n.getChildCount(); j++) {
+							BeeCommonNodeTree para = (BeeCommonNodeTree) n
+									.getChild(j);
+							this.writeTree(para);
+							if (BeeNumber.class.isAssignableFrom(para.getTypeClass().getRawType())) {
+								this.print(mc.getOutputType(j - 1));
+							}
+							if (j != n.getChildCount() - 1)
+								this.print(",");
 						}
-						if (j != classMethodNode.getChildCount() - 1)
-							this.print(",");
-					}
-
-					if (BeeNumber.class.isAssignableFrom(exp.getExpType())) {
 						print(")");
-					}
-
-					if (t.getParent() != null
-							&& t.getParent().getType() == BeeParser.DIRECT_CALL) {
-						print(");");
-						printCR();
-					} else {
-						print(")");
-					}
-
-				} else {
-
-					StringBuilder sb = new StringBuilder();
-					if (t.getParent() != null
-							&& t.getParent().getType() == BeeParser.DIRECT_CALL) {
-						// 无意义，忽略此代码
-						break;
-					}
-					if (BeeNumber.class.isAssignableFrom(exp.getExpType())) {
-						print("nf.y(");
-					}
-					Object o;
-					for (int i = 0; i < exp.getChildCount() - 1; i++) {
-						sb.append(exp.getChild(i).getText()).append(".");
-					}
-					sb.setLength(sb.length() - 1);
-					print(sb.toString() + ".");
-
-					String propertyName = null;
-
-					CommonTree propertyNode = (CommonTree) exp.getChild(exp
-							.getChildCount() - 1);
-					propertyName = propertyNode.getToken().getText();
-					print(propertyName);
-					if (BeeNumber.class.isAssignableFrom(exp.getExpType())) {
-						print(")");
+					} else if (n.getType() == BeeParser.CLASS_ARRAY) {
+						BeeCommonNodeTree para = (BeeCommonNodeTree) n
+								.getChild(0);
+						print("[");
+						this.writeTree(para);
+						print(".intValue()");
+						print("]");
 					}
 
 				}
+				if (BeeNumber.class.isAssignableFrom(exp.getExpType())){
+					print(")");
+				}
+				if (exp.getParent() != null
+						&& exp.getParent().getType() == BeeParser.DIRECT_CALL) {
+					print(";");
+				}
+
+				this.writeSimpleCaseIfNecessary(t);
+
 				break;
 			}
 
@@ -1333,8 +1283,7 @@ public class BeetlCodeGenerator {
 							print(")");
 						}
 
-					} else if (BeeNumber.class.isAssignableFrom(left
-							.getTypeClass().getRawType())) {
+					} else if (BeeNumber.class.isAssignableFrom(left.getTypeClass().getRawType())) {
 						// double类型，以及除法，在beetl中总是精度计算:new
 						// BigDecimal(aValue.toString()).subtract(new
 						// BigDecimal(bValue.toString()))
@@ -1445,6 +1394,7 @@ public class BeetlCodeGenerator {
 			case BeeParser.BOOLEAN: {
 				String text = t.getToken().getText();
 				print(text);
+				this.writeSimpleCaseIfNecessary(t);
 				break;
 			}
 
@@ -1630,13 +1580,10 @@ public class BeetlCodeGenerator {
 				boolean hasElseFor = t.getChildCount() == 4;
 				boolean hasSafeOutput = varRef.getChild(
 						varRef.getChildCount() - 1).getType() == BeeParser.SAFE_OUTPUT;
-				String loopName = "inLoop_" + this.currentLine;
+				println("IteratorStatus " + idNode.getToken().getText()
+						+ "LP = null;");
 				if (hasSafeOutput) {
-					// 安全输出
-					if (hasElseFor) {
-						printStart("boolean " + loopName + "  = false;");
-						printCR();
-					}
+
 					printStart("if(");
 					writeTree(varRef);
 					print("!=null){");
@@ -1644,6 +1591,11 @@ public class BeetlCodeGenerator {
 					this.addIndent();
 				}
 				println("int " + idNode.getToken().getText() + "_index = 0;");
+				printStart(idNode.getToken().getText()
+						+ "LP = new IteratorStatus(");
+				writeTree(varRef);
+				print(");");
+				printCR();
 				Class type = varRef.getTypeClass().getRawType();
 
 				if (Collection.class.isAssignableFrom(type)
@@ -1653,137 +1605,99 @@ public class BeetlCodeGenerator {
 
 					writeTree(varRef);
 					print(".size();");
-					if (hasElseFor && !hasSafeOutput) {
-						printCR();
-						println("if(" + idNode.getToken().getText()
-								+ "_size !=0){ ");
-						this.addIndent();
-						if (hasSafeOutput) {
-							printStart(loopName + " = true;");
-						}
 
-					}
 				}
+
 				// 数组
 				else if (!Iterable.class.isAssignableFrom(type)) {
 					printStart("int " + idNode.getToken().getText()
 							+ "_size = ");
 					writeTree(varRef);
 					print(".length;");
-					if (hasElseFor) {
-
-						printCR();
-						println("if(" + idNode.getToken().getText()
-								+ "_size !=0){ ");
-						this.addIndent();
-						if (hasSafeOutput) {
-							printStart(loopName + " = true;");
-						}
-					}
-				} else {
-					// Iterable
-					if (hasElseFor && !hasSafeOutput) {
-						printStart("boolean " + loopName + "  = false;");
-					}
 
 				}
 
 				printCR();
 
-				printStart("for(");
+				String castType = null;
+
 				if (idNode.getTypeClass().getRawType().equals(MapEntry.class)) {
 
 					if (idNode.getTypeClass().getPtypeMap().get("K")
 							.equals(Object.class)
 							&& idNode.getTypeClass().getPtypeMap().get("V")
 									.equals(Object.class)) {
-						print("Object ");
+						castType = "Object ";
 					} else {
-						print("Entry<");
-						print(idNode.getTypeClass().getPtypeMap().get("K")
-								.getSimpleName());
-						print(",");
-						print(idNode.getTypeClass().getPtypeMap().get("V")
-								.getSimpleName());
-						print(">");
+						castType = "Entry<"
+								+ idNode.getTypeClass().getPtypeMap().get("K")
+										.getSimpleName()
+								+ ","
+								+ idNode.getTypeClass().getPtypeMap().get("V")
+										.getSimpleName() + ">";
+
 					}
 
 				} else {
-					print(idNode.getTypeClass().getRawType().getSimpleName());
+					castType = idNode.getTypeClass().getRawType()
+							.getSimpleName();
 				}
 
-				print(" " + idNode.getToken().getText());
-				print(" : ");
-				writeTree(varRef);
-				if (Map.class.isAssignableFrom(varRef.getTypeClass()
-						.getRawType())) {
-					print(".entrySet() ");
-				}
-				print(")");
-				// for循环主体
+				println(castType + " " + idNode.getToken().getText()
+						+ " = null;");
+
+				// 循环开始
+				printStart("while(" + idNode.getToken().getText()
+						+ "LP.hasNext())");
+
+				String firstStatment = idNode.getToken().getText() + " = ("
+						+ castType + ")" + idNode.getToken().getText()
+						+ "LP.next();";
 				if (Collection.class.isAssignableFrom(type)
 						|| Map.class.isAssignableFrom(type)
 						|| !Iterable.class.isAssignableFrom(type)) {
 
-					writeBlock((BeeCommonNodeTree) t.getChild(2), "", idNode
-							.getToken().getText() + "_index++;");
+					writeBlock((BeeCommonNodeTree) t.getChild(2),
+							firstStatment, idNode.getToken().getText()
+									+ "_index++;");
 				} else {
 					// iterate
 					if (hasElseFor) {
-						writeBlock((BeeCommonNodeTree) t.getChild(2), loopName
-								+ " = true;", idNode.getToken().getText()
-								+ "_index++;");
+						writeBlock((BeeCommonNodeTree) t.getChild(2),
+								firstStatment, idNode.getToken().getText()
+										+ "_index++;");
 					} else {
-						writeBlock((BeeCommonNodeTree) t.getChild(2), "",
-								idNode.getToken().getText() + "_index++;");
+						writeBlock((BeeCommonNodeTree) t.getChild(2),
+								firstStatment, idNode.getToken().getText()
+										+ "_index++;");
 					}
 
 				}
-				// for主体结束
+				// 循环结束,如果只有elsefor，没有安全输出
 				if (hasElseFor && !hasSafeOutput) {
 
-					if (Collection.class.isAssignableFrom(type)
-							|| Map.class.isAssignableFrom(type)
-							|| !Iterable.class.isAssignableFrom(type)) {
-
-						this.decIndent();
-						printStart("} else");
-					} else {
-						// iterate情况
-						printStart("if(!" + loopName + ")");
-					}
-
+					printStart("if(!" + idNode.getToken().getText()
+							+ "LP.hasData())");
 					writeBlock((BeeCommonNodeTree) t.getChild(3), "", "");
-
-				} else if (hasSafeOutput) {
-					// 安全输出
-
-					if (!hasElseFor) {
-						this.decIndent();
-						println("}");
-					} else {
-
-						if (Iterable.class.isAssignableFrom(type)) {
-							this.decIndent();
-							println("}");
-							printStart("if(!" + loopName + ")");
-							writeBlock((BeeCommonNodeTree) t.getChild(3), "",
-									"");
-						} else {
-							this.decIndent();
-							println("}");
-							this.decIndent();
-							println("}");
-							printStart("if(!" + loopName + ")");
-							writeBlock((BeeCommonNodeTree) t.getChild(3), "",
-									"");
-						}
-
-					}
+					this.decIndent();
 
 				}
+				// 如果有安全输出，先结束安全输出
+				else if (hasSafeOutput) {
+					// 结束安全输出
+					this.decIndent();
+					println("}");
+					if (hasElseFor) {
+						printStart("if(" + idNode.getToken().getText()
+								+ "LP==null||!" + idNode.getToken().getText()
+								+ "LP.hasData())");
+						writeBlock((BeeCommonNodeTree) t.getChild(3), "", "");
+					}
 
-				this.decIndent();
+				} else {
+					this.decIndent();
+				}
+
 				println("}");
 
 				break;
@@ -1820,6 +1734,7 @@ public class BeetlCodeGenerator {
 					print("||");
 				}
 				writeTree(right);
+				this.writeSimpleCaseIfNecessary(t);
 
 				break;
 			}
@@ -1847,6 +1762,25 @@ public class BeetlCodeGenerator {
 			}
 		}
 
+	}
+
+	private void writeSimpleCaseIfNecessary(BeeCommonNodeTree t)
+			throws IOException {
+		if (t.expLeft != null || t.expRight != null) {
+			print("?");
+			if (t.expLeft != null) {
+				this.writeTree(t.expLeft);
+			} else {
+				this.print("null");
+			}
+			print(":");
+			if (t.expRight != null) {
+				this.writeTree(t.expRight);
+			} else {
+				this.print("null");
+			}
+
+		}
 	}
 
 	private boolean isClassName(CommonTree node) {
@@ -2037,8 +1971,7 @@ public class BeetlCodeGenerator {
 
 		String finalExp = this.fw.toString();
 		// 转成BeeNumber类型
-		if (t.getChildCount() > 1
-				&& BeeNumber.class.isAssignableFrom(type.getRawType())) {
+		if (t.getChildCount() > 1 && BeeNumber.class.isAssignableFrom(type.getRawType())){
 			finalExp = "nf.y(" + this.fw.toString() + ")";
 		}
 

@@ -10,6 +10,7 @@ import org.bee.tl.core.GroupTemplate;
 import org.bee.tl.core.Template;
 
 public class StrTemplateTestCase extends BasicTestCase {
+
 	public void testSimple() throws IOException, BeeException {
 
 		// System.setProperty("BEETL_EXTRA_CLASSPATH",
@@ -38,6 +39,20 @@ public class StrTemplateTestCase extends BasicTestCase {
 		t.set("a", 15);
 		result = t.getTextAsString();
 		Assert.assertEquals("15", result);
+
+	}
+
+	public void testRemove() throws IOException, BeeException {
+
+		String input = "${a}";
+		GroupTemplate gt = new GroupTemplate();
+		// gt.enableOptimize();
+		Template t = gt.getStringTemplate(input, "bbb");
+		t.set("a", 15);
+		String result = t.getTextAsString();
+		Assert.assertEquals("15", result);
+
+		gt.removeTemplateCache("bbb");
 
 	}
 }

@@ -34,8 +34,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.bee.testcase.objref.ComplicatedModelTestCase.CommonOrder;
-
 /**
  * 得到javabean的 get方法
  * 
@@ -274,15 +272,6 @@ public class PropertyUtil {
 		}
 		// return contain(c.getSuperclass(), methodName);
 		return false;
-
-	}
-
-	public static void main(String[] args) throws Exception {
-		List interfaceList = new ArrayList();
-		List classList = new ArrayList();
-		getAllClass(CommonOrder.class, interfaceList, classList);
-		interfaceList.addAll(classList);
-		System.out.println(interfaceList);
 
 	}
 

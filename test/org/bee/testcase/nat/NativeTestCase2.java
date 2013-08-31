@@ -34,6 +34,7 @@ public class NativeTestCase2 extends BasicTestCase {
 		lucy.setName("lucy");
 		list.add(lucy);
 		joel.setFriend(list);
+		joel.setWife(lucy);
 
 	}
 
@@ -73,6 +74,25 @@ public class NativeTestCase2 extends BasicTestCase {
 		str = t.getTextAsString();
 		Assert.assertEquals(
 				this.getFileContent("/nat/person_method_call_expected.html"),
+				str);
+
+	}
+
+	public void tesCalltChain() throws IOException, BeeException {
+
+		Template t = this.gt
+				.getFileTemplate("/nat/chain_method_call_template.html");
+
+		t.set("user1", joel);
+		String str = t.getTextAsString();
+		Assert.assertEquals(
+				this.getFileContent("/nat/chain_method_call_expected.html"),
+				str);
+		t = this.gt.getFileTemplate("/nat/chain_method_call_template.html");
+		t.set("user1", joel);
+		str = t.getTextAsString();
+		Assert.assertEquals(
+				this.getFileContent("/nat/chain_method_call_expected.html"),
 				str);
 
 	}

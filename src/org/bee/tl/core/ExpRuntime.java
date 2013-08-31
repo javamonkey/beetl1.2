@@ -188,6 +188,8 @@ public class ExpRuntime {
 
 		try {
 			int tokeType = exp.getType();
+
+			Object r = null;
 			switch (tokeType) {
 
 			case BeeParser.TEXT_VAR_REFER: {
@@ -199,17 +201,6 @@ public class ExpRuntime {
 				((BeeCommonNodeTree) exp.getParent().getParent())
 						.setCached(text);
 				return text;
-
-			}
-			case BeeParser.VAR_REFER: {
-
-				Object o = evalVarRef(exp.getChildren(), ctx, exp, control);
-				if (o instanceof Number) {
-					return control.nf.y((Number) o);
-
-				} else {
-					return o;
-				}
 
 			}
 
@@ -246,6 +237,7 @@ public class ExpRuntime {
 					map.put(varName, eval(valueTree, ctx, control));
 				}
 				return map;
+
 			}
 			case BeeParser.ADD: {
 				return nodeAdd((BeeCommonNodeTree) exp.getChild(0),
@@ -286,30 +278,16 @@ public class ExpRuntime {
 				return o;
 
 			}
-			case BeeParser.BOOLEAN: {
-				return new Boolean(exp.getToken().getText());
-			}
+
 			case BeeParser.StringLiteral: {
 				return exp.getToken().getText();
 
 			}
-			case BeeParser.FUNCTION: {
-				return function(exp, ctx, control);
-			}
-			case BeeParser.CLASS_FUNCTION: {
-				Object o = classNativeCall(exp, ctx, control);
-				if (o instanceof Number) {
-					return control.nf.y((Number) o);
 
-				} else {
-					return o;
-
-				}
-
-			}
 			case BeeParser.NULL: {
 				return null;
 			}
+				// ??
 			case BeeParser.SAFE_OUTPUT: {
 				if (exp.getChildCount() != 0) {
 					return eval((BeeCommonNodeTree) exp.getChild(0), ctx,
@@ -318,12 +296,77 @@ public class ExpRuntime {
 					return null;
 				}
 			}
+				// 以下表达式可能是三元表达式
+			case BeeParser.BOOLEAN: {
+				r = new Boolean(exp.getToken().getText());
+				break;
+			}
+			case BeeParser.FUNCTION: {
+				r = function(exp, ctx, control);
+				break;
+			}
+			case BeeParser.CLASS_FUNCTION: {
+				Object o = classNativeCall(exp, ctx, control);
+				if (o instanceof Number) {
+					r = control.nf.y((Number) o);
+
+				} else {
+					r = o;
+
+				}
+				break;
+
+			}
+			case BeeParser.VAR_REFER: {
+
+				Object o = evalVarRef(exp.getChildren(), ctx, exp, control);
+				if (o instanceof Number) {
+					r = control.nf.y((Number) o);
+
+				} else {
+					r = o;
+				}
+				break;
+
+			}
 			default: {
 				// 为啥是这个？忘记了.........
-				return condition(exp, ctx, control);
+				r = condition(exp, ctx, control);
 				// throw new BeeRuntimeException(
 				// BeeRuntimeException.DO_NOT_SUPPORT, exp.getToken());
 			}
+			}
+
+			if (exp.expLeft != null && exp.expRight != null) {
+
+				if (r instanceof Boolean) {
+					// a==1 ? a:b
+					boolean isBoolean = (Boolean) r;
+
+					if (isBoolean) {
+						// lfetcase
+						if (exp.expLeft != null) {
+							return eval(exp.expLeft, ctx, control);
+						} else {
+							// 如果没有，返回null
+							return null;
+						}
+					} else {
+						if (exp.expRight != null) {
+							return eval(exp.expRight, ctx, control);
+						} else {
+							// 如果没有，返回null
+							return null;
+						}
+					}
+				} else {
+					throw new BeeRuntimeException(
+							BeeRuntimeException.BOOLEAN_EXPECTED_ERROR,
+							exp.getToken());
+				}
+
+			} else {
+				return r;
 			}
 
 		} catch (BeeRuntimeException bre) {
@@ -335,243 +378,170 @@ public class ExpRuntime {
 
 	}
 
+	public static Object classChainCall(Object targetObject, Class targetClass,
+			BeeCommonNodeTree exp1, int index, Context ctx,
+			RuntimeControl control) {
+
+		for (int i = index; i < exp1.getChildCount(); i++) {
+			BeeCommonNodeTree n = (BeeCommonNodeTree) exp1.getChild(i);
+			if (n.getType() == BeeParser.Identifier) {
+				// 属性方法
+				try {
+					targetObject = targetClass.getDeclaredField(n.getText())
+							.get(targetObject);
+					// todo 空指针
+					if (targetObject != null) {
+						targetClass = targetObject.getClass();
+					} else {
+						targetClass = null;
+					}
+
+				} catch (IllegalArgumentException e) {
+					throw new BeeRuntimeException(
+							BeeRuntimeException.NATIVE_CALL_INVALID,
+							exp1.getToken(), e.getMessage());
+				} catch (SecurityException e) {
+					throw new BeeRuntimeException(
+							BeeRuntimeException.NATIVE_CALL_INVALID,
+							exp1.getToken(), e.getMessage());
+				} catch (IllegalAccessException e) {
+					throw new BeeRuntimeException(
+							BeeRuntimeException.NATIVE_CALL_INVALID,
+							exp1.getToken(), e.getMessage());
+				} catch (NoSuchFieldException e) {
+					throw new BeeRuntimeException(
+							BeeRuntimeException.NATIVE_CALL_INVALID,
+							exp1.getToken(), e.getMessage());
+				}
+
+			} else if (n.getType() == BeeParser.CLASS_METHOD) {
+
+				MethodConf mc = (MethodConf) n.getCached();
+				Object[] args = new Object[n.getChildCount() - 1];
+				for (int j = 1; j < n.getChildCount(); j++) {
+					args[j - 1] = eval((BeeCommonNodeTree) n.getChild(j), ctx,
+							control);
+
+				}
+
+				if (mc == null) {
+					// 找到参数对应的具体方法
+					Class[] parameterType = new Class[args.length];
+					for (int j = 0; j < args.length; j++) {
+						if (args[j] == null) {
+							parameterType[j] = null;
+						} else {
+							parameterType[j] = args[j].getClass();
+						}
+
+					}
+
+					String methodName = ((BeeCommonNodeTree) n.getChild(0))
+							.getToken().getText();
+					mc = MethodUtil.findMethod(targetClass, methodName,
+							parameterType);
+					if (mc == null) {
+						throw new BeeRuntimeException(
+								BeeRuntimeException.NATIVE_CALL_INVALID,
+								n.getToken(), methodName);
+					}
+					CoreScriptRunner scriptRunner = (CoreScriptRunner) ctx
+							.getVar("__core");
+					if (scriptRunner.containIllegalNativeCall(targetClass
+							.getName())) {
+						throw new BeeRuntimeException(
+								BeeRuntimeException.NATIVE_CALL_INVALID,
+								n.getToken(), "此本地调用不允许");
+					}
+					n.setCached(mc);
+				}
+				try {
+
+					targetObject = MethodUtil.invoke(targetObject, mc, args);
+					if (targetObject != null) {
+						targetClass = targetObject.getClass();
+					} else {
+						targetClass = null;
+					}
+
+				} catch (Exception ex) {
+					throw new BeeRuntimeException(
+							BeeRuntimeException.NATIVE_CALL_EXCEPTION,
+							n.getToken(), ex);
+				}
+
+			} else if (n.getType() == BeeParser.CLASS_ARRAY) {
+				if (targetObject.getClass().isArray()) {
+					Object o = eval((BeeCommonNodeTree) n.getChild(0), ctx,
+							control);
+					if (o == null) {
+						throw new BeeRuntimeException(
+								BeeRuntimeException.NATIVE_CALL_EXCEPTION,
+								n.getToken(), "数组指针为空");
+					}
+					if (Number.class.isAssignableFrom(o.getClass())) {
+						// todo 空指针
+						targetObject = ((Object[]) targetObject)[((Number) o)
+								.intValue()];
+						if (targetObject != null) {
+							targetClass = targetObject.getClass();
+						} else {
+							targetClass = null;
+						}
+
+					} else {
+						throw new BeeRuntimeException(
+								BeeRuntimeException.NATIVE_CALL_EXCEPTION,
+								n.getToken(), "数组指针应该为整形");
+					}
+
+				} else {
+					throw new BeeRuntimeException(
+							BeeRuntimeException.NATIVE_CALL_EXCEPTION,
+							n.getToken(), "不是数组");
+				}
+				// 数组调用)
+			} else {
+				throw new RuntimeException("暂时不支持");
+			}
+		}
+
+		return targetObject;
+
+	}
+
 	public static Object classNativeCall(BeeCommonNodeTree node, Context ctx,
 			RuntimeControl control) {
 
 		BeeCommonNodeTree exp = (BeeCommonNodeTree) node;
-		if (((BeeCommonNodeTree) exp.getChild(exp.getChildCount() - 1))
-				.getToken().getType() == BeeParser.CLASS_METHOD) {
-			try {
-				// method call,first find the class or instance
-				if (exp.getChildCount() == 2
-						&& !isClassName((BeeCommonNodeTree) exp.getChild(0))) {
-
-					// instance method .such as :aa.GetName();
-					String identity = ((BeeCommonNodeTree) exp.getChild(0))
-							.getToken().getText();
-					Object o = ctx.getVar(identity);
-					BeeCommonNodeTree classMethodNode = (BeeCommonNodeTree) exp
-							.getChild(exp.getChildCount() - 1);
-					MethodConf mc = (MethodConf) exp.getCached();
-					Object[] args = new Object[classMethodNode.getChildCount() - 1];
-
-					for (int j = 1; j < classMethodNode.getChildCount(); j++) {
-						args[j - 1] = eval(
-								(BeeCommonNodeTree) classMethodNode.getChild(j),
-								ctx, control);
-
-					}
-
-					if (mc == null) {
-
-						Class target = null;
-
-						try {
-							target = o.getClass();
-
-						} catch (SecurityException e) {
-							throw new BeeRuntimeException(
-									BeeRuntimeException.NATIVE_CALL_INVALID,
-									exp.getToken(), "SecurityException:"
-											+ e.getMessage());
-						}
-
-						Class[] parameterType = new Class[args.length];
-						for (int j = 0; j < args.length; j++) {
-							if (args[j] == null) {
-								parameterType[j] = null;
-							} else {
-								parameterType[j] = args[j].getClass();
-							}
-
-						}
-
-						String methodName = ((BeeCommonNodeTree) classMethodNode
-								.getChild(0)).getToken().getText();
-						mc = MethodUtil.findMethod(target, methodName,
-								parameterType);
-						if (mc == null) {
-							throw new BeeRuntimeException(
-									BeeRuntimeException.NATIVE_CALL_INVALID,
-									exp.getToken(), methodName);
-						}
-						CoreScriptRunner scriptRunner = (CoreScriptRunner) ctx
-								.getVar("__core");
-						if (scriptRunner.containIllegalNativeCall(target
-								.getName())) {
-							throw new BeeRuntimeException(
-									BeeRuntimeException.NATIVE_CALL_INVALID,
-									node.getToken(), "此本地调用不允许");
-						}
-						exp.setCached(mc);
-					}
-
-					o = MethodUtil.invoke(o, mc, args);
-
-					return o;
-
-				} else {
-					// staic call
-
-					MethodConf mc = (MethodConf) exp.getCached();
-					BeeCommonNodeTree classMethodNode = (BeeCommonNodeTree) exp
-							.getChild(exp.getChildCount() - 1);
-
-					Object[] args = new Object[classMethodNode.getChildCount() - 1];
-
-					for (int j = 1; j < classMethodNode.getChildCount(); j++) {
-						args[j - 1] = eval(
-								(BeeCommonNodeTree) classMethodNode.getChild(j),
-								ctx, control);
-
-					}
-
-					if (mc == null) {
-
-						Class target = null;
-						StringBuilder sb = new StringBuilder();
-
-						for (int i = 0; i < exp.getChildCount() - 1; i++) {
-							sb.append(exp.getChild(i).getText()).append(".");
-						}
-						sb.setLength(sb.length() - 1);
-
-						try {
-							target = Class.forName(sb.toString());
-
-						} catch (SecurityException e) {
-							throw new BeeRuntimeException(
-									BeeRuntimeException.NATIVE_CALL_INVALID,
-									exp.getToken(), "SecurityException:"
-											+ e.getMessage());
-						} catch (ClassNotFoundException e) {
-							throw new BeeRuntimeException(
-									BeeRuntimeException.NATIVE_CALL_INVALID,
-									exp.getToken(), "ClassNotFoundException:"
-											+ e.getMessage());
-						}
-
-						Class[] parameterType = new Class[args.length];
-						for (int j = 0; j < args.length; j++) {
-							if (args[j] == null) {
-								parameterType[j] = null;
-							} else {
-								parameterType[j] = args[j].getClass();
-							}
-
-						}
-
-						String methodName = ((BeeCommonNodeTree) classMethodNode
-								.getChild(0)).getToken().getText();
-						mc = MethodUtil.findMethod(target, methodName,
-								parameterType);
-						if (mc == null) {
-							throw new BeeRuntimeException(
-									BeeRuntimeException.NATIVE_CALL_INVALID,
-									exp.getToken(), methodName);
-						}
-						CoreScriptRunner scriptRunner = (CoreScriptRunner) ctx
-								.getVar("__core");
-						if (scriptRunner.containIllegalNativeCall(target
-								.getName())) {
-							throw new BeeRuntimeException(
-									BeeRuntimeException.NATIVE_CALL_INVALID,
-									node.getToken(), "此本地调用不允许");
-						}
-						exp.setCached(mc);
-					}
-
-					Object o = MethodUtil.invoke(null, mc, args);
-
-					return o;
-
-				}
-			} catch (Exception ex) {
-				throw new BeeRuntimeException(
-						BeeRuntimeException.NATIVE_CALL_EXCEPTION,
-						node.getToken(), ex);
-			}
+		BeetlUtil.analyzeNativeNode(exp);
+		Object[] cached = (Object[]) exp.getCached();
+		int callType = (Integer) cached[0]; // 0 代表实例，1代表静态class调用
+		int i = (Integer) cached[1];
+		;
+		String instance = (String) cached[2]; // class 或者是 实例变量名
+		Object objectTarget = null;
+		Class targetClass = null;
+		if (callType == 0) {
+			objectTarget = ctx.getVar(instance);
+			targetClass = objectTarget.getClass();
 
 		} else {
-			if (exp.getChildCount() == 2
-					&& !isClassName((BeeCommonNodeTree) exp.getChild(0))) {
-				// public field of instance
-				String identity = ((BeeCommonNodeTree) exp.getChild(0))
-						.getToken().getText();
-				Object o = ctx.getVar(identity);
-				BeeCommonNodeTree classMethodNode = null;
-				String propertyName = ((BeeCommonNodeTree) exp.getChild(exp
-						.getChildCount() - 1)).getToken().getText();
-				try {
-					return o.getClass().getDeclaredField(propertyName).get(o);
-				} catch (IllegalArgumentException e) {
-					throw new BeeRuntimeException(
-							BeeRuntimeException.NATIVE_CALL_INVALID,
-							exp.getToken(), e.getMessage());
-				} catch (SecurityException e) {
-					throw new BeeRuntimeException(
-							BeeRuntimeException.NATIVE_CALL_INVALID,
-							exp.getToken(), e.getMessage());
-				} catch (IllegalAccessException e) {
-					throw new BeeRuntimeException(
-							BeeRuntimeException.NATIVE_CALL_INVALID,
-							exp.getToken(), e.getMessage());
-				} catch (NoSuchFieldException e) {
-					throw new BeeRuntimeException(
-							BeeRuntimeException.NATIVE_CALL_INVALID,
-							exp.getToken(), e.getMessage());
-				}
-			} else {
-				StringBuilder sb = new StringBuilder();
-				Class target = null;
-				Object o;
-				for (int i = 0; i < exp.getChildCount() - 1; i++) {
-					sb.append(exp.getChild(i).getText()).append(".");
-				}
-				sb.setLength(sb.length() - 1);
+			try {
+				targetClass = Class.forName(instance);
 
-				try {
-					target = Class.forName(sb.toString());
-
-				} catch (SecurityException e) {
-					throw new BeeRuntimeException(
-							BeeRuntimeException.NATIVE_CALL_INVALID,
-							exp.getToken(), e.getMessage());
-				} catch (ClassNotFoundException e) {
-					throw new BeeRuntimeException(
-							BeeRuntimeException.NATIVE_CALL_INVALID,
-							exp.getToken(), "类未找到:" + e.getMessage());
-				}
-
-				String propertyName = null;
-
-				BeeCommonNodeTree propertyNode = (BeeCommonNodeTree) exp
-						.getChild(exp.getChildCount() - 1);
-				propertyName = propertyNode.getToken().getText();
-				try {
-					o = target.getDeclaredField(propertyName).get(null);
-				} catch (IllegalArgumentException e) {
-					throw new BeeRuntimeException(
-							BeeRuntimeException.NATIVE_CALL_INVALID,
-							exp.getToken(), e.getMessage());
-				} catch (SecurityException e) {
-					throw new BeeRuntimeException(
-							BeeRuntimeException.NATIVE_CALL_INVALID,
-							exp.getToken(), e.getMessage());
-				} catch (IllegalAccessException e) {
-					throw new BeeRuntimeException(
-							BeeRuntimeException.NATIVE_CALL_INVALID,
-							exp.getToken(), e.getMessage());
-				} catch (NoSuchFieldException e) {
-					throw new BeeRuntimeException(
-							BeeRuntimeException.NATIVE_CALL_INVALID,
-							exp.getToken(), e.getMessage());
-				}
-				return o;
-
+			} catch (SecurityException e) {
+				throw new BeeRuntimeException(
+						BeeRuntimeException.NATIVE_CALL_INVALID,
+						exp.getToken(), e.getMessage());
+			} catch (ClassNotFoundException e) {
+				throw new BeeRuntimeException(
+						BeeRuntimeException.NATIVE_CALL_INVALID,
+						exp.getToken(), "类未找到:" + e.getMessage());
 			}
-
 		}
+
+		return classChainCall(objectTarget, targetClass, exp, i, ctx, control);
 
 	}
 

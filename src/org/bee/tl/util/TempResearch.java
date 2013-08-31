@@ -4,14 +4,16 @@ public class TempResearch {
 	int age = 12;
 
 	public static void main(String[] args) throws Exception {
-		// Function f = new NVLFunction();
-		// f.getClass().getMethod("call", new Class[]{new
-		// Class[],Context.class});
+		Object o = TempResearch.get();
+		Class c = TempResearch.class.getMethod("get", new Class[0])
+				.getReturnType();
+		System.out.println(c.getComponentType());
+		System.out.println(c);
 
 	}
 
-	public static void test(Object o) {
-		o = new Object();
+	public static int[] get() {
+		return new int[] { 1, 2 };
 	}
 
 }
