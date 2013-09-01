@@ -29,6 +29,8 @@ package org.bee.tl.core;
 
 import java.math.BigDecimal;
 
+
+
 /**
  * beetl里的数值，支持大精度模式和普通模式
  * <p>
@@ -38,22 +40,25 @@ import java.math.BigDecimal;
  * 
  */
 
-public abstract class BeeNumber extends Number implements Comparable {
-
+public  abstract class BeeNumber extends Number implements Comparable
+{
+	
+	
+	
 	public abstract BeeNumber add(Number i);
-
 	public abstract BeeNumber min(Number i);
-
+		
 	public abstract BeeNumber multiply(Number d);
 
 	public abstract BeeNumber divide(Number d);
-
+	
 	public abstract Number orginalObject();
 
 	public abstract BeeNumber negate();
-
 	public abstract Number get();
-
 	public abstract BigDecimal getBigDecimal();
+
+	
+		
 
 }

@@ -2,7 +2,8 @@ package org.bee.tl.core;
 
 import org.bee.tl.core.number.NumberFactory;
 
-public class RuntimeControl {
+public class RuntimeControl
+{
 	// 0 reset 1 continue 2 break;
 	int jump = 0;
 	static final int FOR_RESET = 0;

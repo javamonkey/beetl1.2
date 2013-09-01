@@ -24,7 +24,7 @@ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 package org.bee.tl.ext.jfinal;
 
 import java.io.IOException;
@@ -42,47 +42,51 @@ import org.bee.tl.ext.spring.WebVariable;
 import com.jfinal.render.Render;
 import com.jfinal.render.RenderException;
 
-public class BeetlRender extends Render {
+public class BeetlRender extends Render
+{
 	GroupTemplate gt = null;
 	private transient static final String encoding = getEncoding();
-	private transient static final String contentType = "text/html; charset="
-			+ encoding;
+	private transient static final String contentType = "text/html; charset=" + encoding;
 
-	public BeetlRender(GroupTemplate gt, String view) {
+	public BeetlRender(GroupTemplate gt, String view)
+	{
 		this.gt = gt;
 		this.view = view;
 	}
 
 	@Override
-	public void render() {
+	public void render()
+	{
 		Writer writer = null;
 		OutputStream os = null;
-		try {
+		try
+		{
 			response.setContentType(contentType);
 			Template template = gt.getFileTemplate(view);
 			Enumeration<String> attrs = request.getAttributeNames();
 
-			while (attrs.hasMoreElements()) {
+			while (attrs.hasMoreElements())
+			{
 				String attrName = attrs.nextElement();
-				if (attrName.equals("session")) {
-					// jfinal session is private,do nothing
-					HttpSession session = (HttpSession) request
-							.getAttribute("session");
+				if(attrName.equals("session")){
+					//jfinal session is private,do nothing
+					HttpSession  session = (HttpSession )request.getAttribute("session");
 					template.setRawValue("session", new SessionWrapper(session));
-
-				} else {
+					
+					
+				}else{
 					template.set(attrName, request.getAttribute(attrName));
 				}
+				
 
 			}
 			WebVariable webVariable = new WebVariable();
 			webVariable.setRequest(request);
 			webVariable.setResponse(response);
 			webVariable.setSession(request.getSession());
-			// System.out.println(request.getSession().getAttributeNames());
-			//
-			// template.setRawValue("session",new
-			// SessionWrapper(webVariable.getSession()));
+//			System.out.println(request.getSession().getAttributeNames());
+//			
+//			template.setRawValue("session",new SessionWrapper(webVariable.getSession()));
 
 			template.set("servlet", webVariable);
 			template.set("request", request);
@@ -92,24 +96,35 @@ public class BeetlRender extends Render {
 			// HttpSession hs = request.getSession(false);
 			// if (hs != null)
 			// template.setRawValue("session", new SessionWrapper(hs));
-			if (gt.isDirectByteOutput()) {
+			if (gt.isDirectByteOutput())
+			{
 				os = response.getOutputStream();
 				template.getText(os);
-			} else {
+			}
+			else
+			{
 				writer = response.getWriter();
 				template.getText(writer);
 			}
 
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			throw new RenderException(e);
-		} finally {
-			try {
+		}
+		finally
+		{
+			try
+			{
 				if (writer != null)
 					writer.close();
-				if (os != null) {
+				if (os != null)
+				{
 					os.close();
 				}
-			} catch (IOException e) {
+			}
+			catch (IOException e)
+			{
 				e.printStackTrace();
 			}
 		}

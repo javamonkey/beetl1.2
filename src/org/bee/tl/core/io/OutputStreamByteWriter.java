@@ -31,23 +31,27 @@ import java.io.IOException;
 import java.io.Writer;
 
 @Deprecated
-public class OutputStreamByteWriter extends Writer {
+public class OutputStreamByteWriter extends Writer
+{
 	public static int DEFAULT_BYTE_BUFFER_SIZE = 1024 * 8;
 
 	@Override
-	public void write(char[] cbuf, int off, int len) throws IOException {
+	public void write(char[] cbuf, int off, int len) throws IOException
+	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void flush() throws IOException {
+	public void flush() throws IOException
+	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void close() throws IOException {
+	public void close() throws IOException
+	{
 		// TODO Auto-generated method stub
 
 	}

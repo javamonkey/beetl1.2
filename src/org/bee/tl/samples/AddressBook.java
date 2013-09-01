@@ -1,5 +1,6 @@
 package org.bee.tl.samples;
 
-public class AddressBook {
+public class AddressBook
+{
 
 }

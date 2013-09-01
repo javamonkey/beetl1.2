@@ -42,26 +42,35 @@ import java.util.logging.Logger;
 import org.bee.tl.core.GroupTemplate;
 import org.bee.tl.core.exception.PreCompileException;
 
-public class SunJdk15Javac extends JavaCompiler {
+public class SunJdk15Javac extends JavaCompiler
+{
 	Class javac = null;
 	Method m = null;
 	static Logger logger = Logger.getLogger(SunJdk15Javac.class.toString());
 	static StringBuilder sb = new StringBuilder();
-	static {
+	static
+	{
 		ClassLoader loader = Jdk16Javac.class.getClassLoader();
-		while (true) {
-			if (loader == null) {
+		while (true)
+		{
+			if (loader == null)
+			{
 				break;
 			}
-			if (loader instanceof URLClassLoader) {
+			if (loader instanceof URLClassLoader)
+			{
 				File f = null;
-				for (URL url : ((URLClassLoader) loader).getURLs()) {
+				for (URL url : ((URLClassLoader) loader).getURLs())
+				{
 
-					if (url.getProtocol().equals("jar")) {
+					if (url.getProtocol().equals("jar"))
+					{
 						String temp = url.getPath();
 						// 去掉最后的！
 						f = new File(temp.substring(5, temp.length() - 2));
-					} else {
+					}
+					else
+					{
 						f = new File(url.getFile());
 					}
 					sb.append(f.toString()).append(";");
@@ -69,29 +78,34 @@ public class SunJdk15Javac extends JavaCompiler {
 			}
 			loader = loader.getParent();
 		}
-		if (extraPath != null) {
+		if (extraPath != null)
+		{
 			sb.append(extraPath);
 		}
 		System.out.println(sb.toString());
 
 	}
 
-	public SunJdk15Javac() {
+	public SunJdk15Javac()
+	{
 
 		String javaHome = System.getenv("JAVA_HOME");
-		if (javaHome == null) {
+		if (javaHome == null)
+		{
 			logger.severe("优化失败：请设置java_home");
 			throw new PreCompileException("优化失败：请设置java_home");
 		}
-		try {
-			URL url = new File(javaHome + File.separator + "lib"
-					+ File.separator + "tools.jar").toURL();
-			URLClassLoader classLoader = new URLClassLoader(new URL[] { url },
-					this.getClass().getClassLoader());
+		try
+		{
+			URL url = new File(javaHome + File.separator + "lib" + File.separator + "tools.jar").toURL();
+			URLClassLoader classLoader = new URLClassLoader(new URL[]
+			{ url }, this.getClass().getClassLoader());
 			javac = classLoader.loadClass("com.sun.tools.javac.Main");
-			m = javac.getMethod("compile", new Class[] { String[].class,
-					PrintWriter.class });
-		} catch (Exception ex) {
+			m = javac.getMethod("compile", new Class[]
+			{ String[].class, PrintWriter.class });
+		}
+		catch (Exception ex)
+		{
 			logger.severe("优化失败：不能找到com.sun.tools.javac.Main");
 			throw new PreCompileException("优化失败：不能找到com.sun.tools.javac.Main");
 		}
@@ -99,46 +113,58 @@ public class SunJdk15Javac extends JavaCompiler {
 
 	}
 
-	public int compile() {
+	public int compile()
+	{
 		Object o;
-		try {
+		try
+		{
 			o = javac.newInstance();
 			StringWriter sw = new StringWriter();
-			Object result = m.invoke(o, new Object[] { getOpts(),
-					new PrintWriter(sw) });
+			Object result = m.invoke(o, new Object[]
+			{ getOpts(), new PrintWriter(sw) });
 			// todo,详细解释哪儿出错了
 
 			int i = ((Integer) result).intValue();
-			if (i != 0) {
+			if (i != 0)
+			{
 				System.err.println(sw.toString());
 
 			}
 
 			Map optimizeMap = groupTemplate.getOptimizeConfigMap();
-			if (optimizeMap != null) {
-				Object keep = optimizeMap
-						.get(GroupTemplate.OPTIMIZE_KEEP_SOURCE);
-				if (keep == null || !((Boolean) keep).booleanValue()) {
-					// delete source,jdk support the src can be inputstream,not
-					// file.i will do it latter
+			if (optimizeMap != null)
+			{
+				Object keep = optimizeMap.get(GroupTemplate.OPTIMIZE_KEEP_SOURCE);
+				if (keep == null || !((Boolean) keep).booleanValue())
+				{
+					//					 delete source,jdk support the src can be inputstream,not
+					//					 file.i will do it latter
 					new File(this.srcPath).delete();
 				}
 
 			}
 			return i;
-		} catch (InstantiationException e) {
+		}
+		catch (InstantiationException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return -1;
-		} catch (IllegalAccessException e) {
+		}
+		catch (IllegalAccessException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return -1;
-		} catch (IllegalArgumentException e) {
+		}
+		catch (IllegalArgumentException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return -1;
-		} catch (InvocationTargetException e) {
+		}
+		catch (InvocationTargetException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return -1;
@@ -146,17 +172,21 @@ public class SunJdk15Javac extends JavaCompiler {
 
 	}
 
-	private String[] getOpts() {
+	private String[] getOpts()
+	{
 		List<String> list = new ArrayList<String>();
 
-		if (this.classPath != null) {
+		if (this.classPath != null)
+		{
 			list.add("-cp");
-			if (groupTemplate.getExtraClassPath() != null) {
+			if (groupTemplate.getExtraClassPath() != null)
+			{
 				StringBuilder sb = new StringBuilder();
-				sb.append(this.className).append(";")
-						.append(groupTemplate.getExtraClassPath());
+				sb.append(this.className).append(";").append(groupTemplate.getExtraClassPath());
 				list.add(sb.toString());
-			} else {
+			}
+			else
+			{
 				list.add(this.classPath);
 			}
 			list.add(this.classPath);
@@ -170,12 +200,12 @@ public class SunJdk15Javac extends JavaCompiler {
 		list.add("-d");
 		list.add(this.targetPath);
 
-		list.add(this.srcPath + File.separator
-				+ this.className.replace(".", "\\") + ".java");
+		list.add(this.srcPath + File.separator + this.className.replace(".", "\\") + ".java");
 		return list.toArray(new String[0]);
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception
+	{
 		SunJdk15Javac javac = new SunJdk15Javac();
 		javac.setSRCPath("C:\\Documents and Settings\\李bear\\.bee\\beetls\\src");
 		javac.setClassName("test.first_html");

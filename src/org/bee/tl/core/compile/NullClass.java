@@ -29,9 +29,8 @@ package org.bee.tl.core.compile;
 
 /**
  * 仅仅用于类型推测的时候表示节点类型为Null
- * 
  * @author joelli
- * 
+ *
  */
 public class NullClass {
 

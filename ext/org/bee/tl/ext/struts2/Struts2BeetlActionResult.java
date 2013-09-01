@@ -24,7 +24,7 @@ DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+*/
 package org.bee.tl.ext.struts2;
 
 import java.io.IOException;
@@ -51,33 +51,33 @@ import com.opensymphony.xwork2.inject.Inject;
 import com.opensymphony.xwork2.util.ValueStack;
 import com.opensymphony.xwork2.util.reflection.ReflectionProvider;
 
-public class Struts2BeetlActionResult extends StrutsResultSupport {
+public class Struts2BeetlActionResult extends StrutsResultSupport
+{
 
 	public static GroupTemplate gt = null;
 	ReflectionProvider reflectionProvider = null;
 
 	@Inject
-	public void setReflectionProvider(ReflectionProvider prov) {
+	public void setReflectionProvider(ReflectionProvider prov)
+	{
 		this.reflectionProvider = prov;
 	}
 
-	protected void doExecute(String locationArg, ActionInvocation invocation)
-			throws Exception {
+	protected void doExecute(String locationArg, ActionInvocation invocation) throws Exception
+	{
 
 		ActionContext ctx = invocation.getInvocationContext();
 
-		HttpServletRequest req = (HttpServletRequest) ctx
-				.get(ServletActionContext.HTTP_REQUEST);
-		HttpServletResponse rsp = (HttpServletResponse) ctx
-				.get(ServletActionContext.HTTP_RESPONSE);
+		HttpServletRequest req = (HttpServletRequest) ctx.get(ServletActionContext.HTTP_REQUEST);
+		HttpServletResponse rsp = (HttpServletResponse) ctx.get(ServletActionContext.HTTP_RESPONSE);
 
-		if (!locationArg.startsWith("/")) {
+		if (!locationArg.startsWith("/"))
+		{
 			String base = ResourceUtil.getResourceBase(req);
 			locationArg = base + "/" + locationArg;
 		}
 
-		GroupTemplate groupTemplate = getGroupTemplate(ServletActionContext
-				.getServletContext());
+		GroupTemplate groupTemplate = getGroupTemplate(ServletActionContext.getServletContext());
 		Template template = groupTemplate.getFileTemplate(locationArg);
 
 		ValueStack stack = ctx.getValueStack();
@@ -85,7 +85,8 @@ public class Struts2BeetlActionResult extends StrutsResultSupport {
 		Object action = stack.getRoot().pop();
 		Map<String, Object> values = reflectionProvider.getBeanMap(action);
 
-		for (Map.Entry<String, Object> entry : values.entrySet()) {
+		for (Map.Entry<String, Object> entry : values.entrySet())
+		{
 			template.set(entry.getKey(), entry.getValue());
 		}
 
@@ -101,7 +102,8 @@ public class Struts2BeetlActionResult extends StrutsResultSupport {
 		template.setRawValue("session", new SessionWrapper(session));
 
 		Enumeration en = req.getAttributeNames();
-		while (en.hasMoreElements()) {
+		while (en.hasMoreElements())
+		{
 			String key = (String) en.nextElement();
 			template.set(key, req.getAttribute(key));
 		}
@@ -109,9 +111,12 @@ public class Struts2BeetlActionResult extends StrutsResultSupport {
 		template.set("request", req);
 		addCommonProperty(template, req, rsp);
 		rsp.setContentType("text/html;charset=UTF-8");
-		if (gt.isDirectByteOutput()) {
+		if (gt.isDirectByteOutput())
+		{
 			template.getText(rsp.getOutputStream());
-		} else {
+		}
+		else
+		{
 			template.getText(rsp.getWriter());
 		}
 
@@ -136,17 +141,21 @@ public class Struts2BeetlActionResult extends StrutsResultSupport {
 
 	}
 
-	public synchronized GroupTemplate getGroupTemplate(
-			ServletContext servletContext) {
-		if (gt == null) {
-			try {
+	public synchronized GroupTemplate getGroupTemplate(ServletContext servletContext)
+	{
+		if (gt == null)
+		{
+			try
+			{
 				Config config = new Config();
 				String realPath = servletContext.getRealPath("/");
 				config.put(Config.TEMPLATE_ROOT, realPath);
 				gt = config.createGroupTemplate();
 				initGroupTemplate(gt);
 
-			} catch (IOException e) {
+			}
+			catch (IOException e)
+			{
 				throw new RuntimeException("Beetl faild:" + e.getMessage());
 			}
 		}
@@ -154,24 +163,21 @@ public class Struts2BeetlActionResult extends StrutsResultSupport {
 		return gt;
 	}
 
-	/**
-	 * 设置group的其他属性，使用者可以继承此类，重载这个方法来定制group
-	 * 
+	/**设置group的其他属性，使用者可以继承此类，重载这个方法来定制group
 	 * @param group
 	 */
-	public void initGroupTemplate(GroupTemplate group) {
+	public void initGroupTemplate(GroupTemplate group)
+	{
 
 	}
 
-	/**
-	 * 每次渲染前调用此方法，使用者可以继承此类，重载这个方法。
-	 * 
+	/** 每次渲染前调用此方法，使用者可以继承此类，重载这个方法。
 	 * @param t
 	 * @param req
 	 * @param rsp
 	 */
-	public void addCommonProperty(Template t, HttpServletRequest req,
-			HttpServletResponse rsp) {
+	public void addCommonProperty(Template t, HttpServletRequest req, HttpServletResponse rsp)
+	{
 
 	}
 }

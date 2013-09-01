@@ -37,16 +37,21 @@ import org.bee.tl.core.io.ByteWriter;
 
 /**
  * @author miaojun
- * 
+ *
  */
-public class Printf implements Function {
+public class Printf implements Function
+{
 
-	public String call(Object[] paras, Context ctx) {
+	
+	public String call(Object[] paras, Context ctx)
+	{
 		String template = (String) paras[0];
 		Object[] args = new Object[paras.length - 1];
-		for (int i = 0; i < args.length; i++) {
+		for (int i = 0; i < args.length; i++)
+		{
 			args[i] = paras[i + 1];
-			if (args[i] instanceof BeeNumber) {
+			if (args[i] instanceof BeeNumber)
+			{
 				args[i] = ((BeeNumber) args[i]).getBigDecimal();
 			}
 		}
@@ -54,9 +59,12 @@ public class Printf implements Function {
 		Formatter f = new Formatter(sb);
 		f.format(template, args);
 		ByteWriter w = (ByteWriter) ctx.getVar("__pw");
-		try {
+		try
+		{
 			w.write(sb.toString());
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			throw new RuntimeException(e);
 		}
 
@@ -64,7 +72,8 @@ public class Printf implements Function {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		String name = "joel";
 		int age = 12;
 		System.out.printf("Hello, %s. Next year, you'll be %d", name, age);

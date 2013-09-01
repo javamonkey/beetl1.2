@@ -42,7 +42,7 @@ import org.bee.tl.core.io.ByteWriter;
  * String result = t.getTextAsString();
  * </pre>
  * 
- * or
+ * or 
  * 
  * <pre>
  * t.getText(writer);
@@ -53,7 +53,7 @@ import org.bee.tl.core.io.ByteWriter;
  * </p>
  * Template 还具备如下功能
  * <ul>
- * <li>设置模版里的占位符号，以及控制语句起始符号</li>
+ * <li>设置模版里的占位符号，以及控制语句起始符号 </li>
  * <li>注册方法，格式化函数，标签，虚拟属性</li>
  * <li>设置模版的全局变量</li>
  * <li>设置是否采用严格的MVC策略</li>
@@ -69,7 +69,8 @@ import org.bee.tl.core.io.ByteWriter;
  * @create 2012-2-29
  * @see GroupTemplate
  */
-public interface Template {
+public interface Template
+{
 
 	/**
 	 * merge 模板和模型，将内容输出到Writer里。
@@ -82,8 +83,7 @@ public interface Template {
 	 */
 	public void getText(Writer pw) throws IOException, BeeException;
 
-	public void getTextByByteWriter(ByteWriter pw) throws IOException,
-			BeeException;
+	public void getTextByByteWriter(ByteWriter pw) throws IOException, BeeException;
 
 	/**
 	 * 设置变量，在编译方式，beetl总是假设同一个模板，同一个变量名，对应的类型是一致的。解释方式则无此假设。

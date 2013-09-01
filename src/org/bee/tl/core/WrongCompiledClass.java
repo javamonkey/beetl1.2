@@ -6,18 +6,20 @@ import java.io.IOException;
 import org.bee.tl.core.compile.CompiledClass;
 import org.bee.tl.core.io.ByteWriter;
 
-public class WrongCompiledClass extends CompiledClass {
+public class WrongCompiledClass extends CompiledClass
+{
 
 	long version;
 	BeeException parseException;
 
-	public WrongCompiledClass() {
+	public WrongCompiledClass()
+	{
 
 	}
 
-	public void init(String child, GroupTemplate group,
-			CoreScriptRunner scriptRunner, Resource resource)
-			throws IOException {
+	public void init(String child, GroupTemplate group, CoreScriptRunner scriptRunner, Resource resource)
+			throws IOException
+	{
 
 		File file = new File(group.root, child);
 		version = file.lastModified();
@@ -26,9 +28,10 @@ public class WrongCompiledClass extends CompiledClass {
 
 	}
 
-	public void service(ByteWriter out, Context ctx) throws IOException,
-			BeeException {
-		if (parseException != null) {
+	public void service(ByteWriter out, Context ctx) throws IOException, BeeException
+	{
+		if (parseException != null)
+		{
 			throw parseException;
 		}
 		ctx.set("__pw", out);
@@ -38,19 +41,23 @@ public class WrongCompiledClass extends CompiledClass {
 	}
 
 	@Override
-	public long getVersion() {
+	public long getVersion()
+	{
 		return version;
 	}
 
-	public void setVersion(long version) {
+	public void setVersion(long version)
+	{
 		this.version = version;
 	}
 
-	public BeeException getParseException() {
+	public BeeException getParseException()
+	{
 		return parseException;
 	}
 
-	public void setParseException(BeeException parseException) {
+	public void setParseException(BeeException parseException)
+	{
 		this.parseException = parseException;
 	}
 

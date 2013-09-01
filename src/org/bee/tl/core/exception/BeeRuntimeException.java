@@ -31,17 +31,18 @@ import org.antlr.runtime.Token;
 
 /**
  * 解释执行下的异常错误
- * 
  * @author joelli
  * @since 1.1
- * 
+ *
  */
-public class BeeRuntimeException extends RuntimeException {
+public class BeeRuntimeException extends RuntimeException
+{
 
 	public String detailCode;
 	public Token token;
 
-	public Throwable getCause() {
+	public Throwable getCause()
+	{
 		return super.getCause();
 	}
 
@@ -86,7 +87,8 @@ public class BeeRuntimeException extends RuntimeException {
 	 */
 	public static final String FORMAT_NOT_FOUND = "FORMAT_NOT_FOUND";
 	public static final String DEFAULT_FORMAT_NOT_FOUND = "DEFAULT_FORMAT_NOT_FOUND";
-
+	
+	
 	/**
 	 * 表达式运行错误
 	 */
@@ -121,61 +123,73 @@ public class BeeRuntimeException extends RuntimeException {
 	 */
 	public static final String STRICK_MVC = "STRICK_MVC";
 
-	// 对象的属性get方法出错
+	//对象的属性get方法出错
 	public static final String GET_CALL_ERROR = "GET_CALL_ERROR";
 
-	// 断言异常，与assert函数一起使用
+	//断言异常，与assert函数一起使用
 	public static final String ASSERT_ERROR = "ASSERT_ERROR";
-
-	// HTML TAG 解析出错
+	
+	//HTML TAG 解析出错
 	public static final String HTML_TAG_PARSER_ERROR = "HTML_TAG_PARSER_ERROR";
+	
+	
 
 	public static final String ERROR = "ERROR";
 
-	public BeeRuntimeException(String detailCode, Token token) {
+	public BeeRuntimeException(String detailCode, Token token)
+	{
 		this(detailCode, token, (Exception) null, null);
 
 	}
+	
+	
 
-	public BeeRuntimeException(String detailCode, Token token, String msg) {
+	public BeeRuntimeException(String detailCode, Token token, String msg)
+	{
 		this(detailCode, token, (Exception) null, msg);
 	}
 
-	public BeeRuntimeException(String detailCode, Token token, Throwable ex) {
+	public BeeRuntimeException(String detailCode, Token token, Throwable ex)
+	{
 		this(detailCode, token, ex, null);
 	}
 
-	public BeeRuntimeException(String detailCode, Token token, Throwable cause,
-			String msg) {
+	public BeeRuntimeException(String detailCode, Token token, Throwable cause, String msg)
+	{
 
 		super(msg, cause);
 		this.detailCode = detailCode;
 		this.token = token;
 	}
 
-	public String getDetailCode() {
+	public String getDetailCode()
+	{
 		return detailCode;
 	}
 
-	public void setDetailCode(String detailCode) {
+	public void setDetailCode(String detailCode)
+	{
 		this.detailCode = detailCode;
 	}
 
-	public Token getToken() {
+	public Token getToken()
+	{
 		return token;
 	}
 
-	public void setToken(Token token) {
+	public void setToken(Token token)
+	{
 		this.token = token;
 	}
 
-	public String getMsg() {
+	public String getMsg()
+	{
 		return super.getMessage();
 	}
 
-	public String toString() {
-		return "Error:" + detailCode + "at " + token.getLine()
-				+ super.getMessage() != null ? super.getMessage() : "";
+	public String toString()
+	{
+		return "Error:" + detailCode + "at " + token.getLine() + super.getMessage() != null ? super.getMessage() : "";
 	}
 
 }

@@ -73,76 +73,104 @@ import org.bee.tl.core.io.ByteWriter;
  * 
  * 如果变量layoutContent与模板有冲突，可以作为第三个参数传入到layout变量里，如：
  * layout(path,{},"xxxLayoutContent");
- * 
  * @author joelli
  * @since 1.1
  * 
  */
-public class LayoutTag extends GeneralBeetlTag {
+public class LayoutTag extends GeneralBeetlTag
+{
 
 	ByteWriter tempWriter = null;
 
-	public boolean requriedInput() {
+	public boolean requriedInput()
+	{
 		return true;
 	}
 
-	public void makeOutput() {
-		if (args.length == 0 || args.length > 2) {
+	public void makeOutput()
+	{
+		if (args.length == 0 || args.length > 2)
+		{
 			throw new RuntimeException("参数错误，期望child,map");
 		}
 		String child = (String) args[0];
 
 		Template t = null;
-		if (BeetlUtil.isOutsideOfRoot(child)) {
-			throw new RuntimeException("layout 文件非法，不在根目录里:" + child);
+		if(BeetlUtil.isOutsideOfRoot(child)){
+			throw new RuntimeException("layout 文件非法，不在根目录里:"+child);
 		}
-		try {
+		try
+		{
 			t = group.getFileTemplate(child);
-		} catch (IOException e1) {
+		}
+		catch (IOException e1)
+		{
 			throw new RuntimeException(e1);
 		}
 
 		String key = null;
-		for (Entry<String, Object> entry : ctx.getRootVars().entrySet()) {
+		for (Entry<String, Object> entry : ctx.getRootVars().entrySet())
+		{
 			key = entry.getKey();
 
-			if (ctx.getRawList() != null && ctx.getRawList().contains(key)) {
+			if (ctx.getRawList() != null && ctx.getRawList().contains(key))
+			{
 				t.setRawValue(key, entry.getValue());
-			} else {
+			}
+			else
+			{
 				t.set(entry.getKey(), entry.getValue());
 			}
 
 		}
-		String varName = "layoutContent";
-		if (args.length == 3) {
-			varName = (String) args[2];
+		String varName = "layoutContent" ;
+		if(args.length==3){
+			varName = (String)args[2];
 		}
 
-		if (this.byteContent) {
+		if (this.byteContent)
+		{
 			t.set(varName, this.inputBytes);
-		} else {
+		}
+		else
+		{
 			t.set(varName, this.input);
 		}
 
-		if (args.length == 2) {
+		
+		if (args.length == 2)
+		{
 			Map<String, Object> map = (Map<String, Object>) args[1];
-			for (Entry<String, Object> entry : map.entrySet()) {
+			for (Entry<String, Object> entry : map.entrySet())
+			{
 				t.set(entry.getKey(), entry.getValue());
 			}
 		}
 
 		tempWriter = this.writer.getTempWriter();
 
-		try {
+		try
+		{
 
 			t.getTextByByteWriter(tempWriter);
 			tempWriter.flushToParent();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		} catch (BeeException e) {
+		}
+		catch (IOException e)
+		{
 			throw new RuntimeException(e);
 		}
+		catch (BeeException e)
+		{
+			throw new RuntimeException(e);
+		}
+		
+		
+		
+	
+		
 
 	}
+
+	
 
 }

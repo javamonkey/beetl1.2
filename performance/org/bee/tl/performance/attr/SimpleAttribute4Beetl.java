@@ -7,8 +7,10 @@ import org.bee.tl.performance.DoNothingOutputSteam;
 import org.bee.tl.performance.Employee;
 import org.bee.tl.util.Log;
 
-public class SimpleAttribute4Beetl {
-	public static void main(String[] args) throws Exception {
+public class SimpleAttribute4Beetl
+{
+	public static void main(String[] args) throws Exception
+	{
 		GroupTemplate group = BeetlConfig.base;
 		Employee emp = new Employee();
 		int loopCount = 50000;
@@ -22,7 +24,8 @@ public class SimpleAttribute4Beetl {
 		long start = System.currentTimeMillis();
 
 		Log.startAll();
-		for (int i = 0; i < loopCount; i++) {
+		for (int i = 0; i < loopCount; i++)
+		{
 
 			t = group.getFileTemplate(child);
 			t.set("emp", emp);

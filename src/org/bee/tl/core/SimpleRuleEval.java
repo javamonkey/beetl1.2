@@ -40,7 +40,8 @@ import org.bee.tl.core.exception.WrapperAntlrLexerException;
 import org.bee.tl.core.io.ByteWriter_Char;
 
 /*一个简单扩展，只用来衡量表达式*/
-public class SimpleRuleEval {
+public class SimpleRuleEval
+{
 	protected CoreScriptRunner runner = null;
 	protected Context ctx = new Context();
 	protected StringWriter console = new StringWriter();
@@ -49,119 +50,150 @@ public class SimpleRuleEval {
 	protected String tokenName = null;
 	protected String input = null;
 
-	public SimpleRuleEval(String input) {
+	public SimpleRuleEval(String input)
+	{
 		this.input = input;
 		runner = new CoreScriptRunner("var litinghong=(" + input + ");");
 		runner.enableNativeCall();
 
 	}
 
-	public SimpleRuleEval(String input, String pattern) {
-		this.input = MessageFormat.format(pattern, new String[] { input });
+	public SimpleRuleEval(String input, String pattern)
+	{
+		this.input = MessageFormat.format(pattern, new String[]
+		{ input });
 		runner = new CoreScriptRunner(input);
 
 	}
 
-	public void set(String name, Object value) {
+	public void set(String name, Object value)
+	{
 		ctx.set(name, value);
 	}
 
-	public void registerFunction(String name, Function fn) {
+	public void registerFunction(String name, Function fn)
+	{
 		runner.registerFunction(name, fn);
 	}
 
-	public Object calc() throws SimpleEvalException {
+	public Object calc() throws SimpleEvalException
+	{
 
 		return calc("litinghong");
 
 	}
 
-	public Object calc(String name) throws SimpleEvalException {
+	public Object calc(String name) throws SimpleEvalException
+	{
 
-		try {
+		try
+		{
 			runner.parse();
 			runner.runScript(new ByteWriter_Char(console, "UTF-8"), ctx);
 			Object o = ctx.getVarWithoutException(name);
 			return o;
-		} catch (IOException ex) {
-			// could not happen
+		}
+		catch (IOException ex)
+		{
+			//could not happen
 			throw new SimpleEvalException(ex.getMessage(), ex);
-		} catch (BeeException e) {
+		}
+		catch (BeeException e)
+		{
 			Resource rs = new Resource(this.input);
 			e.setResource(rs);
 			new DefaultErrorHandler().processExcption(e);
 			Throwable ex = e.getCause();
 			this.isEvalSuccess = false;
-			if (ex instanceof BeeRuntimeException) {
+			if (ex instanceof BeeRuntimeException)
+			{
 				this.line = ((BeeRuntimeException) ex).getToken().getLine();
-				this.tokenName = ((BeeRuntimeException) ex).getToken()
-						.getText();
+				this.tokenName = ((BeeRuntimeException) ex).getToken().getText();
 
-			} else if (ex instanceof WrapperAntlrLexerException) {
-				this.handleRecognitionException((RecognitionException) ex
-						.getCause());
+			}
+			else if (ex instanceof WrapperAntlrLexerException)
+			{
+				this.handleRecognitionException((RecognitionException) ex.getCause());
 			}
 
-			else if (ex instanceof RecognitionException) {
+			else if (ex instanceof RecognitionException)
+			{
 				handleRecognitionException((RecognitionException) ex);
 
-			} else {
+			}
+			else
+			{
 				this.tokenName = "未知";
 			}
-			throw new SimpleEvalException(
-					this.line + "错误,原因是" + this.tokenName, ex);
+			throw new SimpleEvalException(this.line + "错误,原因是" + this.tokenName, ex);
 		}
 
 	}
 
-	public boolean calcBoolean() throws SimpleEvalException {
+	public boolean calcBoolean() throws SimpleEvalException
+	{
 		return (Boolean) calc();
 	}
 
-	public int calcInt() throws SimpleEvalException {
+	public int calcInt() throws SimpleEvalException
+	{
 		return ((BeeNumber) calc()).intValue();
 	}
 
-	public long calcLong() throws SimpleEvalException {
+	public long calcLong() throws SimpleEvalException
+	{
 		return ((BeeNumber) calc()).longValue();
 	}
 
-	public double calcDouble() throws SimpleEvalException {
+	public double calcDouble() throws SimpleEvalException
+	{
 		return ((BeeNumber) calc()).doubleValue();
 	}
 
-	public double calcFloat() throws SimpleEvalException {
+	public double calcFloat() throws SimpleEvalException
+	{
 		return ((BeeNumber) calc()).floatValue();
 	}
 
-	public BigDecimal calcBigDecimal() throws SimpleEvalException {
+	public BigDecimal calcBigDecimal() throws SimpleEvalException
+	{
 		return ((BeeNumber) calc()).getBigDecimal();
 	}
 
-	protected void handleRecognitionException(RecognitionException ex) {
+	protected void handleRecognitionException(RecognitionException ex)
+	{
 
 		int errorLine = ex.line;
 		this.tokenName = ex.token.getText();
 
-		if (ex instanceof MismatchedTokenException) {
+		if (ex instanceof MismatchedTokenException)
+		{
 			MismatchedTokenException misError = (MismatchedTokenException) ex;
 			String errorText = null;
 
-			if (misError.expecting != -1) {
+			if (misError.expecting != -1)
+			{
 				this.tokenName = BeeParser.tokenNames[misError.expecting];
-			} else if (misError.token != null) {
+			}
+			else if (misError.token != null)
+			{
 				this.tokenName = misError.token.getText();
-			} else {
+			}
+			else
+			{
 				this.tokenName = "未知";
 			}
 
-		} else {
+		}
+		else
+		{
 			this.tokenName = ex.token != null ? ex.token.getText() : "未知";
 
 		}
 	}
 
-	public static void main(String[] args) throws SimpleEvalException {
+	public static void main(String[] args) throws SimpleEvalException
+	{
 		SimpleRuleEval eval = new SimpleRuleEval("100000/223--*1");
 		Object o = eval.calc();
 		System.out.println(o);

@@ -31,8 +31,9 @@ package org.bee.tl.core;
  * 当前模版的指令对应的值，目前只支持安全输出，默认为false
  * 
  * @author joelli
- * 
+ *
  */
-public class Derective {
+public class Derective
+{
 	public boolean safeOutput = false;
 }

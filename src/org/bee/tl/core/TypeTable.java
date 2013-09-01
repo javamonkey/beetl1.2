@@ -169,54 +169,32 @@ public class TypeTable {
 				break;
 			}
 			case BeeParser.CLASS_FUNCTION: {
-				if (((BeeCommonNodeTree) t.getChild(t.getChildCount() - 1))
-						.getToken().getType() == BeeParser.CLASS_METHOD) {
-					if (t.getChildCount() == 2
-							&& !BeetlUtil.isClassName(((CommonTree) t
-									.getChild(0)).getToken().getText())) {
-						// instance
-						String identity = ((CommonTree) t.getChild(0))
-								.getToken().getText();
-						this.addType(identity);
-						BeeCommonNodeTree classMethodNode = (BeeCommonNodeTree) t
-								.getChild(1);
-						String methodName = classMethodNode.getChild(0)
-								.getText();
-						// 标示非属性，而是本地调用，这将在setTypeClass中判断
-						this.addTypeAttribute(identity, "@" + methodName);
-						for (int i = 1; i < classMethodNode.getChildCount(); i++) {
-							this.iterateForTypeTable(
-									(BeeCommonNodeTree) classMethodNode
-											.getChild(i), localCtx, tempObject);
-						}
-
-					} else {
-						// 静态方法调用：
-
-						BeeCommonNodeTree classMethodNode = (BeeCommonNodeTree) t
-								.getChild(t.getChildCount() - 1);
-						// 推测其他参数
-						for (int j = 1; j < classMethodNode.getChildCount(); j++) {
-							BeeCommonNodeTree para = (BeeCommonNodeTree) classMethodNode
-									.getChild(j);
-							this.iterateForTypeTable(para, localCtx, tempObject);
-
-						}
-
-					}
-
-				} else {
-					if (t.getChildCount() == 2
-							&& !BeetlUtil.isClassName(((CommonTree) t
-									.getChild(0)).getToken().getText())) {
-						String identity = ((CommonTree) t.getChild(0))
-								.getToken().getText();
-						this.addType(identity);
-						String propertyName = ((CommonTree) t.getChild(t
-								.getChildCount() - 1)).getToken().getText();
-						this.addTypeAttribute(identity, "!" + propertyName);
-					}
+				BeeCommonNodeTree exp = (BeeCommonNodeTree) t;
+				BeetlUtil.analyzeNativeNode(exp);
+				Object[] cached = (Object[]) exp.getCached();
+				int callType = (Integer) cached[0]; // 0 代表实例，1代表静态class调用
+				int next = (Integer) cached[1];
+				String instance = (String) cached[2]; // class 或者是 实例变量名
+				if (callType == 0) {
+					this.addType(instance);
 				}
+				for (int i = next; i < exp.getChildCount(); i++) {
+					BeeCommonNodeTree child = (BeeCommonNodeTree) exp
+							.getChild(next);
+					if (child.getType() == BeeParser.CLASS_ARRAY) {
+						this.iterateForTypeTable(
+								(BeeCommonNodeTree) child.getChild(0),
+								localCtx, tempObject);
+					} else if (child.getType() == BeeParser.CLASS_METHOD) {
+						for (int j = 0; j < child.getChildCount(); j++) {
+							this.iterateForTypeTable(
+									(BeeCommonNodeTree) child.getChild(j),
+									localCtx, tempObject);
+						}
+					}
+
+				}
+
 				break;
 
 			}
@@ -226,9 +204,10 @@ public class TypeTable {
 					break;
 				int size = list.size();
 				BeeCommonNodeTree node = null;
+				Context ctx = new Context(localCtx);
 				for (int i = 0; i < size; i++) {
 					node = (BeeCommonNodeTree) list.get(i);
-					iterateForTypeTable(node, new Context(localCtx), tempObject);
+					iterateForTypeTable(node, ctx, tempObject);
 				}
 				break;
 			}
@@ -243,6 +222,12 @@ public class TypeTable {
 		}
 	}
 
+	/**
+	 * 核心方法之一，根据ctx里已有变量类型，推测某个节点对应的java类型，
+	 * 
+	 * @param tree
+	 * @param ctx
+	 */
 	public void infer(BeeCommonNodeTree tree, Context ctx) {
 
 		if (tree.getToken() == null) {
@@ -351,6 +336,8 @@ public class TypeTable {
 		case BeeParser.LARGE_EQUAL:
 		case BeeParser.LESS:
 		case BeeParser.LESS_EQUAL: {
+			
+			
 			BeeCommonNodeTree left = (BeeCommonNodeTree) tree.getChild(0);
 			BeeCommonNodeTree right = (BeeCommonNodeTree) tree.getChild(1);
 			if (left.getExpType() == null) {
@@ -653,189 +640,25 @@ public class TypeTable {
 		case BeeParser.CLASS_FUNCTION: {
 
 			BeeCommonNodeTree exp = (BeeCommonNodeTree) tree;
-
-			if (((BeeCommonNodeTree) exp.getChild(exp.getChildCount() - 1))
-					.getToken().getType() == BeeParser.CLASS_METHOD) {
-				// method call,first find the class or instance
-				if (exp.getChildCount() == 2
-						&& !BeetlUtil
-								.isClassName(((CommonTree) exp.getChild(0))
-										.getToken().getText())) {
-					// instance method .such as :aa.GetName();
-					String identity = ((BeeCommonNodeTree) exp.getChild(0))
-							.getToken().getText();
-					TypeClass typeClass = (TypeClass) ctx.getVar(identity);
-					Class c = typeClass.getRawType();
-					BeeCommonNodeTree classMethodNode = null;
-					String methodName = null;
-					Method method = null;
-					classMethodNode = (BeeCommonNodeTree) exp.getChild(exp
-							.getChildCount() - 1);
-					methodName = ((BeeCommonNodeTree) classMethodNode
-							.getChild(0)).getToken().getText();
-					Class[] parameterType = new Class[classMethodNode
-							.getChildCount() - 1];
-					for (int j = 1; j < classMethodNode.getChildCount(); j++) {
-						BeeCommonNodeTree para = (BeeCommonNodeTree) classMethodNode
-								.getChild(j);
-						this.infer(para, ctx);
-						parameterType[j - 1] = para.getTypeClass().getRawType();
-					}
-
-					MethodConf mc = (MethodConf) exp.getCached();
-					if (mc == null) {
-						mc = MethodUtil
-								.findMethod(c, methodName, parameterType);
-					}
-
-					if (mc != null) {
-						if (scriptRunner.containIllegalNativeCall(mc.method
-								.getDeclaringClass().toString())) {
-							throw new PreCompileException("此本地调用不允许 "
-									+ mc.method.getName());
-						}
-
-						this.setExpType(exp, mc.method.getReturnType());
-						exp.setCached(mc);
-					} else {
-						throw new PreCompileException("本地方法调用未找到!");
-					}
-
-				} else {
-					StringBuilder sb = new StringBuilder();
-					Class target = null;
-					Object o;
-					for (int i = 0; i < exp.getChildCount() - 1; i++) {
-						sb.append(exp.getChild(i).getText()).append(".");
-					}
-					sb.setLength(sb.length() - 1);
-
-					try {
-						target = Class.forName(sb.toString());
-
-					} catch (SecurityException e) {
-						throw new PreCompileException("本地方法调用不被JVM允许，在行"
-								+ exp.getToken().getLine(), e);
-					} catch (ClassNotFoundException e) {
-						throw new PreCompileException("未找到类" + sb.toString()
-								+ "，在行" + exp.getToken().getLine(), e);
-					}
-					BeeCommonNodeTree classMethodNode = null;
-					String methodName = null;
-					Method method = null;
-
-					classMethodNode = (BeeCommonNodeTree) exp.getChild(exp
-							.getChildCount() - 1);
-					methodName = ((BeeCommonNodeTree) classMethodNode
-							.getChild(0)).getToken().getText();
-
-					Class[] parameterType = new Class[classMethodNode
-							.getChildCount() - 1];
-					for (int j = 1; j < classMethodNode.getChildCount(); j++) {
-						BeeCommonNodeTree para = (BeeCommonNodeTree) classMethodNode
-								.getChild(j);
-						this.infer(para, ctx);
-						parameterType[j - 1] = para.getTypeClass().getRawType();
-					}
-
-					MethodConf mc = (MethodConf) exp.getCached();
-					if (mc == null) {
-						mc = MethodUtil.findMethod(target, methodName,
-								parameterType);
-
-					}
-					if (mc != null) {
-						if (scriptRunner.containIllegalNativeCall(mc.method
-								.getDeclaringClass().toString())) {
-							throw new PreCompileException("此本地调用不允许 "
-									+ mc.method.getName());
-						}
-						exp.setCached(mc);
-						this.setExpType(exp, mc.method.getReturnType());
-					} else {
-						throw new PreCompileException("本地方法调用未找到!");
-					}
-
-				}
-
+			BeetlUtil.analyzeNativeNode(exp);
+			Object[] cached = (Object[]) exp.getCached();
+			int callType = (Integer) cached[0]; // 0 代表实例，1代表静态class调用
+			int i = (Integer) cached[1];
+			String instance = (String) cached[2]; // class 或者是 实例变量名
+			Class targetClass = null;
+			if (callType == 0) {
+				targetClass = ((TypeClass) ctx.getVar(instance)).getRawType();
 			} else {
-				// property access
-				if (exp.getChildCount() == 2
-						&& !BeetlUtil
-								.isClassName(((CommonTree) exp.getChild(0))
-										.getToken().getText())) {
-					// public field of instance
-					String identity = ((CommonTree) exp.getChild(0)).getToken()
-							.getText();
-					TypeClass typeClass = (TypeClass) ctx.getVar(identity);
-					Class c = typeClass.getRawType();
-
-					String propertyName = ((CommonTree) exp.getChild(exp
-							.getChildCount() - 1)).getToken().getText();
-					try {
-
-						Class returnClass = c.getDeclaredField(propertyName)
-								.getType();
-						this.setExpType(exp, returnClass);
-					} catch (IllegalArgumentException e) {
-						throw new PreCompileException("错误的native属性调用，符号"
-								+ identity + "," + exp.getToken().getLine()
-								+ "行", e);
-					} catch (SecurityException e) {
-						throw new PreCompileException("错误的native属性调用，符号"
-								+ identity + "," + exp.getToken().getLine()
-								+ "行", e);
-					} catch (NoSuchFieldException e) {
-						throw new PreCompileException("错误的native属性调用，无此属性:"
-								+ propertyName + "," + exp.getToken().getLine()
-								+ "行", e);
-					}
-				} else {
-					StringBuilder sb = new StringBuilder();
-					Class target = null;
-
-					for (int i = 0; i < exp.getChildCount() - 1; i++) {
-						sb.append(exp.getChild(i).getText()).append(".");
-					}
-					sb.setLength(sb.length() - 1);
-
-					try {
-						target = Class.forName(sb.toString());
-
-					} catch (SecurityException e) {
-						throw new PreCompileException("错误的native调用,"
-								+ exp.getToken().getLine() + "行", e);
-					} catch (ClassNotFoundException e) {
-						throw new PreCompileException("错误的native class:" + sb
-								+ "," + exp.getToken().getLine() + "行", e);
-					}
-
-					String propertyName = null;
-
-					CommonTree propertyNode = (CommonTree) exp.getChild(exp
-							.getChildCount() - 1);
-					propertyName = propertyNode.getToken().getText();
-					try {
-						Class returnClass = target.getDeclaredField(
-								propertyName).getType();
-						this.setExpType(exp, returnClass);
-
-					} catch (IllegalArgumentException e) {
-						throw new PreCompileException("错误的native调用,"
-								+ exp.getToken().getLine() + "行", e);
-					} catch (SecurityException e) {
-						throw new PreCompileException("错误的native调用,"
-								+ exp.getToken().getLine() + "行", e);
-					} catch (NoSuchFieldException e) {
-						throw new PreCompileException("错误的native属性调用，无此属性:"
-								+ propertyName + "," + exp.getToken().getLine()
-								+ "行", e);
-
-					}
-
+				try{
+					targetClass = Class.forName(instance);
+				}catch(Exception ex){
+					//不可能发生，因为前面已经检测过了
+					throw new PreCompileException("预编译出错,Class不能实例化,"
+							+ instance);
 				}
-
+				
 			}
+			this.classChainInfer(targetClass, exp, i, ctx);
 			break;
 		}
 
@@ -1083,6 +906,90 @@ public class TypeTable {
 		}
 
 		}
+		
+		//似乎没有必要推测
+		BeeCommonNodeTree exp = (BeeCommonNodeTree) tree ;
+		if(exp.expLeft!=null){
+			this.infer(exp.expLeft, ctx);
+		}
+		if(exp.expRight!=null){
+			this.infer(exp.expRight, ctx);
+		}
+		
+
+	}
+
+	/**
+	 * 判断一个本地class调用后最后的对应类型
+	 * 
+	 * @param targetObject
+	 * @param targetClass
+	 * @param exp1
+	 * @param index
+	 * @param ctx
+	 * @param control
+	 * @return
+	 */
+	public void classChainInfer(Class targetClass, BeeCommonNodeTree exp1,
+			int index, Context ctx) {
+		for (int i = index; i < exp1.getChildCount(); i++) {
+			BeeCommonNodeTree n = (BeeCommonNodeTree) exp1.getChild(i);
+			if (n.getType() == BeeParser.Identifier) {
+				// 属性方法
+				try {
+					targetClass = targetClass.getDeclaredField(n.getText()).getType();
+							
+
+				} catch (Exception ex) {
+					throw new PreCompileException("预编译出错,非法的属性," + n.getText()
+							+ ":" + ex.getMessage());
+				}
+
+			} else if (n.getType() == BeeParser.CLASS_METHOD) {
+				String methodName = ((BeeCommonNodeTree) n.getChild(0))
+						.getToken().getText();
+				Class[] parameterType = new Class[n.getChildCount() - 1];
+				for (int j = 1; j < n.getChildCount(); j++) {
+					BeeCommonNodeTree para = (BeeCommonNodeTree) n.getChild(j);
+					this.infer(para, ctx);
+					parameterType[j - 1] = para.getTypeClass().getRawType();
+				}
+				MethodConf mc = (MethodConf) n.getCached();
+				if(mc==null){
+					 mc = MethodUtil.findMethod(targetClass, methodName,
+							parameterType);
+					 n.setCached(mc);
+				}
+				
+				if (mc == null) {
+					throw new PreCompileException("预编译出错,找不到对应的方法,"
+							+ methodName);
+				}
+				if (scriptRunner.containIllegalNativeCall(mc.method
+						.getDeclaringClass().toString())) {
+					throw new PreCompileException("此本地调用不允许 "
+							+ mc.method.getName());
+				}
+				
+				targetClass = mc.method.getReturnType();
+
+			} else if (n.getType() == BeeParser.CLASS_ARRAY) {
+
+				BeeCommonNodeTree para = (BeeCommonNodeTree) n.getChild(0);
+				this.infer(para, ctx);
+				targetClass = targetClass.getComponentType();
+				if(targetClass==null){
+					throw new PreCompileException("本地调用碰到了非数组调用 "+n.getText()+"[]");
+				}
+				
+
+			} else {
+				throw new RuntimeException("暂时不支持");
+			}
+
+		}
+
+		exp1.setExpType(targetClass);
 
 	}
 

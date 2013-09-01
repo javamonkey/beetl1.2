@@ -30,18 +30,26 @@ package org.bee.tl.samples;
 import org.bee.tl.core.Context;
 import org.bee.tl.core.Function;
 
-public class SplitFunction implements Function {
+import org.bee.tl.core.Context;
+import org.bee.tl.core.Function;
 
+public class SplitFunction implements Function{
+	
+	
 	public String[] call(Object[] paras, Context ctx) {
 
-		if (paras.length != 2) {
+		if(paras.length!=2)
+		{
 			throw new RuntimeException("请输入要分割的字符串和字符！");
-		} else {
-			if (paras.length == 2) {
+		}
+		else
+		{
+			if(paras.length==2)
+			{
 				String[] list = paras[0].toString().split(paras[1].toString());
 				return list;
 			}
-
+			
 			throw new RuntimeException("Parse split Error,Args String,String ");
 		}
 	}

@@ -9,8 +9,10 @@ import org.bee.tl.performance.DoNothingOutputSteam;
 import org.bee.tl.performance.Employee;
 import org.bee.tl.util.Log;
 
-public class FunctionRun4Beetl {
-	public static void main(String[] args) throws Exception {
+public class FunctionRun4Beetl
+{
+	public static void main(String[] args) throws Exception
+	{
 		GroupTemplate group = BeetlConfig.base;
 		group.registerFunction("getSysdate", new DateFunction());
 		Employee emp = new Employee();
@@ -32,7 +34,8 @@ public class FunctionRun4Beetl {
 		long start = System.currentTimeMillis();
 
 		Log.startAll();
-		for (int i = 0; i < loopCount; i++) {
+		for (int i = 0; i < loopCount; i++)
+		{
 
 			t = group.getFileTemplate(child);
 
@@ -49,9 +52,12 @@ public class FunctionRun4Beetl {
 
 	}
 
-	static class DateFunction implements Function {
+	static class DateFunction implements Function
+	{
 
-		public String call(Object[] paras, Context ctx) {
+		
+		public String call(Object[] paras, Context ctx)
+		{
 			return (String) paras[0];
 
 		}

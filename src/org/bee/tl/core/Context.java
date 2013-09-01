@@ -46,7 +46,8 @@ import org.bee.tl.core.number.NumberFactory;
  * @since 0.5
  * 
  */
-public class Context {
+public class Context
+{
 	Map<String, Object> vars = new HashMap<String, Object>();
 	Map text = new HashMap();
 	// boolean orginalContextChanged = false;
@@ -54,7 +55,8 @@ public class Context {
 	Context parent = null;
 	NumberFactory nf = null;
 
-	public Context() {
+	public Context()
+	{
 
 	}
 
@@ -75,54 +77,61 @@ public class Context {
 	 * 
 	 * @param parent
 	 */
-	public Context(Context parent) {
+	public Context(Context parent)
+	{
 		this();
 		this.parent = parent;
 		this.nf = parent.getNumberFactory();
 
 	}
 
-	/**
-	 * 设置全局变量,仅仅在java代码里调用，模板解析使用setVar
-	 * 
+	/**设置全局变量,仅仅在java代码里调用，模板解析使用setVar
 	 * @param name
 	 * @param value
 	 */
-	public void set(String name, Object value) {
+	public void set(String name, Object value)
+	{
 
-		if (parent != null) {
+		if (parent != null)
+		{
 			throw new RuntimeException("不能设置或者改变全局变量");
 		}
 
+	
 		this.vars.put(name, value);
 
 	}
 
-	/**
-	 * 不要调用此方法，内部使用
-	 * 
+	/** 不要调用此方法，内部使用
 	 * @param name
 	 * @param value
 	 */
-	public void replace(String name, Object value) {
-		if (this.parent != null) {
+	public void replace(String name, Object value)
+	{
+		if (this.parent != null)
+		{
 			this.parent.replace(name, value);
-		} else {
+		}
+		else
+		{
 			this.vars.put(name, value);
 		}
 	}
 
 	/* 指示此容器包含对象为Object，不需要预编译进行类型推测 */
-	public void setRawValue(String name, Object value) {
+	public void setRawValue(String name, Object value)
+	{
 		this.set(name, value);
-		if (rawList == null) {
+		if (rawList == null)
+		{
 			rawList = new HashSet<String>();
 		}
 		rawList.add(name);
 
 	}
 
-	public Set<String> getRawList() {
+	public Set<String> getRawList()
+	{
 
 		return rawList;
 	}
@@ -133,19 +142,22 @@ public class Context {
 	 * @param name
 	 * @param value
 	 */
-	protected void defineVar(String name, Object value) {
+	protected void defineVar(String name, Object value)
+	{
 
-		if (this.contain(name)) {
+		if (this.contain(name))
+		{
 			throw new RuntimeException("变量已经定义");
 		}
 		vars.put(name, value);
 	}
 
-	protected void defineVar(String name, Object value, Token token) {
+	protected void defineVar(String name, Object value, Token token)
+	{
 
-		if (this.contain(name)) {
-			throw new BeeRuntimeException(
-					BeeRuntimeException.VAR_ALREADY_DEFINED, token, "变量已经定义");
+		if (this.contain(name))
+		{
+			throw new BeeRuntimeException(BeeRuntimeException.VAR_ALREADY_DEFINED, token, "变量已经定义");
 		}
 		vars.put(name, value);
 	}
@@ -156,14 +168,20 @@ public class Context {
 	 * @param name
 	 * @param value
 	 */
-	protected void setVar(String name, Object value) {
+	protected void setVar(String name, Object value)
+	{
 
-		if (this.vars.containsKey(name)) {
+		if (this.vars.containsKey(name))
+		{
 			vars.put(name, value);
 
-		} else if (parent != null && parent.contain(name)) {
+		}
+		else if (parent != null && parent.contain(name))
+		{
 			parent.setVar(name, value);
-		} else {
+		}
+		else
+		{
 			throw new RuntimeException("变量未定义");
 
 		}
@@ -172,23 +190,30 @@ public class Context {
 
 	/**
 	 * 不检测变量是否存在，直接赋值，用于稍微提高性能
-	 * 
 	 * @param name
 	 * @param value
 	 */
-	protected void fastSetVar(String name, Object value) {
+	protected void fastSetVar(String name, Object value)
+	{
 		this.vars.put(name, value);
 	}
 
-	public Object getVar(String name) {
+	public Object getVar(String name)
+	{
 
-		if (this.vars.containsKey(name)) {
+		if (this.vars.containsKey(name))
+		{
 			return vars.get(name);
 
-		} else {
-			if (parent != null) {
+		}
+		else
+		{
+			if (parent != null)
+			{
 				return parent.getVar(name);
-			} else {
+			}
+			else
+			{
 				throw new NullPointerException("符号" + name + "未发现");
 
 			}
@@ -200,14 +225,21 @@ public class Context {
 	/**
 	 * 为NULL等内置变量的时候调用此 2011-6-28 javamonkey
 	 */
-	public Object getVarWithoutException(String name) {
-		if (this.vars.containsKey(name)) {
+	public Object getVarWithoutException(String name)
+	{
+		if (this.vars.containsKey(name))
+		{
 			return vars.get(name);
 
-		} else {
-			if (parent != null) {
+		}
+		else
+		{
+			if (parent != null)
+			{
 				return parent.getVarWithoutException(name);
-			} else {
+			}
+			else
+			{
 				return null;
 
 			}
@@ -221,183 +253,229 @@ public class Context {
 	 * @param name
 	 * @return
 	 */
-	public boolean contain(String name) {
-		return vars.containsKey(name)
-				|| (this.parent != null && this.parent.contain(name));
+	public boolean contain(String name)
+	{
+		return vars.containsKey(name) || (this.parent != null && this.parent.contain(name));
 
 	}
 
-	protected void putTextVar(Map map) {
+	protected void putTextVar(Map map)
+	{
 		this.text.putAll(map);
 	}
 
-	protected Object getTextVar(String key) {
-		if (this.text.containsKey(key)) {
+	protected Object getTextVar(String key)
+	{
+		if (this.text.containsKey(key))
+		{
 			return text.get(key);
 
-		} else if (parent != null) {
+		}
+		else if (parent != null)
+		{
 			return parent.getTextVar(key);
-		} else {
+		}
+		else
+		{
 			throw new NullPointerException(key);
 		}
 
 	}
 
-	// 其他方法，要放到beetlutil类里
+	//其他方法，要放到beetlutil类里
 
-	protected Object getValueAsMapListKey(Object o, Object exp,
-			BeeCommonNodeTree node) {
-		if (o instanceof Map) {
+	protected Object getValueAsMapListKey(Object o, Object exp, BeeCommonNodeTree node)
+	{
+		if (o instanceof Map)
+		{
 			Map map = (Map) o;
 			return map.get(exp);
-		} else if (o instanceof List) {
+		}
+		else if (o instanceof List)
+		{
 			List list = (List) o;
 			BeeNumber index = (BeeNumber) exp;
 			int i = index.intValue();
 			return list.get(i);
-		} else if (o.getClass().isArray()) {
+		}
+		else if (o.getClass().isArray())
+		{
 			Object[] array = (Object[]) o;
 			BeeNumber index = (BeeNumber) exp;
 			int i = index.intValue();
 			return array[i];
 		}
 
-		else {
+		else
+		{
 			Method m = (Method) node.getCached();
-			if (m == null) {
+			if (m == null)
+			{
 				// not map,it's attribute
 				m = PropertyUtil.getGetMehod(o.getClass(), (String) exp);
-				if (m == null) {
+				if (m == null)
+				{
 					// Generic get
 					m = PropertyUtil.getGetMehod(o.getClass(), null);
 				}
 				// 对象有get(String key)方法
-				if (m != null) {
+				if (m != null)
+				{
 					node.setCached(m);
 
 				}
 
-				else {
+				else
+				{
 					// 并不支持其他集合类型
-					throw new IllegalArgumentException(
-							"Must be Map or List,Array,or Generic Get for []");
+					throw new IllegalArgumentException("Must be Map or List,Array,or Generic Get for []");
 				}
 			}
 
-			try {
-				if (m.getParameterTypes().length == 1) {
+			try
+			{
+				if (m.getParameterTypes().length == 1)
+				{
 					// Generic Get
-					if (exp instanceof String) {
+					if (exp instanceof String)
+					{
 						return m.invoke(o, (String) exp);
-					} else {
-						throw new BeeRuntimeException(
-								BeeRuntimeException.GET_CALL_ERROR,
-								node.getToken(),
+					}
+					else
+					{
+						throw new BeeRuntimeException(BeeRuntimeException.GET_CALL_ERROR, node.getToken(),
 								"Generic Get Must be String as Parameter,such as user[\"key\"]");
 					}
 
-				} else {
+				}
+				else
+				{
 					// java bean attribute
 					return m.invoke(o, null);
 				}
 
-			} catch (Exception ex) {
-				throw new BeeRuntimeException(
-						BeeRuntimeException.GET_CALL_ERROR, node.getToken(),
-						ex.getMessage());
+			}
+			catch (Exception ex)
+			{
+				throw new BeeRuntimeException(BeeRuntimeException.GET_CALL_ERROR, node.getToken(), ex.getMessage());
 			}
 
 		}
 	}
 
-	protected Object getValueAttribute(Object o, String attrName,
-			BeeCommonNodeTree node) {
+	protected Object getValueAttribute(Object o, String attrName, BeeCommonNodeTree node)
+	{
 		//
-		// if (o instanceof Map)
-		// {
-		// return ((Map) o).get(attrName);
-		// }
+		//		if (o instanceof Map)
+		//		{
+		//			return ((Map) o).get(attrName);
+		//		}
 		Object[] minfo = (Object[]) node.getCached();
 		Class c = o.getClass();
 		Method m = null;
 		boolean isGeneralGet = false;
 
-		try {
+		try
+		{
 
-			if (minfo == null) {
+			if (minfo == null)
+			{
 				m = PropertyUtil.getReadMethod(c, attrName);
 
-				// m = PropertyUtil.getReadMethod(o.getClass(), attrName);
-				if (m == null) {
-					throw new RuntimeException("Object '" + o
-							+ "' call attrbute " + attrName
+				//			m = PropertyUtil.getReadMethod(o.getClass(), attrName);
+				if (m == null)
+				{
+					throw new RuntimeException("Object '" + o + "' call attrbute " + attrName
 							+ " with error:no read method " + attrName);
 				}
-				if (m.getParameterTypes().length == 0) {
-					node.setCached(new Object[] { m, false });
+				if (m.getParameterTypes().length == 0)
+				{
+					node.setCached(new Object[]
+					{ m, false });
 
-				} else {
-					node.setCached(new Object[] { m, true });
+				}
+				else
+				{
+					node.setCached(new Object[]
+					{ m, true });
 					isGeneralGet = true;
 				}
 
-			} else {
+			}
+			else
+			{
 				m = (Method) minfo[0];
-				if (((Boolean) minfo[1]).booleanValue()) {
+				if (((Boolean) minfo[1]).booleanValue())
+				{
 					isGeneralGet = true;
 				}
 			}
 
-			if (!isGeneralGet) {
+			if (!isGeneralGet)
+			{
 				Object r = m.invoke(o, new Object[0]);
 				return r;
-			} else {
+			}
+			else
+			{
 				// generic get
-				Object r = m.invoke(o, new Object[] { attrName });
+				Object r = m.invoke(o, new Object[]
+				{ attrName });
 				return r;
 			}
 
-		} catch (IllegalArgumentException e) {
-			throw new RuntimeException("Object '" + o + "' call attrbute "
-					+ attrName + " with illegal argument:" + e.getMessage());
-		} catch (Exception e) {
+		}
+		catch (IllegalArgumentException e)
+		{
+			throw new RuntimeException("Object '" + o + "' call attrbute " + attrName + " with illegal argument:"
+					+ e.getMessage());
+		}
+		catch (Exception e)
+		{
 			// TODO Auto-generated catch block
-			throw new RuntimeException("Object '" + o + "' call attrbute "
-					+ attrName + " with ecception:" + e.getMessage());
+			throw new RuntimeException("Object '" + o + "' call attrbute " + attrName + " with ecception:"
+					+ e.getMessage());
 		}
 
 	}
 
-	public Map<String, Object> getVars() {
+	public Map<String, Object> getVars()
+	{
 		return vars;
 	}
 
 	/**
 	 * 得到模板变量
-	 * 
 	 * @return
 	 */
-	public Map<String, Object> getRootVars() {
-		if (parent != null) {
+	public Map<String, Object> getRootVars()
+	{
+		if (parent != null)
+		{
 			return this.parent.getRootVars();
-		} else {
+		}
+		else
+		{
 			return this.vars;
 		}
 	}
-
-	protected NumberFactory getNumberFactory() {
+	
+	protected NumberFactory getNumberFactory(){
 		return nf;
 	}
 
-	public void setVars(Map<String, Object> vars) {
+	public void setVars(Map<String, Object> vars)
+	{
 		this.vars = vars;
 	}
 
-	public Map<String, Object> getText() {
+	public Map<String, Object> getText()
+	{
 		return text;
 	}
 
-	public void setText(Map<String, Object> text) {
+	public void setText(Map<String, Object> text)
+	{
 		this.text = text;
 	}
 

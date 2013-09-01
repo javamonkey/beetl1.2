@@ -35,19 +35,24 @@ import org.bee.tl.core.io.ByteWriter;
 
 /**
  * &lt;% print("hello") %>
- * 
  * @author jeolli
- * 
+ *
  */
-public class Print implements Function {
+public class Print implements Function
+{
 
-	public String call(Object[] paras, Context ctx) {
+	public String call(Object[] paras, Context ctx)
+	{
 		Object o = paras[0];
 		ByteWriter w = (ByteWriter) ctx.getVar("__pw");
-		if (o != null) {
-			try {
+		if (o != null)
+		{
+			try
+			{
 				w.write(o.toString());
-			} catch (IOException e) {
+			}
+			catch (IOException e)
+			{
 				throw new RuntimeException(e);
 			}
 		}

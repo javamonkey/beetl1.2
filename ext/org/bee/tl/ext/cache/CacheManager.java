@@ -28,16 +28,16 @@
 package org.bee.tl.ext.cache;
 
 /**
- * cache标签的接口，默认使用SimpleCacheManager，用户可以实现自定义的CacheManager
- * 并调用CacheTag.cacheManager = yourCacheManager来实现
- * 
+ *  cache标签的接口，默认使用SimpleCacheManager，用户可以实现自定义的CacheManager
+ *  并调用CacheTag.cacheManager = yourCacheManager来实现
+ *    
  * @author joelli
- * 
+ *
  */
-public interface CacheManager {
+public interface CacheManager
+{
 	/**
 	 * 获取key值对应的对象
-	 * 
 	 * @param key
 	 * @return
 	 */
@@ -46,14 +46,12 @@ public interface CacheManager {
 	/**
 	 * @param key
 	 * @param value
-	 * @param period
-	 *            多少秒后过期
+	 * @param period 多少秒后过期
 	 */
 	public void setObject(String key, Object value, long period);
 
 	/**
 	 * 查看key值对应的对象是否存在
-	 * 
 	 * @param key
 	 * @return
 	 */
@@ -66,14 +64,12 @@ public interface CacheManager {
 
 	/**
 	 * 删除key对应的对象
-	 * 
 	 * @param key
 	 */
 	public void clearAll(String key);
 
 	/**
 	 * 删除keys对应的所有缓存对象
-	 * 
 	 * @param keys
 	 */
 	public void clearAll(String... keys);

@@ -47,7 +47,8 @@ import org.bee.tl.core.exception.PreCompileException;
 import org.bee.tl.core.exception.VaribaleCastException;
 import org.bee.tl.core.io.ByteWriter;
 
-public class PreCompiledClass extends CompiledClass {
+public class PreCompiledClass extends CompiledClass
+{
 
 	File root;
 	String child;
@@ -61,9 +62,9 @@ public class PreCompiledClass extends CompiledClass {
 	static Logger logger = Logger.getLogger(PreCompiledClass.class.toString());
 	GroupTemplate group = null;
 
-	public void init(String child, GroupTemplate group,
-			CoreScriptRunner scriptRunner, Resource resource)
-			throws IOException {
+	public void init(String child, GroupTemplate group, CoreScriptRunner scriptRunner, Resource resource)
+			throws IOException
+	{
 		this.group = group;
 		this.root = group.root;
 		this.child = child;
@@ -71,7 +72,8 @@ public class PreCompiledClass extends CompiledClass {
 		this.resource = resource;
 		file = new File(this.root.toString(), child);
 		lastModified = file.lastModified();
-		if (!scriptRunner.isParseSuccess) {
+		if (!scriptRunner.isParseSuccess)
+		{
 			this.compileError = true;
 			return;
 		}
@@ -90,7 +92,8 @@ public class PreCompiledClass extends CompiledClass {
 	}
 
 	@Override
-	public long getVersion() {
+	public long getVersion()
+	{
 		return lastModified;
 	}
 
@@ -98,8 +101,8 @@ public class PreCompiledClass extends CompiledClass {
 	 * 预编译发生错误，或者正在预编译的时候调用此方法。 2011-10-27
 	 * 
 	 */
-	private void runAsRuntimeTemplate(ByteWriter out, Context ctx)
-			throws IOException, BeeException {
+	private void runAsRuntimeTemplate(ByteWriter out, Context ctx) throws IOException, BeeException
+	{
 
 		BeeTemplate newTemplate = new BeeTemplate(this.resource, scriptRunner);
 		newTemplate.setGroupTemplate(this.group);
@@ -109,17 +112,19 @@ public class PreCompiledClass extends CompiledClass {
 
 	/* 
 	 */
-	public void service(final ByteWriter out, final Context ctx)
-			throws IOException, BeeException {
+	public void service(final ByteWriter out, final Context ctx) throws IOException, BeeException
+	{
 
 		ctx.set("__pw", out);
 
-		if (isCompiling || this.isCompileError()) {
+		if (isCompiling || this.isCompileError())
+		{
 			// 解释执行
 			runAsRuntimeTemplate(out, ctx);
 			return;
 		}
-		if (typeTable.mustInfer()) {
+		if (typeTable.mustInfer())
+		{
 			// 变量表中仍然有变量未确定类型
 			collectAllVariableFromContext(ctx);
 			// 解释执行
@@ -129,55 +134,72 @@ public class PreCompiledClass extends CompiledClass {
 
 		// 如果需要的类型都已经确定，类型推测
 		Context typeContext = new Context();
-		for (String varName : typeTable.allType()) {
+		for (String varName : typeTable.allType())
+		{
 			// 设置已知到类型
 			typeContext.set(varName, typeTable.getTypeClass(varName));
 		}
 
-		try {
+		try
+		{
 
 			// 推测未知类型
-			if ((BeeCommonNodeTree) scriptRunner.tree != null) {
-				typeTable.infer((BeeCommonNodeTree) scriptRunner.tree,
-						typeContext);
+			if ((BeeCommonNodeTree) scriptRunner.tree != null)
+			{
+				typeTable.infer((BeeCommonNodeTree) scriptRunner.tree, typeContext);
 			}
 
-		} catch (PreCompileException ex) {
+		}
+		catch (PreCompileException ex)
+		{
 			// 如果推测失败，譬如json数据格式无法编译成class
 			ex.printStackTrace();
-			logger.info("优化失败:" + this.child + ",原因是" + ex.getMessage()
-					+ ",此模板" + resource.file.getName() + "将按照解释方式执行");
+			logger.info("优化失败:" + this.child + ",原因是" + ex.getMessage() + ",此模板" + resource.file.getName()
+					+ "将按照解释方式执行");
 			this.setCompileError(true);
 			runAsRuntimeTemplate(out, ctx);
 			return;
 
 		}
-		if (group.futureComplileExecutor == null) {
+		if (group.futureComplileExecutor == null)
+		{
 			// comile and run right now
 			compileNow(out, ctx, true);
-		} else {
+		}
+		else
+		{
 
 			CompileTask task = new CompileTask() {
-				public void run() {
-					try {
+				public void run()
+				{
+					try
+					{
 						isCompiling = true;
 						this.setPc(PreCompiledClass.this);
 						compileNow(out, ctx, false);
 						this.setDone(true);
 						isCompiling = false;
-					} catch (IOException e) {
+					}
+					catch (IOException e)
+					{
 						logger.warning(e.getMessage());
 						PreCompiledClass.this.setCompileError(true);
 
-					} catch (BeeException e) {
+					}
+					catch (BeeException e)
+					{
 						// in fact ,never throw this exception since run is
 						// false;
 						logger.warning(e.getMessage());
 						PreCompiledClass.this.setCompileError(true);
-					} catch (PreCompileException e) {
+					}
+					catch (PreCompileException e)
+					{
 						logger.warning(e.getMessage());
 						PreCompiledClass.this.setCompileError(true);
-					} catch (Exception e) {
+					}
+					catch (Exception e)
+					{
 						logger.warning(e.getMessage());
 						PreCompiledClass.this.setCompileError(true);
 
@@ -193,20 +215,19 @@ public class PreCompiledClass extends CompiledClass {
 
 	}
 
-	public void compileNow(ByteWriter out, Context ctx, boolean run)
-			throws IOException, BeeException {
+	public void compileNow(ByteWriter out, Context ctx, boolean run) throws IOException, BeeException
+	{
 
 		// 既然类型都已经知道，生成代码，目前类型推测功能很弱，不能推测父类.
 		// 假设已经推测出来，typeTable正确
 		boolean newLoaderRequired = false;
-		BeetlCodeGenerator cg = new BeetlCodeGenerator(
-				group.getTargetSrcPath(), group.charset, group.root.toString(),
-				scriptRunner, typeTable, scriptRunner.textVar,
-				(BeeCommonNodeTree) scriptRunner.tree, child,
+		BeetlCodeGenerator cg = new BeetlCodeGenerator(group.getTargetSrcPath(), group.charset, group.root.toString(),
+				scriptRunner, typeTable, scriptRunner.textVar, (BeeCommonNodeTree) scriptRunner.tree, child,
 				file.lastModified());
 		cg.CR = scriptRunner.CR;
 
-		if (group.classMap.hasLoaded(child)) {
+		if (group.classMap.hasLoaded(child))
+		{
 			// class已经存在，需要重新加载，所以新生成一个classloader
 			newLoaderRequired = true;
 		}
@@ -215,10 +236,10 @@ public class PreCompiledClass extends CompiledClass {
 		/* 开始编译 */
 		JavaCompiler compiler = CompileFactory.getCompiler();
 		compiler.setGroupTemplate(group);
-		compiler.setClassName(BeetlUtil.getClassFullName(cg.getPkg(),
-				cg.getClsName()));
+		compiler.setClassName(BeetlUtil.getClassFullName(cg.getPkg(), cg.getClsName()));
 		compiler.setSRCPath(cg.getSrcRoot());
-		if (group.getExtraClassPath() != null) {
+		if (group.getExtraClassPath() != null)
+		{
 			compiler.setClassPath(group.getExtraClassPath());
 		}
 
@@ -228,7 +249,8 @@ public class PreCompiledClass extends CompiledClass {
 		compiler.setTargetPath(group.targetClassPath);
 		compiler.setEncoding(group.charset);
 		int result = compiler.compile();
-		if (result != 0) {
+		if (result != 0)
+		{
 			// 编译失败
 			this.setCompileError(true);
 			if (run)
@@ -237,15 +259,17 @@ public class PreCompiledClass extends CompiledClass {
 		}
 
 		CompiledClass real = null;
-		try {
-
-			if (newLoaderRequired) {
+		try
+		{
+		
+			if (newLoaderRequired)
+			{
 				// class已经存在，需要重新加载，所以新生成一个classloader
 				group.newLoader();
 			}
 
-			Class c = group.getTemplateClassLoader().loadClass(
-					BeetlUtil.getClassFullName(cg.getPkg(), cg.getClsName()));
+			Class c = group.getTemplateClassLoader()
+					.loadClass(BeetlUtil.getClassFullName(cg.getPkg(), cg.getClsName()));
 
 			real = (CompiledClass) c.newInstance();
 
@@ -256,24 +280,34 @@ public class PreCompiledClass extends CompiledClass {
 			// 编译，运行成功
 			this.scriptRunner.clearAST();
 			typeTable = null;
-		} catch (InstantiationException e) {
+		}
+		catch (InstantiationException e)
+		{
 			this.setCompileError(true);
 			this.runAsRuntimeTemplate(out, ctx);
 			return;
-		} catch (IllegalAccessException e) {
+		}
+		catch (IllegalAccessException e)
+		{
 			this.setCompileError(true);
 			this.runAsRuntimeTemplate(out, ctx);
 			return;
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e)
+		{
 			this.setCompileError(true);
 			this.runAsRuntimeTemplate(out, ctx);
 			return;
 		}
 		/* 开始运行 */
-		if (run) {
-			try {
+		if (run)
+		{
+			try
+			{
 				real.service(out, ctx);
-			} catch (VaribaleCastException pe) {
+			}
+			catch (VaribaleCastException pe)
+			{
 				// cast 异常的时候
 				this.setCompileError(true);
 				this.runAsRuntimeTemplate(out, ctx);
@@ -284,99 +318,111 @@ public class PreCompiledClass extends CompiledClass {
 
 	}
 
-	private void collectAllVariableFromContext(Context ctx) {
+	private void collectAllVariableFromContext(Context ctx)
+	{
 
-		for (String varName : typeTable.allType()) {
+		for (String varName : typeTable.allType())
+		{
 
-			if (ctx.getVarWithoutException(varName) == null) {
+			if (ctx.getVarWithoutException(varName) == null)
+			{
 				// 从context中未找到想要推测的变量，下次再搜集
 				continue;
-			} else {
+			}
+			else
+			{
 				Object o = ctx.getVar(varName);
-				if (o instanceof List) {
+				if (o instanceof List)
+				{
 					/*
 					 * 如果是List，则要搜集list包含的时什么对象,beetl总是假设list包含的变量类型是一样的，
 					 * 除非在rawList中说明
 					 */
 					List listObject = (List) o;
-					if (ctx.getRawList() == null
-							|| !ctx.getRawList().contains(varName)) {
+					if (ctx.getRawList() == null || !ctx.getRawList().contains(varName))
+					{
 
-						if (listObject.size() != 0) {
+						if (listObject.size() != 0)
+						{
 							Object value = listObject.get(0);
 							TypeClass tc = new TypeClass();
 							tc.setRawType(List.class);
 							tc.getPtypeMap().put("E", value.getClass());
 							typeTable.setTypeClass(varName, tc);
 
-						} else {
+						}
+						else
+						{
 							// 需要继续搜集，仍然使用runtime方式先运行
 						}
-					} else {
+					}
+					else
+					{
 						// 不需要搜集，既然context已经说明该list包含对象非具体类
-						typeTable.setTypeClass(varName,
-								new TypeClass(o.getClass()));
+						typeTable.setTypeClass(varName, new TypeClass(o.getClass()));
 					}
 
-				} else if (o instanceof Iterable) {
+				}
+				else if (o instanceof Iterable)
+				{
 					/**
 					 * 暂时不知道如何预测Iterator里的对象类型，除非是ListIterator，这个以后再考虑
 					 */
-					typeTable.setTypeClass(varName, new TypeClass(
-							Iterable.class));
-					// Iterator it = (Iterator) o;
-					// if (ctx.getRawList() == null ||
-					// !ctx.getRawList().contains(varName))
-					// {
+					typeTable.setTypeClass(varName, new TypeClass(Iterable.class));
+					//					Iterator it = (Iterator) o;
+					//					if (ctx.getRawList() == null || !ctx.getRawList().contains(varName))
+					//					{
 					//
-					// TypeClass tc = new TypeClass();
-					// tc.setRawType(Iterator.class);
-					// tc.getPtypeMap().put("E", Object.class);
-					// typeTable.setTypeClass(varName, tc);
-					// }
-					// else
-					// {
-					// // 不需要搜集，既然context已经说明该list包含对象非具体类
-					// typeTable.setTypeClass(varName, new
-					// TypeClass(o.getClass()));
-					//
-					// }
+					//						TypeClass tc = new TypeClass();
+					//						tc.setRawType(Iterator.class);
+					//						tc.getPtypeMap().put("E", Object.class);
+					//						typeTable.setTypeClass(varName, tc);
+					//					}
+					//					else
+					//					{
+					//						// 不需要搜集，既然context已经说明该list包含对象非具体类
+					//					typeTable.setTypeClass(varName, new TypeClass(o.getClass()));
+					//						
+					//					}
 
-				} else if (o instanceof Map) {
+				}
+				else if (o instanceof Map)
+				{
 					/*
 					 * 如果是map，则要搜集Map包含的时什么对象,beetl总是假设map包含的key-value 类型是一样的，
 					 * 除非在rawList中说明
 					 */
 					Map mapObject = (Map) o;
-					if (ctx.getRawList() == null
-							|| !ctx.getRawList().contains(varName)) {
-						if (mapObject.size() != 0) {
-							Map.Entry value = (Map.Entry) mapObject.entrySet()
-									.iterator().next();
+					if (ctx.getRawList() == null || !ctx.getRawList().contains(varName))
+					{
+						if (mapObject.size() != 0)
+						{
+							Map.Entry value = (Map.Entry) mapObject.entrySet().iterator().next();
 							TypeClass tc = new TypeClass();
 							tc.setRawType(o.getClass());
-							tc.getPtypeMap()
-									.put("K", value.getKey().getClass());
-							tc.getPtypeMap().put("V",
-									value.getValue().getClass());
+							tc.getPtypeMap().put("K", value.getKey().getClass());
+							tc.getPtypeMap().put("V", value.getValue().getClass());
 							typeTable.setTypeClass(varName, tc);
 
-						} else {
+						}
+						else
+						{
 							// 需要继续搜集，仍然使用runtime方式先运行
 						}
-					} else {
+					}
+					else
+					{
 						// 不需要搜集，既然context已经说明该list包含对象非具体类
-						typeTable.setTypeClass(varName,
-								new TypeClass(o.getClass()));
+						typeTable.setTypeClass(varName, new TypeClass(o.getClass()));
 					}
 
 				}
 
-				else {
+				else
+				{
 
 					// 普通对象
-					typeTable
-							.setTypeClass(varName, new TypeClass(o.getClass()));
+					typeTable.setTypeClass(varName, new TypeClass(o.getClass()));
 
 					// if(o!=null){
 					// typeTable.setTypeClass(varName, new

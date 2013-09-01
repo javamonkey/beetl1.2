@@ -11,55 +11,65 @@ import org.bee.tl.core.BeetlUtil;
 import org.bee.tl.core.Tag;
 import org.bee.tl.ext.spring.WebVariable;
 
-public class IncludeJSPTag extends Tag {
+public class IncludeJSPTag extends Tag
+{
 
 	@Override
-	public boolean requriedInput() {
+	public boolean requriedInput()
+	{
 		return false;
 	}
 
 	@Override
-	public String getOutput() {
-		// if (args.length == 0 || args.length > 2)
-		// {
-		// throw new RuntimeException("参数错误，期望child,Map .....");
-		// }
+	public String getOutput()
+	{
+		//		if (args.length == 0 || args.length > 2)
+		//		{
+		//			throw new RuntimeException("参数错误，期望child,Map .....");
+		//		}
 		String child = (String) args[0];
-		if (BeetlUtil.isOutsideOfRoot(child)) {
-			throw new RuntimeException("includeJSP 文件非法，不在根目录里:" + child);
+		if(BeetlUtil.isOutsideOfRoot(child)){
+			throw new RuntimeException("includeJSP 文件非法，不在根目录里:"+child);
 		}
-		try {
+		try
+		{
 			Map map = ctx.getRootVars();
 			WebVariable wv = (WebVariable) map.get("servlet");
-			if (wv == null) {
+			if (wv == null)
+			{
 				throw new RuntimeException("不支持JSP");
 			}
 			HttpServletRequest request = wv.getRequest();
 
 			HttpServletResponse response = wv.getResponse();
-			if (args.length == 2) {
+			if (args.length == 2)
+			{
 				Map<String, Object> paras = (Map<String, Object>) args[1];
-				if (paras.size() != 0) {
+				if (paras.size() != 0)
+				{
 					BeetlServletRequestWrapper requestWrapper = null;
 					Map requestPara = request.getParameterMap();
-					for (Entry<String, Object> entry : paras.entrySet()) {
+					for (Entry<String, Object> entry : paras.entrySet())
+					{
 						requestPara.put(entry.getKey(), entry.getValue());
 					}
-					requestWrapper = new BeetlServletRequestWrapper(request,
-							requestPara);
+					requestWrapper = new BeetlServletRequestWrapper(request, requestPara);
 					request = requestWrapper;
 				}
 
 			}
 
-			BeetlServletResponseWrapper rspWrapper = new BeetlServletResponseWrapper(
-					response);
+			BeetlServletResponseWrapper rspWrapper = new BeetlServletResponseWrapper(response);
 			request.getRequestDispatcher(child).forward(request, rspWrapper);
 			return rspWrapper.getRealWriter().toString();
 
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			throw new RuntimeException(e);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			throw new RuntimeException(e);
 		}
 

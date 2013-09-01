@@ -42,28 +42,30 @@ import org.bee.tl.core.io.ByteWriter;
 
 /**
  * 得到编译过后的模板
- * 
  * @author joelli
- * 
+ *
  */
-public class CompiledBeeTemplate extends AbstractTemplate {
+public class CompiledBeeTemplate extends AbstractTemplate
+{
 
 	CompiledClass cls = null;
 	String child = null;
-	static Logger logger = Logger.getLogger(CompiledBeeTemplate.class
-			.toString());
+	static Logger logger = Logger.getLogger(CompiledBeeTemplate.class.toString());
 
-	public CompiledBeeTemplate(String child, GroupTemplate group)
-			throws IOException {
+	public CompiledBeeTemplate(String child, GroupTemplate group) throws IOException
+	{
 		this.child = child;
 		this.group = group;
 
 		cls = group.classMap.getClass(child);
-		if (cls == null) {
+		if (cls == null)
+		{
 
 			this.createPreCompiledClass(false);
 
-		} else {
+		}
+		else
+		{
 			this.resource = cls.getResource();
 			this.scriptRunner = cls.getScriptRunner();
 			this.scriptRunner.setGlobal(group.scriptGlobal);
@@ -71,100 +73,113 @@ public class CompiledBeeTemplate extends AbstractTemplate {
 
 	}
 
-	public void getTextByByteWriter(ByteWriter pw) throws IOException,
-			BeeException {
+	public void getTextByByteWriter(ByteWriter pw) throws IOException, BeeException
+	{
 
-		try {
+		try
+		{
 			this.context.set("__group", this.group);
 			this.context.set("__core", this.scriptRunner);
-			// 如果是预编译类发生的错误，将不抛出来内部以Runtime方式处理，参考PreCompiledClass
+			//如果是预编译类发生的错误，将不抛出来内部以Runtime方式处理，参考PreCompiledClass
 			cls.service(pw, this.context);
-		} catch (VaribaleCastException ex) {
+		}
+		catch (VaribaleCastException ex)
+		{
 			ex.printStackTrace();
 			this.createPreCompiledClass(true);
 			this.delete();
 			this.runAsPreCompiledClass(pw, child);
 		}
 
-		catch (BeeException ex) {
+		catch (BeeException ex)
+		{
 			handleBeeException(ex);
 		}
 
-		catch (Error ex) {
-			if (ex.getMessage() != null
-					|| ex.getMessage().indexOf(
-							"Unresolved compilation problem:") != -1) {
+		catch (Error ex)
+		{
+			if (ex.getMessage() != null || ex.getMessage().indexOf("Unresolved compilation problem:") != -1)
+			{
 				// 不能正确运行，某些类已经改变,重新优化
 				if (group.isDebug())
 					logger.info("Class is Changed,rebuild template class");
 				delete();
 				this.createPreCompiledClass(false);
 				runAsPreCompiledClass(pw, child);
-			} else {
+			}
+			else
+			{
 				throw ex;
 			}
 
 		}
 	}
 
-	private void runAsRuntimeTemplate(ByteWriter pw, String key)
-			throws IOException, BeeException {
-		try {
+	private void runAsRuntimeTemplate(ByteWriter pw, String key) throws IOException, BeeException
+	{
+		try
+		{
 
-			BeeTemplate newTemplate = new BeeTemplate(this.resource,
-					scriptRunner);
+			BeeTemplate newTemplate = new BeeTemplate(this.resource, scriptRunner);
 			newTemplate.setGroupTemplate(this.group);
 			newTemplate.setContext(this.context);
 			newTemplate.getTextByByteWriter(pw);
 		}
 
-		catch (BeeException ex) {
+		catch (BeeException ex)
+		{
 			handleBeeException(ex);
 
 		}
 
 	}
 
-	private void runAsPreCompiledClass(ByteWriter pw, String key)
-			throws IOException, BeeException {
-		try {
+	private void runAsPreCompiledClass(ByteWriter pw, String key) throws IOException, BeeException
+	{
+		try
+		{
 
 			cls.service(pw, this.context);
 
 		}
 
-		catch (BeeException ex) {
+		catch (BeeException ex)
+		{
 			handleBeeException(ex);
 		}
 
 	}
 
-	private void delete() {
+	private void delete()
+	{
 
 		String[] strs = BeetlUtil.getPackage2Class(this.child);
-		String classFile = strs[0].replace('.', File.pathSeparatorChar)
-				+ File.separator + strs[1];
-		File f = new File(group.getTargetClassPath() + File.separator
-				+ classFile + ".class");
-		if (!f.delete()) {
+		String classFile = strs[0].replace('.', File.pathSeparatorChar) + File.separator + strs[1];
+		File f = new File(group.getTargetClassPath() + File.separator + classFile + ".class");
+		if (!f.delete())
+		{
 			// bug ,can not delete ,why?
 			System.out.println("can not delete file " + f.toString());
 		}
 	}
 
-	private void createPreCompiledClass(boolean isWrong) throws IOException {
-		if (isWrong) {
+	private void createPreCompiledClass(boolean isWrong) throws IOException
+	{
+		if (isWrong)
+		{
 			cls = new WrongCompiledClass();
-		} else {
+		}
+		else
+		{
 			cls = new PreCompiledClass();
 		}
 
-		Transformator tf = new Transformator(group.placeholderStart,
-				group.placeholderEnd, group.statementStart, group.statementEnd);
-		if (group.isHtmlTagSupport) {
+		Transformator tf = new Transformator(group.placeholderStart, group.placeholderEnd, group.statementStart,
+				group.statementEnd);
+		if(group.isHtmlTagSupport){
 			tf.enableHtmlTagSupport(group.htmlTagStart, group.htmlTagEnd);
 		}
-
+	
 		Resource resource = new Resource(child, group.root, group.charset);
 		Reader textReader = resource.getReader();
 		Reader scriptReader = null;
@@ -172,71 +187,82 @@ public class CompiledBeeTemplate extends AbstractTemplate {
 		try {
 			scriptReader = tf.transform(textReader);
 		} catch (HTMLTagParserException e) {
-			// 返回一个错误的模板
+			//返回一个错误的模板		
 			tf.clear();
 			cls = new WrongCompiledClass();
-			cls.setScriptRunner(scriptRunner);
-			scriptRunner.lasetRe = e;
-			scriptRunner.isParseSuccess = false;
+			cls.setScriptRunner(scriptRunner);			
+			scriptRunner.lasetRe =e ;
+			scriptRunner.isParseSuccess = false ;
 			scriptRunner.hasParsed = true;
-			((WrongCompiledClass) cls).init(child, group, scriptRunner,
-					resource);
+			((WrongCompiledClass) cls).init(child, group, scriptRunner, resource);
 			BeeException bee = new BeeException(e);
 			bee.setResource(resource);
-			((WrongCompiledClass) cls).setParseException(bee);
+			((WrongCompiledClass)cls).setParseException(bee);
 			group.classMap.cacheCompiledClass(child, cls);
-			return;
+			return ;
+			
+			
+			
+		}
+	
+			
+			scriptRunner.setScriptInputReader(scriptReader);
+			if (group.directByteOutput)
+			{
+				scriptRunner.enableDirectOutputByte();
+			}
+			if (group.isStrict)
+			{
+				scriptRunner.enableStrict();
+			}
+			if (group.nativeCall)
+			{
+				scriptRunner.enableNativeCall();
+			}
+			scriptRunner.setGlobal(group.scriptGlobal);
+			if (this.scriptRunner.directByteOutput)
+			{
+				// 直接二进制输出
+				Map<String, String> texts = tf.getTextMap();
+				Map<String, byte[]> byteMap = new HashMap<String, byte[]>(texts.size());
+				for (Map.Entry<String, String> entry : texts.entrySet())
+				{
+					byteMap.put(entry.getKey(), entry.getValue().getBytes(group.charset));
+				}
 
-		}
+				scriptRunner.textVar = byteMap;
 
-		scriptRunner.setScriptInputReader(scriptReader);
-		if (group.directByteOutput) {
-			scriptRunner.enableDirectOutputByte();
-		}
-		if (group.isStrict) {
-			scriptRunner.enableStrict();
-		}
-		if (group.nativeCall) {
-			scriptRunner.enableNativeCall();
-		}
-		scriptRunner.setGlobal(group.scriptGlobal);
-		if (this.scriptRunner.directByteOutput) {
-			// 直接二进制输出
-			Map<String, String> texts = tf.getTextMap();
-			Map<String, byte[]> byteMap = new HashMap<String, byte[]>(
-					texts.size());
-			for (Map.Entry<String, String> entry : texts.entrySet()) {
-				byteMap.put(entry.getKey(),
-						entry.getValue().getBytes(group.charset));
+			}
+			else
+			{
+				scriptRunner.textVar = tf.getTextMap();
 			}
 
-			scriptRunner.textVar = byteMap;
+			resource.setCR(tf.lineSeparator);
+			scriptRunner.setCharset(group.charset);
+			scriptRunner.setCR(tf.lineSeparator);
+			scriptRunner.parse();
+			tf.clear();
+		
+		
+		if (isWrong)
+		{
+			((WrongCompiledClass) cls).init(child, group, scriptRunner, resource);
 
-		} else {
-			scriptRunner.textVar = tf.getTextMap();
 		}
+		else
+		{
 
-		resource.setCR(tf.lineSeparator);
-		scriptRunner.setCharset(group.charset);
-		scriptRunner.setCR(tf.lineSeparator);
-		scriptRunner.parse();
-		tf.clear();
-
-		if (isWrong) {
-			((WrongCompiledClass) cls).init(child, group, scriptRunner,
-					resource);
-
-		} else {
-
-			try {
-				((PreCompiledClass) cls).init(child, group, scriptRunner,
-						resource);
-			} catch (BeeRuntimeException ex) {
+			try
+			{
+				((PreCompiledClass) cls).init(child, group, scriptRunner, resource);
+			}
+			catch (BeeRuntimeException ex)
+			{
 				final BeeException parseException = new BeeException(ex);
 				parseException.setResource(this.cls.getResource());
 				cls = new WrongCompiledClass();
-				((WrongCompiledClass) cls).init(child, group, scriptRunner,
-						resource);
+				((WrongCompiledClass) cls).init(child, group, scriptRunner, resource);
 				((WrongCompiledClass) cls).setParseException(parseException);
 
 			}
@@ -246,72 +272,84 @@ public class CompiledBeeTemplate extends AbstractTemplate {
 
 	}
 
-	public void handleBeeException(BeeException ex) throws BeeException {
-		// 如果异常相关的resource没有
-		if (ex.getResource() == null) {
-			if (cls.getResource() == null) {
-				// 对于编译好的class抛此错误，需要创建一个cls;
-				Resource resource = new Resource(child, new File(
-						group.root.toString(), child), group.charset);
+	public void handleBeeException(BeeException ex) throws BeeException
+	{
+		//如果异常相关的resource没有
+		if (ex.getResource() == null)
+		{
+			if (cls.getResource() == null)
+			{
+				//对于编译好的class抛此错误，需要创建一个cls;
+				Resource resource = new Resource(child, new File(group.root.toString(), child), group.charset);
 				resource.setCR(cls.getCR());
 				cls.setResource(resource);
 				ex.setResource(resource);
 
-			} else {
+			}
+			else
+			{
 
 				ex.setResource(cls.getResource());
 			}
 		}
 
-		if (this.group.errorHandler != null) {
+		if (this.group.errorHandler != null)
+		{
 			this.group.errorHandler.processExcption(ex);
-		} else {
+		}
+		else
+		{
 			throw ex;
 		}
 	}
 
-	public String getCR() {
+	public String getCR()
+	{
 		return cls.getCR();
 	}
 
-	public String getPlaceholderStart() {
+	public String getPlaceholderStart()
+	{
 		return group.getPlaceholderStart();
 	}
 
-	public void setPlaceholderStart(String placeholderStart) {
-		throw new UnsupportedOperationException(
-				"设置不允许，因为CoreScriptRunner已经初始化完毕");
+	public void setPlaceholderStart(String placeholderStart)
+	{
+		throw new UnsupportedOperationException("设置不允许，因为CoreScriptRunner已经初始化完毕");
 
 	}
 
-	public String getPlaceholderEnd() {
+	public String getPlaceholderEnd()
+	{
 		return group.getPlaceholderEnd();
 	}
 
-	public void setPlaceholderEnd(String placeholderEnd) {
-		throw new UnsupportedOperationException(
-				"设置不允许，因为CoreScriptRunner已经初始化完毕");
+	public void setPlaceholderEnd(String placeholderEnd)
+	{
+		throw new UnsupportedOperationException("设置不允许，因为CoreScriptRunner已经初始化完毕");
 
 	}
 
-	public String getStatementStart() {
+	public String getStatementStart()
+	{
 		// TODO Auto-generated method stub
 		return group.getStatementStart();
 	}
 
-	public void setStatementStart(String statementStart) {
-		throw new UnsupportedOperationException(
-				"设置不允许，因为CoreScriptRunner已经初始化完毕");
+	public void setStatementStart(String statementStart)
+	{
+		throw new UnsupportedOperationException("设置不允许，因为CoreScriptRunner已经初始化完毕");
 
 	}
 
-	public String getStatementEnd() {
+	public String getStatementEnd()
+	{
 		return group.getStatementEnd();
 	}
 
-	public void setStatementEnd(String statementEnd) {
-		throw new UnsupportedOperationException(
-				"设置不允许，因为CoreScriptRunner已经初始化完毕");
+	public void setStatementEnd(String statementEnd)
+	{
+		throw new UnsupportedOperationException("设置不允许，因为CoreScriptRunner已经初始化完毕");
 
 	}
 

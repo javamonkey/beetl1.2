@@ -29,64 +29,89 @@ package org.bee.tl.core;
 
 import java.io.UnsupportedEncodingException;
 
-/**
- * 在Tag基础上，增加了getOutputAsByte方法，便于模版在二进制输出的时候可以直接输出二进制
+/** 在Tag基础上，增加了getOutputAsByte方法，便于模版在二进制输出的时候可以直接输出二进制
  * 大部分tag只需要继承Tag实现其getOutput方法就可以了，Beetl内置的include和layout继承了ByteSupportTag
  * 
  * @author lijiazhi
- * 
+ *
  */
-public abstract class ByteSupportTag extends Tag {
+public abstract class ByteSupportTag extends Tag
+{
 	protected byte[] inputBytes = null;
 	protected boolean byteContent = false;
 	public static final byte[] NULL_BYTE = new byte[0];
 
-	public void setByteInput(byte[] bs) {
+	public void setByteInput(byte[] bs)
+	{
 		this.inputBytes = bs;
 		byteContent = true;
 	}
 
-	public String getInput() {
-		if (input != null) {
+	public String getInput()
+	{
+		if (input != null)
+		{
 			return this.input;
-		} else if (inputBytes != null) {
-			try {
+		}
+		else if (inputBytes != null)
+		{
+			try
+			{
 				return new String(inputBytes, group.getCharset());
-			} catch (UnsupportedEncodingException e) {
+			}
+			catch (UnsupportedEncodingException e)
+			{
 				throw new RuntimeException(e.getMessage());
 			}
-		} else {
+		}
+		else
+		{
 			return null;
 		}
 	}
 
-	public byte[] getInputAsBytes() {
-		if (inputBytes != null) {
+	public byte[] getInputAsBytes()
+	{
+		if (inputBytes != null)
+		{
 			return inputBytes;
-		} else if (input != null) {
-			try {
+		}
+		else if (input != null)
+		{
+			try
+			{
 				return input.getBytes(group.getCharset());
-			} catch (UnsupportedEncodingException e) {
+			}
+			catch (UnsupportedEncodingException e)
+			{
 				throw new RuntimeException(e.getMessage());
 			}
-		} else {
+		}
+		else
+		{
 			return null;
 		}
 	}
 
-	public boolean isByteContent() {
+	public boolean isByteContent()
+	{
 		return byteContent;
 	}
 
-	public void setByteContent(boolean byteContent) {
+	public void setByteContent(boolean byteContent)
+	{
 		this.byteContent = byteContent;
 	}
 
 	@Override
-	public String getOutput() {
-		try {
+	public String getOutput()
+	{
+		try
+		{
 			return new String(this.getOutputAsByte(), group.getCharset());
-		} catch (UnsupportedEncodingException e) {
+		}
+		catch (UnsupportedEncodingException e)
+		{
 			throw new RuntimeException(e.getMessage());
 		}
 	}

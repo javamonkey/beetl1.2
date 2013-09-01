@@ -6,8 +6,10 @@ import org.bee.tl.performance.BeetlConfig;
 import org.bee.tl.performance.DoNothingOutputSteam;
 import org.bee.tl.util.Log;
 
-public class NativeStaticCall4Beetl {
-	public static void main(String[] args) throws Exception {
+public class NativeStaticCall4Beetl
+{
+	public static void main(String[] args) throws Exception
+	{
 		GroupTemplate group = BeetlConfig.base;
 
 		int loopCount = 50000;
@@ -21,7 +23,8 @@ public class NativeStaticCall4Beetl {
 		long start = System.currentTimeMillis();
 
 		Log.startAll();
-		for (int i = 0; i < loopCount; i++) {
+		for (int i = 0; i < loopCount; i++)
+		{
 
 			t = group.getFileTemplate(child);
 			byteStream = new DoNothingOutputSteam();
@@ -37,7 +40,8 @@ public class NativeStaticCall4Beetl {
 
 	}
 
-	public static String getText(String str, int a) {
+	public static String getText(String str, int a)
+	{
 		return str + a;
 	}
 }

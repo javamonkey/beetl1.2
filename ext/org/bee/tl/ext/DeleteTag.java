@@ -29,14 +29,14 @@ package org.bee.tl.ext;
 
 import org.bee.tl.core.Tag;
 
-public class DeleteTag extends Tag {
-	public String getOutput() {
+public class DeleteTag extends Tag{
+	public String getOutput(){
 		return "";
-	}
-
+	}	
 	@Override
-	public boolean requriedInput() {
+	public  boolean requriedInput(){
 		return false;
 	}
+
 
 }

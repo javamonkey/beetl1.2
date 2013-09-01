@@ -39,50 +39,59 @@ import org.bee.tl.core.io.ByteWriter_Byte;
 import org.bee.tl.core.io.ByteWriter_Char;
 import org.bee.tl.core.number.NumberFactory;
 
-public abstract class AbstractTemplate implements Template {
+public abstract class AbstractTemplate implements Template
+{
 	GroupTemplate group = null;
 
 	Context context = new Context();
 
-	// 模板的输入
+	//模板的输入
 	Resource resource = null;
-	// 脚本引擎
+	//脚本引擎
 	CoreScriptRunner scriptRunner = null;
 
-	public CoreScriptRunner getScriptRunner() {
+	public CoreScriptRunner getScriptRunner()
+	{
 		return scriptRunner;
 	}
 
-	public void setScriptRunner(CoreScriptRunner scriptRunner) {
+	public void setScriptRunner(CoreScriptRunner scriptRunner)
+	{
 		this.scriptRunner = scriptRunner;
 	}
 
-	public Resource getResource() {
+	public Resource getResource()
+	{
 		return resource;
 	}
 
-	public abstract void getTextByByteWriter(ByteWriter pw) throws IOException,
-			BeeException;
+	public abstract void getTextByByteWriter(ByteWriter pw) throws IOException, BeeException;
 
-	public void getText(Writer pw) throws IOException, BeeException {
+	public void getText(Writer pw) throws IOException, BeeException
+	{
 		ByteWriter_Char bw = new ByteWriter_Char(pw, group.getCharset());
 		this.getTextByByteWriter(bw);
 	}
 
-	public void getText(OutputStream os) throws IOException, BeeException {
+	public void getText(OutputStream os) throws IOException, BeeException
+	{
 
 		ByteWriter_Byte bwb = new ByteWriter_Byte(os, this.group.charset);
 		this.getTextByByteWriter(bwb);
 
 	}
 
-	public String getTextAsString() throws IOException, BeeException {
-		if (scriptRunner.directByteOutput) {
+	public String getTextAsString() throws IOException, BeeException
+	{
+		if (scriptRunner.directByteOutput)
+		{
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
 			getText(os);
 			byte[] result = os.toByteArray();
 			return new String(result, group.charset);
-		} else {
+		}
+		else
+		{
 			StringWriter sw = new StringWriter();
 			PrintWriter pw = new PrintWriter(sw);
 			getText(pw);
@@ -92,121 +101,152 @@ public abstract class AbstractTemplate implements Template {
 
 	}
 
-	public void set(String name, Object o) {
-
-		if (o instanceof Number) {
-			if (this.scriptRunner.isBigNumberSupport()) {
-				context.set(name, NumberFactory.big.y((Number) o));
-			} else {
-				context.set(name, NumberFactory.general.y((Number) o));
+	public void set(String name, Object o)
+	{
+		
+	
+		if(o instanceof Number){
+			if(this.scriptRunner.isBigNumberSupport()){
+				context.set(name, NumberFactory.big.y((Number)o));
+			}else{
+				context.set(name,  NumberFactory.general.y((Number)o));
 			}
-		} else {
+		}else{
 			context.set(name, o);
 		}
+		
 
 	}
 
-	public void setRawValue(String name, Object o) {
-		// o should be list
+	public void setRawValue(String name, Object o)
+	{
+		//o should be list
 		context.setRawValue(name, o);
 
 	}
 
-	public void setContext(Context ctx) {
+	public void setContext(Context ctx)
+	{
 		this.context = ctx;
 	}
 
-	public void setGroupTemplate(GroupTemplate group) {
+	public void setGroupTemplate(GroupTemplate group)
+	{
 		this.group = group;
 
 	}
 
-	public GroupTemplate getGroupTemplate() {
+	public GroupTemplate getGroupTemplate()
+	{
 		return this.group;
 	}
 
-	public void registerFunction(String name, Function fn) {
+	public void registerFunction(String name, Function fn)
+	{
 
 		scriptRunner.registerFunction(name, fn);
 	}
 
-	public void registerTagClass(String name, Class process) {
+	public void registerTagClass(String name, Class process)
+	{
 		scriptRunner.registerTagClass(name, process);
 
 	}
 
-	public void registerFormat(String name, Format format) {
+	public void registerFormat(String name, Format format)
+	{
 		scriptRunner.registerFormat(name, format);
 
 	}
 
-	public void registerVirtualAttributeEval(VirtualAttributeEval e) {
+	public void registerVirtualAttributeEval(VirtualAttributeEval e)
+	{
 		scriptRunner.registerVirtualAttributeEval(e);
 	}
 
-	public Function getFunction(String name) {
+	public Function getFunction(String name)
+	{
 		return scriptRunner.getFunction(name);
 
 	}
 
-	public Tag getTag(String name) {
+	public Tag getTag(String name)
+	{
 
 		return scriptRunner.getTag(name);
 
 	}
 
-	public Format getFormat(String name) {
+	public Format getFormat(String name)
+	{
 		return scriptRunner.getFormat(name);
 
 	}
 
-	public VirtualAttributeEval getVirtualAttributeEval(Class c, String name) {
+	public VirtualAttributeEval getVirtualAttributeEval(Class c, String name)
+	{
 
 		return this.scriptRunner.getVirtualAttributeEval(c, name);
 
 	}
 
-	public Context getContext() {
+	public Context getContext()
+	{
 		return this.context;
 	}
 
-	public boolean containFunction(String name) {
+	public boolean containFunction(String name)
+	{
 		return this.scriptRunner.containFunction(name);
 
 	}
 
-	public boolean containTag(String name) {
+	public boolean containTag(String name)
+	{
 		return this.scriptRunner.containTag(name);
 	}
 
-	public boolean containFormat(String name) {
+	public boolean containFormat(String name)
+	{
 		return this.scriptRunner.containFormat(name);
 	}
 
-	public void enableDirectOutputByte() {
+	public void enableDirectOutputByte()
+	{
 
-		if (scriptRunner == null || !scriptRunner.hasParsed) {
+		if (scriptRunner == null || !scriptRunner.hasParsed)
+		{
 			this.scriptRunner.enableDirectOutputByte();
-		} else {
+		}
+		else
+		{
 			throw new IllegalStateException("设置不允许，因为CoreScriptRunner已经初始化完毕");
 		}
 
 	}
 
-	public void enableNativeCall() {
-		if (scriptRunner == null || !scriptRunner.hasParsed) {
+	public void enableNativeCall()
+	{
+		if (scriptRunner == null || !scriptRunner.hasParsed)
+		{
 			scriptRunner.enableNativeCall();
-		} else {
+		}
+		else
+		{
 			throw new IllegalStateException("设置不允许，因为CoreScriptRunner已经初始化完毕");
 		}
 
 	}
 
-	public void enableStrict() {
+	public void enableStrict()
+	{
 
-		if (scriptRunner == null || !scriptRunner.hasParsed) {
+		if (scriptRunner == null || !scriptRunner.hasParsed)
+		{
 			scriptRunner.enableStrict();
-		} else {
+		}
+		else
+		{
 			throw new IllegalStateException("设置不允许，因为CoreScriptRunner已经初始化完毕");
 		}
 

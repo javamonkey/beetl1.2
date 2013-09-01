@@ -1,2 +1,10 @@
-<% for(user in list){ if(user.age<=18){ continue; } %> ${user.name} <% }
+<%
+for(user in list){
+	if(user.age<=18){	
+	   continue;
+    }
+%>
+${user.name}
+<%
+}
 %>

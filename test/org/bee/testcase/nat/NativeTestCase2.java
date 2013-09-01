@@ -13,14 +13,16 @@ import org.bee.tl.core.BeeException;
 import org.bee.tl.core.Template;
 import org.bee.tl.samples.User;
 
-public class NativeTestCase2 extends BasicTestCase {
+public class NativeTestCase2 extends BasicTestCase
+{
 	List<User> list = new ArrayList<User>();
 	Map<Integer, User> map = new TreeMap<Integer, User>();
 	User[] users = new User[2];
 	User joel = new User();
 	User lucy = new User();
 
-	public NativeTestCase2() {
+	public NativeTestCase2()
+	{
 		super();
 
 		joel = new User();
@@ -34,46 +36,56 @@ public class NativeTestCase2 extends BasicTestCase {
 		lucy.setName("lucy");
 		list.add(lucy);
 		joel.setFriend(list);
+		joel.setWife(lucy);
 
 	}
 
-	public void testSimple() throws IOException, BeeException {
+	public void testSimple() throws IOException, BeeException
+	{
 
-		Template t = this.gt
-				.getFileTemplate("/nat/user_method_call_template.html");
+		Template t = this.gt.getFileTemplate("/nat/user_method_call_template.html");
 
 		t.set("user", joel);
 		String str = t.getTextAsString();
-		Assert.assertEquals(
-				this.getFileContent("/nat/user_method_call_expected.html"), str);
+		Assert.assertEquals(this.getFileContent("/nat/user_method_call_expected.html"), str);
 		t = this.gt.getFileTemplate("/nat/user_method_call_template.html");
 
 		t.set("user", joel);
 		str = t.getTextAsString();
-		Assert.assertEquals(
-				this.getFileContent("/nat/user_method_call_expected.html"), str);
+		Assert.assertEquals(this.getFileContent("/nat/user_method_call_expected.html"), str);
 
 	}
 
-	public void testPersion() throws IOException, BeeException {
+	public void testPersion() throws IOException, BeeException
+	{
 
-		Template t = this.gt
-				.getFileTemplate("/nat/person_method_call_template.html");
+		Template t = this.gt.getFileTemplate("/nat/person_method_call_template.html");
 
 		t.set("user1", joel);
 		t.set("user2", lucy);
 		String str = t.getTextAsString();
-		Assert.assertEquals(
-				this.getFileContent("/nat/person_method_call_expected.html"),
-				str);
+		Assert.assertEquals(this.getFileContent("/nat/person_method_call_expected.html"), str);
 		t = this.gt.getFileTemplate("/nat/person_method_call_template.html");
 
 		t.set("user1", joel);
 		t.set("user2", lucy);
 		str = t.getTextAsString();
-		Assert.assertEquals(
-				this.getFileContent("/nat/person_method_call_expected.html"),
-				str);
+		Assert.assertEquals(this.getFileContent("/nat/person_method_call_expected.html"), str);
+
+	}
+	
+	public void tesCalltChain() throws IOException, BeeException
+	{
+
+		Template t = this.gt.getFileTemplate("/nat/chain_method_call_template.html");
+
+		t.set("user1", joel);
+		String str = t.getTextAsString();
+		Assert.assertEquals(this.getFileContent("/nat/chain_method_call_expected.html"), str);
+		t = this.gt.getFileTemplate("/nat/chain_method_call_template.html");
+		t.set("user1", joel);
+		str = t.getTextAsString();
+		Assert.assertEquals(this.getFileContent("/nat/chain_method_call_expected.html"), str);
 
 	}
 

@@ -10,12 +10,14 @@ import org.bee.tl.performance.FTLConfig;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
-public class Stock4FTL {
+public class Stock4FTL
+{
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception
+	{
 		Configuration cfg = FTLConfig.cfg;
 		String child = "\\freemarker\\stocks.ftl.html";
 		int loopCount = 10000;
@@ -30,7 +32,8 @@ public class Stock4FTL {
 		template.process(root, writer);
 
 		long start = System.currentTimeMillis();
-		for (int i = 0; i < loopCount; i++) {
+		for (int i = 0; i < loopCount; i++)
+		{
 
 			root = new HashMap();
 			root.put("items", items);

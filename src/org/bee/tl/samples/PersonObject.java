@@ -1,7 +1,7 @@
 package org.bee.tl.samples;
 
 public class PersonObject {
-	String address;
+	String address ;
 
 	public String getAddress() {
 		return address;

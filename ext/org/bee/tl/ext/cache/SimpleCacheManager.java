@@ -34,106 +34,148 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * 简单实现
- * 
  * @author jeolli
- * 
+ *
  */
-public class SimpleCacheManager implements CacheManager {
+public class SimpleCacheManager implements CacheManager
+{
 
+	
 	protected ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 	protected Map<String, CachedEntry> map = new HashMap<String, CachedEntry>();
 
-	public Object getObject(String key) {
+	public Object getObject(String key)
+	{
 		lock.readLock().lock();
-		try {
+		try
+		{
 			CachedEntry entry = map.get(key);
-			if (entry != null) {
-				if (entry.disableTime < System.currentTimeMillis()) {
-					// 过期了,不删除，等待调用set方法
+			if (entry != null)
+			{
+				if (entry.disableTime < System.currentTimeMillis())
+				{
+					//过期了,不删除，等待调用set方法
 					return null;
-				} else {
+				}
+				else
+				{
 					Object o = entry.sr.get();
 					return o;
 				}
-			} else {
+			}
+			else
+			{
 				return null;
 			}
-		} finally {
+		}
+		finally
+		{
 			lock.readLock().unlock();
 		}
 		// TODO Auto-generated method stub
 
 	}
 
-	public void setObject(String key, Object value, long period) {
+	public void setObject(String key, Object value, long period)
+	{
 		lock.writeLock().lock();
-		try {
+		try
+		{
 			CachedEntry entry = new CachedEntry();
 			entry.sr = new SoftReference(value);
-			if (period == 0) {
+			if (period == 0)
+			{
 				entry.disableTime = Long.MAX_VALUE;
-			} else {
+			}
+			else
+			{
 				entry.disableTime = System.currentTimeMillis() + period * 1000;
 			}
 
 			map.put(key, entry);
 
-		} finally {
+		}
+		finally
+		{
 			lock.writeLock().unlock();
 		}
 
 	}
 
-	static class CachedEntry {
+	static class CachedEntry
+	{
 		public SoftReference sr;
 		public long disableTime;
 	}
 
-	public boolean isDisable(String key) {
+	public boolean isDisable(String key)
+	{
 		lock.readLock().lock();
-		try {
+		try
+		{
 			CachedEntry entry = map.get(key);
-			if (entry != null && entry.sr.get() != null) {
-				if (entry.disableTime < System.currentTimeMillis()) {
+			if (entry != null&&entry.sr.get()!=null)
+			{
+				if (entry.disableTime < System.currentTimeMillis())
+				{
 					return true;
-				} else {
+				}
+				else
+				{
 					return false;
 				}
-			} else {
+			}
+			else
+			{
 				return true;
 			}
-		} finally {
+		}
+		finally
+		{
 			lock.readLock().unlock();
 		}
 	}
 
-	public void clearAll() {
+	public void clearAll()
+	{
 		lock.writeLock().lock();
-		try {
+		try
+		{
 			map.clear();
-		} finally {
+		}
+		finally
+		{
 			lock.writeLock().unlock();
 		}
 
 	}
 
-	public void clearAll(String... keys) {
+	public void clearAll(String... keys)
+	{
 		lock.writeLock().lock();
-		try {
-			for (String key : keys) {
+		try
+		{
+			for (String key : keys)
+			{
 				map.remove(key);
 			}
-		} finally {
+		}
+		finally
+		{
 			lock.writeLock().unlock();
 		}
 
 	}
 
-	public void clearAll(String key) {
+	public void clearAll(String key)
+	{
 		lock.writeLock().lock();
-		try {
+		try
+		{
 			map.remove(key);
-		} finally {
+		}
+		finally
+		{
 			lock.writeLock().unlock();
 		}
 

@@ -31,22 +31,22 @@ import org.bee.tl.core.Context;
 import org.bee.tl.core.Function;
 
 /**
- * 在控制台输出对象，如 <% debug(user) %>,该方法输出该方法的行数，以及对象的toString返回的字符串:
- * 
+ * 在控制台输出对象，如
+ * <% debug(user) %>,该方法输出该方法的行数，以及对象的toString返回的字符串:
  * <pre>
- * System.out.println(paras[0].toString());
+ * System.out.println(paras[0].toString());	
  * </pre>
- * 
  * 可以调用DebugFunction.enable = false ,来禁止输出
- * 
  * @author joelli
- * 
+ *
  */
-public class DebugFunction implements Function {
+public class DebugFunction implements Function
+{
 
 	public static boolean enable = true;
 
-	public Object call(Object[] paras, Context ctx) {
+	public Object call(Object[] paras, Context ctx)
+	{
 		if (!enable)
 			return "";
 		System.out.println(paras[0].toString());

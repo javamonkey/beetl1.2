@@ -33,24 +33,32 @@ import org.bee.tl.core.io.ByteWriter;
 
 /**
  * 模版变量类型
- * 
  * @author joelli
- * 
+ *
  */
-public class SuperVar {
+public class SuperVar
+{
 	ByteWriter writer;
 	byte[] bs = null;
 	String str = null;
 
-	public SuperVar(ByteWriter writer) {
+	public SuperVar(ByteWriter writer)
+	{
 		this.writer = writer;
 	}
+	
+	
 
-	public byte[] toByte() {
-		if (bs == null) {
-			try {
+	public byte[] toByte()
+	{
+		if (bs == null)
+		{
+			try
+			{
 				writer.flush();
-			} catch (IOException e) {
+			}
+			catch (IOException e)
+			{
 				// could not happen
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -60,11 +68,16 @@ public class SuperVar {
 		return bs;
 	}
 
-	public String toString() {
-		if (str == null) {
-			try {
+	public String toString()
+	{
+		if (str == null)
+		{
+			try
+			{
 				writer.flush();
-			} catch (IOException e) {
+			}
+			catch (IOException e)
+			{
 				// could not happen
 				e.printStackTrace();
 			}
@@ -73,5 +86,6 @@ public class SuperVar {
 		}
 		return str;
 	}
-
+	
+	
 }

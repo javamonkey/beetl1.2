@@ -1,1 +1,7 @@
-<% for(entry in @service.getUserMap()){ %> ${entry.value.name} <% } %>
+<%
+for(entry in @service.getUserMap()){	
+%>
+${entry.value.name}
+<%
+}
+%>

@@ -27,8 +27,7 @@
  */
 package org.bee.tl.core;
 
-public interface VirtualAttributeEval {
-	public Object eval(Object o, String attributeName, Context ctx);
-
-	public boolean isSuppoert(Class c, String attributeName);
+public interface  VirtualAttributeEval {
+	public Object eval(Object o,String attributeName,Context ctx);	
+	public boolean isSuppoert(Class c,String attributeName);
 }

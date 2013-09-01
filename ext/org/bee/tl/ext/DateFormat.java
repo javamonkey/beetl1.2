@@ -33,31 +33,38 @@ import java.util.Date;
 import org.bee.tl.core.Format;
 
 /**
- * 日期格式化函数，如 ${date,dateFormat='yyyy-Mm-dd'}，如果没有patten，则使用local
- * 
+ * 日期格式化函数，如
+ * ${date,dateFormat='yyyy-Mm-dd'}，如果没有patten，则使用local 
  * @author joelli
- * 
+ *
  */
-public class DateFormat implements Format {
+public class DateFormat implements Format
+{
 
-	public Object format(Object data, String pattern) {
-		if (data == null)
-			return null;
-		if (Date.class.isAssignableFrom(data.getClass())) {
+	public Object format(Object data, String pattern)
+	{
+		if(data==null) return null;
+		if (Date.class.isAssignableFrom(data.getClass()))
+		{
 			SimpleDateFormat sdf = null;
-			if (pattern == null) {
+			if (pattern == null)
+			{
 				sdf = new SimpleDateFormat();
-			} else {
+			}
+			else
+			{
 				sdf = new SimpleDateFormat(pattern);
 			}
-			return sdf.format((Date) data);
+			return sdf.format((Date)data);
 
-		} else {
+		}
+		else
+		{
 			throw new RuntimeException("Arg Error:Type should be Date");
 		}
 	}
-
-	public static void main(String[] args) {
+	
+	public static void main(String[] args){
 		DateFormat d = new DateFormat();
 		System.out.println(d.format(new java.sql.Timestamp(11), "yyyy"));
 	}

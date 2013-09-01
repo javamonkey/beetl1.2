@@ -7,8 +7,10 @@ import org.bee.tl.performance.DoNothingWriter;
 import org.bee.tl.performance.Employee;
 import org.bee.tl.util.Log;
 
-public class Include4beetl {
-	public static void main(String[] args) throws Exception {
+public class Include4beetl
+{
+	public static void main(String[] args) throws Exception
+	{
 		GroupTemplate group = BeetlConfig.base;
 		group.disableDirectOutputByte();
 		Employee emp = new Employee();
@@ -23,7 +25,8 @@ public class Include4beetl {
 		long start = System.currentTimeMillis();
 
 		Log.startAll();
-		for (int i = 0; i < loopCount; i++) {
+		for (int i = 0; i < loopCount; i++)
+		{
 
 			t = group.getFileTemplate(child);
 			t.set("emp", emp);

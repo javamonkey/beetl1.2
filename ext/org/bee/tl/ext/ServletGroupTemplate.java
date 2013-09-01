@@ -20,7 +20,8 @@ import org.bee.tl.ext.spring.WebVariable;
  * @author joelli
  * 
  */
-public class ServletGroupTemplate {
+public class ServletGroupTemplate
+{
 	protected GroupTemplate group;
 	protected String root = "/";
 	protected String webPath = null;
@@ -40,7 +41,8 @@ public class ServletGroupTemplate {
 
 	static ServletGroupTemplate instance = new ServletGroupTemplate();
 
-	private ServletGroupTemplate() {
+	private ServletGroupTemplate()
+	{
 
 	}
 
@@ -50,7 +52,8 @@ public class ServletGroupTemplate {
 	 * @return
 	 */
 	@Deprecated
-	public static ServletGroupTemplate intance() {
+	public static ServletGroupTemplate intance()
+	{
 		return instance;
 	}
 
@@ -59,39 +62,35 @@ public class ServletGroupTemplate {
 	 * 
 	 * @return
 	 */
-	public static ServletGroupTemplate instance() {
+	public static ServletGroupTemplate instance()
+	{
 		return instance;
 	}
 
-	public GroupTemplate getGroup() {
+	public GroupTemplate getGroup()
+	{
 		return this.group;
 	}
 
-	public void init(ServletContext sc) {
+	public void init(ServletContext sc)
+	{
 
 		this.root = getString(sc, "GroupTemplate.Root", "/");
 		// 可能为null
 		webPath = sc.getRealPath("/");
 		this.root = webPath + File.separator + this.root;
 		this.tempFolder = getString(sc, "GroupTemplate.TempFolder", null);
-		this.optimize = Boolean.parseBoolean(getString(sc,
-				"GroupTemplate.Optimize", "true"));
-		this.keepSource = Boolean.parseBoolean(getString(sc,
-				"GroupTemplate.KeepSource", "false"));
-		this.nativeCall = Boolean.parseBoolean(getString(sc,
-				"GroupTemplate.NativeCall", "true"));
+		this.optimize = Boolean.parseBoolean(getString(sc, "GroupTemplate.Optimize", "true"));
+		this.keepSource = Boolean.parseBoolean(getString(sc, "GroupTemplate.KeepSource", "false"));
+		this.nativeCall = Boolean.parseBoolean(getString(sc, "GroupTemplate.NativeCall", "true"));
 
-		this.statementStart = getString(sc, "GroupTemplate.StatementStart",
-				"<%");
+		this.statementStart = getString(sc, "GroupTemplate.StatementStart", "<%");
 		this.statementEnd = getString(sc, "GroupTemplate.StatementEnd", "%>");
-		this.placeholderStart = getString(sc, "GroupTemplate.PlaceholderStart",
-				"${");
+		this.placeholderStart = getString(sc, "GroupTemplate.PlaceholderStart", "${");
 		this.placeholderEnd = getString(sc, "GroupTemplate.PlaceholderEnd", "}");
 		this.charset = getString(sc, "GroupTemplate.Charset", "GBK");
-		this.check = Integer
-				.parseInt(getString(sc, "GroupTemplate.Check", "2"));
-		this.directByte = Boolean.parseBoolean(getString(sc,
-				"GroupTemplate.DirectByteOutput", "false"));
+		this.check = Integer.parseInt(getString(sc, "GroupTemplate.Check", "2"));
+		this.directByte = Boolean.parseBoolean(getString(sc, "GroupTemplate.DirectByteOutput", "false"));
 		initGroup();
 
 	}
@@ -106,11 +105,13 @@ public class ServletGroupTemplate {
 	 * @return
 	 * @throws IOException
 	 */
-	public Template getTemplate(String child, HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+	public Template getTemplate(String child, HttpServletRequest request, HttpServletResponse response)
+			throws IOException
+	{
 		Template t = group.getFileTemplate(child);
 		Enumeration en = request.getAttributeNames();
-		while (en.hasMoreElements()) {
+		while (en.hasMoreElements())
+		{
 			String key = (String) en.nextElement();
 			t.set(key, request.getAttribute(key));
 		}
@@ -128,35 +129,43 @@ public class ServletGroupTemplate {
 
 	}
 
-	private String getString(ServletContext sc, String name, String defaultValue) {
+	private String getString(ServletContext sc, String name, String defaultValue)
+	{
 		String temp = sc.getInitParameter(name);
-		if (temp != null) {
+		if (temp != null)
+		{
 			return temp;
-		} else {
+		}
+		else
+		{
 			return defaultValue;
 		}
 	}
 
-	private void initGroup() {
+	private void initGroup()
+	{
 
 		group = new GroupTemplate(new File(root));
-		group.config(statementStart, statementEnd, placeholderStart,
-				placeholderEnd);
-		if (tempFolder != null) {
+		group.config(statementStart, statementEnd, placeholderStart, placeholderEnd);
+		if (tempFolder != null)
+		{
 			group.setTempFolder(tempFolder);
-		} else {
-			if (webPath == null || webPath.length() == 0) {
+		}
+		else
+		{
+			if (webPath == null || webPath.length() == 0)
+			{
 				// 可能采用war部署方式
-				String tempRoot = System.getProperty("user.dir")
-						+ File.separator + ".bee" + File.separator + tempFolder;
+				String tempRoot = System.getProperty("user.dir") + File.separator + ".bee" + File.separator
+						+ tempFolder;
 				File target = new File(tempRoot);
 				target.mkdirs();
 				group.setTempFolder(target.toString());
-				logger.warning("war包运行方式不能得到正确的绝对路径" + webPath
-						+ "，请显式的设置tempFolder的绝对路径,目前target位于用户主目录下:" + target);
-			} else {
-				File target = new File(webPath + File.separator + "WEB-INF",
-						".temp");
+				logger.warning("war包运行方式不能得到正确的绝对路径" + webPath + "，请显式的设置tempFolder的绝对路径,目前target位于用户主目录下:" + target);
+			}
+			else
+			{
+				File target = new File(webPath + File.separator + "WEB-INF", ".temp");
 				target.mkdirs();
 				tempFolder = target.toString();
 				group.setTempFolder(target.toString());
@@ -166,12 +175,16 @@ public class ServletGroupTemplate {
 
 		if (nativeCall)
 			group.enableNativeCall();
-		if (optimize) {
-			if (this.keepSource) {
+		if (optimize)
+		{
+			if (this.keepSource)
+			{
 				Map optimizeConfigMap = new HashMap();
 				optimizeConfigMap.put(GroupTemplate.OPTIMIZE_KEEP_SOURCE, true);
 				group.enableOptimize(optimizeConfigMap);
-			} else {
+			}
+			else
+			{
 				group.enableOptimize();
 			}
 
@@ -181,101 +194,125 @@ public class ServletGroupTemplate {
 			group.enableChecker(check);
 		group.setCharset(charset);
 
-		if (this.directByte) {
+		if (this.directByte)
+		{
 			group.enableDirectOutputByte();
 		}
 
 	}
 
-	public String getRoot() {
+	public String getRoot()
+	{
 		return root;
 	}
 
-	public void setRoot(String root) {
+	public void setRoot(String root)
+	{
 		this.root = root;
 	}
 
-	public String getTempFolder() {
+	public String getTempFolder()
+	{
 		return tempFolder;
 	}
 
-	public void setTempFolder(String tempFolder) {
+	public void setTempFolder(String tempFolder)
+	{
 		this.tempFolder = tempFolder;
 	}
 
-	public boolean isOptimize() {
+	public boolean isOptimize()
+	{
 		return optimize;
 	}
 
-	public void setOptimize(boolean optimize) {
+	public void setOptimize(boolean optimize)
+	{
 		this.optimize = optimize;
 	}
 
-	public boolean isNativeCall() {
+	public boolean isNativeCall()
+	{
 		return nativeCall;
 	}
 
-	public void setNativeCall(boolean nativeCall) {
+	public void setNativeCall(boolean nativeCall)
+	{
 		this.nativeCall = nativeCall;
 	}
 
-	public String getStatementStart() {
+	public String getStatementStart()
+	{
 		return statementStart;
 	}
 
-	public void setStatementStart(String statementStart) {
+	public void setStatementStart(String statementStart)
+	{
 		this.statementStart = statementStart;
 	}
 
-	public String getStatementEnd() {
+	public String getStatementEnd()
+	{
 		return statementEnd;
 	}
 
-	public void setStatementEnd(String statementEnd) {
+	public void setStatementEnd(String statementEnd)
+	{
 		this.statementEnd = statementEnd;
 	}
 
-	public String getPlaceholderStart() {
+	public String getPlaceholderStart()
+	{
 		return placeholderStart;
 	}
 
-	public void setPlaceholderStart(String placeholderStart) {
+	public void setPlaceholderStart(String placeholderStart)
+	{
 		this.placeholderStart = placeholderStart;
 	}
 
-	public String getPlaceholderEnd() {
+	public String getPlaceholderEnd()
+	{
 		return placeholderEnd;
 	}
 
-	public void setPlaceholderEnd(String placeholderEnd) {
+	public void setPlaceholderEnd(String placeholderEnd)
+	{
 		this.placeholderEnd = placeholderEnd;
 	}
 
-	public String getCharset() {
+	public String getCharset()
+	{
 		return charset;
 	}
 
-	public void setCharset(String charset) {
+	public void setCharset(String charset)
+	{
 		this.charset = charset;
 	}
 
-	public Logger getLogger() {
+	public Logger getLogger()
+	{
 		return logger;
 	}
 
-	public void setLogger(Logger logger) {
+	public void setLogger(Logger logger)
+	{
 		this.logger = logger;
 	}
 
-	public int getCheck() {
+	public int getCheck()
+	{
 		return check;
 	}
 
-	public void setCheck(int check) {
+	public void setCheck(int check)
+	{
 		this.check = check;
 	}
 
-	public void setGroup(GroupTemplate group) {
+	public void setGroup(GroupTemplate group)
+	{
 		this.group = group;
 	}
 

@@ -39,10 +39,10 @@ public class BeetlViewMaker implements ViewMaker {
 		}
 		webConfig.updateRootPath(Mvcs.getServletContext().getRealPath("/"));
 		groupTemplate = webConfig.createGroupTemplate();
-		// groupTemplate.enableNativeCall();
-		// groupTemplate.enableChecker(10);
-		// groupTemplate.enableOptimize();
-		// groupTemplate.enableDirectOutputByte();
+//		groupTemplate.enableNativeCall();
+//		groupTemplate.enableChecker(10);
+//		groupTemplate.enableOptimize();
+//		groupTemplate.enableDirectOutputByte();
 		inited = true;
 	}
 
@@ -51,6 +51,8 @@ public class BeetlViewMaker implements ViewMaker {
 			groupTemplate.close();
 	}
 
+	
+	
 	public View make(Ioc ioc, String type, String value) {
 		if (!inited)
 			init();
@@ -66,7 +68,7 @@ public class BeetlViewMaker implements ViewMaker {
 							req, obj));
 					Enumeration attrs = req.getAttributeNames();
 					while (attrs.hasMoreElements()) {
-						String attrName = (String) attrs.nextElement();
+						String attrName = (String)attrs.nextElement();
 						template.set(attrName, req.getAttribute(attrName));
 					}
 					WebVariable webVariable = new WebVariable();
@@ -77,12 +79,12 @@ public class BeetlViewMaker implements ViewMaker {
 					template.set("request", req);
 					template.set("ctxPath", req.getContextPath());
 					template.set("session", Mvcs.getHttpSession());
-					if (groupTemplate.isDirectByteOutput()) {
+					if(groupTemplate.isDirectByteOutput()){
 						template.getText(resp.getOutputStream()); // TODO做成可配置?
-					} else {
+					}else{
 						template.getText(resp.getWriter());
 					}
-
+					
 				}
 			};
 		return null;

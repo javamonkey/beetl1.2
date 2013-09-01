@@ -39,26 +39,35 @@ import org.bee.tl.core.number.NumberFactory;
  * @author jeolli
  *
  */
-public class NumberFormat implements Format {
+public class NumberFormat implements Format
+{
 
-	public String format(Object data, String pattern) {
+	
+	public String format(Object data, String pattern)
+	{
 		DecimalFormat df = null;
-		if (pattern == null) {
+		if (pattern == null)
+		{
 			df = new DecimalFormat();
-		} else {
+		}
+		else
+		{
 			df = new DecimalFormat(pattern);
 		}
-
-		if (data instanceof BeeNumber) {
-			return df.format(((BeeNumber) data).orginalObject());
-		} else {
+		
+		
+		if(data instanceof BeeNumber){
+			return df.format(((BeeNumber)data).orginalObject());
+		}else{
 
 			return df.format(data);
 		}
 
+
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		NumberFactory f = new NumberFactory(false);
 		BeeNumber n = f.y(12.4464);
 		NumberFormat nf = new NumberFormat();

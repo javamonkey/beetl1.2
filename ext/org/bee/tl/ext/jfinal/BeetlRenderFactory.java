@@ -9,26 +9,34 @@ import org.bee.tl.ext.WebPathKit;
 import com.jfinal.render.IMainRenderFactory;
 import com.jfinal.render.Render;
 
-public class BeetlRenderFactory implements IMainRenderFactory {
+public class BeetlRenderFactory implements IMainRenderFactory
+{
 	public static WebConfig config = null;
 	public static String viewExtension = ".html";
 	public static GroupTemplate groupTemplate = null;
 
-	static {
-		try {
+	static
+	{
+		try
+		{
 			config = new WebConfig();
-			config.updateRootPath(WebPathKit.getWebRootPath()); // 更新模版路径
+			config.updateRootPath(WebPathKit.getWebRootPath()); //更新模版路径
 			groupTemplate = config.createGroupTemplate();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			throw new RuntimeException("Can notload properties for beetl");
 		}
 	}
 
-	public Render getRender(String view) {
+	public Render getRender(String view)
+	{
 		return new BeetlRender(groupTemplate, view);
 	}
 
-	public String getViewExtension() {
+	
+	public String getViewExtension()
+	{
 		return viewExtension;
 	}
 

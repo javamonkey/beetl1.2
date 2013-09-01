@@ -12,12 +12,14 @@ import org.bee.tl.performance.FTLConfig;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
-public class Book4FTL {
+public class Book4FTL
+{
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception
+	{
 		Configuration cfg = FTLConfig.cfg;
 		String child = "\\freemarker\\ftl_book.txt";
 		List list = new ArrayList();
@@ -52,7 +54,8 @@ public class Book4FTL {
 		template.process(root, writer);
 		int loopCount = 100000;
 		long start = System.currentTimeMillis();
-		for (int i = 0; i < loopCount; i++) {
+		for (int i = 0; i < loopCount; i++)
+		{
 
 			template = cfg.getTemplate(child);
 			root = new HashMap();

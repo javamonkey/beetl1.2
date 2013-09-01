@@ -57,6 +57,11 @@ import org.bee.tl.ext.TruncFunction;
 import org.bee.tl.ext.cache.CacheTag;
 
 public class ScriptGlobal {
+	public static ScriptGlobal defaultScriptGlobal = new ScriptGlobal();
+
+	static {
+		initEmbed(defaultScriptGlobal);
+	}
 
 	Map<String, Function> fnMap = new HashMap<String, Function>();
 	Map<String, Class> textProcessMap = new HashMap<String, Class>();
@@ -104,10 +109,10 @@ public class ScriptGlobal {
 	 * @param o
 	 */
 	public void registerFunctionPackage(String packageName, Object o) {
-
-		List<FunctionWrapper> list = FunctionWrapper.getFunctionWrapper(o);
+		
+		List<FunctionWrapper>  list = FunctionWrapper.getFunctionWrapper(o);
 		Method[] ms = BeetlUtil.getSelfMethod(o);
-		for (FunctionWrapper fw : list) {
+		for (FunctionWrapper fw : list) {			
 			this.registerFunction(packageName + "." + fw.getFunctionName(), fw);
 		}
 
@@ -149,9 +154,9 @@ public class ScriptGlobal {
 	public Format getDefaultFormat(Class type) {
 
 		// 或者便利defaultFormatMap，看key是否是type的超类或者接口,看哪个性能好了
-
+	
 		return this.defaultFormatMap.get(type);
-
+	
 	}
 
 	protected VirtualAttributeEval getVirtualAttributeEval(Class c,
@@ -246,15 +251,15 @@ public class ScriptGlobal {
 		// format
 		Format dateForamt = new DateFormat();
 		Format numberFormat = new NumberFormat();
-
-		sg.registerFormat("dateFormat", dateForamt);
-		sg.registerFormat("numberFormat", numberFormat);
-
+		
+		sg.registerFormat("dateFormat",dateForamt);
+		sg.registerFormat("numberFormat",numberFormat);
+		
 		sg.registerDefaultFormat(java.util.Date.class, dateForamt);
 		sg.registerDefaultFormat(java.sql.Date.class, dateForamt);
 		sg.registerDefaultFormat(java.sql.Time.class, dateForamt);
 		sg.registerDefaultFormat(java.sql.Timestamp.class, dateForamt);
-
+		
 		sg.registerDefaultFormat(java.lang.Short.class, numberFormat);
 		sg.registerDefaultFormat(java.lang.Long.class, numberFormat);
 		sg.registerDefaultFormat(java.lang.Integer.class, numberFormat);
@@ -262,14 +267,10 @@ public class ScriptGlobal {
 		sg.registerDefaultFormat(java.lang.Double.class, numberFormat);
 		sg.registerDefaultFormat(java.math.BigInteger.class, numberFormat);
 		sg.registerDefaultFormat(java.math.BigDecimal.class, numberFormat);
-		sg.registerDefaultFormat(java.util.concurrent.atomic.AtomicLong.class,
-				numberFormat);
-		sg.registerDefaultFormat(
-				java.util.concurrent.atomic.AtomicInteger.class, numberFormat);
-		sg.registerDefaultFormat(org.bee.tl.core.number.BigDecimalNumber.class,
-				numberFormat);
-		sg.registerDefaultFormat(org.bee.tl.core.number.GeneralNumber.class,
-				numberFormat);
+		sg.registerDefaultFormat(java.util.concurrent.atomic.AtomicLong.class, numberFormat);
+		sg.registerDefaultFormat(java.util.concurrent.atomic.AtomicInteger.class, numberFormat);
+		sg.registerDefaultFormat(org.bee.tl.core.number.BigDecimalNumber.class, numberFormat);
+		sg.registerDefaultFormat(org.bee.tl.core.number.GeneralNumber.class, numberFormat);
 
 		// tag
 		sg.registerTag("deleteTag", DeleteTag.class);

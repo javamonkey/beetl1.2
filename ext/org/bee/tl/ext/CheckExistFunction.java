@@ -31,22 +31,28 @@ import org.bee.tl.core.Context;
 import org.bee.tl.core.Function;
 
 /**
- * 判断是否存在全局变量，是否存在全局变量userList,sessions ${exist('userList','sessions')}
+ * 判断是否存在全局变量，是否存在全局变量userList,sessions
+ * ${exist('userList','sessions')}
  * 参数可以一个到多个
- * 
  * @author joelli
- * 
+ *
  */
-public class CheckExistFunction implements Function {
+public class CheckExistFunction implements Function
+{
 
-	public Boolean call(Object[] paras, Context ctx) {
+	public Boolean call(Object[] paras, Context ctx)
+	{
 
 		String key = null;
-		for (Object o : paras) {
+		for (Object o : paras)
+		{
 			key = (String) o;
-			if (ctx.contain(key)) {
+			if (ctx.contain(key))
+			{
 				continue;
-			} else {
+			}
+			else
+			{
 				return false;
 			}
 		}
@@ -54,12 +60,14 @@ public class CheckExistFunction implements Function {
 
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		CheckExistFunction fn = new CheckExistFunction();
 		Context ctx = new Context();
 		ctx.set("list", null);
 
-		System.out.println(fn.call(new Object[] { "list" }, ctx));
+		System.out.println(fn.call(new Object[]
+		{ "list" }, ctx));
 
 	}
 

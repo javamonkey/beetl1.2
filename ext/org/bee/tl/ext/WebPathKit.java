@@ -32,22 +32,24 @@ import java.io.IOException;
 
 /**
  * 获取web应用所在的绝对路径
- * 
  * @author joeli
- * 
+ *
  */
-public class WebPathKit {
+public class WebPathKit
+{
 	/**
 	 * 返回web应用的绝对路径
-	 * 
 	 * @return
 	 */
-	public static String getWebRootPath() {
-		try {
+	public static String getWebRootPath()
+	{
+		try
+		{
 			String path = WebPathKit.class.getResource("/").getFile();
-			return new File(path).getParentFile().getParentFile()
-					.getCanonicalPath();
-		} catch (IOException e) {
+			return new File(path).getParentFile().getParentFile().getCanonicalPath();
+		}
+		catch (IOException e)
+		{
 			throw new RuntimeException(e);
 		}
 

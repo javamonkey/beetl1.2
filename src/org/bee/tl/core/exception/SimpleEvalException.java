@@ -27,8 +27,10 @@
  */
 package org.bee.tl.core.exception;
 
-public class SimpleEvalException extends Exception {
-	public SimpleEvalException(String msg, Throwable t) {
+public class SimpleEvalException extends Exception
+{
+	public SimpleEvalException(String msg, Throwable t)
+	{
 		super(msg, t);
 	}
 }

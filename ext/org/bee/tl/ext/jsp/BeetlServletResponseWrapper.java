@@ -6,23 +6,28 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
-public class BeetlServletResponseWrapper extends HttpServletResponseWrapper {
+public class BeetlServletResponseWrapper extends HttpServletResponseWrapper
+{
 	CharArrayWriter cw = null;
 	PrintWriter writer = null;
 
-	public BeetlServletResponseWrapper(HttpServletResponse rsp) {
+	public BeetlServletResponseWrapper(HttpServletResponse rsp)
+	{
 		super(rsp);
 	}
 
-	public java.io.PrintWriter getWriter() {
-		if (writer == null) {
+	public java.io.PrintWriter getWriter()
+	{
+		if (writer == null)
+		{
 			cw = new CharArrayWriter();
 			writer = new PrintWriter(cw);
 		}
 		return writer;
 	}
 
-	public CharArrayWriter getRealWriter() {
+	public CharArrayWriter getRealWriter()
+	{
 		return cw;
 	}
 

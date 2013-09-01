@@ -39,12 +39,14 @@ import java.util.Set;
 /**
  * 通过配置文件创建GroupTemplate，主要用于与其他框架集成
  * 默认情况，Config会先读取/org/bee/tl/core/beetl-default.properties，
- * 如果/beetl.properties存在，则用此配置文件覆盖默认情况，也可以通过调用load或者put方法 自己设定属性
+ * 如果/beetl.properties存在，则用此配置文件覆盖默认情况，也可以通过调用load或者put方法
+ * 自己设定属性
  * 
  * @author joelli
- * 
+ *
  */
-public class Config {
+public class Config
+{
 
 	protected Properties ps = new Properties();
 	public static String DELIMITER_PLACEHOLDER_START = "DELIMITER_PLACEHOLDER_START";
@@ -65,76 +67,90 @@ public class Config {
 	public static String BIG_NUMBER_SUPPORT = "BIG_NUMBER_SUPPORT";
 	public static String HTML_TAG_SUPPORT = "HTML_TAG_SUPPORT";
 	public static String HTML_TAG_FLAG = "HTML_TAG_FLAG";
+	
 
-	public Config() throws IOException {
+	
 
-		// beetl默认
-		ps.load(Config.class
-				.getResourceAsStream("/org/bee/tl/core/beetl-default.properties"));
-		// 应用默认
+	public Config() throws IOException
+	{
+
+		//beetl默认
+		ps.load(Config.class.getResourceAsStream("/org/bee/tl/core/beetl-default.properties"));
+		//应用默认
 		InputStream ins = Config.class.getResourceAsStream("/beetl.properties");
-		if (ins != null) {
+		if (ins != null)
+		{
 			ps.load(ins);
 		}
 
 	}
 
-	public Config load(File path) throws IOException {
+	public Config load(File path) throws IOException
+	{
 		ps.load(new FileReader(path));
 		return this;
 	}
 
-	public Config load(String path) throws IOException {
+	public Config load(String path) throws IOException
+	{
 		ps.load(Config.class.getResourceAsStream(path));
 		return this;
 	}
 
-	public Config put(String name, String value) {
+	public Config put(String name, String value)
+	{
 		ps.put(name, value);
 		return this;
 	}
 
-	public Config put(Map<String, String> map) {
+	public Config put(Map<String, String> map)
+	{
 		Set<Map.Entry<String, String>> entrys = map.entrySet();
-		for (Map.Entry<String, String> entry : entrys) {
+		for (Map.Entry<String, String> entry : entrys)
+		{
 			ps.put(entry.getKey(), entry.getValue());
 		}
 		return this;
 	}
 
-	public String get(String name) {
+	public String get(String name)
+	{
 		return ps.getProperty(name);
 	}
 
-	/**
-	 * 根据配置创建一个GroupTemplate
-	 * 
+	/** 根据配置创建一个GroupTemplate
 	 * @return
 	 */
-	public GroupTemplate createGroupTemplate() {
+	public GroupTemplate createGroupTemplate()
+	{
 		GroupTemplate gt = null;
-		// 必须先检测是否是文件模板？
+		//必须先检测是否是文件模板？
 		String templateRoot = ps.getProperty(this.TEMPLATE_ROOT);
-		if (isNotEmpty(templateRoot)) {
+		if (isNotEmpty(templateRoot))
+		{
 			gt = new GroupTemplate(new File(templateRoot));
-			// 模板文件字符集，如果编译，输出的class到哪个目录
+			//模板文件字符集，如果编译，输出的class到哪个目录
 
 			String classFolder = ps.getProperty(this.TEMPLATE_CLASS_FOLDER);
-			if (isNotEmpty(classFolder)) {
+			if (isNotEmpty(classFolder))
+			{
 				gt.setTempFolder(classFolder);
 			}
 
 			boolean isCompileClass = this.isBoolean(this.COMPILE_CLASS, false);
-			if (isCompileClass) {
+			if (isCompileClass)
+			{
 
 				Map compileConfig = new HashMap();
-				boolean keepSource = this.isBoolean(COMPILE_CLASS_KEEP_SOURCE,
-						false);
-				if (keepSource) {
+				boolean keepSource = this.isBoolean(COMPILE_CLASS_KEEP_SOURCE, false);
+				if (keepSource)
+				{
 
 					compileConfig.put(GroupTemplate.OPTIMIZE_KEEP_SOURCE, true);
 					gt.enableOptimize(compileConfig);
-				} else {
+				}
+				else
+				{
 					gt.enableOptimize();
 				}
 
@@ -142,99 +158,124 @@ public class Config {
 
 			int strSheckPeriod = getInt(TEMPLATE_CACHE_CHECK_PERIOD, 0);
 			gt.enableChecker(strSheckPeriod);
-		} else {
+		}
+		else
+		{
 			gt = new GroupTemplate();
 		}
 
-		if (isBoolean(DIRECT_BYTE_OUTPUT, false)) {
+		if (isBoolean(DIRECT_BYTE_OUTPUT, false))
+		{
 			gt.enableDirectOutputByte();
 		}
-		if (isBoolean(NATIVE_CALL, false)) {
+		if (isBoolean(NATIVE_CALL, false))
+		{
 			gt.enableNativeCall();
 		}
-		if (isBoolean(MVC_STRICT, false)) {
+		if (isBoolean(MVC_STRICT, false))
+		{
 			gt.enableStrict();
 		}
-
-		if (isBoolean(BIG_NUMBER_SUPPORT, true)) {
+		
+		if(isBoolean(BIG_NUMBER_SUPPORT,true)){
 			gt.setBigNumberSupport(true);
-		} else {
+		}else{
 			gt.setBigNumberSupport(false);
 		}
-
-		if (isBoolean(HTML_TAG_SUPPORT, false)) {
-			gt.enableHtmlTagSupport(this.getString(HTML_TAG_FLAG, "#"));
+		
+		if(isBoolean(HTML_TAG_SUPPORT,false)){
+			gt.enableHtmlTagSupport(this.getString(HTML_TAG_FLAG,"#"));
 		}
 
 		String hanlderClass = ps.getProperty(ERROR_HANDLER);
-		try {
-			if (this.isNotEmpty(hanlderClass)) {
-				gt.setErrorHandler((ErrorHandler) Class.forName(hanlderClass)
-						.newInstance());
-			} else {
-				// user handle it outside of beetl
+		try
+		{
+			if (this.isNotEmpty(hanlderClass))
+			{
+				gt.setErrorHandler((ErrorHandler) Class.forName(hanlderClass).newInstance());
+			}
+			else
+			{
+				//user handle it outside of beetl
 				gt.setErrorHandler(null);
 			}
 
-		} catch (Exception ex) {
+		}
+		catch (Exception ex)
+		{
 			throw new IllegalArgumentException(hanlderClass);
 		}
 
-		if (isBoolean(DEBUG, false)) {
+		if (isBoolean(DEBUG, false))
+		{
 			gt.setDebug(true);
 		}
+		
+		
 
 		String charset = ps.getProperty(this.TEMPLATE_CHARSET);
-		if (charset != null) {
+		if (charset != null)
+		{
 			gt.setCharset(charset);
 		}
-
+		
 		String sd = getString(DELIMITER_STATEMENT_END);
-		if (sd == null || sd.length() == 0 || sd.equals("null")) {
+		if(sd==null||sd.length()==0||sd.equals("null")){
 			sd = null;
 		}
 
 		gt.config(getString(DELIMITER_STATEMENT_START, "<%"), sd,
-				getString(DELIMITER_PLACEHOLDER_START, "${"),
-				getString(DELIMITER_PLACEHOLDER_END, "}"));
+				getString(DELIMITER_PLACEHOLDER_START, "${"), getString(DELIMITER_PLACEHOLDER_END, "}"));
 
 		return gt;
 	}
 
-	public int getInt(String key, int defaultValue) {
+	public int getInt(String key, int defaultValue)
+	{
 		String value = (String) ps.get(key);
-		if (isNotEmpty(value)) {
+		if (isNotEmpty(value))
+		{
 			return Integer.parseInt(value);
-		} else {
+		}
+		else
+		{
 			return defaultValue;
 		}
 
 	}
 
-	public String getString(String key, String defaultValue) {
+	public String getString(String key, String defaultValue)
+	{
 		return ps.getProperty(key, defaultValue);
 	}
 
-	public String getString(String key) {
+	public String getString(String key)
+	{
 		return ps.getProperty(key);
 	}
 
-	public boolean isNotEmpty(String str) {
+	public boolean isNotEmpty(String str)
+	{
 		return str != null && str.length() != 0;
 	}
 
-	private boolean isBoolean(String str, boolean defaultValue) {
+	private boolean isBoolean(String str, boolean defaultValue)
+	{
 		String value = ps.getProperty(str);
-		if (isNotEmpty(value)) {
+		if (isNotEmpty(value))
+		{
 			return Boolean.parseBoolean(value);
-		} else {
+		}
+		else
+		{
 			return defaultValue;
 		}
 	}
 
-	public static void main(String[] args) {
-		// Config config = new Config();
-		// GroupTemplate groupTemplate = config.createGroupTemplate();
+	public static void main(String[] args)
+	{
+		//		Config config = new Config();
+		//		GroupTemplate groupTemplate = config.createGroupTemplate();
 
 	}
 

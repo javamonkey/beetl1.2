@@ -39,13 +39,13 @@ import java.util.List;
 import org.bee.tl.core.GroupTemplate;
 
 /**
- * 编译java文件的实现类，需要实现 {@link #compile}方法(
- * 
+ *  编译java文件的实现类，需要实现 {@link #compile}方法(
  * @author joelli
  * @since 1.1
- * 
+ *
  */
-public class JavaCompiler {
+public class JavaCompiler
+{
 	String srcPath;
 	String targetPath;
 	String classPath;
@@ -57,100 +57,105 @@ public class JavaCompiler {
 
 	protected static List<String> extraPathList = null;
 	protected static String extraPath = null;
-	static {
+	static
+	{
 		extraPath = System.getProperty(BEETL_EXTRA_CLASSPATH);
-		if (extraPath != null) {
+		if (extraPath != null)
+		{
 			extraPathList = Arrays.asList(extraPath.split(";"));
 
 		}
 	}
 
-	/**
-	 * java文件编码
-	 * 
+	/** java文件编码
 	 * @return
 	 */
-	public String getEncoding() {
+	public String getEncoding()
+	{
 		return encoding;
 	}
 
-	/**
-	 * 设置java文件编码
-	 * 
+	/** 设置java文件编码
 	 * @param encoding
 	 */
-	public void setEncoding(String encoding) {
+	public void setEncoding(String encoding)
+	{
 		this.encoding = encoding;
 	}
 
-	/**
-	 * 设置java文件path
-	 * 
+	/**设置java文件path
 	 * @param srcPath
 	 */
-	public void setSRCPath(String srcPath) {
+	public void setSRCPath(String srcPath)
+	{
 		this.srcPath = srcPath;
 	}
 
-	/**
-	 * 设置编译后class的存放路径
-	 * 
+	/** 设置编译后class的存放路径
 	 * @param targetPath
 	 */
-	public void setTargetPath(String targetPath) {
+	public void setTargetPath(String targetPath)
+	{
 		this.targetPath = targetPath;
 	}
 
-	/**
-	 * 设置编译需要的classpath
-	 * 
+	/**设置编译需要的classpath
 	 * @param classPath
 	 */
-	public void setClassPath(String classPath) {
+	public void setClassPath(String classPath)
+	{
 		this.classPath = classPath;
 	}
 
 	/**
 	 * 需要编译的类
-	 * 
 	 * @param className
 	 */
-	public void setClassName(String className) {
+	public void setClassName(String className)
+	{
 		this.className = className;
 	}
 
-	/**
-	 * 编译，0指示编译成功，其他指示失败
-	 * 
+	/** 编译，0指示编译成功，其他指示失败
 	 * @return
 	 */
-	public int compile() {
+	public int compile()
+	{
 		return 0;
 	}
 
-	public GroupTemplate getGroupTemplate() {
+	public GroupTemplate getGroupTemplate()
+	{
 		return groupTemplate;
 	}
 
-	public void setGroupTemplate(GroupTemplate groupTemplate) {
+	public void setGroupTemplate(GroupTemplate groupTemplate)
+	{
 		this.groupTemplate = groupTemplate;
 	}
-
+	
 	public static List<File> getClassPath1(ClassLoader loader) {
 		List<File> path = new ArrayList<File>();
-		while (true) {
-			if (loader == null) {
+		while (true)
+		{
+			if (loader == null)
+			{
 				break;
 			}
-			if (loader instanceof URLClassLoader) {
+			if (loader instanceof URLClassLoader)
+			{
 				File f = null;
-				for (URL url : ((URLClassLoader) loader).getURLs()) {
+				for (URL url : ((URLClassLoader) loader).getURLs())
+				{
 
-					if (url.getProtocol().equals("jar")) {
+					if (url.getProtocol().equals("jar"))
+					{
 						String temp = url.getPath();
 						// 去掉最后的！
 						f = new File(temp.substring(5, temp.length() - 2));
-					} else {
+					}
+					else
+					{
 						f = new File(url.getFile());
 					}
 
@@ -161,7 +166,8 @@ public class JavaCompiler {
 		}
 		return path;
 	}
-
+	
+	
 	/**
 	 * 
 	 * suggest by qingsong
@@ -193,5 +199,8 @@ public class JavaCompiler {
 		}
 		return paths;
 	}
+	
+	
+
 
 }

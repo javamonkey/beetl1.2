@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
-
 public class MethodUtil {
 
 	static Map<Class, Method[]> cacheMap = new HashMap<Class, Method[]>();
@@ -124,7 +123,7 @@ public class MethodUtil {
 			temp = ms[i];
 			if (temp.getName().equals(methodName)) {
 				MethodConf selfMc = match(temp, parameterType);
-				if (selfMc != null && selfMc.isExactMatch) {
+				if (selfMc != null&&selfMc.isExactMatch) {
 					Class[] interfaces = target.getInterfaces();
 					// 优先返回接口
 					for (Class inf : interfaces) {
@@ -157,33 +156,31 @@ public class MethodUtil {
 		return null;
 	}
 
-	public static MethodConf match(Method method, Class[] parameterType) {
-		return match(method, parameterType, -1);
+	public static MethodConf match(Method method, Class[] parameterType) {		
+		return match(method, parameterType,-1);
 	}
 
-	/**
-	 * 看给定的参数是否匹配给定方法的前parameterCount参数 joelli
-	 * 
-	 * @param method
-	 * @param parameterType
-	 *            输入的参数
-	 * @param parameterCount
-	 *            如果为-1，则是精确匹配，输入参数与方法得参数个数必须一致
+	
+	/**看给定的参数是否匹配给定方法的前parameterCount参数 joelli
+	 * @param method 
+	 * @param parameterType 输入的参数
+	 * @param parameterCount 如果为-1，则是精确匹配，输入参数与方法得参数个数必须一致
 	 * @return
 	 */
 	public static MethodConf match(Method method, Class[] parameterType,
 			int parameterCount) {
 		Class[] paras = method.getParameterTypes();
-		if (parameterCount == -1) {
-			if (parameterType.length != paras.length) {
+		if(parameterCount==-1){			
+			if(parameterType.length!=paras.length){
 				return null;
 			}
 			parameterCount = parameterType.length;
 		}
-
-		if (parameterType.length > parameterCount) {
+		
+		if ( parameterType.length > parameterCount) {
 			return null;
 		}
+		
 
 		int[] convert = new int[parameterCount];
 
@@ -236,12 +233,13 @@ public class MethodUtil {
 					convert[j] = FLOAT_CONVERT;
 				} else if (paras[j] == Short.class) {
 					convert[j] = SHORT_CONVERT;
-				} else if (paras[j] == BigDecimal.class) {
+				}else if(paras[j] == BigDecimal.class){
 					convert[j] = BIGDECIMAL_CONVERT;
 				} else {
-					throw new RuntimeException("");
+					throw new RuntimeException("不支持的类型转化");
 				}
-			} else if (paras[j] == Boolean.class) {
+			}
+			else if (paras[j] == Boolean.class) {
 				if (parameterType[j] == boolean.class
 						|| parameterType[j] == Boolean.class) {
 					convert[j] = NO_CONVERT;

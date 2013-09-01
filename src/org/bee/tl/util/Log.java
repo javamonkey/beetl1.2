@@ -2,12 +2,12 @@ package org.bee.tl.util;
 
 /**
  * 性能调优用
- * 
  * @author joelli
  * @since 1.1
- * 
+ *
  */
-public class Log {
+public class Log
+{
 	static long startAll;
 	static long endAll;
 	static long key1Start;
@@ -21,61 +21,74 @@ public class Log {
 	static long key5Start;
 	static long key5End;
 
-	public static void startAll() {
+	public static void startAll()
+	{
 		startAll = System.currentTimeMillis();
 	}
 
-	public static void endAll() {
+	public static void endAll()
+	{
 		endAll = endAll + (System.currentTimeMillis() - startAll);
 		startAll = 0;
 	}
 
-	public static void key1Start() {
+	public static void key1Start()
+	{
 		key1Start = System.currentTimeMillis();
 	}
 
-	public static void key1End() {
+	public static void key1End()
+	{
 		key1End = key1End + (System.currentTimeMillis() - key1Start);
 		key1Start = 0;
 	}
 
-	public static void key2Start() {
+	public static void key2Start()
+	{
 		key2Start = System.currentTimeMillis();
 	}
 
-	public static void key2End() {
+	public static void key2End()
+	{
 		key2End = key2End + (System.currentTimeMillis() - key2Start);
 		key2Start = 0;
 	}
 
-	public static void key3Start() {
+	public static void key3Start()
+	{
 		key3Start = System.currentTimeMillis();
 	}
 
-	public static void key3End() {
+	public static void key3End()
+	{
 		key3End = key3End + (System.currentTimeMillis() - key3Start);
 		key3Start = 0;
 	}
 
-	public static void key4Start() {
+	public static void key4Start()
+	{
 		key4Start = System.currentTimeMillis();
 	}
 
-	public static void key4End() {
+	public static void key4End()
+	{
 		key4End = key4End + (System.currentTimeMillis() - key4Start);
 		key4Start = 0;
 	}
 
-	public static void key5Start() {
+	public static void key5Start()
+	{
 		key5Start = System.currentTimeMillis();
 	}
 
-	public static void key5End() {
+	public static void key5End()
+	{
 		key5End = key5End + (System.currentTimeMillis() - key5Start);
 		key5Start = 0;
 	}
 
-	public static void display() {
+	public static void display()
+	{
 		long total = endAll;
 		System.out.println("key1=" + key1End + " 百分比," + key1End * 1.0 / total);
 		System.out.println("key2=" + key2End + " 百分比," + key2End * 1.0 / total);
