@@ -202,7 +202,7 @@ public class CompiledClass
 	{
 		if (a instanceof String || b instanceof String)
 		{
-			return a != null ? a.toString() : "" + b != null ? b.toString() : "";
+			return (a != null ? a.toString() : "") + (b != null ? b.toString() : "");
 		}
 		else if (a instanceof Number && b instanceof Number)
 		{

@@ -1,5 +1,9 @@
 <%
-var a = 1;
-var b = 2;
+var list = ['a',"b","c"];
+var k = null;
+for(item in list){
+k = k+item+";";
+}
 %>
-${@t.isTrue(1,2,3)?"1":"2"}
+${k}
+
