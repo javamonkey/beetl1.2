@@ -1,7 +1,9 @@
 package org.bee.tl.samples;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bee.tl.core.GroupTemplate;
@@ -32,20 +34,18 @@ public class Test
 	 		    group.enableOptimize(compileConfig);
 //		 		 	group.enableOptimize();
 //		 		  group.enableDirectOutputByte();
-		 		 
-		 		 Template template = group.getFileTemplate("/helloworld.html");
-		 		String[] aa = new String[]{"tt","123"};		 		
-		 		template.set("t", new Test());
-		 		//template.set("b", 4);
-		 		template.set("aa", null);
-		 		
-		 		int c = i==12?j==1?3:4:2;
+		 		 Page page = new Page();
+		 		 page.setPageNumber(2);
+		 		 page.setTotalPage(20);
+		 		 page.setTotalRow(50);
+		 		 page.setPageSize(10);
+		 	 Template template = group.getFileTemplate("/page.html");
+		 	 template.set("page", page);
+		 	
 		 		System.out.println(template.getTextAsString());
 		 		
-	 		template = group.getFileTemplate("/helloworld.html");
-	 		template.set("t", new Test());
-	 		template.set("b", 4);
-	 		template.set("aa", null);
+	 		template = group.getFileTemplate("/page.html");
+	 		 template.set("page", page);
 	 		System.out.println(template.getTextAsString());
 //		 		
 
@@ -68,6 +68,13 @@ public class Test
 	public static boolean isTrue(int a, int b, int c)
 	{
 		return true;
+	}
+	
+	public Object getList(){
+		List list = new ArrayList();
+		list.add(new User());
+		list.add(new User());
+		return list;
 	}
 
 }

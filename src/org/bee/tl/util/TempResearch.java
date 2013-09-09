@@ -7,10 +7,7 @@ public class TempResearch
 
 	public static void main(String[] args) throws Exception
 	{
-		Object o = TempResearch.get();
-		Class c = TempResearch.class.getMethod("get", new Class[0]).getReturnType();
-		System.out.println(c.getComponentType());
-		System.out.println(c);
+	  System.out.println(3+2>1);
 
 	}
 

@@ -33,6 +33,7 @@ import java.math.RoundingMode;
 import org.bee.tl.core.BeeNumber;
 import org.bee.tl.core.Context;
 import org.bee.tl.core.Function;
+import org.bee.tl.core.number.NumberFactory;
 
 /**
  * 截取数字，剩下指定位数,如果输入0，则取整
@@ -43,26 +44,30 @@ import org.bee.tl.core.Function;
 public class TruncFunction implements Function
 {
 
-	public Object call(Object[] paras, Context ctx)
+	public BeeNumber call(Object[] paras, Context ctx)
 	{
 		BeeNumber n = (BeeNumber) paras[0];
 		int pos = 0;
 		if (paras.length != 1)
 		{
-			pos = ((BeeNumber) paras[1]).intValue();
+			pos = ((BeeNumber) paras[1]).intValue();			
 		}
+		//@todo ,得到正确的Number工厂
 		if (pos == 0)
-			return n.longValue();
+			return NumberFactory.big.y(n.longValue());
 		else
 		{
 			BigDecimal c = n.getBigDecimal().setScale(pos, RoundingMode.UP);
-			return c;
+			
+			return NumberFactory.big.y(c);
 		}
 
 	}
 
 	public static void main(String[] args)
 	{
+		
+		
 		BigDecimal b = new BigDecimal("1212.2632");
 		//		b.setScale(0);
 		BigDecimal c = b.setScale(1, RoundingMode.UP);

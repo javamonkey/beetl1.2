@@ -346,6 +346,7 @@ public class TypeTable {
 			if (right.getExpType() == null) {
 				infer(right, ctx);
 			}
+			tree.setExpType(Boolean.class);
 			break;
 		}
 		case BeeParser.NOT: {
@@ -373,19 +374,34 @@ public class TypeTable {
 				}
 				fnNameNode.setCached(fn);
 			}
-
-			Method[] ms = fn.getClass().getMethods();
-			Method call = null;
-			// @todo 通过反射找到Call方法
-			for (Method m : ms) {
-				if (m.getName().equals("call")) {
-					call = m;
-					break;
+			
+			if(fn instanceof FunctionWrapper){
+				FunctionWrapper funw = (FunctionWrapper)fn;
+				if(funw.isSingleMethod){
+					Class c = funw.method.getReturnType();
+					tree.setExpType(c);
+				}else{
+					//使用第一个同名行数的返回值
+					Method m = funw.listMethod.get(0).m;
+					Class c = m.getReturnType();
+					tree.setExpType(c);
 				}
+			}else{
+				Method[] ms = fn.getClass().getMethods();
+				Method call = null;
+				// @todo 通过反射找到Call方法
+				for (Method m : ms) {
+					if (m.getName().equals("call")) {
+						call = m;
+						break;
+					}
+				}
+
+				Class c = call.getReturnType();
+				tree.setExpType(c);
 			}
 
-			Class c = call.getReturnType();
-			tree.setExpType(c);
+	
 			for (int i = 1; i < tree.getChildCount(); i++) {
 				infer((BeeCommonNodeTree) tree.getChild(i), ctx);
 			}
@@ -457,6 +473,7 @@ public class TypeTable {
 								.getRef();
 						varDefinNode.setTypeClass(newTypeClass);
 					} else if (!oldTypeClass.equals(newTypeClass)) {
+						//如果新类型是Object，目前版本不尝试转型，@todo
 						throw new PreCompileException(varName + "类型定义不一致在行 "
 								+ indentifyTree.getToken().getLine());
 					} else {
@@ -604,9 +621,16 @@ public class TypeTable {
 				idNode.setTypeClass(entryType);
 
 			} else {
+				
+				//试图尝试支持循环
+				varRef.setExpType(Object.class);
+				idNode.setExpType(Object.class);
+				
+				/*
 				throw new PreCompileException("For 循环类型是 "
 						+ varRef.getTypeClass().getRawType() + ",位于行"
 						+ varRef.getToken().getLine() + ",for循环里明确类型将有助于优化");
+				*/
 			}
 
 			newCtx.defineVar(idNode.getToken().getText(), idNode.getTypeClass());

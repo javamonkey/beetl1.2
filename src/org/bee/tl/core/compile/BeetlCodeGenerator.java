@@ -51,6 +51,7 @@ import org.bee.tl.core.ByteSupportTag;
 import org.bee.tl.core.CoreScriptRunner;
 import org.bee.tl.core.Derective;
 import org.bee.tl.core.Function;
+import org.bee.tl.core.IteratorStatus;
 import org.bee.tl.core.MapEntry;
 import org.bee.tl.core.MethodConf;
 import org.bee.tl.core.PropertyUtil;
@@ -560,13 +561,13 @@ public class BeetlCodeGenerator
 				if (cls.isRawType())
 				{
 					className = getClassName(cls.getRawType());
-					println("final " + className + " " + varName + ";");
+					println( className + " " + varName + ";");
 				}
 				else
 				{
 					Class key = cls.getPtypeMap().get("E");
 					className = getClassName(cls.getRawType());
-					println("final " + className + "<" + key.getSimpleName() + "> " + varName + ";");
+					println( className + "<" + key.getSimpleName() + "> " + varName + ";");
 				}
 
 			}
@@ -575,14 +576,14 @@ public class BeetlCodeGenerator
 				if (cls.isRawType())
 				{
 					className = getClassName(cls.getRawType());
-					println("final " + className + " " + varName + ";");
+					println( className + " " + varName + ";");
 				}
 				else
 				{
 					Class key = cls.getPtypeMap().get("K");
 					Class value = cls.getPtypeMap().get("V");
 					className = getClassName(cls.getRawType());
-					println("final " + className + "<" + key.getSimpleName() + "," + value.getSimpleName() + "> "
+					println(className + "<" + key.getSimpleName() + "," + value.getSimpleName() + "> "
 							+ varName + ";");
 				}
 
@@ -590,7 +591,7 @@ public class BeetlCodeGenerator
 			else
 			{
 				className = getClassName(cls.getRawType());
-				println("final " + className + " " + varName + ";");
+				println( className + " " + varName + ";");
 			}
 
 		}
@@ -1107,9 +1108,13 @@ public class BeetlCodeGenerator
 					}
 					else
 					{
-						print("(" + this.getShowType(t.getTypeClass().getRawType()) + ")");
+						Class returnType = t.getTypeClass().getRawType();
+						returnType = BeetlUtil.wrapClassForCast(returnType);
+						if(!returnType.equals(Object.class)){
+							print("(" + this.getShowType(returnType) + ")");
+						}
+												
 					}
-
 					// this.funRetrunMap.put(fnName, t.getTypeClass().getRawType());
 					print("callFunction(\"");
 					print(fnName);
@@ -1325,9 +1330,10 @@ public class BeetlCodeGenerator
 				{
 
 					BeeCommonNodeTree expNode = (BeeCommonNodeTree) t.getChild(1);
+					BeeCommonNodeTree idNode = (BeeCommonNodeTree) t.getChild(0);
 					if (expNode.getType() == BeeParser.SLIST)
 					{
-						String varName = t.getToken().getText();
+						String varName =idNode.getToken().getText();
 						printStart("SuperVar ");
 						print(varName);
 						print(" = null;");
@@ -1347,7 +1353,8 @@ public class BeetlCodeGenerator
 					}
 					else
 					{
-						printStart(t.getToken().getText());
+						
+						printStart(idNode.getToken().getText());
 						print("=");
 						writeTree(expNode);
 						print(";");
@@ -1738,7 +1745,7 @@ public class BeetlCodeGenerator
 						this.addIndent();
 					}
 					println("int " + idNode.getToken().getText() + "_index = 0;");
-					printStart(idNode.getToken().getText()+"LP = new IteratorStatus(");
+					printStart(idNode.getToken().getText()+"LP = IteratorStatus.getIteratorStatus (");
 					writeTree(varRef);
 					print(");");
 					printCR();
@@ -1751,9 +1758,15 @@ public class BeetlCodeGenerator
 						writeTree(varRef);
 						print(".size();");
 						
-					}
+					}else if(Object.class==type){
+						
+						
+						println("int " + idNode.getToken().getText() + "_size = 0;");
+						println("if("+idNode.getToken().getText()+"LP.hasSize())"
+								+idNode.getToken().getText() + "_size ="+idNode.getToken().getText()+"LP.getSize();");						
+						
+					}		
 					
-					//数组
 					else if (!Iterable.class.isAssignableFrom(type))
 					{
 						printStart("int " + idNode.getToken().getText() + "_size = ");
@@ -1761,6 +1774,7 @@ public class BeetlCodeGenerator
 						print(".length;");
 						
 					}
+					
 					
 
 					printCR();

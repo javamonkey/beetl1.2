@@ -74,8 +74,7 @@ public class HtmlTagTestCase extends BasicTestCase
 		Assert.assertEquals(this.getFileContent("/htmltag/tagfunction_expected.html"), str);
 
 	}
-	
-	
+
 	public static class CommentTag extends GeneralBeetlTag {
 
 		@Override

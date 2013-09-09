@@ -341,6 +341,29 @@ public class BeetlUtil
 		
 	}
 	
+	public static Class wrapClassForCast(Class c ){
+		if(c==boolean.class){
+			return Boolean.class;
+		}else if(c==int.class){
+			return Integer.class;
+		}else if( c==short.class){
+			return Short.class;
+		}else if(c==long.class){
+			return Long.class;
+		}else if(c==double.class){
+			return Double.class;
+		}else if(c==float.class){
+			return Float.class;
+		}else if(c==byte.class){
+			return Byte.class;
+		}else if(c==char.class){
+			//能用么？
+			return Character.class;
+		}
+		else{
+			return c;
+		}
+	}
 
 
 }
