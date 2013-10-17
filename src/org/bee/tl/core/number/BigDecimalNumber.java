@@ -44,6 +44,7 @@ public class BigDecimalNumber  extends GeneralNumber{
 	}
 	
 	private BigDecimal make(Number n){
+		if(n==null) return null;
 		if(n instanceof BigDecimal){
 			return (BigDecimal)n;
 		}else{

@@ -16,6 +16,7 @@ public class HTMLTagParser {
 	String tagName = null;
 	boolean isEmptyTag = false;
 	Map<String, String> expMap = new HashMap<String, String>();
+	Map<String, Character> quatMap = new HashMap<String, Character>();
 
 	public HTMLTagParser(char[] cs, int index, boolean isStart) {
 		this.cs = cs;
@@ -160,6 +161,7 @@ public class HTMLTagParser {
 
 			case 3: {
 				this.expMap.put(key, exp);
+				quatMap.put(key,Character.valueOf(quot));
 				// 继续往前，如果碰到了'>'或者'/>'者表示结束，如果碰到其他分空字符，则是下一个属性
 				if (ch == '>') {
 					return false;
@@ -194,6 +196,10 @@ public class HTMLTagParser {
 	public Map<String, String> getExpMap() {
 		return expMap;
 	}
+	
+	public Map<String, Character> getQuatMap() {
+		return this.quatMap;
+	}
 
 	public void setExpMap(Map<String, String> expMap) {
 		this.expMap = expMap;
@@ -202,7 +208,7 @@ public class HTMLTagParser {
 	
 
 	public static void main(String[] args) {
-		String input = "<@  input aa='cc>' >";
+		String input = "<#img_cut p=\"[{k:'name',v:'2'}]\" />";
 		HTMLTagParser htmltag = new HTMLTagParser(input.toCharArray(),2,true);
 		htmltag.parser();
 		System.out.println(htmltag.getTagName());

@@ -31,22 +31,17 @@ public class Test
 		 		//group.enableDirectOutputByte();
 		 		Map compileConfig = new HashMap();
 	 		    compileConfig.put(GroupTemplate.OPTIMIZE_KEEP_SOURCE, true);
-	 		    group.enableOptimize(compileConfig);
+	 		    //group.enableOptimize(compileConfig);
 //		 		 	group.enableOptimize();
 //		 		  group.enableDirectOutputByte();
-		 		 Page page = new Page();
-		 		 page.setPageNumber(2);
-		 		 page.setTotalPage(20);
-		 		 page.setTotalRow(50);
-		 		 page.setPageSize(10);
-		 	 Template template = group.getFileTemplate("/page.html");
-		 	 template.set("page", page);
-		 	
-		 		System.out.println(template.getTextAsString());
 		 		
-	 		template = group.getFileTemplate("/page.html");
-	 		 template.set("page", page);
-	 		System.out.println(template.getTextAsString());
+		 	 Template template = group.getFileTemplate("/helloworld.html");
+		 	 template.set("key", 1);
+		 	 Map map = new HashMap();
+		 	 map.put("1","hello");
+		 	 template.set("map", map);
+		 	System.out.println(template.getTextAsString());
+		
 //		 		
 
 		

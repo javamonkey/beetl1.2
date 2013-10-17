@@ -89,7 +89,7 @@ public class LayoutTag extends GeneralBeetlTag
 
 	public void makeOutput()
 	{
-		if (args.length == 0 || args.length > 2)
+		if (args.length == 0 || args.length > 3)
 		{
 			throw new RuntimeException("参数错误，期望child,map");
 		}

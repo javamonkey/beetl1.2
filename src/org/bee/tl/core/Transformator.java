@@ -290,6 +290,7 @@ public class Transformator
 			script.append("('").append(tagName).append("',");
 			
 			Map<String,String> map = html.getExpMap();
+			Map<String, Character> quat = html.getQuatMap();
 			if(map.size()!=0){
 				script.append("{");
 			}
@@ -299,7 +300,11 @@ public class Transformator
 				String value = entry.getValue();
 				script.append(key).append(":");
 				if(!value.startsWith(this.placeholderStart)){
-					script.append("'").append(value).append("'");
+					//value是一个正常字符串,还原
+					char c = quat.get(key);					
+					script.append(c).append(value).append(c);	
+					
+					
 				}else{
 					value = new String(value.toCharArray(),this.placeholderStart.length(),value.length()-this.placeholderStart.length()-this.placeholderEnd.length());
 					script.append(value);
