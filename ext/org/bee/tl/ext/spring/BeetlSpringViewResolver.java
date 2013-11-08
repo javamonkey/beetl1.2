@@ -41,9 +41,9 @@ public class BeetlSpringViewResolver extends AbstractTemplateViewResolver
 	 * Requires {@link FreeMarkerView}.
 	 */
 
-	protected Class requiredViewClass()
-	{
+	protected Class requiredViewClass()	{
 
+		
 		return BeetlSpringView.class;
 	}
 }

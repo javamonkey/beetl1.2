@@ -515,11 +515,15 @@ public class TypeTable {
 				if (caseTree.getToken().getType() != BeeParser.DEFAULT) {
 					comparedTree = (BeeCommonNodeTree) caseTree.getChild(0);
 					this.infer(comparedTree, ctx);
-					caseExpTree = (BeeCommonNodeTree) caseTree.getChild(1);
-					this.infer(caseExpTree, ctx);
+					//case body
+					for(int j = 1;j<caseTree.getChildCount();j++){
+						this.infer((BeeCommonNodeTree)caseTree.getChild(j),ctx);
+					}
 				} else {
-					caseExpTree = (BeeCommonNodeTree) caseTree.getChild(0);
-					this.infer(caseExpTree, ctx);
+					//default
+					for(int j = 0;j<caseTree.getChildCount();j++){
+						this.infer((BeeCommonNodeTree)caseTree.getChild(j),ctx);
+					}
 
 				}
 
@@ -557,12 +561,18 @@ public class TypeTable {
 						this.infer((BeeCommonNodeTree) expListTree.getChild(j),
 								ctx);
 					}
-					caseBlockTree = (BeeCommonNodeTree) caseTree.getChild(1);
-					this.infer(caseBlockTree, ctx);
+					//case body
+					for(int j = 1;j<caseTree.getChildCount();j++){
+						this.infer((BeeCommonNodeTree)caseTree.getChild(j),ctx);
+					}
+					
 
 				} else {
-					caseBlockTree = (BeeCommonNodeTree) caseTree.getChild(0);
-					this.infer(caseBlockTree, ctx);
+					//default
+					for(int j = 0;j<caseTree.getChildCount();j++){
+						this.infer((BeeCommonNodeTree)caseTree.getChild(j),ctx);
+					}
+					
 
 				}
 

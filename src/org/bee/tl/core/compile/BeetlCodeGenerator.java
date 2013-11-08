@@ -1665,7 +1665,7 @@ public class BeetlCodeGenerator
 						if (caseTree.getToken().getType() != BeeParser.G_DEFAULT)
 						{
 							expListTree = (BeeCommonNodeTree) caseTree.getChild(0);
-							caseBlockTree = (BeeCommonNodeTree) caseTree.getChild(1);
+							
 							String concat = "||";
 							if(hasWriteIf){
 								printStart("else if(");
@@ -1694,7 +1694,11 @@ public class BeetlCodeGenerator
 							print("){");
 							printCR();
 							this.addIndent();
-							this.writeTree(caseBlockTree);
+							//case body
+							for(int j = 1;j<caseTree.getChildCount();j++){
+								this.writeTree((BeeCommonNodeTree)caseTree.getChild(j));
+							}
+							
 							this.decIndent();
 							println("}");
 							
@@ -1702,11 +1706,14 @@ public class BeetlCodeGenerator
 						}
 						else
 						{
-							caseBlockTree = (BeeCommonNodeTree) caseTree.getChild(0);
+							
 							printStart("else {");
 							printCR();
 							this.addIndent();
-							writeTree(caseBlockTree);
+							//dafault
+							for(int j = 0;j<caseTree.getChildCount();j++){
+								this.writeTree((BeeCommonNodeTree)caseTree.getChild(j));
+							}
 							this.decIndent();							
 							println("}");
 							

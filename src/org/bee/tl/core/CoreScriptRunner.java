@@ -584,8 +584,11 @@ public class CoreScriptRunner {
 				}
 				if(expListHasTrue){
 					//执行
-					blockTree = (BeeCommonNodeTree)caseTree.getChild(1);
-					this.print(blockTree, localCtx, pw, control);
+					//blockTree = (BeeCommonNodeTree)caseTree.getChild(1);
+					for(int j = 1;j<caseTree.getChildCount();j++){
+						this.print((BeeCommonNodeTree)caseTree.getChild(j), localCtx, pw, control);
+					}
+					
 				
 					break;
 				}
