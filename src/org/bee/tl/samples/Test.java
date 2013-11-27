@@ -31,7 +31,7 @@ public class Test
 		 		//group.enableDirectOutputByte();
 		 		Map compileConfig = new HashMap();
 	 		    compileConfig.put(GroupTemplate.OPTIMIZE_KEEP_SOURCE, true);
-	 		    group.enableOptimize(compileConfig);
+	 		   // group.enableOptimize(compileConfig);
 //		 		 	group.enableOptimize();
 //		 		  group.enableDirectOutputByte();
 		 		
