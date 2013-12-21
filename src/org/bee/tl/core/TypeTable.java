@@ -1085,6 +1085,10 @@ public class TypeTable {
 
 		}
 	}
+	
+	public void setObjectTypeClass(String varName) {
+		typeClassMap.put(varName, new TypeClass(Object.class));
+	}
 
 	/**
 	 * 判断变量真正的类型，譬如，类型应该是某个接口

@@ -31,15 +31,20 @@ public class Test
 		 		//group.enableDirectOutputByte();
 		 		Map compileConfig = new HashMap();
 	 		    compileConfig.put(GroupTemplate.OPTIMIZE_KEEP_SOURCE, true);
-	 		   // group.enableOptimize(compileConfig);
+	 		   group.enableOptimize(compileConfig);
 //		 		 	group.enableOptimize();
 //		 		  group.enableDirectOutputByte();
 		 		
 		 	 Template template = group.getFileTemplate("/helloworld.html");
-		 	
+		 	 template.set("a",new User());
 		 	System.out.println(template.getTextAsString());
-template = group.getFileTemplate("/helloworld.html");
-		 	
+			template = group.getFileTemplate("/helloworld.html");
+			template.set("a",new User());
+		 	System.out.println(template.getTextAsString());
+		 	Map map = new HashMap();
+		 	map.put("name", "lijz");
+		 	template = group.getFileTemplate("/helloworld.html");
+		 	template.set("a",map);
 		 	System.out.println(template.getTextAsString());
 		
 //		 		

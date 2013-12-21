@@ -70,6 +70,9 @@ tokens {
 package org.bee.tl.core;
 import org.bee.tl.core.exception.*;
 import org.bee.tl.core.compile.*;
+import java.util.Set;
+import java.util.HashSet;
+
 
 
 }
@@ -126,6 +129,8 @@ public void addCase(conditionalOrExpression_return exp, BeeParser.exp_return  le
 
 
 }
+
+
 protected Object recoverFromMismatchedToken(IntStream input, int ttype, BitSet follow)
 	throws RecognitionException
 {
@@ -136,7 +141,25 @@ public void emitErrorMessage(String msg) {
 	// do not display error ,instead of ErrorHndler
 }
 
+ boolean hasDynamic = false;
+    boolean allDynamic = false;
+    Set<String> dynamicNames = new HashSet(0);
+    public void checkDynamic(String key,String value){
+    	if(key.equalsIgnoreCase("dynamic")){
+    		hasDynamic = true;
+    		String[] array = value.split(",");
+    		for(String objName:array){
+    			if(objName.equals("...")){
+    				allDynamic = true;
+    			}else{
+    				dynamicNames.add(objName);
+    			}
+    		}
+    		
+    	}
+    }
 }
+
 
 
 
@@ -187,7 +210,7 @@ g_caseStatment
 g_defaultStatment
 	:	a='default' ':' statements -> ^(G_DEFAULT[$a] statements);	
 
-directive: 'DIRECTIVE'  Identifier (StringLiteral)? ';' -> ^(DIRECTIVE Identifier (StringLiteral)?);
+directive: 'DIRECTIVE'  a=Identifier (b=StringLiteral)? ';' {checkDynamic($a.text,$b.text);} -> ^(DIRECTIVE Identifier (StringLiteral)?);
 returnStatment
 	:	'return' -> ^(RETURN) ;
 continueStatment:	'continue' -> ^(CONTINUE) ;
