@@ -1013,7 +1013,7 @@ public class GroupTemplate
 	 * 
 	 * @param period
 	 */
-	public void enableChecker(final int period)
+	public void enableChecker(final double period)
 	{
 		if (period == 0)
 			return;
@@ -1033,7 +1033,8 @@ public class GroupTemplate
 							GroupTemplate.this.cachedRuntime.checkTemplateUpdate();
 						if (GroupTemplate.this.classMap != null)
 							GroupTemplate.this.classMap.checkTemplateUpdate();
-						Thread.sleep(1000 * period);
+						long sleep = new Double(1000*period).longValue() ;
+						Thread.sleep(sleep);
 					}
 					catch (InterruptedException e)
 					{
