@@ -158,6 +158,11 @@ public class DefaultErrorHandler extends ErrorHandler
 				}
 
 				os.println((">>语法错：缺少符号" + errorText + "," + errorLine + " 行" + fileTip));
+				if(errorText.equals("RIGHT_BRACE")){
+					String moreInfo = getMissRightBraceInfo(misError);
+					if(moreInfo!=null)os.println("缺少 } 在"+moreInfo+"语句里,也可能是嵌套在内的其他语句占用了"+moreInfo+"的 }");
+				}
+				
 			}
 			else if(ex instanceof HTMLTagParserException){
 				HTMLTagParserException htmle = (HTMLTagParserException)ex;
@@ -180,6 +185,33 @@ public class DefaultErrorHandler extends ErrorHandler
 			e.printStackTrace();
 		}
 
+	}
+	
+	private String getMissRightBraceInfo(MismatchedTokenException e){
+		//分析可能是哪个函数调用出错导致的
+		for (StackTraceElement st : e.getStackTrace())
+		{
+			String parseMethod = st.getMethodName();
+			if(parseMethod.startsWith("for")){
+				return "for";
+			}else if(parseMethod.startsWith("if")){
+				return "if";
+			}else if(parseMethod.startsWith("mess")){
+				return "tag()";
+			}else if(parseMethod.startsWith("while")){
+				return "while";
+			}else if(parseMethod.startsWith("g_switch")){
+				return "select";
+			}else if(parseMethod.startsWith("g_case")){
+				return "case:";
+			}else if(parseMethod.startsWith("switch")){
+				return "switch";
+			}else if(parseMethod.startsWith("case")){
+				return "case";
+			}
+		
+		}
+		return null;
 	}
 
 	protected void writeLines(int errorLine, Resource resource, PrintWriter os) throws IOException

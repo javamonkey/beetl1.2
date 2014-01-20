@@ -78,6 +78,11 @@ public class PreCompiledClass extends CompiledClass
 			return;
 		}
 		typeTable = new TypeTable(scriptRunner);
+		if(scriptRunner.parser.hasDynamic){
+			if(scriptRunner.parser.allDynamic){
+				
+			}
+		}
 
 		/**
 		 * 为了预编译，必须确定模板里的变量类型（对应的java class），因此首先 分析模板里有哪些变量需要知道其类型，如下模板 var
@@ -324,7 +329,15 @@ public class PreCompiledClass extends CompiledClass
 		for (String varName : typeTable.allType())
 		{
 
-			if (ctx.getVarWithoutException(varName) == null)
+			if(this.scriptRunner.parser.allDynamic){
+				typeTable.setObjectTypeClass(varName);
+				continue ;
+				
+			}else if(this.scriptRunner.parser.hasDynamic){
+				if(this.scriptRunner.parser.dynamicNames.contains(varName)){
+					typeTable.setObjectTypeClass(varName);
+				}
+			}else if (ctx.getVarWithoutException(varName) == null)
 			{
 				// 从context中未找到想要推测的变量，下次再搜集
 				continue;
