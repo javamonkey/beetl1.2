@@ -36,11 +36,17 @@ public class Test
 //		 		  group.enableDirectOutputByte();
 		 		
 		 	 Template template = group.getFileTemplate("/helloworld.html");
-		 	
+		 	template.set("a", 1);
 		 	System.out.println(template.getTextAsString());
-template = group.getFileTemplate("/helloworld.html");
-		 	
+			template = group.getFileTemplate("/helloworld.html");
+			template.set("a", 1);
 		 	System.out.println(template.getTextAsString());
+		 	group.removeTemplateCache("hello2");
+		 	Template t = group.getStringTemplate("hello1dfdf2356${name}", "hello2");
+		 	t.set("name", "中文");
+		 	String str = t.getTextAsString();
+		 	System.out.println(str);
+		 	
 		
 //		 		
 

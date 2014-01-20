@@ -405,12 +405,19 @@ public class GroupTemplate
 		if (stringTemplateList.contains(key))
 		{
 
-			File file = new File(this.tempFolder + File.separator + "strtemp" + File.separator + key + ".txt");
+			File file = new File(this.root + File.separator + "strtemp" + File.separator + key + ".txt");
 			if (!file.delete())
 			{
 				logger.info("删除String模板失败");
 			}
 
+		}else {
+			File file = new File(this.root + File.separator + "strtemp" + File.separator + key + ".txt");
+			if (file.exists()&&!file.delete())
+			{
+				logger.info("删除String模板失败");
+			}
+			
 		}
 	
 	}
@@ -1099,16 +1106,17 @@ public class GroupTemplate
 
 	private boolean containTempStringFile(String fileName)
 	{
-		File file = new File(this.tempFolder + File.separator + "strtemp" + File.separator + fileName + ".txt");
+		File file = new File(this.root + File.separator + "strtemp" + File.separator + fileName + ".txt");
 		return file.exists();
 	}
 
 	private File saveTempStringFile(String fileName, Reader rs) throws IOException
 	{
-
-		File parent = new File(this.tempFolder + File.separator + "strtemp");
+		
+		
+		File parent = new File(this.root + File.separator + "strtemp");
 		parent.mkdirs();
-		File file = new File(this.tempFolder + File.separator + "strtemp" + File.separator + fileName + ".txt");
+		File file = new File(this.root + File.separator + "strtemp" + File.separator + fileName + ".txt");
 
 		BufferedWriter fw = new BufferedWriter(new FileWriter(file));
 		char[] cs = new char[1024];
