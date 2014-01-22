@@ -51,7 +51,6 @@ import org.bee.tl.core.ByteSupportTag;
 import org.bee.tl.core.CoreScriptRunner;
 import org.bee.tl.core.Derective;
 import org.bee.tl.core.Function;
-import org.bee.tl.core.IteratorStatus;
 import org.bee.tl.core.MapEntry;
 import org.bee.tl.core.MethodConf;
 import org.bee.tl.core.PropertyUtil;
@@ -1109,6 +1108,7 @@ public class BeetlCodeGenerator
 					else
 					{
 						Class returnType = t.getTypeClass().getRawType();
+						
 						returnType = BeetlUtil.wrapClassForCast(returnType);
 						if(!returnType.equals(Object.class)){
 							print("(" + this.getShowType(returnType) + ")");

@@ -156,7 +156,7 @@ public class Config
 
 			}
 
-			int strSheckPeriod = getInt(TEMPLATE_CACHE_CHECK_PERIOD, 0);
+			double strSheckPeriod = getDouble(TEMPLATE_CACHE_CHECK_PERIOD, 0);
 			gt.enableChecker(strSheckPeriod);
 		}
 		else
@@ -243,6 +243,21 @@ public class Config
 		}
 
 	}
+	
+	public double getDouble(String key, int defaultValue)
+	{
+		String value = (String) ps.get(key);
+		if (isNotEmpty(value))
+		{
+			return Double.parseDouble(value);
+		}
+		else
+		{
+			return defaultValue;
+		}
+
+	}
+
 
 	public String getString(String key, String defaultValue)
 	{

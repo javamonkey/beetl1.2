@@ -1009,7 +1009,7 @@ public class GroupTemplate
 	}
 
 	/**
-	 * 检查模板文件是否变动，单位是秒，在开发模式下，设置1秒，2秒都可以，在产品模式下，设置为0，将不检查模板更新
+	 * 检查模板文件是否变动，单位是秒，在开发模式下，设置0.1秒，1秒都可以，在产品模式下，设置为0，将不检查模板更新
 	 * 
 	 * @param period
 	 */
@@ -1034,6 +1034,7 @@ public class GroupTemplate
 						if (GroupTemplate.this.classMap != null)
 							GroupTemplate.this.classMap.checkTemplateUpdate();
 						long sleep = new Double(1000*period).longValue() ;
+						System.out.println("hello");
 						Thread.sleep(sleep);
 					}
 					catch (InterruptedException e)
@@ -1046,8 +1047,10 @@ public class GroupTemplate
 			}
 
 		}, "Beetl-Scanner");
-		thread.setDaemon(true);
+		thread.setDaemon(false);
+		thread.setPriority(Thread.MIN_PRIORITY);
 		thread.start();
+		
 	}
 
 	public String getCharset()

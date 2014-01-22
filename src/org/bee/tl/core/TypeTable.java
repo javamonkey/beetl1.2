@@ -389,15 +389,19 @@ public class TypeTable {
 			}else{
 				Method[] ms = fn.getClass().getMethods();
 				Method call = null;
-				// @todo 通过反射找到Call方法
-				for (Method m : ms) {
-					if (m.getName().equals("call")) {
-						call = m;
-						break;
-					}
+			
+				try {
+					call = fn.getClass().getMethod("call", Object[].class,Context.class);
+				} catch (NoSuchMethodException e) {
+					throw new PreCompileException(fn.getClass()+ "没有找到call方法 "
+							+ fnNameNode.getToken().getLine());
+				} catch (SecurityException e) {
+					throw new PreCompileException(fn.getClass()+ "call方法不允许反射调用 "
+							+ fnNameNode.getToken().getLine());
 				}
 
 				Class c = call.getReturnType();
+				
 				tree.setExpType(c);
 			}
 

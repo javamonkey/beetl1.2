@@ -71,7 +71,7 @@ public class BeetlGroupUtilConfiguration implements ServletContextAware
 	protected String suffix = "";
 	Logger logger = Logger.getLogger(BeetlGroupUtilConfiguration.class.toString());
 	//每2秒检测一次,用于开发
-	int check = 2;
+	double check = 0.1;
 
 	public void setServletContext(ServletContext sc)
 	{
@@ -215,7 +215,7 @@ public class BeetlGroupUtilConfiguration implements ServletContextAware
 		this.nativeCall = nativeCall;
 	}
 
-	public int getCheck()
+	public double getCheck()
 	{
 		return check;
 	}

@@ -40,6 +40,7 @@ import org.bee.tl.core.Function;
 public class CheckExistFunction implements Function
 {
 
+	
 	public Boolean call(Object[] paras, Context ctx)
 	{
 

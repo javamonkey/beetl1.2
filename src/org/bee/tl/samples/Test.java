@@ -24,7 +24,7 @@ public class Test
 		 		group.setCharset("GBK");
 		 		group.config("<%", "%>", "${", "}");
 		 		//group.config("<!--[", "]-->", "<!--[=", "]-->");	 		
-		 		 
+		 		group.enableChecker(0.01);
 		 		
 		 		group.setDebug(true);
 		 		group.enableNativeCall();

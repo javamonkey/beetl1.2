@@ -37,7 +37,7 @@ public class ServletGroupTemplate
 	protected boolean directByte = false;
 	Logger logger = Logger.getLogger(ServletGroupTemplate.class.toString());
 	// 每2秒检测一次,用于开发
-	int check = 2;
+	double check = 2;
 
 	static ServletGroupTemplate instance = new ServletGroupTemplate();
 
@@ -89,7 +89,7 @@ public class ServletGroupTemplate
 		this.placeholderStart = getString(sc, "GroupTemplate.PlaceholderStart", "${");
 		this.placeholderEnd = getString(sc, "GroupTemplate.PlaceholderEnd", "}");
 		this.charset = getString(sc, "GroupTemplate.Charset", "GBK");
-		this.check = Integer.parseInt(getString(sc, "GroupTemplate.Check", "2"));
+		this.check = Double.parseDouble(getString(sc, "GroupTemplate.Check", "2"));
 		this.directByte = Boolean.parseBoolean(getString(sc, "GroupTemplate.DirectByteOutput", "false"));
 		initGroup();
 
@@ -301,12 +301,12 @@ public class ServletGroupTemplate
 		this.logger = logger;
 	}
 
-	public int getCheck()
+	public double getCheck()
 	{
 		return check;
 	}
 
-	public void setCheck(int check)
+	public void setCheck(double check)
 	{
 		this.check = check;
 	}
