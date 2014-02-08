@@ -1034,7 +1034,6 @@ public class GroupTemplate
 						if (GroupTemplate.this.classMap != null)
 							GroupTemplate.this.classMap.checkTemplateUpdate();
 						long sleep = new Double(1000*period).longValue() ;
-						System.out.println("hello");
 						Thread.sleep(sleep);
 					}
 					catch (InterruptedException e)
