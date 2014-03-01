@@ -72,6 +72,8 @@ public class BeetlGroupUtilConfiguration implements ServletContextAware
 	Logger logger = Logger.getLogger(BeetlGroupUtilConfiguration.class.toString());
 	//每2秒检测一次,用于开发
 	double check = 0.1;
+	protected boolean directByteOutput = false;
+	
 
 	public void setServletContext(ServletContext sc)
 	{
@@ -137,17 +139,22 @@ public class BeetlGroupUtilConfiguration implements ServletContextAware
 		}
 		if (check != 0)
 			group.enableChecker(check);
+		if(this.isDirectByteOutput()){
+			group.enableDirectOutputByte();
+		}
 		group.setCharset(charset);
+		group.enableHtmlTagSupport("#");
 		initOther();
 
 	}
 
-	public void initOther()
+	protected void initOther()
 	{
 		//如注册方法，格式化函数等
 		/**
 		 * group.register......
 		 */
+		
 	}
 
 	public GroupTemplate getGroupTemplate()
@@ -220,9 +227,19 @@ public class BeetlGroupUtilConfiguration implements ServletContextAware
 		return check;
 	}
 
-	public void setCheck(int check)
+	public void setCheck(double check)
 	{
 		this.check = check;
+	}
+	
+	
+
+	public boolean isDirectByteOutput() {
+		return directByteOutput;
+	}
+
+	public void setDirectByteOutput(boolean directByteOutput) {
+		this.directByteOutput = directByteOutput;
 	}
 
 	public String getSuffix() {

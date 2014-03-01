@@ -686,10 +686,6 @@ public class ExpRuntime
 			// 安全输出，需要检查是否合法（未来放到语法分析阶段检查）
 			if (list.get(list.size() - 1).getType() == BeeParser.SAFE_OUTPUT)
 			{
-				// if (exp.getParent().getType() ==
-				// BeeParser.VAR_TEXT||exp.getParent().getType() ==
-				// BeeParser.FOR)
-				// {
 
 				defaultValue = eval(list.get(list.size() - 1), ctx, control);
 				count = count - 1;
@@ -699,22 +695,15 @@ public class ExpRuntime
 					return defaultValue;
 				}
 				hasSafeOutput = true;
-				// }
-				// else
-				// {
-				// //将在语法解析阶段做这事情
-				// throw new
-				// BeeRuntimeException(BeeRuntimeException.EXPRESSION_INVALID,
-				// exp.getToken(),
-				// "只能在占位符里使用,如$user.wife.name!'bachelor'$");
-				//
-				// }
+			
 			}
-			else if (control.derective.safeOutput)
-			{
-				hasSafeOutput = true;
-			}
+			
 
+		}
+		
+		 if (control.derective.safeOutput)
+		{
+			hasSafeOutput = true;
 		}
 
 		try

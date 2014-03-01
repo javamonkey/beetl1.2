@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.bee.tl.core.GroupTemplate;
 import org.bee.tl.core.Template;
+import org.bee.tl.ext.String2Json;
 
 public class Test
 {
@@ -25,27 +26,29 @@ public class Test
 		 		group.config("<%", "%>", "${", "}");
 		 		//group.config("<!--[", "]-->", "<!--[=", "]-->");	 		
 		 		group.enableChecker(0.01);
+		 		group.registerFunction("str2json", new String2Json());
 		 		
 		 		group.setDebug(true);
 		 		group.enableNativeCall();
 		 		//group.enableDirectOutputByte();
 		 		Map compileConfig = new HashMap();
 	 		    compileConfig.put(GroupTemplate.OPTIMIZE_KEEP_SOURCE, true);
-	 		    group.enableOptimize(compileConfig);
+	 		 //   group.enableOptimize(compileConfig);
 //		 		 	group.enableOptimize();
 //		 		  group.enableDirectOutputByte();
 		 		
 		 	 Template template = group.getFileTemplate("/helloworld.html");
-		 	template.set("a", 1);
+		 	template.set("a", "[1,2,3]");
+		 	
 		 	System.out.println(template.getTextAsString());
-			template = group.getFileTemplate("/helloworld.html");
-			template.set("a", 1);
-		 	System.out.println(template.getTextAsString());
-		 	group.removeTemplateCache("hello2");
-		 	Template t = group.getStringTemplate("hello1dfdf2356${name}", "hello2");
-		 	t.set("name", "中文");
-		 	String str = t.getTextAsString();
-		 	System.out.println(str);
+//			template = group.getFileTemplate("/helloworld.html");
+//			template.set("a", 1);
+//		 	System.out.println(template.getTextAsString());
+//		 	group.removeTemplateCache("hello2");
+//		 	Template t = group.getStringTemplate("hello1dfdf2356${name}", "hello2");
+//		 	t.set("name", "中文");
+//		 	String str = t.getTextAsString();
+//		 	System.out.println(str);
 		 	
 		
 //		 		

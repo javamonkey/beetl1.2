@@ -60,7 +60,7 @@ public class IncludeJSPTag extends Tag
 			}
 
 			BeetlServletResponseWrapper rspWrapper = new BeetlServletResponseWrapper(response);
-			request.getRequestDispatcher(child).forward(request, rspWrapper);
+			request.getRequestDispatcher(child).include(request, rspWrapper);
 			return rspWrapper.getRealWriter().toString();
 
 		}

@@ -166,4 +166,18 @@ public class Resource
 			return false;
 		}
 	}
+
+	public String getCharset() {
+		return charset;
+	}
+
+	public void setCharset(String charset) {
+		this.charset = charset;
+	}
+
+	public String getCR() {
+		return CR;
+	}
+	
+	
 }

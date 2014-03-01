@@ -55,7 +55,7 @@ public class NoLockStringWriter extends Writer
 	@Override
 	public void close() throws IOException
 	{
-		// TODO Auto-generated method stub
+		System.out.println("closed by....");
 
 	}
 

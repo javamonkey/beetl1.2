@@ -1,33 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src" />
-	<classpathentry kind="src" path="ext" />
-	<classpathentry kind="src" path="samples" />
-	<classpathentry kind="src" path="performance" />
-	<classpathentry kind="src" path="test" />
-	<classpathentry kind="con"
-		path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3" />
-	<classpathentry kind="con"
-		path="org.eclipse.jdt.launching.JRE_CONTAINER" />
-	<classpathentry kind="lib" path="lib/antlr-3.3-complete.jar" />
-	<classpathentry kind="lib" path="lib/antlr-runtime-3.4-nodebug.jar" />
-	<classpathentry kind="lib" path="lib/antlr-runtime.jar" />
-	<classpathentry kind="lib" path="lib/httl-1.0.7.jar" />
-	<classpathentry kind="lib" path="lib/JFinal-1.1.6-bin.jar" />
-	<classpathentry kind="lib" path="lib/nutz-1.b.48.jar" />
-	<classpathentry kind="lib" path="lib/servlet-api.jar" />
-	<classpathentry kind="lib"
-		path="lib/spring-beans-3.2.2.RELEASE.jar" />
-	<classpathentry kind="lib"
-		path="lib/spring-context-3.2.2.RELEASE.jar" />
-	<classpathentry kind="lib"
-		path="lib/spring-context-support-3.2.2.RELEASE.jar" />
-	<classpathentry kind="lib" path="lib/spring-core-3.2.2.RELEASE.jar" />
-	<classpathentry kind="lib" path="lib/spring-web-3.0.5.RELEASE.jar" />
-	<classpathentry kind="lib"
-		path="lib/spring-webmvc-3.2.2.RELEASE.jar" />
-	<classpathentry kind="lib" path="lib/struts2-core-2.3.12.jar" />
-	<classpathentry kind="lib" path="lib/xwork-core-2.3.12.jar" />
-	<classpathentry kind="lib" path="lib/freemarker.jar" />
-	<classpathentry kind="output" path="bin" />
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="ext"/>
+	<classpathentry kind="src" path="samples"/>
+	<classpathentry kind="src" path="performance"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/antlr-3.3-complete.jar"/>
+	<classpathentry kind="lib" path="lib/antlr-runtime-3.4-nodebug.jar"/>
+	<classpathentry kind="lib" path="lib/antlr-runtime.jar"/>
+	<classpathentry kind="lib" path="lib/httl-1.0.7.jar"/>
+	<classpathentry kind="lib" path="lib/JFinal-1.1.6-bin.jar"/>
+	<classpathentry kind="lib" path="lib/nutz-1.b.48.jar"/>
+	<classpathentry kind="lib" path="lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="lib/spring-beans-3.2.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-context-3.2.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-context-support-3.2.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-core-3.2.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-web-3.0.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring-webmvc-3.2.2.RELEASE.jar" sourcepath="C:/Users/lmm/.m2/repository/org/springframework/spring-webmvc/3.2.2.RELEASE/spring-webmvc-3.2.2.RELEASE-sources.jar"/>
+	<classpathentry kind="lib" path="lib/struts2-core-2.3.12.jar"/>
+	<classpathentry kind="lib" path="lib/xwork-core-2.3.12.jar"/>
+	<classpathentry kind="lib" path="lib/freemarker.jar"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>

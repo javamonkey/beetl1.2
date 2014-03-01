@@ -60,6 +60,7 @@ public class BeetlRender extends Render
 		Writer writer = null;
 		OutputStream os = null;
 		try
+		
 		{
 			response.setContentType(contentType);
 			Template template = gt.getFileTemplate(view);
