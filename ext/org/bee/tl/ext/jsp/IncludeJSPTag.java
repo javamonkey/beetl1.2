@@ -1,6 +1,8 @@
 package org.bee.tl.ext.jsp;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -8,11 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.bee.tl.core.BeetlUtil;
+import org.bee.tl.core.Context;
 import org.bee.tl.core.Tag;
+import org.bee.tl.ext.WebPathKit;
 import org.bee.tl.ext.spring.WebVariable;
 
 public class IncludeJSPTag extends Tag
 {
+
+	String prefix ;
 
 	@Override
 	public boolean requriedInput()
@@ -23,10 +29,7 @@ public class IncludeJSPTag extends Tag
 	@Override
 	public String getOutput()
 	{
-		//		if (args.length == 0 || args.length > 2)
-		//		{
-		//			throw new RuntimeException("参数错误，期望child,Map .....");
-		//		}
+		
 		String child = (String) args[0];
 		if(BeetlUtil.isOutsideOfRoot(child)){
 			throw new RuntimeException("includeJSP 文件非法，不在根目录里:"+child);
@@ -48,24 +51,34 @@ public class IncludeJSPTag extends Tag
 				if (paras.size() != 0)
 				{
 					BeetlServletRequestWrapper requestWrapper = null;
+					
 					Map requestPara = request.getParameterMap();
-					for (Entry<String, Object> entry : paras.entrySet())
-					{
-						requestPara.put(entry.getKey(), entry.getValue());
-					}
-					requestWrapper = new BeetlServletRequestWrapper(request, requestPara);
-					request = requestWrapper;
+					
+						Map newRequestParas = new HashMap();
+						newRequestParas.putAll(requestPara);
+						for (Entry<String, Object> entry : paras.entrySet())
+						{
+							newRequestParas.put(entry.getKey(), entry.getValue());
+						}
+						requestWrapper = new BeetlServletRequestWrapper(request, newRequestParas);
+						request = requestWrapper;
+						
+					
+					
 				}
 
 			}
-
+		
+			
 			BeetlServletResponseWrapper rspWrapper = new BeetlServletResponseWrapper(response);
-			request.getRequestDispatcher(child).include(request, rspWrapper);
+			String realJspPath = getJSPPath(child);
+			request.getRequestDispatcher(realJspPath).include(request, rspWrapper);
 			return rspWrapper.getRealWriter().toString();
 
 		}
 		catch (IOException e)
 		{
+			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 		catch (Exception e)
@@ -74,5 +87,30 @@ public class IncludeJSPTag extends Tag
 		}
 
 	}
+	
+	protected String getJSPPath(String child){
+		if(child.startsWith("/")){
+			return prefix+child;
+		}else{
+			return prefix+"/"+child;
+		}
+		
+		
+	}
+	
+	public void setContext(Context ctx)
+	{
 
+		super.setContext(ctx);
+		File file = this.group.getRoot();
+		File root = new File(WebPathKit.getWebRootPath());
+		if(file.equals(root)){
+			prefix="";
+		}else{
+			int len = root.getAbsolutePath().length();
+			 prefix = file.getAbsolutePath().substring(len);
+			
+		}
+
+	}
 }

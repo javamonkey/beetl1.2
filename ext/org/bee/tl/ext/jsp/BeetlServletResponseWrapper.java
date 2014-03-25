@@ -25,6 +25,7 @@ public class BeetlServletResponseWrapper extends HttpServletResponseWrapper
 			cw = new NoLockStringWriter();
 			writer = new PrintWriter(cw);
 		}
+	
 		return writer;
 	}
 

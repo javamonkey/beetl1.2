@@ -308,29 +308,10 @@ public class Context
 
 		else
 		{
-			Method m = (Method) node.getCached();
-			if (m == null)
-			{
-				// not map,it's attribute
-				m = PropertyUtil.getGetMehod(o.getClass(), (String) exp);
-				if (m == null)
-				{
-					// Generic get
-					m = PropertyUtil.getGetMehod(o.getClass(), null);
-				}
-				// 对象有get(String key)方法
-				if (m != null)
-				{
-					node.setCached(m);
+			Method m = PropertyUtil.getGetMehod(o.getClass(), (String) exp);
+			if(m==null)throw new IllegalArgumentException("Must be Map or List,Array,or Generic Get for []");
 
-				}
-
-				else
-				{
-					// 并不支持其他集合类型
-					throw new IllegalArgumentException("Must be Map or List,Array,or Generic Get for []");
-				}
-			}
+			
 
 			try
 			{
@@ -370,7 +351,10 @@ public class Context
 		//		{
 		//			return ((Map) o).get(attrName);
 		//		}
-		Object[] minfo = (Object[]) node.getCached();
+		
+		if(o instanceof Map){
+			return ((Map)o).get(attrName);
+		}
 		Class c = o.getClass();
 		Method m = null;
 		boolean isGeneralGet = false;
@@ -378,8 +362,7 @@ public class Context
 		try
 		{
 
-			if (minfo == null)
-			{
+			
 				m = PropertyUtil.getReadMethod(c, attrName);
 
 				//			m = PropertyUtil.getReadMethod(o.getClass(), attrName);
@@ -388,29 +371,13 @@ public class Context
 					throw new RuntimeException("Object '" + o + "' call attrbute " + attrName
 							+ " with error:no read method " + attrName);
 				}
-				if (m.getParameterTypes().length == 0)
+				if (!(m.getParameterTypes().length == 0))
 				{
-					node.setCached(new Object[]
-					{ m, false });
+					isGeneralGet = true ;
 
 				}
-				else
-				{
-					node.setCached(new Object[]
-					{ m, true });
-					isGeneralGet = true;
-				}
-
-			}
-			else
-			{
-				m = (Method) minfo[0];
-				if (((Boolean) minfo[1]).booleanValue())
-				{
-					isGeneralGet = true;
-				}
-			}
-
+			
+			
 			if (!isGeneralGet)
 			{
 				Object r = m.invoke(o, new Object[0]);

@@ -383,6 +383,8 @@ public class GroupTemplate
 		return this.getFileTemplate("/strtemp/" + key + ".txt");
 
 	}
+	
+	
 
 	/**删除模板缓存。参考 <code>getReaderTemplate(Reader reader, String key)</code> 和 
 	 *<code>getReaderTemplate(String input, String key)</code>
@@ -405,19 +407,15 @@ public class GroupTemplate
 		if (stringTemplateList.contains(key))
 		{
 
-			File file = new File(this.root + File.separator + "strtemp" + File.separator + key + ".txt");
-			if (!file.delete())
-			{
-				logger.info("删除String模板失败");
-			}
+		
+			this.cachedRuntime.removeCache("/strtemp/" + key + ".txt");
 
-		}else {
-			File file = new File(this.root + File.separator + "strtemp" + File.separator + key + ".txt");
-			if (file.exists()&&!file.delete())
-			{
-				logger.info("删除String模板失败");
-			}
-			
+		}
+		//总是试图删除strtemp目录下的东西
+		File file = new File(this.root + File.separator + "strtemp" + File.separator + key + ".txt");
+		if (!file.delete())
+		{
+			logger.info("删除String模板失败");
 		}
 	
 	}

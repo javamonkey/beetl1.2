@@ -10,4 +10,8 @@ public String getNickName() {
 public void setNickName(String nickName) {
 	this.nickName = nickName;
 }
+
+public boolean isOk(){
+	return false;
+}
 }

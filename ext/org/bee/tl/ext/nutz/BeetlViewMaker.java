@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.bee.tl.core.GroupTemplate;
 import org.bee.tl.core.Template;
 import org.bee.tl.ext.WebConfig;
+import org.bee.tl.ext.spring.SessionWrapper;
 import org.bee.tl.ext.spring.WebVariable;
 import org.nutz.ioc.Ioc;
 import org.nutz.lang.Lang;
@@ -78,7 +79,7 @@ public class BeetlViewMaker implements ViewMaker {
 					template.set("servlet", webVariable);
 					template.set("request", req);
 					template.set("ctxPath", req.getContextPath());
-					template.set("session", Mvcs.getHttpSession());
+					template.setRawValue("session", new SessionWrapper( Mvcs.getHttpSession()));
 					if(groupTemplate.isDirectByteOutput()){
 						template.getText(resp.getOutputStream()); // TODO做成可配置?
 					}else{
