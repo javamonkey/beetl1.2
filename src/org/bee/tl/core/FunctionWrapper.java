@@ -132,6 +132,7 @@ public class FunctionWrapper implements Function {
 
 		}
 		
+		
 		if (matchMethodList.size() != 0) {
 			// 得到最匹配的
 			MethodConf methodConf = (MethodConf) matchMethodList.get(0)[0];
@@ -184,7 +185,7 @@ public class FunctionWrapper implements Function {
 				throw new RuntimeException("期望参数个数与实际参数不匹配:"
 						+ method.toString());
 			}
-			args = new Object[parametersType.length + 1];
+			args = new Object[parametersType.length ];
 
 		} else {
 			if (paras.length > parametersType.length) {

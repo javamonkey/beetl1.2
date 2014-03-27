@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bee.tl.core.Context;
 import org.bee.tl.core.GroupTemplate;
 import org.bee.tl.core.Template;
 import org.bee.tl.ext.String2Json;
@@ -37,12 +38,16 @@ public class Test
 //		 		 	group.enableOptimize();
 //		 		  group.enableDirectOutputByte();
 		 		
-		 	 Template template = group.getFileTemplate("/helloworld.html");
+		 	
+	 		    group.registerFunctionPackage("test", new NowFunction());
+	 		    Template template = group.getFileTemplate("/helloworld.html");
 		 	 template.set("tt", new Test());	
 		 	 Map map = new HashMap();
 		 	map.put("a", "a");
 		 	map.put("b", "b");
 		 	template.set("map", map);	
+		 	
+		 	
 		 	 
 		 	 
 		 	
@@ -78,7 +83,7 @@ public class Test
 		return this;
 	}
 	
-	public boolean isOk(){
+	public boolean isOk(Context ctx){
 		return true;
 	}
 

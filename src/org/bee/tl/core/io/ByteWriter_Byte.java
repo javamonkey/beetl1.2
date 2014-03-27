@@ -57,6 +57,16 @@ public class ByteWriter_Byte extends ByteWriter
 		write(bs);
 
 	}
+	
+	public void write(String str) throws IOException
+	{
+
+		if(str!=null){
+			byte[] bs = str.getBytes(cs);
+			write(bs);
+		}
+		
+	}
 
 	@Override
 	public void write(byte[] bs) throws IOException

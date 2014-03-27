@@ -1,6 +1,6 @@
 <project name="client" default="jarClass" basedir=".">
     <property name="product" value="beetl"/>
-    <property name="version" value="1.26.03"/>
+    <property name="version" value="1.26.04"/>
     <property name="classes.dir" value="${basedir}/bin"/>
     <property name="build.dir" value="${basedir}/build"/>
     <property name="lib.dir" value="${basedir}"/>
