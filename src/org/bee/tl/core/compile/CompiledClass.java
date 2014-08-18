@@ -384,14 +384,14 @@ public class CompiledClass
 			if (m.getParameterTypes().length == 0)
 			{
 				Object r = m.invoke(o, new Object[0]);
-				return r;
+				return wrapIfNumber(r);
 			}
 			else
 			{
 				//generic get
 				Object r = m.invoke(o, new Object[]
 				{ attrName });
-				return r;
+				return wrapIfNumber(r);
 			}
 
 		}
@@ -412,19 +412,28 @@ public class CompiledClass
 		}
 
 	}
+	
+	public Object wrapIfNumber(Object o){
+		if(o==null)return o;
+		if(o instanceof Number){
+			return nf.y((Number)o);
+		}else{
+			return o;
+		}
+	}
 
 	public Object evalKey(Object o, Object key)
 	{
 		if (o instanceof Map)
 		{
-			return ((Map) o).get(key);
+			return wrapIfNumber(((Map) o).get(key));
 		}
 		else if (o instanceof List)
 		{
 			if (key instanceof Number)
 			{
 				int index = ((Number) key).intValue();
-				return ((List) o).get(index);
+				return wrapIfNumber(((List) o).get(index));
 			}
 		}
 		else if (o.getClass().isArray())
@@ -433,7 +442,7 @@ public class CompiledClass
 			if (key instanceof Number)
 			{
 				int index = ((Number) key).intValue();
-				return array[index];
+				return wrapIfNumber(array[index]);
 			}
 		}
 		else
@@ -444,7 +453,7 @@ public class CompiledClass
 			{
 				try
 				{
-					return m.invoke(o, (String) key);
+					return wrapIfNumber(m.invoke(o, (String) key));
 				}
 				catch (Exception e)
 				{
